@@ -35,22 +35,28 @@
             --text-muted: #94A3B8; /* Muted text for dark background */
         }
         
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Offset for fixed header */
+        }
+        
         body {
             line-height: 1.6;
             color: var(--text-light);
             background-color: var(--dark-blue);
             overflow-x: hidden;
+            font-size: 16px;
         }
         
         .container {
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
         section {
-            padding: 80px 0;
+            padding: 60px 0;
         }
         
         h1, h2, h3, h4 {
@@ -60,13 +66,13 @@
         }
         
         h1 {
-            font-size: 2.8rem;
+            font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive font size */
         }
         
         h2 {
-            font-size: 2.2rem;
+            font-size: clamp(1.7rem, 4vw, 2.2rem);
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             position: relative;
         }
         
@@ -86,7 +92,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
         
         .section-title h2 {
@@ -96,19 +102,22 @@
         p {
             margin-bottom: 20px;
             color: var(--text-muted);
+            font-size: clamp(0.95rem, 2vw, 1rem);
         }
         
         .btn {
             display: inline-block;
             background-color: var(--primary);
             color: white;
-            padding: 12px 30px;
+            padding: 12px 25px;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            text-align: center;
         }
         
         .btn:hover {
@@ -173,41 +182,46 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Header & Navigation */
+        /* Header & Navigation - Improved for mobile */
         header {
-            background-color: rgba(10, 25, 49, 0.95);
+            background-color: rgba(10, 25, 49, 0.98);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            height: 70px;
         }
         
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
+            height: 100%;
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
             font-weight: 700;
             color: var(--text-light);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .logo-nickname {
             color: var(--accent);
             font-weight: 800;
+            display: none; /* Hidden on mobile, shown on tablet+ */
         }
         
         .logo-icon {
             color: var(--primary);
+            font-size: 1.5rem;
         }
         
         nav ul {
@@ -216,7 +230,7 @@
         }
         
         nav ul li {
-            margin-left: 30px;
+            margin-left: 20px;
         }
         
         nav ul li a {
@@ -225,6 +239,7 @@
             font-weight: 600;
             transition: color 0.3s ease;
             position: relative;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
         
         nav ul li a:hover {
@@ -251,17 +266,23 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--text-light);
+            background: none;
+            border: none;
+            padding: 5px;
         }
         
-        /* Hero Section */
+        /* Hero Section - Optimized for mobile */
         .hero {
-            padding-top: 150px;
-            padding-bottom: 100px;
+            padding-top: 100px;
+            padding-bottom: 80px;
             background: linear-gradient(135deg, rgba(10, 25, 49, 0.9) 0%, rgba(26, 44, 71, 0.9) 100%), 
                         url('https://images.unsplash.com/photo-1583324113626-70df0f4deaab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');
             background-size: cover;
             background-position: center;
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
         
         .hero:before {
@@ -284,11 +305,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
         }
         
         .hero-text {
             flex: 1;
-            padding-right: 40px;
+            min-width: 300px;
         }
         
         .hero-text h1 {
@@ -299,12 +322,13 @@
         .hero-text .nickname {
             color: var(--accent);
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             margin-bottom: 20px;
+            display: block;
         }
         
         .hero-text p {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             margin-bottom: 30px;
             color: var(--text-muted);
         }
@@ -312,18 +336,19 @@
         .specialties {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 30px;
         }
         
         .specialty-tag {
             background-color: rgba(0, 119, 73, 0.2);
             color: var(--primary);
-            padding: 5px 15px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
             font-weight: 500;
             border: 1px solid rgba(0, 119, 73, 0.4);
+            white-space: nowrap;
         }
         
         .specialty-tag.red {
@@ -340,13 +365,16 @@
         
         .hero-image {
             flex: 1;
+            min-width: 300px;
             text-align: center;
             position: relative;
         }
         
         .hero-image img {
-            width: 350px;
-            height: 350px;
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            aspect-ratio: 1;
             border-radius: 50%;
             object-fit: cover;
             object-position: center;
@@ -360,7 +388,7 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
         
-        /* Social Links Bar */
+        /* Social Links Bar - Improved for mobile */
         .social-links-bar {
             background-color: var(--dark-blue-light);
             color: white;
@@ -372,18 +400,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
             flex-wrap: wrap;
         }
         
         .social-link-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
+            font-size: clamp(0.85rem, 2vw, 1rem);
         }
         
         .social-link-item:hover {
@@ -392,7 +421,7 @@
         }
         
         .social-link-item i {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         
         /* Services Section */
@@ -402,14 +431,14 @@
         
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
         
         .service-card {
             background-color: var(--dark-blue-lighter);
             border-radius: 8px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: center;
@@ -429,13 +458,13 @@
         }
         
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             background-color: rgba(42, 60, 87, 0.8);
         }
         
         .service-icon {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--primary);
             margin-bottom: 20px;
         }
@@ -455,10 +484,12 @@
         .service-card h3 {
             margin-bottom: 15px;
             color: var(--text-light);
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
         }
         
         .service-card p {
             color: var(--text-muted);
+            font-size: 0.95rem;
         }
         
         /* GitHub Profile Section */
@@ -471,7 +502,7 @@
         .github-container {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 30px;
         }
         
         .github-header {
@@ -479,18 +510,19 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 20px;
         }
         
         .github-user {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         
         .github-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 4px solid var(--accent);
             object-fit: cover;
@@ -499,7 +531,8 @@
         .github-user-info h2 {
             color: white;
             text-align: left;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
         }
         
         .github-user-info h2:after {
@@ -508,33 +541,33 @@
         
         .github-username {
             color: #8b949e;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 10px;
         }
         
         .github-bio {
             color: #c9d1d9;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
             max-width: 600px;
         }
         
         .github-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
         
         .stat-card {
             background-color: #161b22;
             border-radius: 8px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             border: 1px solid #30363d;
         }
         
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: white;
             margin-bottom: 5px;
@@ -542,17 +575,17 @@
         
         .stat-label {
             color: #8b949e;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .github-projects {
-            margin-top: 40px;
+            margin-top: 30px;
         }
         
         .github-projects h3 {
             color: white;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
             border-bottom: 2px solid var(--github-green);
             padding-bottom: 10px;
             display: inline-block;
@@ -560,14 +593,14 @@
         
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
         
         .project-card {
             background-color: #161b22;
             border-radius: 8px;
-            padding: 25px;
+            padding: 20px;
             border: 1px solid #30363d;
             transition: all 0.3s ease;
         }
@@ -581,7 +614,7 @@
         .project-card h4 {
             color: white;
             margin-bottom: 10px;
-            font-size: 1.3rem;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
         }
         
         .project-card h4 a {
@@ -601,27 +634,28 @@
             padding: 3px 10px;
             border-radius: 12px;
             font-size: 0.8rem;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border: 1px solid rgba(35, 134, 54, 0.3);
         }
         
         .project-description {
             color: #c9d1d9;
             margin-bottom: 15px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .project-tech {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 15px;
         }
         
         .tech-tag {
             background-color: rgba(56, 139, 253, 0.1);
             color: #58a6ff;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 15px;
             font-size: 0.8rem;
         }
@@ -629,7 +663,8 @@
         .project-meta {
             display: flex;
             align-items: center;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 12px;
             color: #8b949e;
             font-size: 0.85rem;
         }
@@ -643,7 +678,7 @@
         /* LinkedIn Certifications Section */
         .linkedin-certifications {
             background-color: var(--dark-blue-light);
-            padding: 80px 0;
+            padding: 60px 0;
         }
         
         .linkedin-certifications .section-title h2 {
@@ -652,21 +687,21 @@
         
         .linkedin-cert-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
         
         .linkedin-cert-card {
             background-color: var(--dark-blue-lighter);
             border-radius: 10px;
-            padding: 25px;
+            padding: 22px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             border-left: 5px solid var(--linkedin-blue);
             display: flex;
             align-items: flex-start;
-            gap: 20px;
+            gap: 15px;
         }
         
         .linkedin-cert-card:hover {
@@ -676,30 +711,31 @@
         }
         
         .linkedin-cert-icon {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: var(--linkedin-blue);
-            min-width: 50px;
+            min-width: 40px;
         }
         
         .linkedin-cert-content h3 {
-            margin-bottom: 10px;
-            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
             color: var(--text-light);
         }
         
         .linkedin-cert-issuer {
             color: var(--text-muted);
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            font-size: 0.9rem;
         }
         
         .linkedin-cert-date {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .linkedin-verify-btn {
@@ -710,7 +746,7 @@
             border-radius: 4px;
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: all 0.3s ease;
             border: 1px solid rgba(10, 102, 194, 0.3);
         }
@@ -723,26 +759,26 @@
         .linkedin-activity {
             background-color: var(--dark-blue-lighter);
             border-radius: 10px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            margin-top: 40px;
+            margin-top: 30px;
         }
         
         .linkedin-activity h3 {
             color: var(--linkedin-blue);
-            margin-bottom: 25px;
-            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
         .activity-item {
-            padding: 20px;
+            padding: 18px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: flex-start;
-            gap: 15px;
+            gap: 12px;
         }
         
         .activity-item:last-child {
@@ -751,25 +787,25 @@
         
         .activity-icon {
             color: var(--linkedin-blue);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-top: 3px;
         }
         
         .activity-content h4 {
             margin-bottom: 5px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-light);
         }
         
         .activity-content p {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .activity-date {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -777,7 +813,7 @@
         
         .view-more-linkedin {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 25px;
         }
         
         /* Certifications Section */
@@ -787,20 +823,20 @@
         
         .certifications-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
         
         .cert-card {
             background-color: var(--dark-blue-light);
             border-radius: 8px;
-            padding: 25px;
+            padding: 22px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             border-left: 4px solid var(--primary);
             display: flex;
             align-items: flex-start;
-            gap: 20px;
+            gap: 15px;
         }
         
         .cert-card:hover {
@@ -810,9 +846,9 @@
         }
         
         .cert-icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--primary);
-            min-width: 50px;
+            min-width: 45px;
         }
         
         .cert-card.red {
@@ -832,28 +868,29 @@
         }
         
         .cert-content h3 {
-            margin-bottom: 10px;
-            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
             color: var(--text-light);
         }
         
         .cert-issuer {
             color: var(--text-muted);
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 5px;
+            font-size: 0.9rem;
         }
         
         .cert-date {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             margin-bottom: 10px;
         }
         
         .cert-id {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             background-color: rgba(0, 119, 73, 0.2);
             color: var(--primary);
             padding: 3px 10px;
@@ -870,26 +907,31 @@
         .about-content {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 40px;
+            flex-wrap: wrap;
         }
         
         .about-text {
             flex: 1;
+            min-width: 300px;
         }
         
         .about-text h3 {
             color: var(--primary);
             margin-top: 20px;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
         }
         
         .about-image {
             flex: 1;
+            min-width: 300px;
             text-align: center;
             position: relative;
         }
         
         .about-image img {
-            max-width: 100%;
+            width: 100%;
+            max-width: 450px;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 5px solid var(--dark-blue-lighter);
@@ -898,16 +940,17 @@
         .zambian-connection {
             position: absolute;
             top: -15px;
-            left: -15px;
+            left: -10px;
             background-color: var(--primary);
             color: white;
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: clamp(0.8rem, 2vw, 1rem);
         }
         
         /* Contact Section */
@@ -918,12 +961,13 @@
         .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
+            gap: 40px;
         }
         
         .contact-info h3 {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: var(--primary);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
         }
         
         .contact-details {
@@ -932,7 +976,7 @@
         
         .contact-detail {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 15px;
         }
         
@@ -941,14 +985,15 @@
             margin-right: 15px;
             font-size: 1.2rem;
             width: 30px;
+            margin-top: 5px;
         }
         
         .contact-form input,
         .contact-form textarea,
         .contact-form select {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 14px;
+            margin-bottom: 18px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             font-size: 1rem;
@@ -1011,19 +1056,21 @@
         footer {
             background-color: #0A1429;
             color: white;
-            padding: 60px 0 30px;
+            padding: 50px 0 25px;
         }
         
         .footer-content {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
-            margin-bottom: 40px;
+            gap: 40px;
+            margin-bottom: 30px;
         }
         
         .footer-logo {
-            font-size: 1.8rem;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: white;
         }
         
@@ -1034,16 +1081,16 @@
         .footer-zambia {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-top: 15px;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .footer-links h4,
         .footer-social h4 {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-size: clamp(1.1rem, 2vw, 1.2rem);
             color: var(--accent);
         }
         
@@ -1052,13 +1099,14 @@
         }
         
         .footer-links ul li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .footer-links ul li a {
             color: var(--text-muted);
             text-decoration: none;
             transition: color 0.3s ease;
+            font-size: 0.9rem;
         }
         
         .footer-links ul li a:hover {
@@ -1067,7 +1115,7 @@
         
         .social-icons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
         
         .social-icons a {
@@ -1106,10 +1154,10 @@
         
         .copyright {
             text-align: center;
-            padding-top: 30px;
+            padding-top: 25px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .zambia-pride {
@@ -1120,42 +1168,35 @@
             font-weight: 600;
         }
         
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 2.4rem;
+        /* Improved Responsive Styles */
+        @media (min-width: 768px) {
+            .logo-nickname {
+                display: inline; /* Show nickname on tablet and larger */
             }
             
-            h2 {
-                font-size: 2rem;
+            .hero {
+                padding-top: 120px;
             }
             
             .hero-content {
-                flex-direction: column;
+                flex-wrap: nowrap;
             }
             
             .hero-text {
-                padding-right: 0;
+                padding-right: 40px;
+            }
+            
+            section {
+                padding: 80px 0;
+            }
+            
+            h2 {
                 margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .github-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .github-user {
-                flex-direction: column;
-                align-items: flex-start;
             }
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 767px) {
+            /* Mobile Navigation */
             .mobile-toggle {
                 display: block;
             }
@@ -1170,10 +1211,12 @@
                 align-items: center;
                 padding: 20px 0;
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-                transform: translateY(-100%);
+                transform: translateY(-150%);
                 opacity: 0;
                 transition: all 0.3s ease;
                 z-index: 999;
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
             }
             
             nav ul.active {
@@ -1182,35 +1225,141 @@
             }
             
             nav ul li {
-                margin: 15px 0;
+                margin: 12px 0;
+                width: 100%;
+                text-align: center;
             }
             
-            .certifications-grid,
-            .linkedin-cert-grid {
-                grid-template-columns: 1fr;
+            nav ul li a {
+                display: block;
+                padding: 10px 20px;
+                font-size: 1.1rem;
             }
             
-            .projects-grid {
-                grid-template-columns: 1fr;
+            /* Hero adjustments for mobile */
+            .hero {
+                padding-top: 90px;
+                min-height: auto;
             }
             
-            .github-stats {
-                grid-template-columns: repeat(2, 1fr);
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .specialties {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                order: -1; /* Image first on mobile */
+                margin-bottom: 30px;
+            }
+            
+            .hero-image img {
+                max-width: 280px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                order: -1; /* Image first on mobile */
+                margin-bottom: 30px;
+            }
+            
+            .github-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .github-user {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .github-avatar {
+                align-self: center;
             }
             
             .footer-content {
                 flex-direction: column;
-                gap: 40px;
+                gap: 30px;
             }
             
             .social-links-container {
                 flex-direction: column;
                 gap: 15px;
+                align-items: flex-start;
             }
             
-            .hero-image img {
-                width: 280px;
-                height: 280px;
+            .social-link-item {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Touch-friendly buttons */
+            .btn {
+                padding: 15px 25px;
+                min-width: 140px;
+            }
+            
+            /* Improve form for mobile */
+            .contact-form input,
+            .contact-form textarea,
+            .contact-form select {
+                padding: 16px;
+                font-size: 16px; /* Prevents iOS zoom on focus */
+            }
+        }
+        
+        @media (min-width: 768px) and (max-width: 1024px) {
+            /* Tablet-specific adjustments */
+            .hero-text {
+                padding-right: 20px;
+            }
+            
+            .container {
+                padding: 0 30px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .linkedin-cert-grid,
+            .certifications-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* High-resolution displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            /* Optimize for retina displays */
+            .hero-image img,
+            .about-image img,
+            .github-avatar {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+        
+        /* Prevent horizontal overflow */
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Fix for iOS Safari 100vh issue */
+        @supports (-webkit-touch-callout: none) {
+            .hero {
+                min-height: -webkit-fill-available;
             }
         }
     </style>
@@ -1224,9 +1373,9 @@
                 Daka Felix <span class="logo-nickname">(Tech Guy)</span>
             </a>
             
-            <div class="mobile-toggle" id="mobileToggle">
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
             
             <nav>
                 <ul id="navMenu">
@@ -1245,6 +1394,9 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container hero-content">
+            <div class="hero-image">
+                <img src="https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=gRWudHIrnhoQ7kNvwFADKwK&_nc_oc=Admgf5rYJG7fK_mVdZzfQRLUA58rgzcz2QMCDkFXb6-qERpOU0x4r0K3tvWiYkyT1zk&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=3icEliEPTwuelHkd1gTGgw&oh=00_AfrfyDFmsBKM-Ts--_qBPvn3vyUt_7AQ708Bc02RuKtjjQ&oe=697AC8A3" alt="Daka Felix - Tech Professional">
+            </div>
             <div class="hero-text">
                 <h1>Daka Felix</h1>
                 <div class="nickname">"Tech Guy" - Computer Scientist</div>
@@ -1260,10 +1412,8 @@
                 
                 <div>
                     <a href="#contact" class="btn btn-red">Hire Me</a>
+                    <a href="#about" class="btn" style="margin-left: 10px;">Learn More</a>
                 </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=gRWudHIrnhoQ7kNvwFADKwK&_nc_oc=Admgf5rYJG7fK_mVdZzfQRLUA58rgzcz2QMCDkFXb6-qERpOU0x4r0K3tvWiYkyT1zk&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=3icEliEPTwuelHkd1gTGgw&oh=00_AfrfyDFmsBKM-Ts--_qBPvn3vyUt_7AQ708Bc02RuKtjjQ&oe=697AC8A3" alt="Daka Felix - Tech Professional">
             </div>
         </div>
     </section>
@@ -1271,19 +1421,19 @@
     <!-- Social Links Bar -->
     <div class="social-links-bar">
         <div class="container social-links-container">
-            <a href="https://github.com/Feligo1" target="_blank" class="social-link-item">
+            <a href="https://github.com/Feligo1" target="_blank" class="social-link-item" aria-label="GitHub Profile">
                 <i class="fab fa-github"></i>
                 <span>GitHub: Feligo1</span>
             </a>
-            <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" class="social-link-item">
+            <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" class="social-link-item" aria-label="LinkedIn Profile">
                 <i class="fab fa-linkedin"></i>
                 <span>LinkedIn: Felix Daka</span>
             </a>
-            <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" class="social-link-item">
+            <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" class="social-link-item" aria-label="Facebook Profile">
                 <i class="fab fa-facebook"></i>
                 <span>Facebook</span>
             </a>
-            <a href="https://wa.me/260774496821" target="_blank" class="social-link-item">
+            <a href="https://wa.me/260774496821" target="_blank" class="social-link-item" aria-label="WhatsApp Contact">
                 <i class="fab fa-whatsapp"></i>
                 <span>WhatsApp: +260 774496821</span>
             </a>
@@ -1546,7 +1696,6 @@
         <div class="container">
             <div class="section-title">
                 <h2>Professional Certifications</h2>
-                <div class="zambia-flag"></div>
             </div>
             <div class="certifications-grid">
                 <div class="cert-card">
@@ -1655,6 +1804,9 @@
                 <h2>About Me</h2>
             </div>
             <div class="about-content">
+                <div class="about-image">
+                    <img src="https://scontent.fhre1-2.fna.fbcdn.net/v/t39.30808-6/550404361_1456385622261944_3534110292626451549_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEKbBpfN0_i4_nf-DGLjzW5PkwDTmElXZQ-TANOYSVdlDptzGpMFglCmcKXRro2izunOpkgvWL50o6PPEHh3vmz&_nc_ohc=d0Lo-JkXdLkQ7kNvwEZ_r4C&_nc_oc=AdlbMJJB7ob0vcYp0izLT4ExZDMO8SacZBaKFFfe43jslL3WxGcLFhdwWOOp6JwAxbQ&_nc_zt=23&_nc_ht=scontent.fhre1-2.fna&_nc_gid=JrtydHM0MQ42edv5Dw9gNQ&oh=00_AfrNnwFBknwbZx8Lz53DUt5xLbFNGKb0AAI6wXAMK7YNfg&oe=697ACFDE" alt="Daka Felix at work">
+                </div>
                 <div class="about-text">
                     <p>Hello! I'm <strong>Daka Felix</strong> (GitHub: <strong>Feligo1</strong>), a Zambian computer scientist known professionally as <strong>"Tech Guy"</strong>. My passion for technology began in Zambia and has grown into a comprehensive expertise spanning multiple IT domains.</p>
                     
@@ -1670,9 +1822,6 @@
                         <i class="fab fa-linkedin"></i> Connect on LinkedIn
                     </a>
                     <a href="#contact" class="btn btn-red">Let's Collaborate</a>
-                </div>
-                <div class="about-image">
-                    <img src="https://scontent.fhre1-2.fna.fbcdn.net/v/t39.30808-6/550404361_1456385622261944_3534110292626451549_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEKbBpfN0_i4_nf-DGLjzW5PkwDTmElXZQ-TANOYSVdlDptzGpMFglCmcKXRro2izunOpkgvWL50o6PPEHh3vmz&_nc_ohc=d0Lo-JkXdLkQ7kNvwEZ_r4C&_nc_oc=AdlbMJJB7ob0vcYp0izLT4ExZDMO8SacZBaKFFfe43jslL3WxGcLFhdwWOOp6JwAxbQ&_nc_zt=23&_nc_ht=scontent.fhre1-2.fna&_nc_gid=JrtydHM0MQ42edv5Dw9gNQ&oh=00_AfrNnwFBknwbZx8Lz53DUt5xLbFNGKb0AAI6wXAMK7YNfg&oe=697ACFDE" alt="Daka Felix at work">
                 </div>
             </div>
         </div>
@@ -1740,7 +1889,6 @@
                 </div>
                 <div class="contact-form">
                     <div class="form-message" id="formMessage"></div>
-                    <!-- YOUR FORMSPREE ENDPOINT IS INSERTED HERE -->
                     <form action="https://formspree.io/f/xeeannqy" method="POST" id="contactForm">
                         <input type="text" name="name" id="name" placeholder="Your Name" required>
                         <input type="email" name="email" id="email" placeholder="Your Email" required>
@@ -1797,10 +1945,10 @@
                 <div class="footer-social">
                     <h4>Connect With Me</h4>
                     <div class="social-icons">
-                        <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://github.com/Feligo1" target="_blank" class="github"><i class="fab fa-github"></i></a>
-                        <a href="https://wa.me/260774496821" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" class="facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" class="linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/Feligo1" target="_blank" class="github" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://wa.me/260774496821" target="_blank" class="whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -1817,8 +1965,16 @@
         
         mobileToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
-            mobileToggle.querySelector('i').classList.toggle('fa-bars');
-            mobileToggle.querySelector('i').classList.toggle('fa-times');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+            
+            // Prevent body scrolling when menu is open on mobile
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
         
         // Close mobile menu when clicking a link
@@ -1827,6 +1983,7 @@
                 navMenu.classList.remove('active');
                 mobileToggle.querySelector('i').classList.remove('fa-times');
                 mobileToggle.querySelector('i').classList.add('fa-bars');
+                document.body.style.overflow = '';
             });
         });
         
@@ -1854,7 +2011,6 @@
             }, 500);
             
             // The form will submit normally to Formspree
-            // They will process it and redirect back
         });
         
         // Check for success parameter in URL when page loads
@@ -1885,7 +2041,7 @@
             }
         });
         
-        // Smooth scrolling for anchor links
+        // Smooth scrolling for anchor links with offset for fixed header
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1895,8 +2051,11 @@
                 
                 const targetElement = document.querySelector(targetId);
                 if(targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: targetPosition,
                         behavior: 'smooth'
                     });
                 }
@@ -1905,7 +2064,7 @@
         
         // Add animation on scroll for certifications
         const observerOptions = {
-            threshold: 0.3,
+            threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
         
@@ -1919,18 +2078,28 @@
         }, observerOptions);
         
         // Observe certification cards
-        document.querySelectorAll('.cert-card').forEach(card => {
+        document.querySelectorAll('.cert-card, .service-card, .linkedin-cert-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(card);
         });
         
+        // Handle iOS viewport height fix
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setVH();
+        window.addEventListener('resize', setVH);
+        
         // Console verification
         console.log('Daka Felix (Tech Guy) Portfolio Website');
         console.log('Formspree Endpoint: https://formspree.io/f/xeeannqy');
         console.log('Emails will be sent to: felixddaka@gmail.com');
         console.log('Test the form by submitting a message!');
+        console.log('Responsive design optimized for phone, tablet, and computer');
     </script>
 </body>
 </html>
