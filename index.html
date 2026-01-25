@@ -205,6 +205,7 @@
             align-items: center;
             padding: 10px 15px;
             height: 100%;
+            position: relative;
         }
         
         .logo {
@@ -215,6 +216,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            z-index: 1001;
         }
         
         .logo-nickname {
@@ -274,6 +276,104 @@
             border: none;
             padding: 5px;
             z-index: 1001;
+        }
+        
+        /* Corner Dropdown Navigation for Mobile */
+        @media (max-width: 767px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 60px;
+                right: 15px;
+                width: 220px;
+                background-color: var(--dark-blue-light);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+                transform: translateY(-20px) scale(0.95);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                z-index: 999;
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                margin: 0;
+                overflow: hidden;
+            }
+            
+            nav ul.active {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            /* Arrow pointing to menu button */
+            nav ul::before {
+                content: '';
+                position: absolute;
+                top: -8px;
+                right: 20px;
+                width: 16px;
+                height: 16px;
+                background-color: var(--dark-blue-light);
+                transform: rotate(45deg);
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+                border-left: 1px solid rgba(255, 255, 255, 0.15);
+            }
+            
+            nav ul li {
+                margin: 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 14px 25px;
+                font-size: 0.95rem;
+                width: 100%;
+                border-left: 4px solid transparent;
+                transition: all 0.3s ease;
+            }
+            
+            nav ul li a:hover {
+                background-color: rgba(0, 119, 73, 0.15);
+                border-left-color: var(--primary);
+                padding-left: 30px;
+                color: var(--accent);
+            }
+            
+            nav ul li a:after {
+                display: none;
+            }
+            
+            /* Overlay when menu is open */
+            .nav-overlay {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(3px);
+                z-index: 998;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            /* Hide desktop navigation on mobile */
+            nav:not(.mobile-toggle) {
+                display: none;
+            }
         }
         
         /* Hero Section */
@@ -1191,7 +1291,7 @@
             font-weight: 600;
         }
         
-        /* Responsive Styles */
+        /* Responsive Styles for Tablet and Desktop */
         @media (min-width: 768px) {
             html {
                 font-size: 16px;
@@ -1230,6 +1330,31 @@
             
             .header-container {
                 padding: 15px 30px;
+            }
+            
+            /* Hide mobile toggle on desktop */
+            .mobile-toggle {
+                display: none;
+            }
+            
+            /* Show desktop navigation */
+            nav ul {
+                display: flex;
+                position: static;
+                width: auto;
+                background: none;
+                box-shadow: none;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                padding: 0;
+                border-radius: 0;
+                border: none;
+            }
+            
+            /* Hide overlay on desktop */
+            .nav-overlay {
+                display: none;
             }
             
             /* Hero section for tablet+ */
@@ -1365,33 +1490,6 @@
             .social-icons {
                 justify-content: flex-start;
             }
-            
-            /* Navigation for tablet+ */
-            .mobile-toggle {
-                display: none;
-            }
-            
-            nav ul {
-                position: static;
-                flex-direction: row;
-                transform: none;
-                opacity: 1;
-                padding: 0;
-                background: none;
-                box-shadow: none;
-                max-height: none;
-                overflow: visible;
-            }
-            
-            nav ul li {
-                margin-left: 20px;
-            }
-            
-            nav ul li a {
-                display: inline;
-                padding: 0;
-                font-size: 1rem;
-            }
         }
         
         @media (min-width: 1024px) {
@@ -1417,56 +1515,10 @@
             }
         }
         
-        @media (max-width: 767px) {
-            /* Mobile Navigation */
-            .mobile-toggle {
-                display: block;
-            }
-            
-            nav ul {
-                position: fixed;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background-color: var(--dark-blue-light);
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-                transform: translateY(-150%);
-                opacity: 0;
-                transition: all 0.3s ease;
-                z-index: 999;
-                max-height: calc(var(--vh, 1vh) * 100 - 60px);
-                overflow-y: auto;
-            }
-            
-            nav ul.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            
-            nav ul li {
-                margin: 10px 0;
-                width: 100%;
-                text-align: center;
-            }
-            
-            nav ul li a {
-                display: block;
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-        }
-        
         /* iOS Safari 100vh fix */
         @supports (-webkit-touch-callout: none) {
             .hero {
                 min-height: -webkit-fill-available;
-            }
-            
-            nav ul.active {
-                max-height: -webkit-fill-available;
             }
         }
         
@@ -1501,6 +1553,9 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+            
+            <!-- Overlay for mobile menu -->
+            <div class="nav-overlay" id="navOverlay"></div>
         </div>
     </header>
 
@@ -1919,6 +1974,8 @@
             <div class="about-content">
                 <div class="about-image">
                     <div class="zambian-connection">
+                        <i class="fas fa-globe-africa"></i>
+                        <span>Proudly Zambian Tech Professional</span>
                     </div>
                     <img src="https://scontent.fhre1-2.fna.fbcdn.net/v/t39.30808-6/550404361_1456385622261944_3534110292626451549_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEKbBpfN0_i4_nf-DGLjzW5PkwDTmElXZQ-TANOYSVdlDptzGpMFglCmcKXRro2izunOpkgvWL50o6PPEHh3vmz&_nc_ohc=d0Lo-JkXdLkQ7kNvwEZ_r4C&_nc_oc=AdlbMJJB7ob0vcYp0izLT4ExZDMO8SacZBaKFFfe43jslL3WxGcLFhdwWOOp6JwAxbQ&_nc_zt=23&_nc_ht=scontent.fhre1-2.fna&_nc_gid=JrtydHM0MQ42edv5Dw9gNQ&oh=00_AfrNnwFBknwbZx8Lz53DUt5xLbFNGKb0AAI6wXAMK7YNfg&oe=697ACFDE" alt="Daka Felix at work">
                 </div>
@@ -2079,9 +2136,12 @@
         // Mobile Navigation Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
-        
-        mobileToggle.addEventListener('click', () => {
+        const navOverlay = document.getElementById('navOverlay');
+
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
             const icon = mobileToggle.querySelector('i');
             icon.classList.toggle('fa-bars');
             icon.classList.toggle('fa-times');
@@ -2089,25 +2149,51 @@
             // Prevent body scrolling when menu is open on mobile
             if (navMenu.classList.contains('active')) {
                 document.body.style.overflow = 'hidden';
-                document.body.style.position = 'fixed';
-                document.body.style.width = '100%';
             } else {
                 document.body.style.overflow = '';
-                document.body.style.position = '';
-                document.body.style.width = '';
             }
         });
-        
+
+        // Close mobile menu when clicking overlay
+        navOverlay.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            mobileToggle.querySelector('i').classList.remove('fa-times');
+            mobileToggle.querySelector('i').classList.add('fa-bars');
+            document.body.style.overflow = '';
+        });
+
         // Close mobile menu when clicking a link
         document.querySelectorAll('#navMenu a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
                 mobileToggle.querySelector('i').classList.remove('fa-times');
                 mobileToggle.querySelector('i').classList.add('fa-bars');
                 document.body.style.overflow = '';
-                document.body.style.position = '';
-                document.body.style.width = '';
             });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                mobileToggle.querySelector('i').classList.remove('fa-times');
+                mobileToggle.querySelector('i').classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                mobileToggle.querySelector('i').classList.remove('fa-times');
+                mobileToggle.querySelector('i').classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
         });
         
         // Contact Form Submission
@@ -2219,25 +2305,11 @@
         window.addEventListener('resize', setVH);
         window.addEventListener('orientationchange', setVH);
         
-        // Fix for iOS Safari 100vh issue on hero section
-        function fixHeroHeight() {
-            const hero = document.querySelector('.hero');
-            if (hero) {
-                hero.style.minHeight = window.innerHeight + 'px';
-            }
-        }
-        
-        // Call on load and resize
-        window.addEventListener('load', fixHeroHeight);
-        window.addEventListener('resize', fixHeroHeight);
-        window.addEventListener('orientationchange', fixHeroHeight);
-        
         // Console verification
         console.log('Daka Felix (Tech Guy) Portfolio Website');
         console.log('Formspree Endpoint: https://formspree.io/f/xeeannqy');
-        console.log('Emails will be sent to: felixddaka@gmail.com');
+        console.log('Mobile navigation dropdown positioned in top-right corner');
         console.log('Responsive design optimized for all devices');
-        console.log('Mobile navigation working properly');
     </script>
 </body>
 </html>
