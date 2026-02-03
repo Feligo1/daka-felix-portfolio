@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Me | Daka Felix (Tech Guy)</title>
+    <title>Contact | Daka Felix (Tech Guy)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Copy all CSS from index.html and add specific contact styles */
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
         :root {
             --primary: #007749;
             --secondary: #EF3340;
@@ -22,70 +29,165 @@
             --text-muted: #94A3B8;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 70px;
         }
         
         body {
-            background-color: var(--dark-blue);
+            line-height: 1.6;
             color: var(--text-light);
+            background-color: var(--dark-blue);
+            overflow-x: hidden;
         }
         
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
-        /* Header & Navigation - Same as index.html */
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #005a3f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-red {
+            background-color: var(--secondary);
+        }
+        
+        .btn-red:hover {
+            background-color: #d9202d;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-accent:hover {
+            background-color: #e6b800;
+        }
+        
+        /* Header & Navigation */
         header {
             background-color: rgba(10, 25, 49, 0.98);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            height: 80px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            height: 70px;
         }
         
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 30px;
+            padding: 0 20px;
             height: 100%;
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--text-light);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .logo-icon {
             color: var(--primary);
-            font-size: 2rem;
+            font-size: 1.5rem;
+        }
+        
+        .logo-nickname {
+            color: var(--accent);
+            font-weight: 800;
+            display: none;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
         }
         
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 25px;
         }
         
         nav ul li a {
             text-decoration: none;
             color: var(--text-light);
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             padding: 8px 0;
             position: relative;
             transition: color 0.3s ease;
@@ -112,56 +214,39 @@
             width: 100%;
         }
         
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
         /* Page Header */
         .page-header {
-            padding-top: 140px;
+            padding-top: 100px;
             padding-bottom: 60px;
+            background: linear-gradient(135deg, rgba(10, 25, 49, 0.95) 0%, rgba(26, 44, 71, 0.95) 100%);
             text-align: center;
-            background: linear-gradient(135deg, rgba(10, 25, 49, 0.9) 0%, rgba(26, 44, 71, 0.9) 100%);
-        }
-        
-        .page-header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--text-light);
-        }
-        
-        .page-header p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 800px;
-            margin: 0 auto;
         }
         
         /* Contact Section */
         .contact-section {
-            padding: 80px 0;
+            padding: 60px 0;
         }
         
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: 1fr;
+            gap: 40px;
         }
         
+        @media (min-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* Contact Info */
         .contact-info h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: var(--accent);
             text-align: left;
         }
         
         .contact-info h2:after {
-            display: none;
+            left: 0;
+            transform: none;
         }
         
         .contact-details {
@@ -175,10 +260,12 @@
             padding: 15px;
             border-radius: 8px;
             transition: all 0.3s ease;
+            background-color: var(--dark-blue-light);
         }
         
         .contact-item:hover {
             background-color: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
         }
         
         .contact-icon {
@@ -204,24 +291,46 @@
         .contact-text p {
             color: var(--text-muted);
             margin-bottom: 0;
+            font-size: 1rem;
         }
         
         .contact-text a {
             color: var(--primary);
             text-decoration: none;
             transition: color 0.3s ease;
+            display: block;
+            word-break: break-all;
         }
         
         .contact-text a:hover {
             color: var(--accent);
+            text-decoration: underline;
+        }
+        
+        /* Response Time Info */
+        .response-info {
+            background-color: rgba(0, 119, 73, 0.1);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            margin-top: 30px;
+        }
+        
+        .response-info h4 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         /* Contact Form */
-        .contact-form {
+        .contact-form-container {
             background-color: var(--dark-blue-light);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         .form-group {
@@ -233,6 +342,7 @@
             margin-bottom: 8px;
             color: var(--text-light);
             font-weight: 500;
+            font-size: 1rem;
         }
         
         .form-group input,
@@ -261,67 +371,195 @@
             resize: vertical;
         }
         
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
+        .btn-block {
+            width: 100%;
+            padding: 16px;
             font-size: 1.1rem;
         }
         
-        .btn:hover {
-            background-color: #005a3f;
-            transform: translateY(-3px);
+        /* Form Message */
+        .form-message {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            font-weight: 500;
         }
         
-        .btn-block {
-            width: 100%;
+        .form-message.success {
+            background-color: rgba(0, 119, 73, 0.2);
+            border: 1px solid rgba(0, 119, 73, 0.3);
+            color: var(--primary);
+            display: block;
+        }
+        
+        .form-message.error {
+            background-color: rgba(239, 51, 64, 0.2);
+            border: 1px solid rgba(239, 51, 64, 0.3);
+            color: var(--secondary);
+            display: block;
+        }
+        
+        /* Social Links */
+        .social-links {
+            margin-top: 40px;
+        }
+        
+        .social-links h3 {
             text-align: center;
+            margin-bottom: 25px;
+            color: var(--accent);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: var(--dark-blue-light);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .social-icon.github:hover {
+            background-color: #333;
+        }
+        
+        .social-icon.linkedin:hover {
+            background-color: #0077B5;
+        }
+        
+        .social-icon.facebook:hover {
+            background-color: #1877F2;
+        }
+        
+        .social-icon.whatsapp:hover {
+            background-color: #25D366;
         }
         
         /* Footer */
         footer {
             background-color: #0A1429;
-            padding: 60px 0 30px;
-            margin-top: 80px;
+            color: white;
+            padding: 50px 0 25px;
+            margin-top: 60px;
         }
         
-        @media (max-width: 1024px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
-            .contact-info h2 {
-                text-align: center;
-            }
-            
-            .contact-info h2:after {
-                display: block;
-                content: '';
-                position: absolute;
-                width: 80px;
-                height: 4px;
-                background-color: var(--accent);
-                bottom: -15px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 30px;
         }
         
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2.5rem;
+        .footer-about {
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .footer-zambia {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            color: var(--text-muted);
+            justify-content: center;
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-align: center;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            text-align: center;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            color: var(--accent);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 2rem;
             }
             
-            .contact-form {
-                padding: 30px;
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            section {
+                padding: 50px 0;
             }
             
             .mobile-toggle {
@@ -330,7 +568,7 @@
             
             nav ul {
                 position: fixed;
-                top: 80px;
+                top: 70px;
                 left: 0;
                 width: 100%;
                 background-color: var(--dark-blue-light);
@@ -341,6 +579,8 @@
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                z-index: 999;
             }
             
             nav ul.active {
@@ -349,10 +589,92 @@
                 visibility: visible;
             }
             
+            nav ul li {
+                width: 100%;
+            }
+            
             nav ul li a {
                 display: block;
-                padding: 20px;
+                padding: 15px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            nav ul li:last-child a {
+                border-bottom: none;
+            }
+            
+            .contact-item {
+                padding: 15px 10px;
+            }
+            
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                margin-right: 15px;
+            }
+            
+            .contact-form-container {
+                padding: 25px 20px;
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header {
+                padding-top: 80px;
+                padding-bottom: 40px;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .contact-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .logo-nickname {
+                display: inline;
+            }
+            
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+            
+            .footer-about,
+            .footer-links {
+                flex: 1;
+            }
+            
+            .footer-links h4 {
+                text-align: left;
+            }
+            
+            .footer-links ul {
+                text-align: left;
+            }
+            
+            .footer-zambia {
+                justify-content: flex-start;
             }
         }
     </style>
@@ -363,7 +685,7 @@
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
+                <span>Daka Felix <span class="logo-nickname">(Tech Guy)</span></span>
             </a>
             
             <button class="mobile-toggle" id="mobileToggle">
@@ -374,8 +696,7 @@
                 <ul id="navMenu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="expertise.html">Expertise</a></li>
-                    <li><a href="about.html">About Me</a></li>
-                    <li><a href="certificates.html">My Certificates</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
                     <li><a href="contact.html" class="active">Contact</a></li>
                 </ul>
             </nav>
@@ -385,8 +706,13 @@
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Home</span>
+            </a>
+            
             <h1>Get In Touch</h1>
-            <p>Ready to collaborate on a project or need IT solutions? I'm here to help. Reach out through any of these channels.</p>
+            <p style="max-width: 600px; margin: 0 auto;">Ready to collaborate on a project or need IT solutions? I'm here to help. Reach out through any of these channels.</p>
         </div>
     </section>
 
@@ -394,6 +720,7 @@
     <section class="contact-section">
         <div class="container">
             <div class="contact-grid">
+                <!-- Contact Information -->
                 <div class="contact-info">
                     <h2>Contact Information</h2>
                     
@@ -460,21 +787,26 @@
                         </div>
                     </div>
                     
-                    <div style="background-color: rgba(0, 119, 73, 0.1); padding: 25px; border-radius: 8px; border-left: 4px solid var(--accent);">
-                        <h4 style="color: var(--accent); margin-bottom: 15px;">
-                            <i class="fas fa-clock"></i> Response Time
+                    <div class="response-info">
+                        <h4>
+                            <i class="fas fa-clock"></i> 
+                            Response Time
                         </h4>
                         <p style="color: var(--text-muted); margin-bottom: 10px;">
                             I typically respond within 24 hours. For urgent matters, please use WhatsApp or phone call.
                         </p>
                         <p style="color: var(--text-muted);">
-                            <i class="fas fa-globe-africa"></i> Available for projects across Zambia and remote collaborations worldwide.
+                            <i class="fas fa-globe-africa"></i> 
+                            Available for projects across Zambia and remote collaborations worldwide.
                         </p>
                     </div>
                 </div>
                 
-                <div class="contact-form">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
                     <h3 style="color: var(--text-light); margin-bottom: 30px;">Send Me a Message</h3>
+                    
+                    <div class="form-message" id="formMessage"></div>
                     
                     <form action="https://formspree.io/f/xeeannqy" method="POST" id="contactForm">
                         <div class="form-group">
@@ -516,8 +848,25 @@
                             <i class="fas fa-paper-plane"></i> Send Message
                         </button>
                     </form>
-                    
-                    <div id="formMessage" style="margin-top: 20px; padding: 15px; border-radius: 6px; display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Social Links -->
+            <div class="social-links">
+                <h3>Connect With Me</h3>
+                <div class="social-icons">
+                    <a href="https://github.com/Feligo1" target="_blank" class="social-icon github" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" class="social-icon linkedin" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" class="social-icon facebook" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://wa.me/260774496821" target="_blank" class="social-icon whatsapp" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -526,15 +875,30 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div style="text-align: center; color: var(--text-muted);">
-                <p>© 2025 Daka Felix (Tech Guy). All rights reserved. <span style="color: var(--accent);">Proudly Zambian</span></p>
-                <p style="margin-top: 10px;">
-                    <a href="index.html" style="color: var(--primary); text-decoration: none;">Home</a> | 
-                    <a href="expertise.html" style="color: var(--primary); text-decoration: none;">Expertise</a> | 
-                    <a href="about.html" style="color: var(--primary); text-decoration: none;">About Me</a> | 
-                    <a href="certificates.html" style="color: var(--primary); text-decoration: none;">My Certificates</a> | 
-                    <a href="contact.html" style="color: var(--primary); text-decoration: none;">Contact</a>
-                </p>
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
+                    <p>Zambian Computer Scientist specializing in Networking, Web Design, Cyber Security, Computer Engineering and Database Administration.</p>
+                    <div class="footer-zambia">
+                        <i class="fas fa-globe-africa"></i>
+                        <span>Proudly Zambian Technology Professional</span>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="expertise.html">Expertise</a></li>
+                        <li><a href="certificates.html">Certificates</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="admin.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved. <span style="color: var(--accent);">Proudly Zambian</span></p>
             </div>
         </div>
     </footer>
@@ -580,16 +944,13 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitBtn.disabled = true;
             
-            // Simulate form submission (in real implementation, this would be replaced with actual Formspree submission)
+            // Simulate form submission
             setTimeout(() => {
-                formMessage.style.display = 'block';
-                formMessage.style.backgroundColor = 'rgba(0, 119, 73, 0.1)';
-                formMessage.style.color = 'var(--primary)';
-                formMessage.style.borderLeft = '4px solid var(--primary)';
+                formMessage.className = 'form-message success';
                 formMessage.innerHTML = `
                     <i class="fas fa-check-circle"></i>
                     <strong>Message Sent Successfully!</strong> 
-                    <p style="margin: 10px 0 0 0;">Thank you for your message. I'll get back to you within 24 hours.</p>
+                    <p style="margin: 10px 0 0 0; font-weight: normal;">Thank you for your message. I'll get back to you within 24 hours.</p>
                 `;
                 
                 // Reset button
@@ -599,11 +960,60 @@
                 // Reset form
                 form.reset();
                 
+                // Scroll to message
+                formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
                 // Hide message after 5 seconds
                 setTimeout(() => {
                     formMessage.style.display = 'none';
                 }, 5000);
             }, 1500);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Set current year in footer
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.querySelector('.copyright p');
+            if (yearSpan) {
+                const currentYear = new Date().getFullYear();
+                yearSpan.innerHTML = yearSpan.innerHTML.replace('2025', currentYear);
+            }
+            
+            // Check URL parameters for form submission status
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success')) {
+                const formMessage = document.getElementById('formMessage');
+                formMessage.className = 'form-message success';
+                formMessage.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Message Sent Successfully!</strong> 
+                    <p style="margin: 10px 0 0 0; font-weight: normal;">Thank you for your message. I'll get back to you within 24 hours.</p>
+                `;
+                formMessage.style.display = 'block';
+                
+                // Clear URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
         });
     </script>
 </body>
