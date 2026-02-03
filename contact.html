@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me | Daka Felix (Tech Guy)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Copy all CSS from index.html and add specific contact styles */
+        :root {
+            --primary: #007749;
+            --secondary: #EF3340;
+            --accent: #FCD116;
+            --dark: #0A1931;
+            --dark-blue: #0A1931;
+            --dark-blue-light: #1A2C47;
+            --dark-blue-lighter: #2A3C57;
+            --text-light: #E2E8F0;
+            --text-muted: #94A3B8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-blue);
+            color: var(--text-light);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation - Same as index.html */
+        header {
+            background-color: rgba(10, 25, 49, 0.98);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            height: 100%;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--accent);
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover:after,
+        nav ul li a.active:after {
+            width: 100%;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding-top: 140px;
+            padding-bottom: 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10, 25, 49, 0.9) 0%, rgba(26, 44, 71, 0.9) 100%);
+        }
+        
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+        
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--accent);
+            text-align: left;
+        }
+        
+        .contact-info h2:after {
+            display: none;
+        }
+        
+        .contact-details {
+            margin-bottom: 40px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .contact-icon {
+            background-color: rgba(0, 119, 73, 0.2);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .contact-text h4 {
+            color: var(--text-light);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .contact-text p {
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+        
+        .contact-text a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-text a:hover {
+            color: var(--accent);
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background-color: var(--dark-blue-light);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            background-color: var(--dark-blue-lighter);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 119, 73, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            background-color: #005a3f;
+            transform: translateY(-3px);
+        }
+        
+        .btn-block {
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0A1429;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+        
+        @media (max-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .contact-info h2 {
+                text-align: center;
+            }
+            
+            .contact-info h2:after {
+                display: block;
+                content: '';
+                position: absolute;
+                width: 80px;
+                height: 4px;
+                background-color: var(--accent);
+                bottom: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contact-form {
+                padding: 30px;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--dark-blue-light);
+                flex-direction: column;
+                padding: 20px;
+                gap: 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-laptop-code logo-icon"></i>
+                <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
+            </a>
+            
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="expertise.html">Expertise</a></li>
+                    <li><a href="about.html">About Me</a></li>
+                    <li><a href="certificates.html">My Certificates</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            <p>Ready to collaborate on a project or need IT solutions? I'm here to help. Reach out through any of these channels.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Name</h4>
+                                <p>Daka Felix (Tech Guy)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Location</h4>
+                                <p>Zambia, Africa</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Phone & WhatsApp</h4>
+                                <p><a href="tel:+260774496821">+260 774496821</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <p><a href="mailto:felixddaka@gmail.com">felixddaka@gmail.com</a></p>
+                                <p><a href="mailto:techguy2812@gmail.com">techguy2812@gmail.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>LinkedIn</h4>
+                                <p><a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank">linkedin.com/in/felix-daka-5b6058212</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>GitHub</h4>
+                                <p><a href="https://github.com/Feligo1" target="_blank">github.com/Feligo1</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background-color: rgba(0, 119, 73, 0.1); padding: 25px; border-radius: 8px; border-left: 4px solid var(--accent);">
+                        <h4 style="color: var(--accent); margin-bottom: 15px;">
+                            <i class="fas fa-clock"></i> Response Time
+                        </h4>
+                        <p style="color: var(--text-muted); margin-bottom: 10px;">
+                            I typically respond within 24 hours. For urgent matters, please use WhatsApp or phone call.
+                        </p>
+                        <p style="color: var(--text-muted);">
+                            <i class="fas fa-globe-africa"></i> Available for projects across Zambia and remote collaborations worldwide.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3 style="color: var(--text-light); margin-bottom: 30px;">Send Me a Message</h3>
+                    
+                    <form action="https://formspree.io/f/xeeannqy" method="POST" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Your Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" required placeholder="What is this regarding?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Service Needed *</label>
+                            <select id="service" name="service" required>
+                                <option value="" disabled selected>Select a service</option>
+                                <option value="networking">Networking Solutions</option>
+                                <option value="web-design">Web Design & Development</option>
+                                <option value="cybersecurity">Cyber Security</option>
+                                <option value="hardware">Computer Hardware</option>
+                                <option value="database">Database Administration</option>
+                                <option value="consulting">IT Consulting</option>
+                                <option value="certification">Certification Guidance</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message *</label>
+                            <textarea id="message" name="message" required placeholder="Describe your project or inquiry in detail..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-block">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                    
+                    <div id="formMessage" style="margin-top: 20px; padding: 15px; border-radius: 6px; display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div style="text-align: center; color: var(--text-muted);">
+                <p>© 2025 Daka Felix (Tech Guy). All rights reserved. <span style="color: var(--accent);">Proudly Zambian</span></p>
+                <p style="margin-top: 10px;">
+                    <a href="index.html" style="color: var(--primary); text-decoration: none;">Home</a> | 
+                    <a href="expertise.html" style="color: var(--primary); text-decoration: none;">Expertise</a> | 
+                    <a href="about.html" style="color: var(--primary); text-decoration: none;">About Me</a> | 
+                    <a href="certificates.html" style="color: var(--primary); text-decoration: none;">My Certificates</a> | 
+                    <a href="contact.html" style="color: var(--primary); text-decoration: none;">Contact</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            
+            // Toggle menu icon
+            const icon = mobileToggle.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileToggle.querySelector('i').classList.remove('fa-times');
+                mobileToggle.querySelector('i').classList.add('fa-bars');
+            });
+        });
+        
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            const formMessage = document.getElementById('formMessage');
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (in real implementation, this would be replaced with actual Formspree submission)
+            setTimeout(() => {
+                formMessage.style.display = 'block';
+                formMessage.style.backgroundColor = 'rgba(0, 119, 73, 0.1)';
+                formMessage.style.color = 'var(--primary)';
+                formMessage.style.borderLeft = '4px solid var(--primary)';
+                formMessage.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Message Sent Successfully!</strong> 
+                    <p style="margin: 10px 0 0 0;">Thank you for your message. I'll get back to you within 24 hours.</p>
+                `;
+                
+                // Reset button
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+                
+                // Reset form
+                form.reset();
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
