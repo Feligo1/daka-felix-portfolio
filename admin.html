@@ -278,33 +278,44 @@
             height: 180px;
         }
         
-        .current-image-url {
-            background-color: var(--dark-blue);
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-            font-size: 0.85rem;
-            word-break: break-all;
-            color: var(--text-muted);
+        .file-upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            background-color: rgba(0, 119, 73, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        .image-url-input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: var(--dark-blue);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-            border-radius: 4px;
+        .file-upload-area:hover {
+            background-color: rgba(0, 119, 73, 0.2);
+            border-color: var(--accent);
+        }
+        
+        .file-upload-area i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-area p {
+            color: var(--text-muted);
             font-size: 0.9rem;
         }
         
-        .image-url-input:focus {
-            outline: none;
-            border-color: var(--primary);
+        .file-upload-area input[type="file"] {
+            display: none;
         }
         
-        .update-image-btn {
+        .file-name {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+        
+        .upload-btn {
             background-color: var(--primary);
             color: white;
             border: none;
@@ -314,10 +325,16 @@
             transition: all 0.3s ease;
             font-size: 1rem;
             margin-top: 10px;
+            width: 100%;
         }
         
-        .update-image-btn:hover {
+        .upload-btn:hover {
             background-color: #005a3f;
+        }
+        
+        .upload-btn:disabled {
+            background-color: var(--text-muted);
+            cursor: not-allowed;
         }
         
         /* Certificate Upload Form */
@@ -642,7 +659,7 @@
                 <button class="tab-btn" data-tab="settings">Settings</button>
             </div>
             
-            <!-- Images Tab -->
+            <!-- Images Tab with File Upload -->
             <div class="tab-content active" id="imagesTab">
                 <div class="image-management-section">
                     <h2 style="color: var(--text-light); margin-bottom: 25px;">Manage Your Photos</h2>
@@ -652,10 +669,18 @@
                         <div class="image-preview-card">
                             <h3><i class="fas fa-user-circle"></i> Profile Image</h3>
                             <img src="" alt="Profile Preview" class="preview-image" id="profilePreview">
-                            <div class="current-image-url" id="currentProfileUrl"></div>
-                            <input type="url" id="profileImageUrl" class="image-url-input" placeholder="Enter image URL">
-                            <button class="update-image-btn" onclick="updateProfileImage()">
-                                <i class="fas fa-save"></i> Update Profile Image
+                            
+                            <!-- File Upload for Profile Image -->
+                            <div class="file-upload-area" id="profileUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload profile image</p>
+                                <p style="font-size: 0.8rem;">JPG, PNG, GIF (Max 5MB)</p>
+                                <input type="file" id="profileFileInput" accept="image/*">
+                                <div class="file-name" id="profileFileName"></div>
+                            </div>
+                            
+                            <button class="upload-btn" id="uploadProfileBtn" onclick="uploadProfileImage()" disabled>
+                                <i class="fas fa-upload"></i> Upload Profile Image
                             </button>
                         </div>
                         
@@ -663,22 +688,32 @@
                         <div class="image-preview-card">
                             <h3><i class="fas fa-briefcase"></i> About Section Image</h3>
                             <img src="" alt="About Preview" class="preview-image square" id="aboutPreview">
-                            <div class="current-image-url" id="currentAboutUrl"></div>
-                            <input type="url" id="aboutImageUrl" class="image-url-input" placeholder="Enter image URL">
-                            <button class="update-image-btn" onclick="updateAboutImage()">
-                                <i class="fas fa-save"></i> Update About Image
+                            
+                            <!-- File Upload for About Image -->
+                            <div class="file-upload-area" id="aboutUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload about image</p>
+                                <p style="font-size: 0.8rem;">JPG, PNG, GIF (Max 5MB)</p>
+                                <input type="file" id="aboutFileInput" accept="image/*">
+                                <div class="file-name" id="aboutFileName"></div>
+                            </div>
+                            
+                            <button class="upload-btn" id="uploadAboutBtn" onclick="uploadAboutImage()" disabled>
+                                <i class="fas fa-upload"></i> Upload About Image
                             </button>
                         </div>
                     </div>
                     
                     <div style="margin-top: 30px; padding: 20px; background-color: var(--dark-blue-lighter); border-radius: 8px;">
-                        <h3 style="color: var(--accent); margin-bottom: 15px;">Your Facebook Image</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 10px;">Your Facebook profile image URL is set as default:</p>
-                        <div style="background-color: var(--dark-blue); padding: 10px; border-radius: 4px; word-break: break-all; font-size: 0.85rem; color: var(--text-muted);">
-                            https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg
-                        </div>
-                        <p style="color: var(--text-muted); margin-top: 15px; font-size: 0.9rem;">
-                            <i class="fas fa-info-circle"></i> You can replace it with any other image URL above.
+                        <h3 style="color: var(--accent); margin-bottom: 15px;">Image Information</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 10px;">
+                            <i class="fas fa-info-circle"></i> Images are stored permanently in your browser's local storage. They will remain until you change them.
+                        </p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">
+                            <strong>Current Profile Image:</strong> <span id="currentProfileStatus">Default Facebook image</span>
+                        </p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">
+                            <strong>Current About Image:</strong> <span id="currentAboutStatus">Default image</span>
                         </p>
                     </div>
                 </div>
@@ -733,11 +768,14 @@
                         </div>
                         
                         <div class="form-group full-width">
-                            <label>Certificate Image URL *</label>
-                            <input type="url" id="certificateUrl" placeholder="https://example.com/certificate.jpg" required>
-                            <small style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-top: 5px;">
-                                Use a direct image URL (recommended: Unsplash, Imgur, or your own hosting)
-                            </small>
+                            <label>Certificate Image *</label>
+                            <div class="file-upload-area" id="certificateUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload certificate image</p>
+                                <p style="font-size: 0.8rem;">JPG, PNG, GIF (Max 5MB)</p>
+                                <input type="file" id="certificateFileInput" accept="image/*" required>
+                                <div class="file-name" id="certificateFileName"></div>
+                            </div>
                         </div>
                         
                         <div class="form-actions">
@@ -810,11 +848,12 @@
                     </div>
                     
                     <div class="settings-group">
-                        <h3>System Information</h3>
+                        <h3>Storage Information</h3>
                         <div style="background-color: var(--dark-blue-lighter); padding: 20px; border-radius: 6px;">
                             <p><strong>Total Certificates:</strong> <span id="totalCertCount">0</span></p>
                             <p><strong>Last Updated:</strong> <span id="lastUpdatedTime">Never</span></p>
-                            <p><strong>Admin Access:</strong> Enabled</p>
+                            <p><strong>Images Stored:</strong> <span id="imageStorageStatus">Yes (localStorage)</span></p>
+                            <p><strong>Storage Used:</strong> <span id="storageUsed">Calculating...</span></p>
                         </div>
                     </div>
                 </div>
@@ -823,7 +862,7 @@
     </div>
 
     <script>
-        // Your Facebook Profile Image URL
+        // Your Facebook Profile Image URL (as fallback)
         const YOUR_FACEBOOK_IMAGE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3";
         
         // Admin Password Management
@@ -862,7 +901,7 @@
             }
         };
 
-        // Image Management
+        // Image Management with File Upload
         const ImageManager = {
             defaultImages: {
                 profile: YOUR_FACEBOOK_IMAGE,
@@ -887,11 +926,20 @@
                 window.dispatchEvent(new Event('storage'));
             },
             
-            updateImage: function(key, url) {
-                const images = this.getImages();
-                images[key] = url;
-                this.saveImages(images);
-                return images;
+            // Convert file to base64 and store
+            storeImageAsBase64: function(file, key) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const base64String = e.target.result;
+                        const images = this.getImages();
+                        images[key] = base64String;
+                        this.saveImages(images);
+                        resolve(base64String);
+                    };
+                    reader.onerror = (error) => reject(error);
+                    reader.readAsDataURL(file);
+                });
             }
         };
 
@@ -1019,14 +1067,23 @@
         const passwordForm = document.getElementById('passwordForm');
         const totalCertCount = document.getElementById('totalCertCount');
         const lastUpdatedTime = document.getElementById('lastUpdatedTime');
+        const storageUsed = document.getElementById('storageUsed');
         
         // Image preview elements
         const profilePreview = document.getElementById('profilePreview');
         const aboutPreview = document.getElementById('aboutPreview');
-        const currentProfileUrl = document.getElementById('currentProfileUrl');
-        const currentAboutUrl = document.getElementById('currentAboutUrl');
-        const profileImageUrl = document.getElementById('profileImageUrl');
-        const aboutImageUrl = document.getElementById('aboutImageUrl');
+        const currentProfileStatus = document.getElementById('currentProfileStatus');
+        const currentAboutStatus = document.getElementById('currentAboutStatus');
+        
+        // File input elements
+        const profileFileInput = document.getElementById('profileFileInput');
+        const aboutFileInput = document.getElementById('aboutFileInput');
+        const certificateFileInput = document.getElementById('certificateFileInput');
+        const profileFileName = document.getElementById('profileFileName');
+        const aboutFileName = document.getElementById('aboutFileName');
+        const certificateFileName = document.getElementById('certificateFileName');
+        const uploadProfileBtn = document.getElementById('uploadProfileBtn');
+        const uploadAboutBtn = document.getElementById('uploadAboutBtn');
 
         // Utility Functions
         function showMessage(element, text, type = 'info') {
@@ -1055,6 +1112,24 @@
             return new Date(dateString).toLocaleDateString('en-US', options);
         }
 
+        // Calculate storage used
+        function calculateStorageUsed() {
+            let total = 0;
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    total += localStorage[key].length * 2; // Approximate bytes
+                }
+            }
+            
+            if (total < 1024) {
+                storageUsed.textContent = total + ' B';
+            } else if (total < 1024 * 1024) {
+                storageUsed.textContent = (total / 1024).toFixed(2) + ' KB';
+            } else {
+                storageUsed.textContent = (total / (1024 * 1024)).toFixed(2) + ' MB';
+            }
+        }
+
         // Load and display current images
         function loadImagePreviews() {
             const images = ImageManager.getImages();
@@ -1062,52 +1137,123 @@
             profilePreview.src = images.profile;
             aboutPreview.src = images.about;
             
-            currentProfileUrl.textContent = images.profile;
-            currentAboutUrl.textContent = images.about;
-            
-            profileImageUrl.value = images.profile;
-            aboutImageUrl.value = images.about;
+            // Update status text
+            currentProfileStatus.textContent = images.profile === YOUR_FACEBOOK_IMAGE ? 'Default Facebook image' : 'Custom uploaded image';
+            currentAboutStatus.textContent = images.about.includes('base64') ? 'Custom uploaded image' : 'Default image';
         }
 
-        // Update profile image
-        function updateProfileImage() {
-            const newUrl = profileImageUrl.value.trim();
-            if (!newUrl) {
-                showMessage(adminMessage, 'Please enter an image URL', 'error');
+        // Handle profile file selection
+        profileFileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
+                    this.value = '';
+                    profileFileName.textContent = '';
+                    uploadProfileBtn.disabled = true;
+                    return;
+                }
+                
+                profileFileName.textContent = `Selected: ${file.name}`;
+                uploadProfileBtn.disabled = false;
+            }
+        });
+
+        // Handle about file selection
+        aboutFileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
+                    this.value = '';
+                    aboutFileName.textContent = '';
+                    uploadAboutBtn.disabled = true;
+                    return;
+                }
+                
+                aboutFileName.textContent = `Selected: ${file.name}`;
+                uploadAboutBtn.disabled = false;
+            }
+        });
+
+        // Handle certificate file selection
+        certificateFileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
+                    this.value = '';
+                    certificateFileName.textContent = '';
+                    return;
+                }
+                
+                certificateFileName.textContent = `Selected: ${file.name}`;
+            }
+        });
+
+        // Upload profile image
+        async function uploadProfileImage() {
+            const file = profileFileInput.files[0];
+            if (!file) {
+                showMessage(adminMessage, 'Please select an image first', 'error');
                 return;
             }
             
             try {
-                new URL(newUrl);
-            } catch (e) {
-                showMessage(adminMessage, 'Please enter a valid URL', 'error');
-                return;
+                uploadProfileBtn.disabled = true;
+                uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                
+                await ImageManager.storeImageAsBase64(file, 'profile');
+                
+                loadImagePreviews();
+                showMessage(adminMessage, 'Profile image uploaded successfully!', 'success');
+                
+                // Reset file input
+                profileFileInput.value = '';
+                profileFileName.textContent = '';
+                uploadProfileBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile Image';
+                
+                calculateStorageUsed();
+            } catch (error) {
+                showMessage(adminMessage, 'Error uploading image: ' + error.message, 'error');
+                uploadProfileBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile Image';
+                uploadProfileBtn.disabled = false;
             }
-            
-            ImageManager.updateImage('profile', newUrl);
-            loadImagePreviews();
-            showMessage(adminMessage, 'Profile image updated successfully!', 'success');
         }
 
-        // Update about image
-        function updateAboutImage() {
-            const newUrl = aboutImageUrl.value.trim();
-            if (!newUrl) {
-                showMessage(adminMessage, 'Please enter an image URL', 'error');
+        // Upload about image
+        async function uploadAboutImage() {
+            const file = aboutFileInput.files[0];
+            if (!file) {
+                showMessage(adminMessage, 'Please select an image first', 'error');
                 return;
             }
             
             try {
-                new URL(newUrl);
-            } catch (e) {
-                showMessage(adminMessage, 'Please enter a valid URL', 'error');
-                return;
+                uploadAboutBtn.disabled = true;
+                uploadAboutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                
+                await ImageManager.storeImageAsBase64(file, 'about');
+                
+                loadImagePreviews();
+                showMessage(adminMessage, 'About image uploaded successfully!', 'success');
+                
+                // Reset file input
+                aboutFileInput.value = '';
+                aboutFileName.textContent = '';
+                uploadAboutBtn.innerHTML = '<i class="fas fa-upload"></i> Upload About Image';
+                
+                calculateStorageUsed();
+            } catch (error) {
+                showMessage(adminMessage, 'Error uploading image: ' + error.message, 'error');
+                uploadAboutBtn.innerHTML = '<i class="fas fa-upload"></i> Upload About Image';
+                uploadAboutBtn.disabled = false;
             }
-            
-            ImageManager.updateImage('about', newUrl);
-            loadImagePreviews();
-            showMessage(adminMessage, 'About image updated successfully!', 'success');
         }
+
+        // Make upload functions global
+        window.uploadProfileImage = uploadProfileImage;
+        window.uploadAboutImage = uploadAboutImage;
 
         // Tab Switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1124,8 +1270,11 @@
                 
                 if (tabId === 'images') {
                     loadImagePreviews();
+                    calculateStorageUsed();
                 } else if (tabId === 'manage') {
                     renderCertificatesList();
+                } else if (tabId === 'settings') {
+                    calculateStorageUsed();
                 }
             });
         });
@@ -1181,46 +1330,68 @@
             
             const lastUpdated = localStorage.getItem('lastUpdated');
             lastUpdatedTime.textContent = lastUpdated ? formatDateTime(lastUpdated) : 'Never';
+            
+            calculateStorageUsed();
         }
 
         // Certificate Form Submission
-        certificateForm.addEventListener('submit', function(e) {
+        certificateForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const formData = {
-                name: document.getElementById('certificateName').value,
-                issuer: document.getElementById('issuer').value,
-                date: document.getElementById('issueDate').value,
-                expiryDate: document.getElementById('expiryDate').value || null,
-                type: document.getElementById('certificateType').value,
-                credentialId: document.getElementById('credentialId').value || null,
-                description: document.getElementById('description').value,
-                fileName: document.getElementById('certificateUrl').value
-            };
+            const file = certificateFileInput.files[0];
+            if (!file) {
+                showMessage(adminMessage, 'Please select a certificate image', 'error');
+                return;
+            }
             
-            if (!formData.name || !formData.issuer || !formData.date || !formData.type || !formData.fileName) {
-                showMessage(adminMessage, 'Please fill all required fields', 'error');
+            if (file.size > 5 * 1024 * 1024) {
+                showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
                 return;
             }
             
             try {
-                new URL(formData.fileName);
-            } catch (e) {
-                showMessage(adminMessage, 'Please enter a valid URL for the certificate image', 'error');
-                return;
+                // Convert certificate image to base64
+                const reader = new FileReader();
+                const base64Promise = new Promise((resolve, reject) => {
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+                
+                const base64Image = await base64Promise;
+                
+                const formData = {
+                    name: document.getElementById('certificateName').value,
+                    issuer: document.getElementById('issuer').value,
+                    date: document.getElementById('issueDate').value,
+                    expiryDate: document.getElementById('expiryDate').value || null,
+                    type: document.getElementById('certificateType').value,
+                    credentialId: document.getElementById('credentialId').value || null,
+                    description: document.getElementById('description').value,
+                    fileName: base64Image
+                };
+                
+                if (!formData.name || !formData.issuer || !formData.date || !formData.type) {
+                    showMessage(adminMessage, 'Please fill all required fields', 'error');
+                    return;
+                }
+                
+                const newCert = CertificateManager.addCertificate(formData);
+                
+                showMessage(adminMessage, `Certificate "${newCert.name}" added successfully!`, 'success');
+                
+                certificateForm.reset();
+                certificateFileName.textContent = '';
+                document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
+                
+                renderCertificatesList();
+                updateSystemInfo();
+                calculateStorageUsed();
+                
+                document.querySelector('[data-tab="manage"]').click();
+            } catch (error) {
+                showMessage(adminMessage, 'Error uploading certificate: ' + error.message, 'error');
             }
-            
-            const newCert = CertificateManager.addCertificate(formData);
-            
-            showMessage(adminMessage, `Certificate "${newCert.name}" added successfully!`, 'success');
-            
-            certificateForm.reset();
-            document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
-            
-            renderCertificatesList();
-            updateSystemInfo();
-            
-            document.querySelector('[data-tab="manage"]').click();
         });
 
         // Edit certificate
@@ -1240,7 +1411,8 @@
             document.getElementById('certificateType').value = cert.type;
             document.getElementById('credentialId').value = cert.credentialId || '';
             document.getElementById('description').value = cert.description || '';
-            document.getElementById('certificateUrl').value = cert.fileName;
+            
+            // Note: Can't pre-fill file input for security reasons
             
             const submitBtn = certificateForm.querySelector('button[type="submit"]');
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Certificate';
@@ -1250,17 +1422,43 @@
             document.querySelector('[data-tab="upload"]').click();
             certificateForm.scrollIntoView({ behavior: 'smooth' });
             
-            showMessage(adminMessage, `Editing certificate: ${cert.name}`, 'info');
+            showMessage(adminMessage, `Editing certificate: ${cert.name}. Please select a new image if you want to change it.`, 'info');
         }
 
         // Handle certificate update
-        certificateForm.addEventListener('submit', function(e) {
+        certificateForm.addEventListener('submit', async function(e) {
             const submitBtn = this.querySelector('button[type="submit"]');
             
             if (submitBtn.dataset.mode === 'update') {
                 e.preventDefault();
                 
                 const id = parseInt(submitBtn.dataset.id);
+                
+                let fileName;
+                const file = certificateFileInput.files[0];
+                
+                if (file) {
+                    // New image uploaded
+                    if (file.size > 5 * 1024 * 1024) {
+                        showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    const base64Promise = new Promise((resolve, reject) => {
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                    
+                    fileName = await base64Promise;
+                } else {
+                    // Keep existing image
+                    const certificates = CertificateManager.getCertificates();
+                    const existingCert = certificates.find(c => c.id === id);
+                    fileName = existingCert.fileName;
+                }
+                
                 const formData = {
                     name: document.getElementById('certificateName').value,
                     issuer: document.getElementById('issuer').value,
@@ -1269,7 +1467,7 @@
                     type: document.getElementById('certificateType').value,
                     credentialId: document.getElementById('credentialId').value || null,
                     description: document.getElementById('description').value,
-                    fileName: document.getElementById('certificateUrl').value
+                    fileName: fileName
                 };
                 
                 const updated = CertificateManager.updateCertificate(id, formData);
@@ -1278,6 +1476,7 @@
                     showMessage(adminMessage, `Certificate "${updated.name}" updated successfully!`, 'success');
                     
                     certificateForm.reset();
+                    certificateFileName.textContent = '';
                     submitBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Certificate';
                     delete submitBtn.dataset.mode;
                     delete submitBtn.dataset.id;
@@ -1286,6 +1485,7 @@
                     
                     renderCertificatesList();
                     updateSystemInfo();
+                    calculateStorageUsed();
                 }
             }
         });
@@ -1310,6 +1510,7 @@
                 showMessage(adminMessage, `Certificate "${cert.name}" deleted successfully!`, 'success');
                 renderCertificatesList();
                 updateSystemInfo();
+                calculateStorageUsed();
             }
         }
 
@@ -1363,6 +1564,7 @@
             loadImagePreviews();
             renderCertificatesList();
             updateSystemInfo();
+            calculateStorageUsed();
         }
 
         // Export data
@@ -1398,6 +1600,7 @@
                         loadImagePreviews();
                         renderCertificatesList();
                         updateSystemInfo();
+                        calculateStorageUsed();
                     } else {
                         showMessage(adminMessage, 'Failed to import data. Invalid file format.', 'error');
                     }
@@ -1442,8 +1645,6 @@
         });
 
         // Make functions global
-        window.updateProfileImage = updateProfileImage;
-        window.updateAboutImage = updateAboutImage;
         window.editCertificate = editCertificate;
         window.deleteCertificate = deleteCertificate;
         window.syncWithPublic = syncWithPublic;
@@ -1451,6 +1652,19 @@
         window.exportData = exportData;
         window.importData = importData;
         window.logout = logout;
+
+        // Click handlers for file upload areas
+        document.getElementById('profileUploadArea').addEventListener('click', function() {
+            profileFileInput.click();
+        });
+
+        document.getElementById('aboutUploadArea').addEventListener('click', function() {
+            aboutFileInput.click();
+        });
+
+        document.getElementById('certificateUploadArea').addEventListener('click', function() {
+            certificateFileInput.click();
+        });
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1461,6 +1675,7 @@
                 loadImagePreviews();
                 renderCertificatesList();
                 updateSystemInfo();
+                calculateStorageUsed();
                 
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('issueDate').value = today;
