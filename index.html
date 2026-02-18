@@ -9,77 +9,54 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         
         :root {
             --primary: #007749;
             --secondary: #EF3340;
             --accent: #FCD116;
-            --dark: #0A1931;
             --dark-blue: #0A1931;
             --dark-blue-light: #1A2C47;
             --dark-blue-lighter: #2A3C57;
-            --light: #F5F5F5;
-            --gray: #A0AEC0;
-            --zambia-blue: #0066B3;
-            --github-black: #0d1117;
-            --github-green: #238636;
-            --linkedin-blue: #0A66C2;
             --text-light: #E2E8F0;
             --text-muted: #94A3B8;
             --transition: all 0.3s ease;
             --box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             --box-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
-        
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 70px;
-        }
-        
+
         body {
             line-height: 1.6;
             color: var(--text-light);
             background-color: var(--dark-blue);
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
         }
-        
+
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
-        section {
-            padding: 80px 0;
-        }
-        
+
+        section { padding: 80px 0; }
+
         h1, h2, h3, h4 {
             color: var(--text-light);
             margin-bottom: 20px;
             line-height: 1.3;
             font-weight: 700;
         }
-        
-        h1 {
-            font-size: 2.5rem;
-        }
-        
+
+        h1 { font-size: 2.5rem; }
+
         h2 {
             font-size: 2rem;
             text-align: center;
             margin-bottom: 50px;
             position: relative;
         }
-        
+
         h2:after {
             content: '';
             position: absolute;
@@ -90,13 +67,9 @@
             left: 50%;
             transform: translateX(-50%);
         }
-        
-        p {
-            margin-bottom: 20px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-        
+
+        p { color: var(--text-muted); font-size: 1.1rem; }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -111,71 +84,29 @@
             border: none;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 1rem;
-            text-align: center;
-            min-width: 140px;
         }
-        
-        .btn:hover {
-            background-color: #005a3f;
-            transform: translateY(-3px);
-            box-shadow: var(--box-shadow-hover);
-        }
-        
-        .btn-accent {
-            background-color: var(--accent);
-            color: var(--dark);
-        }
-        
-        .btn-accent:hover {
-            background-color: #e6b800;
-        }
-        
-        .btn-red {
-            background-color: var(--secondary);
-        }
-        
-        .btn-red:hover {
-            background-color: #d9202d;
-        }
-        
-        .btn-sm {
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            min-width: auto;
-        }
-        
-        .btn-full {
-            width: 100%;
-        }
-        
-        /* Header & Navigation */
+
+        .btn:hover { background-color: #005a3f; transform: translateY(-3px); }
+
+        .btn-red { background-color: var(--secondary); }
+
         header {
             background-color: rgba(10, 25, 49, 0.98);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             height: 70px;
-            transition: var(--transition);
         }
-        
-        header.scrolled {
-            height: 60px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-        }
-        
+
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
             height: 100%;
         }
-        
+
         .logo {
             font-size: 1.4rem;
             font-weight: 700;
@@ -184,1378 +115,191 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            z-index: 1001;
         }
-        
-        .logo-icon {
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-        
-        .logo-nickname {
-            color: var(--accent);
-            font-weight: 800;
-            display: none;
-        }
-        
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
-            transition: var(--transition);
-            z-index: 1001;
-        }
-        
-        .mobile-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        nav {
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-menu {
+
+        nav ul {
             display: flex;
             list-style: none;
             gap: 25px;
         }
-        
-        .nav-menu li a {
+
+        nav ul li a {
             text-decoration: none;
             color: var(--text-light);
             font-weight: 600;
-            font-size: 1rem;
-            padding: 8px 0;
-            position: relative;
             transition: var(--transition);
-            display: block;
         }
-        
-        .nav-menu li a:hover,
-        .nav-menu li a.active {
-            color: var(--accent);
-        }
-        
-        .nav-menu li a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            background-color: var(--accent);
-            bottom: 0;
-            left: 0;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-menu li a:hover:after,
-        .nav-menu li a.active:after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
+
+        nav ul li a:hover { color: var(--accent); }
+
         .hero {
             padding-top: 120px;
             padding-bottom: 80px;
             background: linear-gradient(135deg, rgba(10, 25, 49, 0.95) 0%, rgba(26, 44, 71, 0.95) 100%);
-            position: relative;
-            overflow: hidden;
         }
-        
-        .hero:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, 
-                var(--secondary) 0%, 
-                var(--secondary) 33%, 
-                var(--accent) 33%, 
-                var(--accent) 66%, 
-                var(--primary) 66%, 
-                var(--primary) 100%);
-        }
-        
+
         .hero-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 40px;
-        }
-        
-        .hero-text {
-            width: 100%;
             text-align: center;
         }
-        
-        .hero-text h1 {
-            margin-bottom: 15px;
-            animation: fadeInUp 1s ease;
-        }
-        
-        .hero-text .nickname {
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            display: block;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-        
-        .hero-text p {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-        
+
         .specialties {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 25px;
             justify-content: center;
-            animation: fadeInUp 1s ease 0.6s both;
         }
-        
+
         .specialty-tag {
             background-color: rgba(0, 119, 73, 0.2);
             color: var(--primary);
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.9rem;
-            font-weight: 500;
             border: 2px solid rgba(0, 119, 73, 0.4);
-            white-space: nowrap;
         }
-        
+
         .specialty-tag.red {
             background-color: rgba(239, 51, 64, 0.2);
             color: var(--secondary);
             border-color: rgba(239, 51, 64, 0.4);
         }
-        
+
         .specialty-tag.yellow {
             background-color: rgba(252, 209, 22, 0.25);
             color: var(--accent);
             border-color: rgba(252, 209, 22, 0.5);
         }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease 0.8s both;
-        }
-        
-        .hero-image {
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-            animation: fadeInUp 1s ease 0.5s both;
-        }
-        
+
+        .hero-image { max-width: 300px; }
+
         .profile-img {
             width: 100%;
-            height: auto;
             border-radius: 50%;
             object-fit: cover;
-            object-position: center;
             border: 8px solid var(--dark-blue-light);
             box-shadow: var(--box-shadow-hover);
-            transition: var(--transition);
             aspect-ratio: 1 / 1;
         }
-        
-        .profile-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-        }
-        
-        /* Services Section */
-        .services {
-            background-color: var(--dark-blue-light);
-        }
-        
+
+        .services { background-color: var(--dark-blue-light); }
+
         .services-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
         }
-        
+
         .service-card {
             background-color: var(--dark-blue-lighter);
             border-radius: 10px;
             padding: 30px 25px;
             box-shadow: var(--box-shadow);
-            transition: var(--transition);
             text-align: center;
             border-top: 4px solid var(--primary);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
         }
-        
-        .service-card.red {
-            border-top-color: var(--secondary);
-        }
-        
-        .service-card.yellow {
-            border-top-color: var(--accent);
-        }
-        
-        .service-card.blue {
-            border-top-color: var(--zambia-blue);
-        }
-        
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--box-shadow-hover);
-        }
-        
+
+        .service-card.red { border-top-color: var(--secondary); }
+        .service-card.yellow { border-top-color: var(--accent); }
+
         .service-icon {
             font-size: 2.5rem;
-            color: var(--primary);
             margin-bottom: 20px;
         }
-        
-        .service-card.red .service-icon {
-            color: var(--secondary);
-        }
-        
-        .service-card.yellow .service-icon {
-            color: var(--accent);
-        }
-        
-        .service-card.blue .service-icon {
-            color: var(--zambia-blue);
-        }
-        
-        .service-card h3 {
-            margin-bottom: 15px;
-            color: var(--text-light);
-            font-size: 1.3rem;
-            min-height: 3.2rem;
-        }
-        
-        .service-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            flex-grow: 1;
-        }
-        
-        /* Certifications Preview */
-        .certifications-preview {
-            background-color: var(--dark-blue);
-        }
-        
-        .cert-preview-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .cert-preview-card {
-            background-color: var(--dark-blue-light);
-            border-radius: 10px;
-            padding: 25px;
-            border-left: 4px solid var(--primary);
-            transition: var(--transition);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .cert-preview-card:hover {
-            transform: translateX(5px);
-            box-shadow: var(--box-shadow-hover);
-        }
-        
-        .cert-preview-card.red {
-            border-left-color: var(--secondary);
-        }
-        
-        .cert-preview-card.yellow {
-            border-left-color: var(--accent);
-        }
-        
-        .cert-preview-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--text-light);
-            min-height: 2.8rem;
-        }
-        
-        .cert-preview-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            flex-grow: 1;
-        }
-        
-        .cert-preview-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: auto;
-        }
-        
-        /* About Preview */
-        .about-preview {
-            background-color: var(--dark-blue-light);
-        }
-        
-        .about-content {
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-            align-items: center;
-        }
-        
-        .about-text {
-            width: 100%;
-            text-align: center;
-        }
-        
-        .about-text h3 {
-            color: var(--primary);
-            margin-top: 20px;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .about-image {
-            width: 100%;
-            max-width: 400px;
-            position: relative;
-        }
-        
-        .about-img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: var(--box-shadow-hover);
-            border: 4px solid var(--dark-blue-lighter);
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-        }
-        
-        .zambian-connection {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            z-index: 1;
-        }
-        
-        /* Contact Preview */
-        .contact-preview {
-            background-color: var(--dark-blue);
-        }
-        
-        .contact-info {
-            background-color: var(--dark-blue-light);
-            border-radius: 10px;
-            padding: 30px;
-            margin-top: 30px;
-        }
-        
-        .contact-detail {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            padding: 10px 0;
-        }
-        
-        .contact-detail i {
-            color: var(--primary);
-            margin-right: 15px;
-            font-size: 1.2rem;
-            width: 25px;
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-        
-        .contact-detail h4 {
-            color: var(--text-light);
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
-        
-        .contact-detail p {
-            color: var(--text-muted);
-            margin-bottom: 0;
-            font-size: 0.95rem;
-            word-break: break-word;
-        }
-        
-        /* Admin Access Section */
-        .admin-access-section {
-            background-color: var(--dark-blue-light);
-            padding: 60px 0;
-            text-align: center;
-            border-top: 2px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .admin-access {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 30px;
-            background-color: var(--dark-blue-lighter);
-            border-radius: 10px;
-            box-shadow: var(--box-shadow);
-        }
-        
-        .admin-access h3 {
-            color: var(--accent);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        
-        .admin-access p {
-            color: var(--text-muted);
-            margin-bottom: 25px;
-            font-size: 1rem;
-        }
-        
-        .admin-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background-color: rgba(252, 209, 22, 0.2);
-            color: var(--accent);
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            border: 2px solid rgba(252, 209, 22, 0.3);
-            transition: var(--transition);
-        }
-        
-        .admin-btn:hover {
-            background-color: rgba(252, 209, 22, 0.3);
-            transform: translateY(-3px);
-            box-shadow: var(--box-shadow);
-        }
-        
-        /* Footer */
+
+        .service-card.red .service-icon { color: var(--secondary); }
+        .service-card.yellow .service-icon { color: var(--accent); }
+
         footer {
             background-color: #0A1429;
             color: white;
             padding: 50px 0 25px;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            margin-bottom: 30px;
-        }
-        
-        .footer-about {
             text-align: center;
-        }
-        
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .footer-logo span {
-            color: var(--accent);
-        }
-        
-        .footer-zambia {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-            color: var(--text-muted);
-            justify-content: center;
-        }
-        
-        .footer-links h4,
-        .footer-social h4 {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            color: var(--accent);
-            text-align: center;
-        }
-        
-        .footer-links ul {
-            list-style: none;
-            text-align: center;
-        }
-        
-        .footer-links ul li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links ul li a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-        
-        .footer-links ul li a:hover {
-            color: var(--accent);
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        
-        .social-icons a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-        
-        .social-icons a:hover {
-            background-color: var(--primary);
-            transform: translateY(-5px);
-        }
-        
-        .social-icons a.linkedin:hover {
-            background-color: var(--linkedin-blue);
-        }
-        
-        .social-icons a.github:hover {
-            background-color: var(--github-black);
-        }
-        
-        .social-icons a.facebook:hover {
-            background-color: #1877F2;
-        }
-        
-        .social-icons a.whatsapp:hover {
-            background-color: #25D366;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        /* Responsive Design */
-        @media (min-width: 768px) {
-            h1 {
-                font-size: 3rem;
-            }
-            
-            h2 {
-                font-size: 2.5rem;
-            }
-            
-            .logo-nickname {
-                display: inline;
-            }
-            
-            .hero-content {
-                flex-direction: row;
-                text-align: left;
-                gap: 60px;
-            }
-            
-            .hero-text {
-                text-align: left;
-                flex: 1;
-            }
-            
-            .specialties {
-                justify-content: flex-start;
-            }
-            
-            .hero-buttons {
-                justify-content: flex-start;
-            }
-            
-            .hero-image {
-                flex: 1;
-                max-width: 400px;
-            }
-            
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
-            }
-            
-            .cert-preview-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .about-content {
-                flex-direction: row;
-                align-items: center;
-            }
-            
-            .about-text {
-                text-align: left;
-                flex: 1;
-            }
-            
-            .about-image {
-                flex: 1;
-            }
-            
-            .zambian-connection {
-                left: -10px;
-                transform: none;
-            }
-            
-            .footer-content {
-                flex-direction: row;
-                justify-content: space-between;
-                text-align: left;
-            }
-            
-            .footer-about,
-            .footer-links,
-            .footer-social {
-                flex: 1;
-            }
-            
-            .footer-links h4,
-            .footer-social h4 {
-                text-align: left;
-            }
-            
-            .footer-links ul {
-                text-align: left;
-            }
-            
-            .footer-zambia {
-                justify-content: flex-start;
-            }
-            
-            .social-icons {
-                justify-content: flex-start;
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .services-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .cert-preview-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .hero-image img {
-                width: 400px;
-                height: 400px;
-            }
-            
-            section {
-                padding: 100px 0;
-            }
-            
-            .hero {
-                padding-top: 140px;
-            }
-        }
-        
-        @media (max-width: 767px) {
-            .mobile-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            nav {
-                position: relative;
-            }
-            
-            .nav-menu {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--dark-blue-light);
-                flex-direction: column;
-                padding: 20px;
-                gap: 0;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.4s ease;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                z-index: 999;
-                max-height: calc(100vh - 70px);
-                overflow-y: auto;
-            }
-            
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-menu li {
-                width: 100%;
-            }
-            
-            .nav-menu li a {
-                display: block;
-                padding: 15px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .nav-menu li:last-child a {
-                border-bottom: none;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 280px;
-            }
-            
-            .specialties {
-                justify-content: center;
-            }
-            
-            .specialty-tag {
-                padding: 6px 12px;
-                font-size: 0.85rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            h2 {
-                font-size: 1.8rem;
-            }
-            
-            .container {
-                padding: 0 15px;
-            }
-            
-            section {
-                padding: 60px 0;
-            }
-            
-            .service-card,
-            .cert-preview-card,
-            .contact-info,
-            .admin-access {
-                padding: 25px 20px;
-            }
-            
-            .specialties {
-                gap: 8px;
-            }
-            
-            .hero-text .nickname {
-                font-size: 1.2rem;
-            }
-            
-            .hero {
-                padding-top: 100px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header id="mainHeader">
-        <div class="container header-container">
-            <a href="#" class="logo">
-                <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span class="logo-nickname">(Tech Guy)</span></span>
-            </a>
-            
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <div class="hero-text">
-                <h1>Daka Felix</h1>
-                <span class="nickname">"Tech Guy" - Zambian Computer Scientist</span>
-                <p>Bringing innovative technology solutions with a unique Zambian perspective. Specializing in comprehensive IT services that bridge the gap between cutting-edge technology and practical business needs.</p>
-                
-                <div class="specialties">
-                    <span class="specialty-tag">Networking</span>
-                    <span class="specialty-tag">Web Design</span>
-                    <span class="specialty-tag red">Cyber Security</span>
-                    <span class="specialty-tag yellow">Computer Engineering</span>
-                    <span class="specialty-tag">Database Administration</span>
-                </div>
-                
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-red">Hire Me</a>
-                    <a href="#about" class="btn">Learn More</a>
-                </div>
-            </div>
-            
-            <div class="hero-image">
-                <!-- Fallback image if external image doesn't load -->
-                <img src="https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3" 
-                     alt="Daka Felix - Tech Professional" 
-                     class="profile-img"
-                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';">
-            </div>
-        </div>
-    </section>
+<header>
+    <div class="container header-container">
+        <a href="#" class="logo">
+            <i class="fas fa-laptop-code"></i>
+            <span>Daka Felix (Tech Guy)</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2>My Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3>Networking</h3>
-                    <p>Design, implementation, and maintenance of secure network infrastructures for businesses of all sizes. Specialized in both local and cloud-based solutions.</p>
+<section class="hero" id="home">
+    <div class="container hero-content">
+        <div>
+            <h1>Daka Felix</h1>
+            <p>"Tech Guy" - Zambian Computer Scientist</p>
+            <p>Innovative technology solutions with strong expertise in networking, cybersecurity, web systems, and database administration.</p>
+
+            <div class="specialties">
+                <span class="specialty-tag">Networking</span>
+                <span class="specialty-tag">Web Design</span>
+                <span class="specialty-tag red">Cyber Security</span>
+                <span class="specialty-tag yellow">Computer Engineering</span>
+                <span class="specialty-tag">Database Administration</span>
+            </div>
+
+            <a href="#services" class="btn btn-red">Hire Me</a>
+        </div>
+
+        <div class="hero-image">
+            <!-- PROFILE IMAGE UPDATED -->
+            <img src="felix.jpg" 
+                 alt="Daka Felix - Tech Professional" 
+                 class="profile-img">
+        </div>
+    </div>
+</section>
+
+<section class="services" id="services">
+    <div class="container">
+        <h2>My Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-network-wired"></i>
                 </div>
-                
-                <div class="service-card red">
-                    <div class="service-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Web Design & Development</h3>
-                    <p>Creating responsive, user-friendly websites and web applications with modern frameworks. Focus on both aesthetics and functionality for optimal user experience.</p>
+                <h3>Networking</h3>
+                <p>Design and maintenance of secure network infrastructures for modern businesses.</p>
+            </div>
+
+            <div class="service-card red">
+                <div class="service-icon">
+                    <i class="fas fa-code"></i>
                 </div>
-                
-                <div class="service-card yellow">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Cyber Security</h3>
-                    <p>Comprehensive security solutions including vulnerability assessments, penetration testing, security protocols implementation, and staff training to protect digital assets.</p>
+                <h3>Web Design & Development</h3>
+                <p>Responsive and scalable web applications using modern development frameworks.</p>
+            </div>
+
+            <div class="service-card yellow">
+                <div class="service-icon">
+                    <i class="fas fa-shield-alt"></i>
                 </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-microchip"></i>
-                    </div>
-                    <h3>Computer Engineering</h3>
-                    <p>Hardware and software integration, system design, troubleshooting, and optimization of computer systems for maximum performance and reliability.</p>
-                </div>
-                
-                <div class="service-card red">
-                    <div class="service-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Administration</h3>
-                    <p>Design, implementation, maintenance, and optimization of database systems. Ensuring data integrity, security, and efficient access for business applications.</p>
-                </div>
-                
-                <div class="service-card blue">
-                    <div class="service-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3>IT Consulting</h3>
-                    <p>Strategic technology planning and implementation tailored to Zambian business contexts. Helping organizations leverage technology for growth and efficiency.</p>
-                </div>
+                <h3>Cyber Security</h3>
+                <p>Penetration testing, vulnerability assessment, and enterprise security implementation.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Certifications Preview -->
-    <section class="certifications-preview" id="certifications">
-        <div class="container">
-            <h2>Recent Certifications</h2>
-            <div class="cert-preview-grid">
-                <div class="cert-preview-card">
-                    <h3>Introduction to Modern AI</h3>
-                    <p>Certificate earned for completing Introduction to Modern AI course from Cisco Networking Academy.</p>
-                    <div class="cert-preview-meta">
-                        <span><i class="far fa-calendar"></i> Feb 2026</span>
-                        <a href="certificates.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">View →</a>
-                    </div>
-                </div>
-                
-                <div class="cert-preview-card red">
-                    <h3>Introduction to Data Science</h3>
-                    <p>Certificate and Badge earned for completing Introduction to Data Science course with specialized modules.</p>
-                    <div class="cert-preview-meta">
-                        <span><i class="far fa-calendar"></i> Jul 2025</span>
-                        <a href="certificates.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">View →</a>
-                    </div>
-                </div>
-                
-                <div class="cert-preview-card yellow">
-                    <h3>Cybersecurity Fundamentals</h3>
-                    <p>Digital badge earned for cybersecurity course completion with focus on Network Defense and Security Administration.</p>
-                    <div class="cert-preview-meta">
-                        <span><i class="far fa-calendar"></i> Feb 2026</span>
-                        <a href="certificates.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">View →</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="certificates.html" class="btn btn-accent">
-                    <i class="fas fa-certificate"></i> View All Certificates
-                </a>
-            </div>
-        </div>
-    </section>
+<footer>
+    <p>&copy; 2026 Daka Felix (Tech Guy). All rights reserved.</p>
+</footer>
 
-    <!-- About Preview -->
-    <section class="about-preview" id="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Hello! I'm <strong>Daka Felix</strong>, known professionally as <strong>"Tech Guy"</strong>. I'm a Zambian computer scientist with a passion for making technology accessible and relevant to the African context.</p>
-                    
-                    <p>My journey in technology began in Zambia, where I developed a deep fascination with how computers work and how they can solve real-world problems. This curiosity evolved into a comprehensive expertise spanning multiple IT domains.</p>
-                    
-                    <h3>My Philosophy</h3>
-                    <p>I believe technology should be a tool for empowerment and development. My approach combines international technical standards with local understanding, ensuring solutions are not only effective but also sustainable and relevant to the Zambian and African context.</p>
-                    
-                    <div style="margin-top: 30px;">
-                        <a href="#contact" class="btn">
-                            <i class="fas fa-handshake"></i> Let's Collaborate
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="about-image">
-                    <div class="zambian-connection">
-                        <i class="fas fa-globe-africa"></i>
-                        <span>Proudly Zambian Tech Professional</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
-                         alt="Daka Felix at work" 
-                         class="about-img"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Preview -->
-    <section class="contact-preview" id="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Ready to collaborate on a project or need IT solutions? I'm here to help.</p>
-            
-            <div class="contact-info">
-                <div class="contact-detail">
-                    <i class="fas fa-user"></i>
-                    <div>
-                        <h4>Name</h4>
-                        <p>Daka Felix (Tech Guy)</p>
-                    </div>
-                </div>
-                
-                <div class="contact-detail">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <h4>Location</h4>
-                        <p>Zambia, Africa</p>
-                    </div>
-                </div>
-                
-                <div class="contact-detail">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <h4>Phone & WhatsApp</h4>
-                        <p>+260 774496821</p>
-                    </div>
-                </div>
-                
-                <div class="contact-detail">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <h4>Email</h4>
-                        <p>felixddaka@gmail.com</p>
-                        <p>techguy2812@gmail.com</p>
-                    </div>
-                </div>
-                
-                <div class="contact-detail">
-                    <i class="fab fa-linkedin"></i>
-                    <div>
-                        <h4>LinkedIn</h4>
-                        <p>linkedin.com/in/felix-daka-5b6058212</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="mailto:felixddaka@gmail.com?subject=Portfolio Inquiry&body=Hello Daka, I saw your portfolio and would like to discuss..." class="btn btn-red">
-                    <i class="fas fa-envelope"></i> Email Me Now
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Admin Access Section -->
-    <section class="admin-access-section" id="admin">
-        <div class="container">
-            <div class="admin-access">
-                <h3><i class="fas fa-lock"></i> Admin Access</h3>
-                <p>Manage your certificates and update your portfolio content through the admin panel.</p>
-                <a href="admin.html" class="admin-btn">
-                    <i class="fas fa-cogs"></i> Go to Admin Panel
-                </a>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 20px;">
-                    <i class="fas fa-info-circle"></i> Password protected access only
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
-                    <p>Zambian Computer Scientist bringing innovative tech solutions to businesses and individuals. Specializing in comprehensive IT services with a focus on African technological development.</p>
-                    <div class="footer-zambia">
-                        <i class="fas fa-globe-africa"></i>
-                        <span>Proudly Zambian Technology Professional</span>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Navigation</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#certifications">Certifications</a></li>
-                        <li><a href="#about">About Me</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="certificates.html">My Certificates</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-social">
-                    <h4>Connect With Me</h4>
-                    <div class="social-icons">
-                        <a href="https://github.com/Feligo1" target="_blank" class="github" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" class="linkedin" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" class="facebook" title="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://wa.me/260774496821" target="_blank" class="whatsapp" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; <span id="currentYear">2025</span> Daka Felix (Tech Guy). All rights reserved. <span style="color: var(--accent);">Proudly Zambian</span></p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // DOM Elements
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navMenu = document.getElementById('navMenu');
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        const mainHeader = document.getElementById('mainHeader');
-        
-        // Mobile Navigation Toggle
-        mobileToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            
-            // Toggle menu icon
-            const icon = mobileToggle.querySelector('i');
-            if (icon.classList.contains('fa-bars')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-        });
-        
-        // Close mobile menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                mobileToggle.querySelector('i').classList.remove('fa-times');
-                mobileToggle.querySelector('i').classList.add('fa-bars');
-                document.body.style.overflow = ''; // Restore scrolling
-            });
-        });
-        
-        // Close menu when clicking outside on mobile
-        document.addEventListener('click', (event) => {
-            const isClickInsideNav = navMenu.contains(event.target) || mobileToggle.contains(event.target);
-            
-            if (!isClickInsideNav && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                mobileToggle.querySelector('i').classList.remove('fa-times');
-                mobileToggle.querySelector('i').classList.add('fa-bars');
-                document.body.style.overflow = '';
-            }
-        });
-        
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                mainHeader.classList.add('scrolled');
-            } else {
-                mainHeader.classList.remove('scrolled');
-            }
-            
-            // Set active navigation based on scroll position
-            const sections = document.querySelectorAll('section');
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === current) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Set Home as active if at top
-            if (scrollY < 100) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                document.querySelector('.nav-menu a[href="#home"]').classList.add('active');
-            }
-        });
-        
-        // Enhanced smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Image error handling
-        document.querySelectorAll('img').forEach(img => {
-            img.addEventListener('error', function() {
-                console.log(`Image failed to load: ${this.src}`);
-                // Keep a placeholder image as a backup
-                if (this.classList.contains('profile-img')) {
-                    this.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';
-                } else if (this.classList.contains('about-img')) {
-                    this.src = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';
-                }
-            });
-        });
-        
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements for animation
-        document.querySelectorAll('.service-card, .cert-preview-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
-        });
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set current year in footer
-            const currentYear = new Date().getFullYear();
-            document.getElementById('currentYear').textContent = currentYear;
-            
-            // Check if user is logged in as admin
-            const isAdmin = localStorage.getItem('adminLoggedIn') === 'true';
-            if (isAdmin) {
-                console.log('Admin is logged in');
-                // Optional: Add admin indicator or modify UI
-                const adminBtn = document.querySelector('.admin-btn');
-                if (adminBtn) {
-                    adminBtn.innerHTML = '<i class="fas fa-user-shield"></i> Admin Panel';
-                }
-            }
-            
-            // Handle email link with pre-filled subject
-            const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
-            emailLinks.forEach(link => {
-                if (!link.getAttribute('href').includes('subject=')) {
-                    const email = link.getAttribute('href').replace('mailto:', '');
-                    link.setAttribute('href', `mailto:${email}?subject=Portfolio Inquiry&body=Hello Daka, I saw your portfolio and would like to discuss...`);
-                }
-            });
-            
-            // Preload critical images
-            const preloadImages = [
-                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
-                'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80'
-            ];
-            
-            preloadImages.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-            
-            // Initialize scroll position for active nav
-            window.dispatchEvent(new Event('scroll'));
-            
-            // Add loading animation to page
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            // Close mobile menu if window is resized to desktop
-            if (window.innerWidth > 767 && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                mobileToggle.querySelector('i').classList.remove('fa-times');
-                mobileToggle.querySelector('i').classList.add('fa-bars');
-                document.body.style.overflow = '';
-            }
-        });
-        
-        // Add touch support for mobile menu
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-        
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-        
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            
-            // Right swipe to close menu
-            if (touchEndX < touchStartX - swipeThreshold && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                mobileToggle.querySelector('i').classList.remove('fa-times');
-                mobileToggle.querySelector('i').classList.add('fa-bars');
-                document.body.style.overflow = '';
-            }
-        }
-    </script>
 </body>
 </html>
