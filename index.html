@@ -339,32 +339,107 @@
             }
         }
         
-        .mobile-toggle {
+        /* Updated Dropdown Menu Styles */
+        .mobile-menu-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mobile-dropdown-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: none;
-            border: none;
+            background: var(--dark-blue-lighter);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-light);
-            font-size: 1.5rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            padding: 8px;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            gap: 6px;
             transition: var(--transition);
             z-index: 1001;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
         }
         
-        .mobile-toggle:active {
-            background-color: rgba(255, 255, 255, 0.1);
+        .mobile-dropdown-btn i {
+            font-size: 1rem;
+        }
+        
+        .mobile-dropdown-btn:active {
+            background-color: rgba(255, 255, 255, 0.15);
         }
         
         @media (min-width: 768px) {
-            .mobile-toggle {
+            .mobile-dropdown-btn {
                 display: none;
+            }
+        }
+        
+        .mobile-dropdown-content {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: var(--dark-blue-lighter);
+            min-width: 200px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow-hover);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .mobile-dropdown-content.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .mobile-dropdown-content a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .mobile-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-dropdown-content a:active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-dropdown-content a i {
+            width: 20px;
+            color: var(--accent);
+            font-size: 1rem;
+        }
+        
+        .mobile-dropdown-content a.active {
+            background-color: rgba(252, 209, 22, 0.15);
+            color: var(--accent);
+        }
+        
+        .mobile-dropdown-content a.active i {
+            color: var(--accent);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
         
@@ -381,73 +456,7 @@
         
         @media (max-width: 767px) {
             .nav-menu {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                height: 100dvh;
-                background-color: var(--dark-blue-light);
-                flex-direction: column;
-                padding: 80px 24px 40px;
-                gap: 0;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                z-index: 999;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-menu li {
-                width: 100%;
-                opacity: 0;
-                transform: translateY(20px);
-                transition: all 0.4s ease;
-                transition-delay: calc(0.1s * var(--item-index));
-            }
-            
-            .nav-menu.active li {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            
-            .nav-menu li a {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 18px 16px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                font-size: 1.1rem;
-                border-radius: 12px;
-                margin-bottom: 4px;
-            }
-            
-            .nav-menu li a i {
-                width: 24px;
-                text-align: center;
-                color: var(--accent);
-            }
-            
-            .nav-menu li:last-child a {
-                border-bottom: none;
-            }
-            
-            .nav-menu li a.active {
-                background-color: rgba(252, 209, 22, 0.15);
-                color: var(--accent);
-            }
-            
-            .nav-menu li a.active i {
-                color: var(--accent);
+                display: none;
             }
         }
         
@@ -1559,10 +1568,6 @@
                 padding-top: env(safe-area-inset-top, 0);
             }
             
-            .nav-menu {
-                padding-bottom: max(40px, env(safe-area-inset-bottom, 40px));
-            }
-            
             .image-update-notification {
                 bottom: max(16px, env(safe-area-inset-bottom, 16px));
             }
@@ -1573,10 +1578,6 @@
             .hero {
                 min-height: auto;
                 padding-top: 70px;
-            }
-            
-            .nav-menu {
-                padding-top: 60px;
             }
             
             .hero-content {
@@ -1633,17 +1634,29 @@
                 <span>Daka Felix <span class="logo-nickname">(Tech Guy)</span></span>
             </a>
             
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
-                <i class="fas fa-bars"></i>
-            </button>
+            <!-- Mobile Dropdown Menu in Corner -->
+            <div class="mobile-menu-container">
+                <button class="mobile-dropdown-btn" id="mobileDropdownBtn">
+                    <i class="fas fa-bars"></i>
+                    <span>Menu</span>
+                </button>
+                <div class="mobile-dropdown-content" id="mobileDropdownContent">
+                    <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                    <a href="expertise.html"><i class="fas fa-cogs"></i> Expertise</a>
+                    <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
+                    <a href="about.html"><i class="fas fa-user"></i> About</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="admin.html"><i class="fas fa-lock" style="color: var(--accent);"></i> Admin</a>
+                </div>
+            </div>
             
             <nav>
                 <ul class="nav-menu" id="navMenu">
-                    <li style="--item-index: 1;"><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
-                    <li style="--item-index: 2;"><a href="expertise.html"><i class="fas fa-cogs"></i> Expertise</a></li>
-                    <li style="--item-index: 3;"><a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a></li>
-                    <li style="--item-index: 4;"><a href="about.html"><i class="fas fa-user"></i> About</a></li>
-                    <li style="--item-index: 5;"><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="expertise.html">Expertise</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -1861,7 +1874,6 @@
                 <a href="admin.html" class="admin-btn">
                     <i class="fas fa-cogs"></i> Go to Admin Panel
                 </a>
-                </p>
             </div>
         </div>
     </section>
@@ -1995,12 +2007,13 @@
         const profileImage = document.getElementById('profileImage');
         const aboutImage = document.getElementById('aboutImage');
         const certificatesPreview = document.getElementById('certificatesPreview');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navMenu = document.getElementById('navMenu');
-        const navLinks = document.querySelectorAll('.nav-menu a');
         const mainHeader = document.getElementById('mainHeader');
         const imageUpdateNotification = document.getElementById('imageUpdateNotification');
         const notificationMessage = document.getElementById('notificationMessage');
+        
+        // Dropdown Elements
+        const mobileDropdownBtn = document.getElementById('mobileDropdownBtn');
+        const mobileDropdownContent = document.getElementById('mobileDropdownContent');
 
         // Show notification
         function showNotification(message) {
@@ -2057,50 +2070,32 @@
             certificatesPreview.innerHTML = html;
         }
 
-        // Mobile Navigation Toggle
-        if (mobileToggle) {
-            mobileToggle.addEventListener('click', (e) => {
+        // Dropdown Toggle
+        if (mobileDropdownBtn) {
+            mobileDropdownBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                navMenu.classList.toggle('active');
-                
-                const icon = mobileToggle.querySelector('i');
-                if (icon.classList.contains('fa-bars')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                    document.body.style.overflow = '';
-                }
+                mobileDropdownContent.classList.toggle('show');
             });
         }
 
-        // Close mobile menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 767) {
-                    navMenu.classList.remove('active');
-                    mobileToggle.querySelector('i').classList.remove('fa-times');
-                    mobileToggle.querySelector('i').classList.add('fa-bars');
-                    document.body.style.overflow = '';
-                }
-            });
-        });
-
-        // Close menu when clicking outside
+        // Close dropdown when clicking outside
         document.addEventListener('click', (event) => {
-            if (window.innerWidth <= 767) {
-                const isClickInsideNav = navMenu?.contains(event.target) || mobileToggle?.contains(event.target);
-                
-                if (!isClickInsideNav && navMenu?.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    mobileToggle.querySelector('i').classList.remove('fa-times');
-                    mobileToggle.querySelector('i').classList.add('fa-bars');
-                    document.body.style.overflow = '';
+            if (mobileDropdownContent && mobileDropdownContent.classList.contains('show')) {
+                const isClickInside = mobileDropdownBtn.contains(event.target) || mobileDropdownContent.contains(event.target);
+                if (!isClickInside) {
+                    mobileDropdownContent.classList.remove('show');
                 }
             }
         });
+
+        // Close dropdown when clicking a link
+        if (mobileDropdownContent) {
+            mobileDropdownContent.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileDropdownContent.classList.remove('show');
+                });
+            });
+        }
 
         // Header scroll effect
         window.addEventListener('scroll', () => {
@@ -2215,14 +2210,10 @@
 
         // Handle window resize
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 767 && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                mobileToggle.querySelector('i').classList.remove('fa-times');
-                mobileToggle.querySelector('i').classList.add('fa-bars');
-                document.body.style.overflow = '';
+            if (window.innerWidth > 767 && mobileDropdownContent?.classList.contains('show')) {
+                mobileDropdownContent.classList.remove('show');
             }
         });
     </script>
 </body>
 </html>
-
