@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | Daka Felix Portfolio Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Admin | Daka Felix</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset and Base Styles */
+        /* Tiny Text Reset - Mobile First */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
         :root {
@@ -30,189 +31,269 @@
             --danger: #E53E3E;
             --text-light: #E2E8F0;
             --text-muted: #94A3B8;
+            --text-tiny: 0.7rem;
+            --text-small: 0.75rem;
+            --text-normal: 0.8rem;
+            --text-medium: 0.85rem;
+            --text-large: 0.9rem;
         }
         
         body {
-            line-height: 1.6;
+            line-height: 1.4;
             color: var(--text-light);
             background-color: var(--dark-blue);
             min-height: 100vh;
+            font-size: var(--text-tiny);
         }
         
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 8px;
         }
         
-        /* Login Page */
+        /* Tiny Text Utility Classes */
+        .text-tiny { font-size: var(--text-tiny); }
+        .text-small { font-size: var(--text-small); }
+        .text-normal { font-size: var(--text-normal); }
+        .text-medium { font-size: var(--text-medium); }
+        .text-large { font-size: var(--text-large); }
+        
+        /* Login Page - Tiny */
         .login-page {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
             background: linear-gradient(135deg, rgba(10, 25, 49, 0.95) 0%, rgba(26, 44, 71, 0.95) 100%);
         }
         
         .login-container {
             background-color: var(--dark-blue-light);
-            border-radius: 12px;
-            padding: 40px;
+            border-radius: 8px;
+            padding: 16px;
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 320px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         .login-logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 16px;
         }
         
         .login-logo h1 {
-            font-size: 1.8rem;
+            font-size: var(--text-large);
             color: var(--text-light);
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
         
         .login-logo p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: var(--text-tiny);
         }
         
         .login-form .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         
         .login-form label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             color: var(--text-light);
             font-weight: 500;
+            font-size: var(--text-tiny);
         }
         
         .login-form input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 8px 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
+            border-radius: 4px;
             background-color: var(--dark-blue-lighter);
             color: var(--text-light);
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            font-size: var(--text-tiny);
         }
         
-        .login-form input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 119, 73, 0.2);
-        }
-        
+        /* Buttons - Tiny */
         .btn {
             display: inline-block;
             background-color: var(--primary);
             color: white;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 4px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-align: center;
             width: 100%;
-            font-size: 1rem;
-        }
-        
-        .btn:hover {
-            background-color: #005a3f;
-            transform: translateY(-2px);
-        }
-        
-        .btn-accent {
-            background-color: var(--accent);
-            color: var(--dark);
-        }
-        
-        .btn-accent:hover {
-            background-color: #e6b800;
-        }
-        
-        .btn-red {
-            background-color: var(--danger);
-        }
-        
-        .btn-red:hover {
-            background-color: #c53030;
+            font-size: var(--text-tiny);
         }
         
         .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.9rem;
+            padding: 4px 8px;
+            font-size: var(--text-tiny);
             width: auto;
         }
         
         /* Admin Dashboard */
         .admin-dashboard {
-            padding: 20px;
+            padding: 8px;
             display: none;
         }
         
-        .admin-header {
-            background-color: var(--dark-blue-light);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
+        /* Mobile Header with Dropdown */
+        .mobile-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            background-color: var(--dark-blue-light);
+            border-radius: 6px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         
-        .admin-header h1 {
-            font-size: 1.8rem;
+        .mobile-header h1 {
+            font-size: var(--text-medium);
             color: var(--text-light);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 4px;
         }
         
-        .admin-actions {
+        .mobile-header h1 i {
+            color: var(--accent);
+            font-size: var(--text-large);
+        }
+        
+        .mobile-dropdown-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: var(--text-large);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 4px;
+            background-color: var(--dark-blue-lighter);
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px;
         }
         
-        /* Tabs */
+        .mobile-dropdown-btn span {
+            font-size: var(--text-tiny);
+        }
+        
+        .mobile-dropdown-content {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: 10px;
+            background-color: var(--dark-blue-lighter);
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1001;
+            min-width: 160px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .mobile-dropdown-content.show {
+            display: block;
+        }
+        
+        .mobile-dropdown-content a,
+        .mobile-dropdown-content button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: var(--text-tiny);
+            width: 100%;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            text-align: left;
+        }
+        
+        .mobile-dropdown-content a:last-child,
+        .mobile-dropdown-content button:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-dropdown-content a:hover,
+        .mobile-dropdown-content button:hover {
+            background-color: var(--dark-blue);
+        }
+        
+        .mobile-dropdown-content i {
+            width: 16px;
+            color: var(--accent);
+        }
+        
+        /* Desktop Header - Hidden on Mobile */
+        .desktop-header {
+            display: none;
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-header {
+                display: none;
+            }
+            
+            .desktop-header {
+                display: flex;
+                background-color: var(--dark-blue-light);
+                border-radius: 6px;
+                padding: 10px 16px;
+                margin-bottom: 20px;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .desktop-header h1 {
+                font-size: var(--text-large);
+            }
+            
+            .desktop-actions {
+                display: flex;
+                gap: 8px;
+            }
+        }
+        
+        /* Tiny Tabs */
         .admin-tabs {
             display: flex;
-            gap: 5px;
+            gap: 3px;
             background-color: var(--dark-blue-light);
-            border-radius: 8px;
-            padding: 5px;
-            margin-bottom: 30px;
+            border-radius: 4px;
+            padding: 3px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
         
         .tab-btn {
             flex: 1;
-            padding: 12px 20px;
+            padding: 6px 8px;
             background: none;
             border: none;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            min-width: 120px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            min-width: 70px;
             text-align: center;
-        }
-        
-        .tab-btn:hover {
-            color: var(--text-light);
-            background-color: rgba(255, 255, 255, 0.05);
+            font-size: var(--text-tiny);
         }
         
         .tab-btn.active {
@@ -220,98 +301,86 @@
             color: white;
         }
         
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Image Management Section */
+        /* Image Management Section - Tiny */
         .image-management-section {
             background-color: var(--dark-blue-light);
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .image-management-section h2 {
+            font-size: var(--text-medium);
+            margin-bottom: 12px;
         }
         
         .image-preview-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        @media (min-width: 640px) {
+            .image-preview-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         .image-preview-card {
             background-color: var(--dark-blue-lighter);
-            border-radius: 10px;
-            padding: 25px;
+            border-radius: 6px;
+            padding: 12px;
             text-align: center;
         }
         
         .image-preview-card h3 {
             color: var(--accent);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-size: var(--text-small);
         }
         
         .preview-image {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--primary);
-            margin: 15px auto;
+            border: 2px solid var(--primary);
+            margin: 8px auto;
             display: block;
         }
         
         .preview-image.square {
-            border-radius: 10px;
-            width: 250px;
-            height: 180px;
+            border-radius: 6px;
+            width: 150px;
+            height: 100px;
         }
         
+        /* Tiny File Upload */
         .file-upload-area {
-            border: 2px dashed var(--primary);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
+            border: 1px dashed var(--primary);
+            border-radius: 4px;
+            padding: 10px;
+            margin: 8px 0;
             background-color: rgba(0, 119, 73, 0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .file-upload-area:hover {
-            background-color: rgba(0, 119, 73, 0.2);
-            border-color: var(--accent);
         }
         
         .file-upload-area i {
-            font-size: 2.5rem;
+            font-size: var(--text-large);
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
         
         .file-upload-area p {
             color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        .file-upload-area input[type="file"] {
-            display: none;
+            font-size: var(--text-tiny);
         }
         
         .file-name {
             color: var(--accent);
-            font-size: 0.85rem;
-            margin-top: 10px;
+            font-size: var(--text-tiny);
+            margin-top: 4px;
             word-break: break-all;
         }
         
@@ -319,40 +388,40 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            padding: 6px 10px;
+            border-radius: 3px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            margin-top: 10px;
+            font-size: var(--text-tiny);
             width: 100%;
         }
         
-        .upload-btn:hover {
-            background-color: #005a3f;
-        }
-        
-        .upload-btn:disabled {
-            background-color: var(--text-muted);
-            cursor: not-allowed;
-        }
-        
-        /* Certificate Upload Form */
+        /* Tiny Form */
         .upload-section {
             background-color: var(--dark-blue-light);
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .upload-section h2 {
+            font-size: var(--text-medium);
+            margin-bottom: 12px;
         }
         
         .upload-form {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        @media (min-width: 640px) {
+            .upload-form {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
         
         .form-group.full-width {
@@ -361,242 +430,145 @@
         
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 3px;
             color: var(--text-light);
             font-weight: 500;
+            font-size: var(--text-tiny);
         }
         
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 6px 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
+            border-radius: 3px;
             background-color: var(--dark-blue-lighter);
             color: var(--text-light);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 119, 73, 0.2);
+            font-size: var(--text-tiny);
         }
         
         .form-group textarea {
-            min-height: 100px;
+            min-height: 60px;
             resize: vertical;
         }
         
         .form-actions {
             grid-column: 1 / -1;
             display: flex;
-            gap: 15px;
+            gap: 8px;
             justify-content: flex-end;
-            margin-top: 10px;
+            margin-top: 4px;
         }
         
-        /* Manage Certificates */
+        /* Tiny Certificate List */
         .certificates-list {
             background-color: var(--dark-blue-light);
-            border-radius: 10px;
+            border-radius: 4px;
             overflow: hidden;
         }
         
         .certificate-item {
             display: flex;
             align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            gap: 20px;
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 8px;
             flex-wrap: wrap;
         }
         
-        .certificate-item:last-child {
-            border-bottom: none;
-        }
-        
         .certificate-preview {
-            width: 80px;
-            height: 60px;
+            width: 40px;
+            height: 30px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 2px;
         }
         
         .certificate-info {
             flex: 1;
-            min-width: 250px;
+            min-width: 150px;
         }
         
         .certificate-info h4 {
             color: var(--text-light);
-            margin-bottom: 5px;
-            font-size: 1rem;
+            margin-bottom: 2px;
+            font-size: var(--text-tiny);
         }
         
         .certificate-info p {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 5px;
+            font-size: 0.65rem;
+            margin-bottom: 2px;
         }
         
         .certificate-actions {
             display: flex;
-            gap: 10px;
+            gap: 4px;
         }
         
         .action-btn {
-            padding: 6px 12px;
-            border-radius: 4px;
+            padding: 3px 6px;
+            border-radius: 2px;
             border: none;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
         
-        .edit-btn {
-            background-color: rgba(56, 161, 105, 0.2);
-            color: var(--success);
-            border: 1px solid rgba(56, 161, 105, 0.3);
-        }
-        
-        .edit-btn:hover {
-            background-color: rgba(56, 161, 105, 0.3);
-        }
-        
-        .delete-btn {
-            background-color: rgba(229, 62, 62, 0.2);
-            color: var(--danger);
-            border: 1px solid rgba(229, 62, 62, 0.3);
-        }
-        
-        .delete-btn:hover {
-            background-color: rgba(229, 62, 62, 0.3);
-        }
-        
-        /* Settings */
+        /* Tiny Settings */
         .settings-section {
             background-color: var(--dark-blue-light);
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 6px;
+            padding: 12px;
         }
         
         .settings-group {
-            margin-bottom: 30px;
+            margin-bottom: 16px;
         }
         
         .settings-group h3 {
             color: var(--text-light);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: var(--text-small);
         }
         
-        /* Messages */
+        /* Tiny Messages */
         .message {
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
+            padding: 6px 10px;
+            border-radius: 3px;
+            margin-bottom: 10px;
             display: none;
+            font-size: var(--text-tiny);
         }
         
-        .message.success {
-            background-color: rgba(56, 161, 105, 0.2);
-            border: 1px solid rgba(56, 161, 105, 0.3);
-            color: var(--success);
-            display: block;
+        /* Info Box */
+        .info-box {
+            margin-top: 16px;
+            padding: 10px;
+            background-color: var(--dark-blue-lighter);
+            border-radius: 4px;
         }
         
-        .message.error {
-            background-color: rgba(229, 62, 62, 0.2);
-            border: 1px solid rgba(229, 62, 62, 0.3);
-            color: var(--danger);
-            display: block;
+        .info-box h3 {
+            font-size: var(--text-small);
+            margin-bottom: 6px;
         }
         
-        .message.info {
-            background-color: rgba(0, 119, 73, 0.2);
-            border: 1px solid rgba(0, 119, 73, 0.3);
-            color: var(--primary);
-            display: block;
+        .info-box p {
+            font-size: var(--text-tiny);
+            margin-bottom: 4px;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-            
-            .admin-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .admin-actions {
-                justify-content: center;
-            }
-            
-            .upload-form {
-                grid-template-columns: 1fr;
-            }
-            
-            .certificate-item {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-            
-            .certificate-preview {
-                width: 100%;
-                height: 120px;
-                margin: 0 auto;
-            }
-            
-            .certificate-actions {
-                justify-content: center;
-                margin-top: 15px;
-            }
-            
-            .tab-btn {
-                min-width: 100px;
-            }
-            
-            .image-preview-container {
-                grid-template-columns: 1fr;
-            }
+        /* All text elements tiny */
+        p, span, div, a, button, input, select, textarea, label, li, h1, h2, h3, h4, h5, h6 {
+            font-size: var(--text-tiny);
         }
         
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .upload-section,
-            .settings-section,
-            .image-management-section {
-                padding: 20px;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            .admin-tabs {
-                flex-direction: column;
-            }
-        }
+        h1 { font-size: var(--text-large); }
+        h2 { font-size: var(--text-medium); }
+        h3 { font-size: var(--text-small); }
     </style>
 </head>
 <body>
@@ -604,8 +576,8 @@
     <div class="login-page" id="loginPage">
         <div class="login-container">
             <div class="login-logo">
-                <h1><i class="fas fa-lock"></i> Admin Access</h1>
-                <p>Portfolio Management Panel</p>
+                <h1><i class="fas fa-lock"></i> Admin</h1>
+                <p>Portfolio Panel</p>
             </div>
             
             <div class="message" id="loginMessage"></div>
@@ -613,7 +585,7 @@
             <form class="login-form" id="loginForm">
                 <div class="form-group">
                     <label for="adminPassword">Password</label>
-                    <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+                    <input type="password" id="adminPassword" placeholder="Enter password" required>
                 </div>
                 
                 <button type="submit" class="btn">
@@ -621,10 +593,10 @@
                 </button>
             </form>
             
-            <div style="margin-top: 20px; text-align: center;">
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Default password: <strong>Felix</strong></p>
-                <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; display: inline-block; margin-top: 10px;">
-                    <i class="fas fa-arrow-left"></i> Back to Home
+            <div style="margin-top: 12px; text-align: center;">
+                <p style="color: var(--text-muted);">Default: <strong>Felix</strong></p>
+                <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-block; margin-top: 6px;">
+                    <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>
         </div>
@@ -633,17 +605,34 @@
     <!-- Admin Dashboard -->
     <div class="admin-dashboard" id="adminDashboard">
         <div class="container">
-            <div class="admin-header">
+            <!-- Mobile Header with Dropdown -->
+            <div class="mobile-header">
+                <h1><i class="fas fa-cogs"></i> Admin</h1>
+                <div class="mobile-dropdown">
+                    <button class="mobile-dropdown-btn" id="mobileDropdownBtn">
+                        <i class="fas fa-bars"></i>
+                        <span>Menu</span>
+                    </button>
+                    <div class="mobile-dropdown-content" id="mobileDropdownContent">
+                        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                        <button onclick="syncWithPublic()"><i class="fas fa-sync"></i> Sync</button>
+                        <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desktop Header -->
+            <div class="desktop-header">
                 <h1><i class="fas fa-cogs"></i> Portfolio Management</h1>
-                <div class="admin-actions">
+                <div class="desktop-actions">
                     <button class="btn btn-sm btn-accent" onclick="syncWithPublic()">
-                        <i class="fas fa-sync"></i> Sync Data
+                        <i class="fas fa-sync"></i> Sync
                     </button>
                     <button class="btn btn-sm" onclick="logout()">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                     <a href="index.html" class="btn btn-sm" style="background-color: var(--dark-blue-light); border: 1px solid rgba(255,255,255,0.1);">
-                        <i class="fas fa-eye"></i> View Home
+                        <i class="fas fa-eye"></i> View
                     </a>
                 </div>
             </div>
@@ -653,68 +642,59 @@
             
             <!-- Tabs -->
             <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="images">Profile Images</button>
-                <button class="tab-btn" data-tab="upload">Upload Certificate</button>
-                <button class="tab-btn" data-tab="manage">Manage Certificates</button>
+                <button class="tab-btn active" data-tab="images">Images</button>
+                <button class="tab-btn" data-tab="upload">Upload</button>
+                <button class="tab-btn" data-tab="manage">Manage</button>
                 <button class="tab-btn" data-tab="settings">Settings</button>
             </div>
             
-            <!-- Images Tab with File Upload -->
+            <!-- Images Tab -->
             <div class="tab-content active" id="imagesTab">
                 <div class="image-management-section">
-                    <h2 style="color: var(--text-light); margin-bottom: 25px;">Manage Your Photos</h2>
+                    <h2>Your Photos</h2>
                     
                     <div class="image-preview-container">
                         <!-- Profile Image Card -->
                         <div class="image-preview-card">
-                            <h3><i class="fas fa-user-circle"></i> Profile Image</h3>
-                            <img src="" alt="Profile Preview" class="preview-image" id="profilePreview">
+                            <h3><i class="fas fa-user-circle"></i> Profile</h3>
+                            <img src="" alt="Profile" class="preview-image" id="profilePreview">
                             
-                            <!-- File Upload for Profile Image -->
                             <div class="file-upload-area" id="profileUploadArea">
                                 <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to upload profile image</p>
-                                <p style="font-size: 0.8rem;">JPG, PNG, GIF (Max 5MB)</p>
+                                <p>Tap to upload</p>
+                                <p style="font-size: 0.65rem;">Max 5MB</p>
                                 <input type="file" id="profileFileInput" accept="image/*">
                                 <div class="file-name" id="profileFileName"></div>
                             </div>
                             
                             <button class="upload-btn" id="uploadProfileBtn" onclick="uploadProfileImage()" disabled>
-                                <i class="fas fa-upload"></i> Upload Profile Image
+                                <i class="fas fa-upload"></i> Upload
                             </button>
                         </div>
                         
                         <!-- About Image Card -->
                         <div class="image-preview-card">
-                            <h3><i class="fas fa-briefcase"></i> About Section Image</h3>
-                            <img src="" alt="About Preview" class="preview-image square" id="aboutPreview">
+                            <h3><i class="fas fa-briefcase"></i> About</h3>
+                            <img src="" alt="About" class="preview-image square" id="aboutPreview">
                             
-                            <!-- File Upload for About Image -->
                             <div class="file-upload-area" id="aboutUploadArea">
                                 <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to upload about image</p>
-                                <p style="font-size: 0.8rem;">JPG, PNG, GIF (Max 5MB)</p>
+                                <p>Tap to upload</p>
+                                <p style="font-size: 0.65rem;">Max 5MB</p>
                                 <input type="file" id="aboutFileInput" accept="image/*">
                                 <div class="file-name" id="aboutFileName"></div>
                             </div>
                             
                             <button class="upload-btn" id="uploadAboutBtn" onclick="uploadAboutImage()" disabled>
-                                <i class="fas fa-upload"></i> Upload About Image
+                                <i class="fas fa-upload"></i> Upload
                             </button>
                         </div>
                     </div>
                     
-                    <div style="margin-top: 30px; padding: 20px; background-color: var(--dark-blue-lighter); border-radius: 8px;">
-                        <h3 style="color: var(--accent); margin-bottom: 15px;">Image Information</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 10px;">
-                            <i class="fas fa-info-circle"></i> Images are stored permanently in your browser's local storage. They will remain until you change them.
-                        </p>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">
-                            <strong>Current Profile Image:</strong> <span id="currentProfileStatus">Default Facebook image</span>
-                        </p>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">
-                            <strong>Current About Image:</strong> <span id="currentAboutStatus">Default image</span>
-                        </p>
+                    <div class="info-box">
+                        <h3>Status</h3>
+                        <p><strong>Profile:</strong> <span id="currentProfileStatus">Default</span></p>
+                        <p><strong>About:</strong> <span id="currentAboutStatus">Default</span></p>
                     </div>
                 </div>
             </div>
@@ -722,67 +702,62 @@
             <!-- Upload Tab -->
             <div class="tab-content" id="uploadTab">
                 <div class="upload-section">
-                    <h2 style="color: var(--text-light); margin-bottom: 25px;">Upload New Certificate</h2>
+                    <h2>New Certificate</h2>
                     
                     <form id="certificateForm" class="upload-form">
                         <div class="form-group">
-                            <label for="certificateName">Certificate Name *</label>
-                            <input type="text" id="certificateName" placeholder="e.g., Introduction to Modern AI" required>
+                            <label>Name *</label>
+                            <input type="text" id="certificateName" placeholder="e.g., AI Course" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="issuer">Issuing Organization *</label>
-                            <input type="text" id="issuer" placeholder="e.g., Cisco Networking Academy" required>
+                            <label>Issuer *</label>
+                            <input type="text" id="issuer" placeholder="e.g., Cisco" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="issueDate">Issue Date *</label>
+                            <label>Date *</label>
                             <input type="date" id="issueDate" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="expiryDate">Expiry Date (if applicable)</label>
+                            <label>Expiry</label>
                             <input type="date" id="expiryDate">
                         </div>
                         
                         <div class="form-group">
-                            <label for="certificateType">Certificate Type *</label>
+                            <label>Type *</label>
                             <select id="certificateType" required>
-                                <option value="">Select type</option>
-                                <option value="certificate">Course Certificate</option>
-                                <option value="badge">Digital Badge</option>
-                                <option value="achievement">Module Achievement</option>
-                                <option value="professional">Professional Certification</option>
+                                <option value="">Select</option>
+                                <option value="certificate">Certificate</option>
+                                <option value="badge">Badge</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="credentialId">Credential ID</label>
-                            <input type="text" id="credentialId" placeholder="e.g., CISCO-2026-AI001">
+                            <label>ID</label>
+                            <input type="text" id="credentialId" placeholder="Credential ID">
                         </div>
                         
                         <div class="form-group full-width">
-                            <label for="description">Description</label>
-                            <textarea id="description" placeholder="Brief description of what you learned or achieved..."></textarea>
+                            <label>Description</label>
+                            <textarea id="description" placeholder="Brief description..."></textarea>
                         </div>
                         
                         <div class="form-group full-width">
-                            <label>Certificate Image *</label>
+                            <label>Image *</label>
                             <div class="file-upload-area" id="certificateUploadArea">
                                 <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to upload certificate image</p>
-                                <p style="font-size: 0.8rem;">JPG, PNG, GIF (Max 5MB)</p>
+                                <p>Tap to upload</p>
                                 <input type="file" id="certificateFileInput" accept="image/*" required>
                                 <div class="file-name" id="certificateFileName"></div>
                             </div>
                         </div>
                         
                         <div class="form-actions">
-                            <button type="reset" class="btn btn-red">Clear Form</button>
-                            <button type="submit" class="btn">
-                                <i class="fas fa-upload"></i> Upload Certificate
-                            </button>
+                            <button type="reset" class="btn btn-red">Clear</button>
+                            <button type="submit" class="btn">Upload</button>
                         </div>
                     </form>
                 </div>
@@ -791,13 +766,11 @@
             <!-- Manage Tab -->
             <div class="tab-content" id="manageTab">
                 <div class="upload-section">
-                    <h2 style="color: var(--text-light); margin-bottom: 25px;">Manage Certificates</h2>
+                    <h2>Certificates</h2>
                     <div id="certificatesList" class="certificates-list">
-                        <!-- Certificates will be dynamically added here -->
-                        <div style="padding: 40px; text-align: center; color: var(--text-muted);">
-                            <i class="fas fa-certificate" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                            <h3>No Certificates Yet</h3>
-                            <p>Upload your first certificate to get started</p>
+                        <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+                            <i class="fas fa-certificate" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>No certificates</p>
                         </div>
                     </div>
                 </div>
@@ -806,54 +779,42 @@
             <!-- Settings Tab -->
             <div class="tab-content" id="settingsTab">
                 <div class="settings-section">
-                    <h2 style="color: var(--text-light); margin-bottom: 30px;">Admin Settings</h2>
+                    <h2>Settings</h2>
                     
                     <div class="settings-group">
-                        <h3>Change Admin Password</h3>
+                        <h3>Change Password</h3>
                         <form id="passwordForm">
                             <div class="form-group">
-                                <label for="currentPassword">Current Password</label>
-                                <input type="password" id="currentPassword" placeholder="Enter current password" required>
+                                <label>Current</label>
+                                <input type="password" id="currentPassword" required>
                             </div>
-                            
                             <div class="form-group">
-                                <label for="newPassword">New Password</label>
-                                <input type="password" id="newPassword" placeholder="Enter new password" required minlength="4">
+                                <label>New</label>
+                                <input type="password" id="newPassword" required minlength="4">
                             </div>
-                            
                             <div class="form-group">
-                                <label for="confirmPassword">Confirm New Password</label>
-                                <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+                                <label>Confirm</label>
+                                <input type="password" id="confirmPassword" required>
                             </div>
-                            
-                            <button type="submit" class="btn">
-                                <i class="fas fa-key"></i> Change Password
-                            </button>
+                            <button type="submit" class="btn">Change</button>
                         </form>
                     </div>
                     
                     <div class="settings-group">
-                        <h3>Data Management</h3>
-                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                            <button class="btn btn-sm btn-red" onclick="resetToDefault()">
-                                <i class="fas fa-redo"></i> Reset to Default
-                            </button>
-                            <button class="btn btn-sm" onclick="exportData()">
-                                <i class="fas fa-download"></i> Export Data
-                            </button>
-                            <button class="btn btn-sm" onclick="importData()">
-                                <i class="fas fa-upload"></i> Import Data
-                            </button>
+                        <h3>Data</h3>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button class="btn btn-sm btn-red" onclick="resetToDefault()">Reset</button>
+                            <button class="btn btn-sm" onclick="exportData()">Export</button>
+                            <button class="btn btn-sm" onclick="importData()">Import</button>
                         </div>
                     </div>
                     
                     <div class="settings-group">
-                        <h3>Storage Information</h3>
-                        <div style="background-color: var(--dark-blue-lighter); padding: 20px; border-radius: 6px;">
-                            <p><strong>Total Certificates:</strong> <span id="totalCertCount">0</span></p>
-                            <p><strong>Last Updated:</strong> <span id="lastUpdatedTime">Never</span></p>
-                            <p><strong>Images Stored:</strong> <span id="imageStorageStatus">Yes (localStorage)</span></p>
-                            <p><strong>Storage Used:</strong> <span id="storageUsed">Calculating...</span></p>
+                        <h3>Info</h3>
+                        <div style="background-color: var(--dark-blue-lighter); padding: 8px; border-radius: 3px;">
+                            <p><strong>Certificates:</strong> <span id="totalCertCount">0</span></p>
+                            <p><strong>Updated:</strong> <span id="lastUpdatedTime">Never</span></p>
+                            <p><strong>Storage:</strong> <span id="storageUsed">0 KB</span></p>
                         </div>
                     </div>
                 </div>
@@ -926,7 +887,6 @@
                 window.dispatchEvent(new Event('storage'));
             },
             
-            // Convert file to base64 and store
             storeImageAsBase64: function(file, key) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -949,32 +909,11 @@
                 {
                     id: 1,
                     name: "Introduction to Modern AI",
-                    issuer: "Cisco Networking Academy",
+                    issuer: "Cisco",
                     date: "2026-02-03",
                     type: "certificate",
-                    credentialId: "CISCO-AI-2026-001",
-                    description: "Certificate earned for completing Introduction to Modern AI course.",
+                    description: "AI course completion",
                     fileName: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                },
-                {
-                    id: 2,
-                    name: "Introduction to Data Science",
-                    issuer: "Cisco Networking Academy",
-                    date: "2025-07-08",
-                    type: "certificate",
-                    credentialId: "CISCO-DS-2025-001",
-                    description: "Certificate and Badge earned for completing Introduction to Data Science course.",
-                    fileName: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                },
-                {
-                    id: 3,
-                    name: "Cybersecurity Fundamentals",
-                    issuer: "Cisco Networking Academy",
-                    date: "2026-02-01",
-                    type: "badge",
-                    credentialId: "CISCO-CYB-2026-001",
-                    description: "Digital badge earned for cybersecurity course completion.",
-                    fileName: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                 }
             ],
 
@@ -984,7 +923,6 @@
                     try {
                         return JSON.parse(stored);
                     } catch (e) {
-                        console.error('Error parsing certificates:', e);
                         return this.defaultCertificates;
                     }
                 }
@@ -1032,16 +970,15 @@
                 const data = {
                     certificates: this.getCertificates(),
                     images: ImageManager.getImages(),
-                    exportDate: new Date().toISOString(),
-                    version: "1.0"
+                    exportDate: new Date().toISOString()
                 };
-                return JSON.stringify(data, null, 2);
+                return JSON.stringify(data);
             },
 
             importData: function(data) {
                 try {
                     const parsed = JSON.parse(data);
-                    if (parsed.certificates && Array.isArray(parsed.certificates)) {
+                    if (parsed.certificates) {
                         this.saveCertificates(parsed.certificates);
                         if (parsed.images) {
                             ImageManager.saveImages(parsed.images);
@@ -1050,7 +987,6 @@
                     }
                     return false;
                 } catch (e) {
-                    console.error('Error importing data:', e);
                     return false;
                 }
             }
@@ -1069,13 +1005,13 @@
         const lastUpdatedTime = document.getElementById('lastUpdatedTime');
         const storageUsed = document.getElementById('storageUsed');
         
-        // Image preview elements
+        // Image elements
         const profilePreview = document.getElementById('profilePreview');
         const aboutPreview = document.getElementById('aboutPreview');
         const currentProfileStatus = document.getElementById('currentProfileStatus');
         const currentAboutStatus = document.getElementById('currentAboutStatus');
         
-        // File input elements
+        // File inputs
         const profileFileInput = document.getElementById('profileFileInput');
         const aboutFileInput = document.getElementById('aboutFileInput');
         const certificateFileInput = document.getElementById('certificateFileInput');
@@ -1085,173 +1021,133 @@
         const uploadProfileBtn = document.getElementById('uploadProfileBtn');
         const uploadAboutBtn = document.getElementById('uploadAboutBtn');
 
-        // Utility Functions
+        // Mobile dropdown
+        const mobileDropdownBtn = document.getElementById('mobileDropdownBtn');
+        const mobileDropdownContent = document.getElementById('mobileDropdownContent');
+
+        // Toggle mobile dropdown
+        mobileDropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileDropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            mobileDropdownContent.classList.remove('show');
+        });
+
+        // Show message
         function showMessage(element, text, type = 'info') {
             element.textContent = text;
             element.className = 'message ' + type;
             element.style.display = 'block';
-            
             setTimeout(() => {
                 element.style.display = 'none';
-            }, 5000);
+            }, 3000);
         }
 
+        // Format date
         function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('en-US', options);
         }
 
-        function formatDateTime(dateString) {
-            const options = { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            return new Date(dateString).toLocaleDateString('en-US', options);
-        }
-
-        // Calculate storage used
+        // Calculate storage
         function calculateStorageUsed() {
             let total = 0;
             for (let key in localStorage) {
                 if (localStorage.hasOwnProperty(key)) {
-                    total += localStorage[key].length * 2; // Approximate bytes
+                    total += localStorage[key].length * 2;
                 }
             }
-            
-            if (total < 1024) {
-                storageUsed.textContent = total + ' B';
-            } else if (total < 1024 * 1024) {
-                storageUsed.textContent = (total / 1024).toFixed(2) + ' KB';
-            } else {
-                storageUsed.textContent = (total / (1024 * 1024)).toFixed(2) + ' MB';
-            }
+            if (total < 1024) storageUsed.textContent = total + ' B';
+            else if (total < 1024 * 1024) storageUsed.textContent = (total / 1024).toFixed(2) + ' KB';
+            else storageUsed.textContent = (total / (1024 * 1024)).toFixed(2) + ' MB';
         }
 
-        // Load and display current images
+        // Load images
         function loadImagePreviews() {
             const images = ImageManager.getImages();
-            
             profilePreview.src = images.profile;
             aboutPreview.src = images.about;
-            
-            // Update status text
-            currentProfileStatus.textContent = images.profile === YOUR_FACEBOOK_IMAGE ? 'Default Facebook image' : 'Custom uploaded image';
-            currentAboutStatus.textContent = images.about.includes('base64') ? 'Custom uploaded image' : 'Default image';
+            currentProfileStatus.textContent = images.profile === YOUR_FACEBOOK_IMAGE ? 'Default' : 'Custom';
+            currentAboutStatus.textContent = images.about.includes('base64') ? 'Custom' : 'Default';
         }
 
-        // Handle profile file selection
+        // File selection handlers
         profileFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 if (file.size > 5 * 1024 * 1024) {
-                    showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
+                    showMessage(adminMessage, 'File too large!', 'error');
                     this.value = '';
-                    profileFileName.textContent = '';
-                    uploadProfileBtn.disabled = true;
                     return;
                 }
-                
-                profileFileName.textContent = `Selected: ${file.name}`;
+                profileFileName.textContent = file.name;
                 uploadProfileBtn.disabled = false;
             }
         });
 
-        // Handle about file selection
         aboutFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 if (file.size > 5 * 1024 * 1024) {
-                    showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
+                    showMessage(adminMessage, 'File too large!', 'error');
                     this.value = '';
-                    aboutFileName.textContent = '';
-                    uploadAboutBtn.disabled = true;
                     return;
                 }
-                
-                aboutFileName.textContent = `Selected: ${file.name}`;
+                aboutFileName.textContent = file.name;
                 uploadAboutBtn.disabled = false;
             }
         });
 
-        // Handle certificate file selection
         certificateFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 if (file.size > 5 * 1024 * 1024) {
-                    showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
+                    showMessage(adminMessage, 'File too large!', 'error');
                     this.value = '';
-                    certificateFileName.textContent = '';
                     return;
                 }
-                
-                certificateFileName.textContent = `Selected: ${file.name}`;
+                certificateFileName.textContent = file.name;
             }
         });
 
-        // Upload profile image
+        // Upload functions
         async function uploadProfileImage() {
             const file = profileFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
+            if (!file) return;
             
-            try {
-                uploadProfileBtn.disabled = true;
-                uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-                
-                await ImageManager.storeImageAsBase64(file, 'profile');
-                
-                loadImagePreviews();
-                showMessage(adminMessage, 'Profile image uploaded successfully!', 'success');
-                
-                // Reset file input
-                profileFileInput.value = '';
-                profileFileName.textContent = '';
-                uploadProfileBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile Image';
-                
-                calculateStorageUsed();
-            } catch (error) {
-                showMessage(adminMessage, 'Error uploading image: ' + error.message, 'error');
-                uploadProfileBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile Image';
-                uploadProfileBtn.disabled = false;
-            }
+            uploadProfileBtn.disabled = true;
+            uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            await ImageManager.storeImageAsBase64(file, 'profile');
+            loadImagePreviews();
+            showMessage(adminMessage, 'Profile updated!', 'success');
+            
+            profileFileInput.value = '';
+            profileFileName.textContent = '';
+            uploadProfileBtn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+            calculateStorageUsed();
         }
 
-        // Upload about image
         async function uploadAboutImage() {
             const file = aboutFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
+            if (!file) return;
             
-            try {
-                uploadAboutBtn.disabled = true;
-                uploadAboutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-                
-                await ImageManager.storeImageAsBase64(file, 'about');
-                
-                loadImagePreviews();
-                showMessage(adminMessage, 'About image uploaded successfully!', 'success');
-                
-                // Reset file input
-                aboutFileInput.value = '';
-                aboutFileName.textContent = '';
-                uploadAboutBtn.innerHTML = '<i class="fas fa-upload"></i> Upload About Image';
-                
-                calculateStorageUsed();
-            } catch (error) {
-                showMessage(adminMessage, 'Error uploading image: ' + error.message, 'error');
-                uploadAboutBtn.innerHTML = '<i class="fas fa-upload"></i> Upload About Image';
-                uploadAboutBtn.disabled = false;
-            }
+            uploadAboutBtn.disabled = true;
+            uploadAboutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            await ImageManager.storeImageAsBase64(file, 'about');
+            loadImagePreviews();
+            showMessage(adminMessage, 'About updated!', 'success');
+            
+            aboutFileInput.value = '';
+            aboutFileName.textContent = '';
+            uploadAboutBtn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+            calculateStorageUsed();
         }
 
-        // Make upload functions global
         window.uploadProfileImage = uploadProfileImage;
         window.uploadAboutImage = uploadAboutImage;
 
@@ -1259,39 +1155,23 @@
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const tabId = this.dataset.tab;
-                
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 document.getElementById(tabId + 'Tab').classList.add('active');
-                
-                if (tabId === 'images') {
-                    loadImagePreviews();
-                    calculateStorageUsed();
-                } else if (tabId === 'manage') {
-                    renderCertificatesList();
-                } else if (tabId === 'settings') {
-                    calculateStorageUsed();
-                }
+                if (tabId === 'images') loadImagePreviews();
+                else if (tabId === 'manage') renderCertificatesList();
+                calculateStorageUsed();
             });
         });
 
-        // Render certificates list
+        // Render certificates
         function renderCertificatesList() {
             const certificates = CertificateManager.getCertificates();
             certificatesList.innerHTML = '';
             
             if (certificates.length === 0) {
-                certificatesList.innerHTML = `
-                    <div style="padding: 40px; text-align: center; color: var(--text-muted);">
-                        <i class="fas fa-certificate" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                        <h3>No Certificates Yet</h3>
-                        <p>Upload your first certificate to get started</p>
-                    </div>
-                `;
+                certificatesList.innerHTML = '<div style="padding:20px;text-align:center;"><p>No certificates</p></div>';
                 return;
             }
             
@@ -1300,25 +1180,17 @@
             certificates.forEach(cert => {
                 const item = document.createElement('div');
                 item.className = 'certificate-item';
-                
                 item.innerHTML = `
-                    <img src="${cert.fileName}" alt="${cert.name}" class="certificate-preview" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'">
+                    <img src="${cert.fileName}" alt="${cert.name}" class="certificate-preview">
                     <div class="certificate-info">
                         <h4>${cert.name}</h4>
-                        <p><i class="fas fa-building"></i> ${cert.issuer}</p>
-                        <p><i class="far fa-calendar"></i> ${formatDate(cert.date)} | <i class="fas fa-tag"></i> ${cert.type}</p>
-                        ${cert.credentialId ? `<p><i class="fas fa-id-card"></i> ${cert.credentialId}</p>` : ''}
+                        <p>${cert.issuer} | ${formatDate(cert.date)}</p>
                     </div>
                     <div class="certificate-actions">
-                        <button class="action-btn edit-btn" onclick="editCertificate(${cert.id})">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button class="action-btn delete-btn" onclick="deleteCertificate(${cert.id})">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
+                        <button class="action-btn edit-btn" onclick="editCertificate(${cert.id})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteCertificate(${cert.id})">Del</button>
                     </div>
                 `;
-                
                 certificatesList.appendChild(item);
             });
         }
@@ -1327,368 +1199,219 @@
         function updateSystemInfo() {
             const certificates = CertificateManager.getCertificates();
             totalCertCount.textContent = certificates.length;
-            
             const lastUpdated = localStorage.getItem('lastUpdated');
-            lastUpdatedTime.textContent = lastUpdated ? formatDateTime(lastUpdated) : 'Never';
-            
+            lastUpdatedTime.textContent = lastUpdated ? formatDate(lastUpdated) : 'Never';
             calculateStorageUsed();
         }
 
-        // Certificate Form Submission
+        // Certificate form submit
         certificateForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const file = certificateFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select a certificate image', 'error');
-                return;
-            }
+            if (!file) return;
             
-            if (file.size > 5 * 1024 * 1024) {
-                showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
-                return;
-            }
-            
-            try {
-                // Convert certificate image to base64
-                const reader = new FileReader();
-                const base64Promise = new Promise((resolve, reject) => {
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                
-                const base64Image = await base64Promise;
-                
+            const reader = new FileReader();
+            reader.onload = () => {
                 const formData = {
                     name: document.getElementById('certificateName').value,
                     issuer: document.getElementById('issuer').value,
                     date: document.getElementById('issueDate').value,
-                    expiryDate: document.getElementById('expiryDate').value || null,
                     type: document.getElementById('certificateType').value,
-                    credentialId: document.getElementById('credentialId').value || null,
                     description: document.getElementById('description').value,
-                    fileName: base64Image
+                    fileName: reader.result
                 };
                 
-                if (!formData.name || !formData.issuer || !formData.date || !formData.type) {
-                    showMessage(adminMessage, 'Please fill all required fields', 'error');
-                    return;
-                }
-                
-                const newCert = CertificateManager.addCertificate(formData);
-                
-                showMessage(adminMessage, `Certificate "${newCert.name}" added successfully!`, 'success');
-                
+                CertificateManager.addCertificate(formData);
+                showMessage(adminMessage, 'Certificate added!', 'success');
                 certificateForm.reset();
                 certificateFileName.textContent = '';
-                document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
-                
                 renderCertificatesList();
                 updateSystemInfo();
-                calculateStorageUsed();
-                
                 document.querySelector('[data-tab="manage"]').click();
-            } catch (error) {
-                showMessage(adminMessage, 'Error uploading certificate: ' + error.message, 'error');
-            }
+            };
+            reader.readAsDataURL(file);
         });
 
         // Edit certificate
         function editCertificate(id) {
-            const certificates = CertificateManager.getCertificates();
-            const cert = certificates.find(c => c.id === id);
-            
-            if (!cert) {
-                showMessage(adminMessage, 'Certificate not found!', 'error');
-                return;
-            }
+            const cert = CertificateManager.getCertificates().find(c => c.id === id);
+            if (!cert) return;
             
             document.getElementById('certificateName').value = cert.name;
             document.getElementById('issuer').value = cert.issuer;
             document.getElementById('issueDate').value = cert.date;
-            document.getElementById('expiryDate').value = cert.expiryDate || '';
             document.getElementById('certificateType').value = cert.type;
-            document.getElementById('credentialId').value = cert.credentialId || '';
             document.getElementById('description').value = cert.description || '';
             
-            // Note: Can't pre-fill file input for security reasons
-            
             const submitBtn = certificateForm.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Certificate';
+            submitBtn.innerHTML = 'Update';
             submitBtn.dataset.mode = 'update';
             submitBtn.dataset.id = id;
             
             document.querySelector('[data-tab="upload"]').click();
-            certificateForm.scrollIntoView({ behavior: 'smooth' });
-            
-            showMessage(adminMessage, `Editing certificate: ${cert.name}. Please select a new image if you want to change it.`, 'info');
         }
 
-        // Handle certificate update
+        // Handle update
         certificateForm.addEventListener('submit', async function(e) {
             const submitBtn = this.querySelector('button[type="submit"]');
-            
             if (submitBtn.dataset.mode === 'update') {
                 e.preventDefault();
                 
                 const id = parseInt(submitBtn.dataset.id);
-                
-                let fileName;
                 const file = certificateFileInput.files[0];
                 
+                let fileName;
                 if (file) {
-                    // New image uploaded
-                    if (file.size > 5 * 1024 * 1024) {
-                        showMessage(adminMessage, 'File too large! Maximum size is 5MB', 'error');
-                        return;
-                    }
-                    
                     const reader = new FileReader();
-                    const base64Promise = new Promise((resolve, reject) => {
+                    fileName = await new Promise(resolve => {
                         reader.onload = () => resolve(reader.result);
-                        reader.onerror = reject;
                         reader.readAsDataURL(file);
                     });
-                    
-                    fileName = await base64Promise;
                 } else {
-                    // Keep existing image
-                    const certificates = CertificateManager.getCertificates();
-                    const existingCert = certificates.find(c => c.id === id);
-                    fileName = existingCert.fileName;
+                    const cert = CertificateManager.getCertificates().find(c => c.id === id);
+                    fileName = cert.fileName;
                 }
                 
                 const formData = {
                     name: document.getElementById('certificateName').value,
                     issuer: document.getElementById('issuer').value,
                     date: document.getElementById('issueDate').value,
-                    expiryDate: document.getElementById('expiryDate').value || null,
                     type: document.getElementById('certificateType').value,
-                    credentialId: document.getElementById('credentialId').value || null,
                     description: document.getElementById('description').value,
                     fileName: fileName
                 };
                 
-                const updated = CertificateManager.updateCertificate(id, formData);
+                CertificateManager.updateCertificate(id, formData);
+                showMessage(adminMessage, 'Certificate updated!', 'success');
                 
-                if (updated) {
-                    showMessage(adminMessage, `Certificate "${updated.name}" updated successfully!`, 'success');
-                    
-                    certificateForm.reset();
-                    certificateFileName.textContent = '';
-                    submitBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Certificate';
-                    delete submitBtn.dataset.mode;
-                    delete submitBtn.dataset.id;
-                    
-                    document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
-                    
-                    renderCertificatesList();
-                    updateSystemInfo();
-                    calculateStorageUsed();
-                }
+                certificateForm.reset();
+                submitBtn.innerHTML = 'Upload';
+                delete submitBtn.dataset.mode;
+                delete submitBtn.dataset.id;
+                
+                renderCertificatesList();
+                updateSystemInfo();
+                document.querySelector('[data-tab="manage"]').click();
             }
         });
 
         // Delete certificate
         function deleteCertificate(id) {
-            if (!confirm('Are you sure you want to delete this certificate? This action cannot be undone.')) {
-                return;
-            }
-            
-            const certificates = CertificateManager.getCertificates();
-            const cert = certificates.find(c => c.id === id);
-            
-            if (!cert) {
-                showMessage(adminMessage, 'Certificate not found!', 'error');
-                return;
-            }
-            
-            const deleted = CertificateManager.deleteCertificate(id);
-            
-            if (deleted) {
-                showMessage(adminMessage, `Certificate "${cert.name}" deleted successfully!`, 'success');
-                renderCertificatesList();
-                updateSystemInfo();
-                calculateStorageUsed();
-            }
+            if (!confirm('Delete?')) return;
+            CertificateManager.deleteCertificate(id);
+            showMessage(adminMessage, 'Certificate deleted', 'success');
+            renderCertificatesList();
+            updateSystemInfo();
         }
 
-        // Password Form Submission
+        // Password form
         passwordForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
             
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (!AdminAuth.checkPassword(currentPassword)) {
-                showMessage(adminMessage, 'Current password is incorrect', 'error');
+            if (!AdminAuth.checkPassword(current)) {
+                showMessage(adminMessage, 'Wrong password', 'error');
+                return;
+            }
+            if (newPass.length < 4) {
+                showMessage(adminMessage, 'Too short', 'error');
+                return;
+            }
+            if (newPass !== confirm) {
+                showMessage(adminMessage, 'No match', 'error');
                 return;
             }
             
-            if (newPassword.length < 4) {
-                showMessage(adminMessage, 'New password must be at least 4 characters', 'error');
-                return;
-            }
-            
-            if (newPassword !== confirmPassword) {
-                showMessage(adminMessage, 'New passwords do not match', 'error');
-                return;
-            }
-            
-            AdminAuth.setPassword(newPassword);
-            
-            showMessage(adminMessage, 'Password changed successfully!', 'success');
-            
+            AdminAuth.setPassword(newPass);
+            showMessage(adminMessage, 'Password changed!', 'success');
             passwordForm.reset();
         });
 
-        // Sync with public page
-        function syncWithPublic() {
-            showMessage(adminMessage, 'Data synced successfully!', 'success');
-            updateSystemInfo();
-        }
-
-        // Reset to default
-        function resetToDefault() {
-            if (!confirm('Are you sure you want to reset all data to default? This will delete all custom certificates and images.')) {
-                return;
-            }
-            
+        // Other functions
+        window.syncWithPublic = function() { showMessage(adminMessage, 'Synced!', 'success'); };
+        window.resetToDefault = function() {
+            if (!confirm('Reset all?')) return;
             CertificateManager.resetToDefault();
             ImageManager.saveImages(ImageManager.defaultImages);
-            
-            showMessage(adminMessage, 'Reset to default data successfully!', 'success');
-            
             loadImagePreviews();
             renderCertificatesList();
             updateSystemInfo();
-            calculateStorageUsed();
-        }
-
-        // Export data
-        function exportData() {
+            showMessage(adminMessage, 'Reset done!', 'success');
+        };
+        window.exportData = function() {
             const data = CertificateManager.exportData();
             const blob = new Blob([data], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `portfolio-backup-${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a);
+            a.download = `backup-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showMessage(adminMessage, 'Data exported successfully!', 'success');
-        }
-
-        // Import data
-        function importData() {
+        };
+        window.importData = function() {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = '.json';
             input.onchange = function(e) {
                 const file = e.target.files[0];
-                if (!file) return;
-                
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const success = CertificateManager.importData(e.target.result);
-                    if (success) {
-                        showMessage(adminMessage, 'Data imported successfully!', 'success');
+                    if (CertificateManager.importData(e.target.result)) {
                         loadImagePreviews();
                         renderCertificatesList();
                         updateSystemInfo();
-                        calculateStorageUsed();
-                    } else {
-                        showMessage(adminMessage, 'Failed to import data. Invalid file format.', 'error');
+                        showMessage(adminMessage, 'Imported!', 'success');
                     }
                 };
                 reader.readAsText(file);
             };
             input.click();
-        }
+        };
+        window.logout = function() {
+            if (!confirm('Logout?')) return;
+            AdminAuth.logout();
+            loginPage.style.display = 'flex';
+            adminDashboard.style.display = 'none';
+        };
 
-        // Logout
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                AdminAuth.logout();
-                loginPage.style.display = 'flex';
-                adminDashboard.style.display = 'none';
-                showMessage(loginMessage, 'Logged out successfully', 'info');
-            }
-        }
-
-        // Login Form Submission
+        // Login form
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const password = document.getElementById('adminPassword').value;
-            
             if (AdminAuth.login(password)) {
                 loginPage.style.display = 'none';
                 adminDashboard.style.display = 'block';
-                
                 loadImagePreviews();
                 renderCertificatesList();
                 updateSystemInfo();
-                
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('issueDate').value = today;
-                document.getElementById('issueDate').max = today;
+                document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
             } else {
-                showMessage(loginMessage, 'Incorrect password. Please try again.', 'error');
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminPassword').focus();
+                showMessage(loginMessage, 'Wrong password', 'error');
             }
         });
 
-        // Make functions global
-        window.editCertificate = editCertificate;
-        window.deleteCertificate = deleteCertificate;
-        window.syncWithPublic = syncWithPublic;
-        window.resetToDefault = resetToDefault;
-        window.exportData = exportData;
-        window.importData = importData;
-        window.logout = logout;
-
-        // Click handlers for file upload areas
-        document.getElementById('profileUploadArea').addEventListener('click', function() {
-            profileFileInput.click();
-        });
-
-        document.getElementById('aboutUploadArea').addEventListener('click', function() {
-            aboutFileInput.click();
-        });
-
-        document.getElementById('certificateUploadArea').addEventListener('click', function() {
-            certificateFileInput.click();
-        });
+        // Click handlers for upload areas
+        document.getElementById('profileUploadArea').addEventListener('click', () => profileFileInput.click());
+        document.getElementById('aboutUploadArea').addEventListener('click', () => aboutFileInput.click());
+        document.getElementById('certificateUploadArea').addEventListener('click', () => certificateFileInput.click());
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             if (AdminAuth.isLoggedIn()) {
                 loginPage.style.display = 'none';
                 adminDashboard.style.display = 'block';
-                
                 loadImagePreviews();
                 renderCertificatesList();
                 updateSystemInfo();
-                calculateStorageUsed();
-                
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('issueDate').value = today;
-                document.getElementById('issueDate').max = today;
+                document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
             } else {
                 loginPage.style.display = 'flex';
                 adminDashboard.style.display = 'none';
-                
-                document.getElementById('adminPassword').focus();
             }
             
             if (!localStorage.getItem('passwordHintShown')) {
-                showMessage(loginMessage, `Default password: "${AdminAuth.defaultPassword}"`, 'info');
+                showMessage(loginMessage, 'Default: Felix', 'info');
                 localStorage.setItem('passwordHintShown', 'true');
             }
         });
