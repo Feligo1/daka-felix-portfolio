@@ -775,6 +775,37 @@
             font-size: 0.9rem;
         }
         
+        /* Notification for image updates */
+        .image-update-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow-hover);
+            z-index: 9999;
+            display: none;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .image-update-notification.show {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
         /* Admin Image Preview */
         .image-preview-container {
             display: flex;
@@ -1086,6 +1117,12 @@
     </style>
 </head>
 <body>
+    <!-- Image Update Notification -->
+    <div class="image-update-notification" id="imageUpdateNotification">
+        <i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i>
+        <span id="notificationMessage">Images updated successfully!</span>
+    </div>
+
     <!-- Header & Navigation -->
     <header id="mainHeader">
         <div class="container header-container">
@@ -1374,13 +1411,14 @@
         
         // Alternative backup image if Facebook image fails
         const BACKUP_IMAGE = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
+        const BACKUP_ABOUT_IMAGE = "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
 
         // Image Management System
         const ImageManager = {
             // Default images (your Facebook image as default)
             defaultImages: {
                 profile: YOUR_FACEBOOK_IMAGE,
-                about: "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
+                about: BACKUP_ABOUT_IMAGE
             },
             
             getImages: function() {
@@ -1465,6 +1503,18 @@
         const navMenu = document.getElementById('navMenu');
         const navLinks = document.querySelectorAll('.nav-menu a');
         const mainHeader = document.getElementById('mainHeader');
+        const imageUpdateNotification = document.getElementById('imageUpdateNotification');
+        const notificationMessage = document.getElementById('notificationMessage');
+
+        // Show notification
+        function showNotification(message) {
+            notificationMessage.textContent = message;
+            imageUpdateNotification.classList.add('show');
+            
+            setTimeout(() => {
+                imageUpdateNotification.classList.remove('show');
+            }, 3000);
+        }
 
         // Load images from localStorage
         function loadImages() {
@@ -1610,7 +1660,7 @@
 
         aboutImage.addEventListener('error', function() {
             console.log('About image failed to load, using backup');
-            this.src = "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
+            this.src = BACKUP_ABOUT_IMAGE;
         });
 
         // Add animation on scroll
@@ -1635,15 +1685,51 @@
             observer.observe(card);
         });
 
-        // Check for image updates from admin
+        // Check for image updates from admin with debouncing
+        let updateTimeout;
+        
         window.addEventListener('storage', function(e) {
             if (e.key === 'siteImages') {
-                loadImages();
+                // Debounce multiple rapid updates
+                clearTimeout(updateTimeout);
+                updateTimeout = setTimeout(() => {
+                    const oldProfileSrc = profileImage.src;
+                    const oldAboutSrc = aboutImage.src;
+                    
+                    loadImages();
+                    
+                    // Check if images actually changed
+                    if (oldProfileSrc !== profileImage.src || oldAboutSrc !== aboutImage.src) {
+                        showNotification('Profile images updated from admin panel!');
+                    }
+                }, 100);
             }
             if (e.key === 'certificates') {
                 loadCertificatesPreview();
+                showNotification('Certificates updated from admin panel!');
             }
         });
+
+        // Poll for changes every 3 seconds (fallback for browsers that don't support storage event across tabs)
+        let lastImages = JSON.stringify(ImageManager.getImages());
+        let lastCertificates = JSON.stringify(CertificateManager.getCertificates());
+
+        setInterval(() => {
+            const currentImages = JSON.stringify(ImageManager.getImages());
+            const currentCertificates = JSON.stringify(CertificateManager.getCertificates());
+            
+            if (currentImages !== lastImages) {
+                lastImages = currentImages;
+                loadImages();
+                showNotification('Profile images updated!');
+            }
+            
+            if (currentCertificates !== lastCertificates) {
+                lastCertificates = currentCertificates;
+                loadCertificatesPreview();
+                showNotification('Certificates updated!');
+            }
+        }, 3000);
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
@@ -1664,6 +1750,10 @@
             
             // Initialize scroll position
             window.dispatchEvent(new Event('scroll'));
+            
+            // Store initial state
+            lastImages = JSON.stringify(ImageManager.getImages());
+            lastCertificates = JSON.stringify(CertificateManager.getCertificates());
         });
 
         // Handle window resize
@@ -1675,6 +1765,10 @@
                 document.body.style.overflow = '';
             }
         });
+
+        // Expose functions globally for debugging if needed
+        window.ImageManager = ImageManager;
+        window.CertificateManager = CertificateManager;
     </script>
 </body>
 </html>
