@@ -1126,7 +1126,7 @@
     <!-- Header & Navigation -->
     <header id="mainHeader">
         <div class="container header-container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
                 <span>Daka Felix <span class="logo-nickname">(Tech Guy)</span></span>
             </a>
@@ -1137,11 +1137,12 @@
             
             <nav>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="expertise.html">Expertise</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="admin.html" style="color: var(--accent);"><i class="fas fa-lock"></i> Admin</a></li>
                 </ul>
             </nav>
         </div>
@@ -1164,8 +1165,8 @@
                 </div>
                 
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-red">Hire Me</a>
-                    <a href="#about" class="btn">Learn More</a>
+                    <a href="contact.html" class="btn btn-red">Hire Me</a>
+                    <a href="about.html" class="btn">Learn More</a>
                 </div>
             </div>
             
@@ -1175,25 +1176,27 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
+    <!-- Expertise Preview Section (Links to expertise.html) -->
+    <section class="services" id="expertise-preview">
         <div class="container">
-            <h2>My Services</h2>
+            <h2>My Expertise</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-network-wired"></i>
                     </div>
                     <h3>Networking</h3>
-                    <p>Design, implementation, and maintenance of secure network infrastructures for businesses of all sizes. Specialized in both local and cloud-based solutions.</p>
+                    <p>Design, implementation, and maintenance of secure network infrastructures for businesses of all sizes.</p>
+                    <a href="expertise.html#networking" style="color: var(--primary); text-decoration: none; margin-top: 15px; display: inline-block;">Learn More →</a>
                 </div>
                 
                 <div class="service-card red">
                     <div class="service-icon">
                         <i class="fas fa-code"></i>
                     </div>
-                    <h3>Web Design & Development</h3>
-                    <p>Creating responsive, user-friendly websites and web applications with modern frameworks. Focus on both aesthetics and functionality for optimal user experience.</p>
+                    <h3>Web Development</h3>
+                    <p>Creating responsive, user-friendly websites and web applications with modern frameworks.</p>
+                    <a href="expertise.html#web" style="color: var(--secondary); text-decoration: none; margin-top: 15px; display: inline-block;">Learn More →</a>
                 </div>
                 
                 <div class="service-card yellow">
@@ -1201,7 +1204,8 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Cyber Security</h3>
-                    <p>Comprehensive security solutions including vulnerability assessments, penetration testing, security protocols implementation, and staff training to protect digital assets.</p>
+                    <p>Comprehensive security solutions including vulnerability assessments and penetration testing.</p>
+                    <a href="expertise.html#cybersecurity" style="color: var(--accent); text-decoration: none; margin-top: 15px; display: inline-block;">Learn More →</a>
                 </div>
                 
                 <div class="service-card">
@@ -1209,7 +1213,8 @@
                         <i class="fas fa-microchip"></i>
                     </div>
                     <h3>Computer Engineering</h3>
-                    <p>Hardware and software integration, system design, troubleshooting, and optimization of computer systems for maximum performance and reliability.</p>
+                    <p>Hardware and software integration, system design, and optimization of computer systems.</p>
+                    <a href="expertise.html#engineering" style="color: var(--primary); text-decoration: none; margin-top: 15px; display: inline-block;">Learn More →</a>
                 </div>
                 
                 <div class="service-card red">
@@ -1217,7 +1222,8 @@
                         <i class="fas fa-database"></i>
                     </div>
                     <h3>Database Administration</h3>
-                    <p>Design, implementation, maintenance, and optimization of database systems. Ensuring data integrity, security, and efficient access for business applications.</p>
+                    <p>Design, implementation, maintenance, and optimization of database systems.</p>
+                    <a href="expertise.html#database" style="color: var(--secondary); text-decoration: none; margin-top: 15px; display: inline-block;">Learn More →</a>
                 </div>
                 
                 <div class="service-card blue">
@@ -1225,14 +1231,21 @@
                         <i class="fas fa-lightbulb"></i>
                     </div>
                     <h3>IT Consulting</h3>
-                    <p>Strategic technology planning and implementation tailored to Zambian business contexts. Helping organizations leverage technology for growth and efficiency.</p>
+                    <p>Strategic technology planning and implementation tailored to Zambian business contexts.</p>
+                    <a href="expertise.html#consulting" style="color: var(--zambia-blue); text-decoration: none; margin-top: 15px; display: inline-block;">Learn More →</a>
                 </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="expertise.html" class="btn btn-accent">
+                    <i class="fas fa-arrow-right"></i> View All Expertise
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Certifications Preview -->
-    <section class="certifications-preview" id="certifications">
+    <!-- Certificates Preview -->
+    <section class="certifications-preview" id="certifications-preview">
         <div class="container">
             <h2>Recent Certifications</h2>
             <div class="cert-preview-grid" id="certificatesPreview">
@@ -1251,8 +1264,8 @@
         </div>
     </section>
 
-    <!-- About Preview with your photo -->
-    <section class="about-preview" id="about">
+    <!-- About Preview -->
+    <section class="about-preview" id="about-preview">
         <div class="container">
             <h2>About Me</h2>
             <div class="about-content">
@@ -1265,8 +1278,8 @@
                     <p>I believe technology should be a tool for empowerment and development. My approach combines international technical standards with local understanding, ensuring solutions are not only effective but also sustainable and relevant to the Zambian and African context.</p>
                     
                     <div style="margin-top: 30px;">
-                        <a href="#contact" class="btn">
-                            <i class="fas fa-handshake"></i> Let's Collaborate
+                        <a href="about.html" class="btn">
+                            <i class="fas fa-user"></i> Read Full Bio
                         </a>
                     </div>
                 </div>
@@ -1283,7 +1296,7 @@
     </section>
 
     <!-- Contact Preview -->
-    <section class="contact-preview" id="contact">
+    <section class="contact-preview" id="contact-preview">
         <div class="container">
             <h2>Get In Touch</h2>
             <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Ready to collaborate on a project or need IT solutions? I'm here to help.</p>
@@ -1332,8 +1345,8 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px;">
-                <a href="mailto:felixddaka@gmail.com?subject=Portfolio Inquiry&body=Hello Daka, I saw your portfolio and would like to discuss..." class="btn btn-red">
-                    <i class="fas fa-envelope"></i> Email Me Now
+                <a href="contact.html" class="btn btn-red">
+                    <i class="fas fa-envelope"></i> Contact Me
                 </a>
             </div>
         </div>
@@ -1371,12 +1384,12 @@
                 <div class="footer-links">
                     <h4>Quick Navigation</h4>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#certifications">Certifications</a></li>
-                        <li><a href="#about">About Me</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="certificates.html">My Certificates</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="expertise.html">Expertise</a></li>
+                        <li><a href="certificates.html">Certificates</a></li>
+                        <li><a href="about.html">About Me</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="admin.html">Admin Panel</a></li>
                     </ul>
                 </div>
                 
@@ -1607,31 +1620,19 @@
                 mainHeader.classList.remove('scrolled');
             }
             
-            // Set active navigation based on scroll position
-            const sections = document.querySelectorAll('section');
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
+            // Set active navigation based on current page
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
             
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === current) {
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
                     link.classList.add('active');
                 }
             });
-            
-            if (scrollY < 100) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                document.querySelector('.nav-menu a[href="#home"]').classList.add('active');
-            }
         });
 
-        // Smooth scrolling for anchor links
+        // Smooth scrolling for anchor links (only for same-page anchors)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1748,8 +1749,16 @@
                 document.body.style.opacity = '1';
             }, 100);
             
-            // Initialize scroll position
-            window.dispatchEvent(new Event('scroll'));
+            // Set active navigation based on current page
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
+                    link.classList.add('active');
+                }
+            });
             
             // Store initial state
             lastImages = JSON.stringify(ImageManager.getImages());
