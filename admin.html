@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | Daka Felix Certificates</title>
+    <title>Admin Panel | Daka Felix Portfolio Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,6 +122,7 @@
             transition: all 0.3s ease;
             text-align: center;
             width: 100%;
+            font-size: 1rem;
         }
         
         .btn:hover {
@@ -144,6 +145,12 @@
         
         .btn-red:hover {
             background-color: #c53030;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            width: auto;
         }
         
         /* Admin Dashboard */
@@ -176,11 +183,6 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-        }
-        
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.9rem;
         }
         
         /* Tabs */
@@ -230,6 +232,92 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Image Management Section */
+        .image-management-section {
+            background-color: var(--dark-blue-light);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .image-preview-card {
+            background-color: var(--dark-blue-lighter);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .image-preview-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .preview-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin: 15px auto;
+            display: block;
+        }
+        
+        .preview-image.square {
+            border-radius: 10px;
+            width: 250px;
+            height: 180px;
+        }
+        
+        .current-image-url {
+            background-color: var(--dark-blue);
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            word-break: break-all;
+            color: var(--text-muted);
+        }
+        
+        .image-url-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: var(--dark-blue);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .image-url-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .update-image-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .update-image-btn:hover {
+            background-color: #005a3f;
         }
         
         /* Certificate Upload Form */
@@ -285,48 +373,6 @@
         .form-group textarea {
             min-height: 100px;
             resize: vertical;
-        }
-        
-        .file-upload {
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .file-upload:hover {
-            border-color: var(--primary);
-            background-color: rgba(0, 119, 73, 0.05);
-        }
-        
-        .file-upload i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        
-        .file-upload p {
-            margin-bottom: 10px;
-            color: var(--text-light);
-        }
-        
-        .file-upload span {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        .file-upload input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
         }
         
         .form-actions {
@@ -505,6 +551,10 @@
             .tab-btn {
                 min-width: 100px;
             }
+            
+            .image-preview-container {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
@@ -513,7 +563,8 @@
             }
             
             .upload-section,
-            .settings-section {
+            .settings-section,
+            .image-management-section {
                 padding: 20px;
             }
             
@@ -537,7 +588,7 @@
         <div class="login-container">
             <div class="login-logo">
                 <h1><i class="fas fa-lock"></i> Admin Access</h1>
-                <p>Certificate Management Panel</p>
+                <p>Portfolio Management Panel</p>
             </div>
             
             <div class="message" id="loginMessage"></div>
@@ -554,8 +605,9 @@
             </form>
             
             <div style="margin-top: 20px; text-align: center;">
-                <a href="certificates.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">
-                    <i class="fas fa-arrow-left"></i> Back to Certificates
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Default password: <strong>Felix</strong></p>
+                <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; display: inline-block; margin-top: 10px;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
                 </a>
             </div>
         </div>
@@ -565,7 +617,7 @@
     <div class="admin-dashboard" id="adminDashboard">
         <div class="container">
             <div class="admin-header">
-                <h1><i class="fas fa-cogs"></i> Certificate Management</h1>
+                <h1><i class="fas fa-cogs"></i> Portfolio Management</h1>
                 <div class="admin-actions">
                     <button class="btn btn-sm btn-accent" onclick="syncWithPublic()">
                         <i class="fas fa-sync"></i> Sync Data
@@ -573,8 +625,8 @@
                     <button class="btn btn-sm" onclick="logout()">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
-                    <a href="certificates.html" class="btn btn-sm" style="background-color: var(--dark-blue-light); border: 1px solid rgba(255,255,255,0.1);">
-                        <i class="fas fa-eye"></i> View Public
+                    <a href="index.html" class="btn btn-sm" style="background-color: var(--dark-blue-light); border: 1px solid rgba(255,255,255,0.1);">
+                        <i class="fas fa-eye"></i> View Home
                     </a>
                 </div>
             </div>
@@ -584,13 +636,56 @@
             
             <!-- Tabs -->
             <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="upload">Upload New</button>
+                <button class="tab-btn active" data-tab="images">Profile Images</button>
+                <button class="tab-btn" data-tab="upload">Upload Certificate</button>
                 <button class="tab-btn" data-tab="manage">Manage Certificates</button>
                 <button class="tab-btn" data-tab="settings">Settings</button>
             </div>
             
+            <!-- Images Tab -->
+            <div class="tab-content active" id="imagesTab">
+                <div class="image-management-section">
+                    <h2 style="color: var(--text-light); margin-bottom: 25px;">Manage Your Photos</h2>
+                    
+                    <div class="image-preview-container">
+                        <!-- Profile Image Card -->
+                        <div class="image-preview-card">
+                            <h3><i class="fas fa-user-circle"></i> Profile Image</h3>
+                            <img src="" alt="Profile Preview" class="preview-image" id="profilePreview">
+                            <div class="current-image-url" id="currentProfileUrl"></div>
+                            <input type="url" id="profileImageUrl" class="image-url-input" placeholder="Enter image URL">
+                            <button class="update-image-btn" onclick="updateProfileImage()">
+                                <i class="fas fa-save"></i> Update Profile Image
+                            </button>
+                        </div>
+                        
+                        <!-- About Image Card -->
+                        <div class="image-preview-card">
+                            <h3><i class="fas fa-briefcase"></i> About Section Image</h3>
+                            <img src="" alt="About Preview" class="preview-image square" id="aboutPreview">
+                            <div class="current-image-url" id="currentAboutUrl"></div>
+                            <input type="url" id="aboutImageUrl" class="image-url-input" placeholder="Enter image URL">
+                            <button class="update-image-btn" onclick="updateAboutImage()">
+                                <i class="fas fa-save"></i> Update About Image
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background-color: var(--dark-blue-lighter); border-radius: 8px;">
+                        <h3 style="color: var(--accent); margin-bottom: 15px;">Your Facebook Image</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 10px;">Your Facebook profile image URL is set as default:</p>
+                        <div style="background-color: var(--dark-blue); padding: 10px; border-radius: 4px; word-break: break-all; font-size: 0.85rem; color: var(--text-muted);">
+                            https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg
+                        </div>
+                        <p style="color: var(--text-muted); margin-top: 15px; font-size: 0.9rem;">
+                            <i class="fas fa-info-circle"></i> You can replace it with any other image URL above.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Upload Tab -->
-            <div class="tab-content active" id="uploadTab">
+            <div class="tab-content" id="uploadTab">
                 <div class="upload-section">
                     <h2 style="color: var(--text-light); margin-bottom: 25px;">Upload New Certificate</h2>
                     
@@ -641,7 +736,7 @@
                             <label>Certificate Image URL *</label>
                             <input type="url" id="certificateUrl" placeholder="https://example.com/certificate.jpg" required>
                             <small style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-top: 5px;">
-                                Use a direct image URL or upload to an image hosting service
+                                Use a direct image URL (recommended: Unsplash, Imgur, or your own hosting)
                             </small>
                         </div>
                         
@@ -728,34 +823,31 @@
     </div>
 
     <script>
+        // Your Facebook Profile Image URL
+        const YOUR_FACEBOOK_IMAGE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3";
+        
         // Admin Password Management
         const AdminAuth = {
-            // Default password
             defaultPassword: "Felix",
             
-            // Get current password from localStorage or use default
             getPassword: function() {
                 const stored = localStorage.getItem('adminPassword');
                 return stored || this.defaultPassword;
             },
             
-            // Set new password
             setPassword: function(newPassword) {
                 localStorage.setItem('adminPassword', newPassword);
                 return true;
             },
             
-            // Check if password is correct
             checkPassword: function(password) {
                 return password === this.getPassword();
             },
             
-            // Check if user is logged in
             isLoggedIn: function() {
                 return localStorage.getItem('adminLoggedIn') === 'true';
             },
             
-            // Login
             login: function(password) {
                 if (this.checkPassword(password)) {
                     localStorage.setItem('adminLoggedIn', 'true');
@@ -764,16 +856,47 @@
                 return false;
             },
             
-            // Logout
             logout: function() {
                 localStorage.removeItem('adminLoggedIn');
                 return true;
             }
         };
 
+        // Image Management
+        const ImageManager = {
+            defaultImages: {
+                profile: YOUR_FACEBOOK_IMAGE,
+                about: "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
+            },
+            
+            getImages: function() {
+                const stored = localStorage.getItem('siteImages');
+                if (stored) {
+                    try {
+                        return JSON.parse(stored);
+                    } catch (e) {
+                        console.error('Error parsing images:', e);
+                        return this.defaultImages;
+                    }
+                }
+                return this.defaultImages;
+            },
+            
+            saveImages: function(images) {
+                localStorage.setItem('siteImages', JSON.stringify(images));
+                window.dispatchEvent(new Event('storage'));
+            },
+            
+            updateImage: function(key, url) {
+                const images = this.getImages();
+                images[key] = url;
+                this.saveImages(images);
+                return images;
+            }
+        };
+
         // Certificate Data Management
         const CertificateManager = {
-            // Default certificates (sample data)
             defaultCertificates: [
                 {
                     id: 1,
@@ -782,7 +905,7 @@
                     date: "2026-02-03",
                     type: "certificate",
                     credentialId: "CISCO-AI-2026-001",
-                    description: "Certificate earned for completing Introduction to Modern AI course. Gained foundational knowledge of artificial intelligence concepts and applications.",
+                    description: "Certificate earned for completing Introduction to Modern AI course.",
                     fileName: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                 },
                 {
@@ -792,12 +915,21 @@
                     date: "2025-07-08",
                     type: "certificate",
                     credentialId: "CISCO-DS-2025-001",
-                    description: "Certificate and Badge earned for completing Introduction to Data Science course with specialized modules in AI/ML concepts, data collection, and analytics fundamentals.",
+                    description: "Certificate and Badge earned for completing Introduction to Data Science course.",
                     fileName: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    id: 3,
+                    name: "Cybersecurity Fundamentals",
+                    issuer: "Cisco Networking Academy",
+                    date: "2026-02-01",
+                    type: "badge",
+                    credentialId: "CISCO-CYB-2026-001",
+                    description: "Digital badge earned for cybersecurity course completion.",
+                    fileName: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                 }
             ],
 
-            // Get certificates from localStorage or use defaults
             getCertificates: function() {
                 const stored = localStorage.getItem('certificates');
                 if (stored) {
@@ -811,13 +943,12 @@
                 return this.defaultCertificates;
             },
 
-            // Save certificates to localStorage
             saveCertificates: function(certificates) {
                 localStorage.setItem('certificates', JSON.stringify(certificates));
                 localStorage.setItem('lastUpdated', new Date().toISOString());
+                window.dispatchEvent(new Event('storage'));
             },
 
-            // Add new certificate
             addCertificate: function(certificate) {
                 const certificates = this.getCertificates();
                 certificate.id = certificates.length > 0 ? Math.max(...certificates.map(c => c.id)) + 1 : 1;
@@ -826,7 +957,6 @@
                 return certificate;
             },
 
-            // Update certificate
             updateCertificate: function(id, updates) {
                 const certificates = this.getCertificates();
                 const index = certificates.findIndex(c => c.id === id);
@@ -838,7 +968,6 @@
                 return null;
             },
 
-            // Delete certificate
             deleteCertificate: function(id) {
                 const certificates = this.getCertificates();
                 const filtered = certificates.filter(c => c.id !== id);
@@ -846,28 +975,29 @@
                 return filtered.length !== certificates.length;
             },
 
-            // Reset to default certificates
             resetToDefault: function() {
                 this.saveCertificates(this.defaultCertificates);
                 return this.defaultCertificates;
             },
 
-            // Export data
             exportData: function() {
                 const data = {
                     certificates: this.getCertificates(),
+                    images: ImageManager.getImages(),
                     exportDate: new Date().toISOString(),
                     version: "1.0"
                 };
                 return JSON.stringify(data, null, 2);
             },
 
-            // Import data
             importData: function(data) {
                 try {
                     const parsed = JSON.parse(data);
                     if (parsed.certificates && Array.isArray(parsed.certificates)) {
                         this.saveCertificates(parsed.certificates);
+                        if (parsed.images) {
+                            ImageManager.saveImages(parsed.images);
+                        }
                         return true;
                     }
                     return false;
@@ -889,6 +1019,14 @@
         const passwordForm = document.getElementById('passwordForm');
         const totalCertCount = document.getElementById('totalCertCount');
         const lastUpdatedTime = document.getElementById('lastUpdatedTime');
+        
+        // Image preview elements
+        const profilePreview = document.getElementById('profilePreview');
+        const aboutPreview = document.getElementById('aboutPreview');
+        const currentProfileUrl = document.getElementById('currentProfileUrl');
+        const currentAboutUrl = document.getElementById('currentAboutUrl');
+        const profileImageUrl = document.getElementById('profileImageUrl');
+        const aboutImageUrl = document.getElementById('aboutImageUrl');
 
         // Utility Functions
         function showMessage(element, text, type = 'info') {
@@ -917,24 +1055,82 @@
             return new Date(dateString).toLocaleDateString('en-US', options);
         }
 
+        // Load and display current images
+        function loadImagePreviews() {
+            const images = ImageManager.getImages();
+            
+            profilePreview.src = images.profile;
+            aboutPreview.src = images.about;
+            
+            currentProfileUrl.textContent = images.profile;
+            currentAboutUrl.textContent = images.about;
+            
+            profileImageUrl.value = images.profile;
+            aboutImageUrl.value = images.about;
+        }
+
+        // Update profile image
+        function updateProfileImage() {
+            const newUrl = profileImageUrl.value.trim();
+            if (!newUrl) {
+                showMessage(adminMessage, 'Please enter an image URL', 'error');
+                return;
+            }
+            
+            try {
+                new URL(newUrl);
+            } catch (e) {
+                showMessage(adminMessage, 'Please enter a valid URL', 'error');
+                return;
+            }
+            
+            ImageManager.updateImage('profile', newUrl);
+            loadImagePreviews();
+            showMessage(adminMessage, 'Profile image updated successfully!', 'success');
+        }
+
+        // Update about image
+        function updateAboutImage() {
+            const newUrl = aboutImageUrl.value.trim();
+            if (!newUrl) {
+                showMessage(adminMessage, 'Please enter an image URL', 'error');
+                return;
+            }
+            
+            try {
+                new URL(newUrl);
+            } catch (e) {
+                showMessage(adminMessage, 'Please enter a valid URL', 'error');
+                return;
+            }
+            
+            ImageManager.updateImage('about', newUrl);
+            loadImagePreviews();
+            showMessage(adminMessage, 'About image updated successfully!', 'success');
+        }
+
         // Tab Switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const tabId = this.dataset.tab;
                 
-                // Update active tab button
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
-                // Show corresponding tab content
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.remove('active');
                 });
                 document.getElementById(tabId + 'Tab').classList.add('active');
+                
+                if (tabId === 'images') {
+                    loadImagePreviews();
+                } else if (tabId === 'manage') {
+                    renderCertificatesList();
+                }
             });
         });
 
-        // Render certificates list for management
+        // Render certificates list
         function renderCertificatesList() {
             const certificates = CertificateManager.getCertificates();
             certificatesList.innerHTML = '';
@@ -950,7 +1146,6 @@
                 return;
             }
             
-            // Sort by date (newest first)
             certificates.sort((a, b) => new Date(b.date) - new Date(a.date));
             
             certificates.forEach(cert => {
@@ -1003,13 +1198,11 @@
                 fileName: document.getElementById('certificateUrl').value
             };
             
-            // Validate required fields
             if (!formData.name || !formData.issuer || !formData.date || !formData.type || !formData.fileName) {
                 showMessage(adminMessage, 'Please fill all required fields', 'error');
                 return;
             }
             
-            // Validate URL
             try {
                 new URL(formData.fileName);
             } catch (e) {
@@ -1017,20 +1210,16 @@
                 return;
             }
             
-            // Add certificate
             const newCert = CertificateManager.addCertificate(formData);
             
-            // Show success message
             showMessage(adminMessage, `Certificate "${newCert.name}" added successfully!`, 'success');
             
-            // Reset form
             certificateForm.reset();
+            document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
             
-            // Update lists and info
             renderCertificatesList();
             updateSystemInfo();
             
-            // Switch to manage tab
             document.querySelector('[data-tab="manage"]').click();
         });
 
@@ -1044,7 +1233,6 @@
                 return;
             }
             
-            // Fill form with certificate data
             document.getElementById('certificateName').value = cert.name;
             document.getElementById('issuer').value = cert.issuer;
             document.getElementById('issueDate').value = cert.date;
@@ -1054,20 +1242,18 @@
             document.getElementById('description').value = cert.description || '';
             document.getElementById('certificateUrl').value = cert.fileName;
             
-            // Change form to update mode
             const submitBtn = certificateForm.querySelector('button[type="submit"]');
             submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Certificate';
             submitBtn.dataset.mode = 'update';
             submitBtn.dataset.id = id;
             
-            // Scroll to form
             document.querySelector('[data-tab="upload"]').click();
             certificateForm.scrollIntoView({ behavior: 'smooth' });
             
             showMessage(adminMessage, `Editing certificate: ${cert.name}`, 'info');
         }
 
-        // Update certificate form handler
+        // Handle certificate update
         certificateForm.addEventListener('submit', function(e) {
             const submitBtn = this.querySelector('button[type="submit"]');
             
@@ -1091,11 +1277,12 @@
                 if (updated) {
                     showMessage(adminMessage, `Certificate "${updated.name}" updated successfully!`, 'success');
                     
-                    // Reset form to add mode
                     certificateForm.reset();
                     submitBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Certificate';
                     delete submitBtn.dataset.mode;
                     delete submitBtn.dataset.id;
+                    
+                    document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
                     
                     renderCertificatesList();
                     updateSystemInfo();
@@ -1134,50 +1321,46 @@
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             
-            // Validate current password
             if (!AdminAuth.checkPassword(currentPassword)) {
                 showMessage(adminMessage, 'Current password is incorrect', 'error');
                 return;
             }
             
-            // Validate new password
             if (newPassword.length < 4) {
                 showMessage(adminMessage, 'New password must be at least 4 characters', 'error');
                 return;
             }
             
-            // Validate password match
             if (newPassword !== confirmPassword) {
                 showMessage(adminMessage, 'New passwords do not match', 'error');
                 return;
             }
             
-            // Change password
             AdminAuth.setPassword(newPassword);
             
-            // Show success message
             showMessage(adminMessage, 'Password changed successfully!', 'success');
             
-            // Clear form
             passwordForm.reset();
         });
 
         // Sync with public page
         function syncWithPublic() {
-            // This function would sync data between admin and public pages
-            // For now, we'll just show a success message
             showMessage(adminMessage, 'Data synced successfully!', 'success');
             updateSystemInfo();
         }
 
         // Reset to default
         function resetToDefault() {
-            if (!confirm('Are you sure you want to reset all certificates to default? This will delete all custom certificates.')) {
+            if (!confirm('Are you sure you want to reset all data to default? This will delete all custom certificates and images.')) {
                 return;
             }
             
             CertificateManager.resetToDefault();
-            showMessage(adminMessage, 'Reset to default certificates successfully!', 'success');
+            ImageManager.saveImages(ImageManager.defaultImages);
+            
+            showMessage(adminMessage, 'Reset to default data successfully!', 'success');
+            
+            loadImagePreviews();
             renderCertificatesList();
             updateSystemInfo();
         }
@@ -1189,7 +1372,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `certificates-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `portfolio-backup-${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -1212,6 +1395,7 @@
                     const success = CertificateManager.importData(e.target.result);
                     if (success) {
                         showMessage(adminMessage, 'Data imported successfully!', 'success');
+                        loadImagePreviews();
                         renderCertificatesList();
                         updateSystemInfo();
                     } else {
@@ -1242,10 +1426,11 @@
             if (AdminAuth.login(password)) {
                 loginPage.style.display = 'none';
                 adminDashboard.style.display = 'block';
+                
+                loadImagePreviews();
                 renderCertificatesList();
                 updateSystemInfo();
                 
-                // Set today's date as default for issue date
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('issueDate').value = today;
                 document.getElementById('issueDate').max = today;
@@ -1256,16 +1441,27 @@
             }
         });
 
+        // Make functions global
+        window.updateProfileImage = updateProfileImage;
+        window.updateAboutImage = updateAboutImage;
+        window.editCertificate = editCertificate;
+        window.deleteCertificate = deleteCertificate;
+        window.syncWithPublic = syncWithPublic;
+        window.resetToDefault = resetToDefault;
+        window.exportData = exportData;
+        window.importData = importData;
+        window.logout = logout;
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if already logged in
             if (AdminAuth.isLoggedIn()) {
                 loginPage.style.display = 'none';
                 adminDashboard.style.display = 'block';
+                
+                loadImagePreviews();
                 renderCertificatesList();
                 updateSystemInfo();
                 
-                // Set today's date as default for issue date
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('issueDate').value = today;
                 document.getElementById('issueDate').max = today;
@@ -1273,11 +1469,9 @@
                 loginPage.style.display = 'flex';
                 adminDashboard.style.display = 'none';
                 
-                // Auto-focus password field
                 document.getElementById('adminPassword').focus();
             }
             
-            // Show default password hint on first visit
             if (!localStorage.getItem('passwordHintShown')) {
                 showMessage(loginMessage, `Default password: "${AdminAuth.defaultPassword}"`, 'info');
                 localStorage.setItem('passwordHintShown', 'true');
