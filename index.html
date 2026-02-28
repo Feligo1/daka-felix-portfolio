@@ -1866,11 +1866,11 @@
         // Your Facebook Profile Image URL (only default photo)
         const YOUR_FACEBOOK_IMAGE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3";
         
-        // Backup image (still your Facebook, but using a reliable placeholder if FB fails)
+        // Backup image (reliable placeholder if FB fails)
         const BACKUP_IMAGE = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
         const BACKUP_ABOUT_IMAGE = "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
 
-        // Image Management System
+        // Image Management System - Allows admin to change images
         const ImageManager = {
             defaultImages: {
                 profile: YOUR_FACEBOOK_IMAGE,
@@ -1888,6 +1888,28 @@
                     }
                 }
                 return this.defaultImages;
+            },
+            
+            saveImages: function(images) {
+                localStorage.setItem('siteImages', JSON.stringify(images));
+                // Trigger storage event for other tabs
+                window.dispatchEvent(new Event('storage'));
+            },
+            
+            // Convert file to base64 and store (used by admin)
+            storeImageAsBase64: function(file, key) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const base64String = e.target.result;
+                        const images = this.getImages();
+                        images[key] = base64String;
+                        this.saveImages(images);
+                        resolve(base64String);
+                    };
+                    reader.onerror = (error) => reject(error);
+                    reader.readAsDataURL(file);
+                });
             }
         };
 
@@ -1934,6 +1956,12 @@
                     }
                 }
                 return this.defaultCertificates;
+            },
+            
+            saveCertificates: function(certificates) {
+                localStorage.setItem('certificates', JSON.stringify(certificates));
+                localStorage.setItem('lastUpdated', new Date().toISOString());
+                window.dispatchEvent(new Event('storage'));
             }
         };
 
@@ -1951,8 +1979,9 @@
         const menuLinks = document.querySelectorAll('.menu-content a');
 
         // Show notification
-        function showNotification(message) {
+        function showNotification(message, isError = false) {
             notificationMessage.textContent = message;
+            imageUpdateNotification.style.backgroundColor = isError ? 'var(--secondary)' : 'var(--primary)';
             imageUpdateNotification.classList.add('show');
             
             setTimeout(() => {
@@ -1960,11 +1989,30 @@
             }, 3000);
         }
 
-        // Load images from localStorage
+        // Load images from localStorage (this handles admin uploaded images)
         function loadImages() {
-            const images = ImageManager.getImages();
-            profileImage.src = images.profile;
-            aboutImage.src = images.about;
+            try {
+                const images = ImageManager.getImages();
+                
+                // Validate that images are valid URLs or base64
+                if (images.profile && typeof images.profile === 'string') {
+                    profileImage.src = images.profile;
+                } else {
+                    profileImage.src = YOUR_FACEBOOK_IMAGE;
+                }
+                
+                if (images.about && typeof images.about === 'string') {
+                    aboutImage.src = images.about;
+                } else {
+                    aboutImage.src = BACKUP_ABOUT_IMAGE;
+                }
+                
+                console.log('Images loaded from admin:', images);
+            } catch (error) {
+                console.error('Error loading images:', error);
+                profileImage.src = YOUR_FACEBOOK_IMAGE;
+                aboutImage.src = BACKUP_ABOUT_IMAGE;
+            }
         }
 
         // Format date
@@ -1973,36 +2021,43 @@
             return new Date(dateString).toLocaleDateString('en-US', options);
         }
 
-        // Load certificates preview
+        // Load certificates preview (handles admin uploaded certificates)
         function loadCertificatesPreview() {
-            const certificates = CertificateManager.getCertificates();
-            
-            // Sort by date (newest first) and take first 3
-            const recent = certificates
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .slice(0, 3);
-            
-            if (recent.length === 0) {
-                certificatesPreview.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No certificates available</div>';
-                return;
-            }
-            
-            let html = '';
-            recent.forEach((cert, index) => {
-                const borderColor = index === 0 ? '' : (index === 1 ? 'red' : 'yellow');
-                html += `
-                    <div class="cert-preview-card ${borderColor}">
-                        <h3>${cert.name}</h3>
-                        <p>${cert.description || `Certificate from ${cert.issuer}`}</p>
-                        <div class="cert-preview-meta">
-                            <span><i class="far fa-calendar"></i> ${formatDate(cert.date)}</span>
-                            <a href="certificates.html">View</a>
+            try {
+                const certificates = CertificateManager.getCertificates();
+                
+                // Sort by date (newest first) and take first 3
+                const recent = certificates
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .slice(0, 3);
+                
+                if (recent.length === 0) {
+                    certificatesPreview.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No certificates available</div>';
+                    return;
+                }
+                
+                let html = '';
+                recent.forEach((cert, index) => {
+                    const borderColor = index === 0 ? '' : (index === 1 ? 'red' : 'yellow');
+                    const imageUrl = cert.fileName && cert.fileName.startsWith('data:') ? cert.fileName : (cert.fileName || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+                    
+                    html += `
+                        <div class="cert-preview-card ${borderColor}">
+                            <h3>${cert.name || 'Certificate'}</h3>
+                            <p>${cert.description || `Certificate from ${cert.issuer || 'Unknown'}`}</p>
+                            <div class="cert-preview-meta">
+                                <span><i class="far fa-calendar"></i> ${cert.date ? formatDate(cert.date) : 'Unknown date'}</span>
+                                <a href="certificates.html">View</a>
+                            </div>
                         </div>
-                    </div>
-                `;
-            });
-            
-            certificatesPreview.innerHTML = html;
+                    `;
+                });
+                
+                certificatesPreview.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading certificates:', error);
+                certificatesPreview.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Error loading certificates</div>';
+            }
         }
 
         // Menu Toggle Functionality
@@ -2101,9 +2156,9 @@
             });
         });
 
-        // Image error handling - use Facebook image as default
+        // Image error handling - fallback if images fail to load
         profileImage.addEventListener('error', function() {
-            console.log('Facebook image failed to load, using backup');
+            console.log('Profile image failed to load, using backup');
             this.src = BACKUP_IMAGE;
         });
 
@@ -2134,36 +2189,41 @@
             observer.observe(card);
         });
 
-        // Check for image updates from admin
+        // Check for image updates from admin via storage event
         window.addEventListener('storage', function(e) {
+            console.log('Storage event detected:', e.key);
             if (e.key === 'siteImages') {
                 loadImages();
-                showNotification('Profile images updated!');
+                showNotification('Profile images updated from admin!');
             }
             if (e.key === 'certificates') {
                 loadCertificatesPreview();
-                showNotification('Certificates updated!');
+                showNotification('Certificates updated from admin!');
             }
         });
 
-        // Poll for changes every 3 seconds
+        // Poll for changes every 3 seconds (fallback for browsers that don't support storage events across tabs)
         let lastImages = JSON.stringify(ImageManager.getImages());
         let lastCertificates = JSON.stringify(CertificateManager.getCertificates());
 
         setInterval(() => {
-            const currentImages = JSON.stringify(ImageManager.getImages());
-            const currentCertificates = JSON.stringify(CertificateManager.getCertificates());
-            
-            if (currentImages !== lastImages) {
-                lastImages = currentImages;
-                loadImages();
-                showNotification('Profile images updated!');
-            }
-            
-            if (currentCertificates !== lastCertificates) {
-                lastCertificates = currentCertificates;
-                loadCertificatesPreview();
-                showNotification('Certificates updated!');
+            try {
+                const currentImages = JSON.stringify(ImageManager.getImages());
+                const currentCertificates = JSON.stringify(CertificateManager.getCertificates());
+                
+                if (currentImages !== lastImages) {
+                    lastImages = currentImages;
+                    loadImages();
+                    showNotification('Profile images updated!');
+                }
+                
+                if (currentCertificates !== lastCertificates) {
+                    lastCertificates = currentCertificates;
+                    loadCertificatesPreview();
+                    showNotification('Certificates updated!');
+                }
+            } catch (error) {
+                console.error('Error in polling:', error);
             }
         }, 3000);
 
@@ -2172,8 +2232,13 @@
             const currentYear = new Date().getFullYear();
             document.getElementById('currentYear').textContent = currentYear;
             
+            // Load images from admin storage
             loadImages();
+            
+            // Load certificates from admin storage
             loadCertificatesPreview();
+            
+            // Set active menu item
             setActiveMenuItem();
             
             document.body.style.opacity = '1';
@@ -2181,6 +2246,8 @@
             // Store initial state
             lastImages = JSON.stringify(ImageManager.getImages());
             lastCertificates = JSON.stringify(CertificateManager.getCertificates());
+            
+            console.log('Index page initialized - ready for admin updates');
         });
 
         // Handle window resize
