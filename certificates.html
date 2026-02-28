@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>My Certificates | Daka Felix (Tech Guy)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -151,7 +151,7 @@
             width: 100%;
         }
         
-        /* Header & Navigation */
+        /* Header & Navigation - Updated with corner menu */
         header {
             background-color: rgba(10, 25, 49, 0.98);
             backdrop-filter: blur(10px);
@@ -194,66 +194,114 @@
             font-size: 1.5rem;
         }
         
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
-            transition: var(--transition);
-            z-index: 1001;
-        }
-        
-        .mobile-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        nav {
+        /* Corner Menu Styles */
+        .menu-container {
+            position: relative;
             display: flex;
             align-items: center;
         }
         
-        .nav-menu {
+        .menu-btn {
             display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-        
-        .nav-menu li a {
-            text-decoration: none;
+            align-items: center;
+            justify-content: center;
+            background: var(--dark-blue-lighter);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-light);
-            font-weight: 600;
             font-size: 1rem;
-            padding: 8px 0;
-            position: relative;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 30px;
+            gap: 8px;
             transition: var(--transition);
-            display: block;
+            z-index: 1001;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .nav-menu li a:hover,
-        .nav-menu li a.active {
+        .menu-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .menu-btn:hover {
+            background: var(--dark-blue);
+            border-color: var(--accent);
+        }
+        
+        .menu-btn:active {
+            transform: scale(0.97);
+        }
+        
+        .menu-content {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: var(--dark-blue-lighter);
+            min-width: 220px;
+            border-radius: 16px;
+            box-shadow: var(--box-shadow-hover);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .menu-content.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+        
+        .menu-content a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .menu-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-content a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            padding-left: 25px;
+        }
+        
+        .menu-content a i {
+            width: 20px;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+        
+        .menu-content a.active {
+            background: rgba(252, 209, 22, 0.15);
             color: var(--accent);
         }
         
-        .nav-menu li a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            background-color: var(--accent);
-            bottom: 0;
-            left: 0;
-            transition: width 0.3s ease;
+        .menu-content a.active i {
+            color: var(--accent);
         }
         
-        .nav-menu li a:hover:after,
-        .nav-menu li a.active:after {
-            width: 100%;
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Hide old navigation */
+        .desktop-nav {
+            display: none;
         }
         
         /* Back Button */
@@ -907,55 +955,6 @@
                 font-size: 1.6rem;
             }
             
-            .mobile-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            nav {
-                position: relative;
-            }
-            
-            .nav-menu {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--dark-blue-light);
-                flex-direction: column;
-                padding: 20px;
-                gap: 0;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.4s ease;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                z-index: 999;
-                max-height: calc(100vh - 70px);
-                overflow-y: auto;
-            }
-            
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-menu li {
-                width: 100%;
-            }
-            
-            .nav-menu li a {
-                display: block;
-                padding: 15px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .nav-menu li:last-child a {
-                border-bottom: none;
-            }
-            
             .filters-header {
                 flex-direction: column;
                 align-items: stretch;
@@ -1046,19 +1045,21 @@
                 <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
             </a>
             
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="index.html#services">Services</a></li>
-                    <li><a href="index.html#about">About</a></li>
-                    <li><a href="certificates.html" class="active">Certificates</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
+            <!-- Corner Menu for All Devices -->
+            <div class="menu-container">
+                <button class="menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                    <span>Menu</span>
+                </button>
+                <div class="menu-content" id="menuContent">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <a href="index.html#services"><i class="fas fa-cogs"></i> Services</a>
+                    <a href="index.html#about"><i class="fas fa-user"></i> About</a>
+                    <a href="certificates.html" class="active"><i class="fas fa-certificate"></i> Certificates</a>
+                    <a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="admin.html"><i class="fas fa-lock" style="color: var(--accent);"></i> Admin</a>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -1161,7 +1162,7 @@
             </div>
             <div class="modal-body">
                 <div class="modal-img-container">
-                    <img id="modalImage" src="" alt="Certificate Preview" class="modal-img" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    <img id="modalImage" src="" alt="Certificate Preview" class="modal-img">
                 </div>
                 <div id="modalDetails"></div>
             </div>
@@ -1211,6 +1212,9 @@
     </footer>
 
     <script>
+        // Your Facebook Profile Image URL (only default photo)
+        const YOUR_FACEBOOK_IMAGE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3";
+        
         // Enhanced Certificate Data Management
         const CertificateManager = {
             // Default certificates (sample data with improved details)
@@ -1346,9 +1350,12 @@
         const modalImage = document.getElementById('modalImage');
         const modalDetails = document.getElementById('modalDetails');
         const mainHeader = document.getElementById('mainHeader');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navMenu = document.getElementById('navMenu');
         const currentYearFooter = document.getElementById('currentYear');
+        
+        // Menu Elements
+        const menuBtn = document.getElementById('menuBtn');
+        const menuContent = document.getElementById('menuContent');
+        const menuLinks = document.querySelectorAll('.menu-content a');
 
         // Utility Functions
         function formatDate(dateString) {
@@ -1625,29 +1632,70 @@
             }
         }
 
-        // Mobile navigation toggle
-        function toggleMobileMenu() {
-            navMenu.classList.toggle('active');
-            
-            // Toggle menu icon
-            const icon = mobileToggle.querySelector('i');
-            if (icon.classList.contains('fa-bars')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
+        // Menu Toggle Functionality
+        if (menuBtn) {
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menuContent.classList.toggle('show');
+                
+                // Change icon when menu is open
+                const icon = menuBtn.querySelector('i');
+                if (menuContent.classList.contains('show')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
         }
 
-        // Close mobile menu when clicking a link
-        function closeMobileMenu() {
-            navMenu.classList.remove('active');
-            mobileToggle.querySelector('i').classList.remove('fa-times');
-            mobileToggle.querySelector('i').classList.add('fa-bars');
-            document.body.style.overflow = '';
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (menuContent && menuContent.classList.contains('show')) {
+                const isClickInside = menuBtn.contains(event.target) || menuContent.contains(event.target);
+                if (!isClickInside) {
+                    menuContent.classList.remove('show');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        });
+
+        // Close menu when clicking a link
+        if (menuLinks) {
+            menuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuContent.classList.remove('show');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+        }
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuContent.classList.contains('show')) {
+                menuContent.classList.remove('show');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Set active menu item based on current page
+        function setActiveMenuItem() {
+            const currentPage = window.location.pathname.split('/').pop() || 'certificates.html';
+            
+            menuLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === currentPage || (href.includes('#') && href.split('#')[0] === currentPage)) {
+                    link.classList.add('active');
+                }
+            });
         }
 
         // Initialize the page
@@ -1662,6 +1710,7 @@
                 document.getElementById('adminAccess').style.display = 'block';
             }
             
+            setActiveMenuItem();
             updateStatistics();
             renderCertificates();
             
@@ -1706,32 +1755,17 @@
                 }
             });
             
-            // Mobile navigation toggle
-            mobileToggle.addEventListener('click', toggleMobileMenu);
-            
-            // Close mobile menu when clicking a link
-            document.querySelectorAll('.nav-menu a').forEach(link => {
-                link.addEventListener('click', closeMobileMenu);
-            });
-            
-            // Close menu when clicking outside on mobile
-            document.addEventListener('click', (event) => {
-                const isClickInsideNav = navMenu.contains(event.target) || mobileToggle.contains(event.target);
-                
-                if (!isClickInsideNav && navMenu.classList.contains('active')) {
-                    closeMobileMenu();
-                }
-            });
-            
             // Header scroll effect
             window.addEventListener('scroll', handleHeaderScroll);
             handleHeaderScroll(); // Initial check
             
             // Handle window resize
             window.addEventListener('resize', function() {
-                // Close mobile menu if window is resized to desktop
-                if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
-                    closeMobileMenu();
+                if (window.innerWidth > 768 && menuContent?.classList.contains('show')) {
+                    menuContent.classList.remove('show');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
             });
             
@@ -1744,6 +1778,11 @@
                 }
             });
         });
+
+        // Make functions global for onclick handlers
+        window.viewCertificate = viewCertificate;
+        window.downloadCertificate = downloadCertificate;
+        window.clearFilters = clearFilters;
     </script>
 </body>
 </html>
