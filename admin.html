@@ -425,7 +425,7 @@
         /* Image Management */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
         }
         
@@ -782,6 +782,53 @@
             color: var(--accent);
         }
         
+        /* Message Contacts Section */
+        .messages-preview {
+            margin-top: 24px;
+        }
+        
+        .message-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        
+        .message-item:hover {
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .message-sender {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .message-date {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+        
+        .message-subject {
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        
+        .message-preview-text {
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
         /* Animations */
         @keyframes slideUp {
             from {
@@ -964,7 +1011,7 @@
                     <i class="fas fa-cogs"></i>
                     <div>
                         <h1>Portfolio Management</h1>
-                        <p>Manage your certificates and profile images</p>
+                        <p>Manage your certificates, profile images, and site content</p>
                     </div>
                 </div>
                 
@@ -1038,6 +1085,9 @@
                 <button class="tab-btn" data-tab="manage">
                     <i class="fas fa-list"></i> Manage
                 </button>
+                <button class="tab-btn" data-tab="messages">
+                    <i class="fas fa-envelope"></i> Messages
+                </button>
                 <button class="tab-btn" data-tab="settings">
                     <i class="fas fa-cog"></i> Settings
                 </button>
@@ -1073,6 +1123,9 @@
                             <button class="btn btn-primary btn-block" id="uploadProfileBtn" onclick="uploadProfileImage()" disabled>
                                 <i class="fas fa-upload"></i> Upload Profile Image
                             </button>
+                            <button class="btn btn-secondary btn-block" onclick="resetProfileImage()" style="margin-top: 8px;">
+                                <i class="fas fa-undo"></i> Reset to Default
+                            </button>
                         </div>
                         
                         <!-- About Image Card -->
@@ -1097,6 +1150,63 @@
                             <button class="btn btn-primary btn-block" id="uploadAboutBtn" onclick="uploadAboutImage()" disabled>
                                 <i class="fas fa-upload"></i> Upload About Image
                             </button>
+                            <button class="btn btn-secondary btn-block" onclick="resetAboutImage()" style="margin-top: 8px;">
+                                <i class="fas fa-undo"></i> Reset to Default
+                            </button>
+                        </div>
+                        
+                        <!-- Expertise Page Image Card -->
+                        <div class="image-card">
+                            <h3><i class="fas fa-cogs"></i> Expertise Header</h3>
+                            
+                            <div class="preview-container">
+                                <img src="" alt="Expertise" class="preview-image square" id="expertisePreview">
+                                <div class="preview-overlay square" onclick="document.getElementById('expertiseFileInput').click()">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="file-upload-area" id="expertiseUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to select image</p>
+                                <p style="font-size: 11px;">JPG, PNG, GIF • Max 5MB</p>
+                                <input type="file" id="expertiseFileInput" accept="image/*" hidden>
+                                <div class="file-name" id="expertiseFileName"></div>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-block" id="uploadExpertiseBtn" onclick="uploadExpertiseImage()" disabled>
+                                <i class="fas fa-upload"></i> Upload Expertise Image
+                            </button>
+                            <button class="btn btn-secondary btn-block" onclick="resetExpertiseImage()" style="margin-top: 8px;">
+                                <i class="fas fa-undo"></i> Reset to Default
+                            </button>
+                        </div>
+                        
+                        <!-- Contact Page Image Card -->
+                        <div class="image-card">
+                            <h3><i class="fas fa-envelope"></i> Contact Header</h3>
+                            
+                            <div class="preview-container">
+                                <img src="" alt="Contact" class="preview-image square" id="contactPreview">
+                                <div class="preview-overlay square" onclick="document.getElementById('contactFileInput').click()">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="file-upload-area" id="contactUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to select image</p>
+                                <p style="font-size: 11px;">JPG, PNG, GIF • Max 5MB</p>
+                                <input type="file" id="contactFileInput" accept="image/*" hidden>
+                                <div class="file-name" id="contactFileName"></div>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-block" id="uploadContactBtn" onclick="uploadContactImage()" disabled>
+                                <i class="fas fa-upload"></i> Upload Contact Image
+                            </button>
+                            <button class="btn btn-secondary btn-block" onclick="resetContactImage()" style="margin-top: 8px;">
+                                <i class="fas fa-undo"></i> Reset to Default
+                            </button>
                         </div>
                     </div>
                     
@@ -1111,8 +1221,12 @@
                             <span class="info-value" id="currentAboutStatus">Default</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Facebook Default:</span>
-                            <span class="info-value"><i class="fas fa-check-circle" style="color: var(--success);"></i> Set</span>
+                            <span class="info-label">Expertise Image:</span>
+                            <span class="info-value" id="currentExpertiseStatus">Default</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Contact Image:</span>
+                            <span class="info-value" id="currentContactStatus">Default</span>
                         </div>
                     </div>
                 </div>
@@ -1211,6 +1325,24 @@
                 </div>
             </div>
             
+            <!-- Messages Tab -->
+            <div class="tab-content" id="messagesTab">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-envelope"></i> Contact Messages</h2>
+                    </div>
+                    
+                    <div id="messagesList" class="messages-preview">
+                        <!-- Messages will be dynamically added here -->
+                        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                            <h3>No Messages Yet</h3>
+                            <p style="margin-top: 8px;">Contact form submissions will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Settings Tab -->
             <div class="tab-content" id="settingsTab">
                 <div class="content-card">
@@ -1251,6 +1383,9 @@
                                 <button class="btn btn-secondary btn-block" onclick="importData()">
                                     <i class="fas fa-upload"></i> Import Data
                                 </button>
+                                <button class="btn btn-danger btn-block" onclick="clearAllMessages()">
+                                    <i class="fas fa-trash"></i> Clear All Messages
+                                </button>
                                 <button class="btn btn-danger btn-block" onclick="resetToDefault()">
                                     <i class="fas fa-redo-alt"></i> Reset to Default
                                 </button>
@@ -1266,7 +1401,11 @@
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Images:</span>
-                                <span class="info-value">2</span>
+                                <span class="info-value" id="infoImageCount">4</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Messages:</span>
+                                <span class="info-value" id="infoMessageCount">0</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Storage:</span>
@@ -1290,6 +1429,14 @@
     <script>
         // Your Facebook Profile Image URL
         const YOUR_FACEBOOK_IMAGE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3";
+        
+        // Default images for all pages
+        const DEFAULT_IMAGES = {
+            profile: YOUR_FACEBOOK_IMAGE,
+            about: "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80",
+            expertise: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80",
+            contact: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
+        };
         
         // Admin Password Management
         const AdminAuth = {
@@ -1327,12 +1474,9 @@
             }
         };
 
-        // Image Management
+        // Image Management - Handles all site images
         const ImageManager = {
-            defaultImages: {
-                profile: YOUR_FACEBOOK_IMAGE,
-                about: "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
-            },
+            defaultImages: DEFAULT_IMAGES,
             
             getImages: function() {
                 const stored = localStorage.getItem('siteImages');
@@ -1349,6 +1493,7 @@
             
             saveImages: function(images) {
                 localStorage.setItem('siteImages', JSON.stringify(images));
+                // Trigger storage event for other tabs
                 window.dispatchEvent(new Event('storage'));
             },
             
@@ -1365,6 +1510,12 @@
                     reader.onerror = (error) => reject(error);
                     reader.readAsDataURL(file);
                 });
+            },
+            
+            resetImage: function(key) {
+                const images = this.getImages();
+                images[key] = this.defaultImages[key];
+                this.saveImages(images);
             }
         };
 
@@ -1380,6 +1531,26 @@
                     credentialId: "CISCO-AI-2026-001",
                     description: "Certificate earned for completing Introduction to Modern AI course.",
                     fileName: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    id: 2,
+                    name: "Introduction to Data Science",
+                    issuer: "Cisco Networking Academy",
+                    date: "2025-07-08",
+                    type: "certificate",
+                    credentialId: "CISCO-DS-2025-001",
+                    description: "Certificate and Badge earned for completing Introduction to Data Science course.",
+                    fileName: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    id: 3,
+                    name: "Cybersecurity Fundamentals",
+                    issuer: "Cisco Networking Academy",
+                    date: "2026-02-01",
+                    type: "badge",
+                    credentialId: "CISCO-CYB-2026-B001",
+                    description: "Digital badge earned for cybersecurity course completion.",
+                    fileName: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                 }
             ],
 
@@ -1431,33 +1602,29 @@
             resetToDefault: function() {
                 this.saveCertificates(this.defaultCertificates);
                 return this.defaultCertificates;
-            },
+            }
+        };
 
-            exportData: function() {
-                const data = {
-                    certificates: this.getCertificates(),
-                    images: ImageManager.getImages(),
-                    exportDate: new Date().toISOString(),
-                    version: "2.0.0"
-                };
-                return JSON.stringify(data, null, 2);
-            },
-
-            importData: function(data) {
-                try {
-                    const parsed = JSON.parse(data);
-                    if (parsed.certificates && Array.isArray(parsed.certificates)) {
-                        this.saveCertificates(parsed.certificates);
-                        if (parsed.images) {
-                            ImageManager.saveImages(parsed.images);
-                        }
-                        return true;
+        // Message Management
+        const MessageManager = {
+            getMessages: function() {
+                const stored = localStorage.getItem('contactMessages');
+                if (stored) {
+                    try {
+                        return JSON.parse(stored);
+                    } catch (e) {
+                        return [];
                     }
-                    return false;
-                } catch (e) {
-                    console.error('Error importing data:', e);
-                    return false;
                 }
+                return [];
+            },
+            
+            saveMessages: function(messages) {
+                localStorage.setItem('contactMessages', JSON.stringify(messages));
+            },
+            
+            clearMessages: function() {
+                localStorage.removeItem('contactMessages');
             }
         };
 
@@ -1469,29 +1636,46 @@
         const adminMessage = document.getElementById('adminMessage');
         const certificateForm = document.getElementById('certificateForm');
         const certificatesList = document.getElementById('certificatesList');
+        const messagesList = document.getElementById('messagesList');
         const passwordForm = document.getElementById('passwordForm');
         const totalCertCount = document.getElementById('totalCertCount');
         const lastUpdatedTime = document.getElementById('lastUpdatedTime');
         const storageUsed = document.getElementById('storageUsed');
         const infoCertCount = document.getElementById('infoCertCount');
+        const infoImageCount = document.getElementById('infoImageCount');
+        const infoMessageCount = document.getElementById('infoMessageCount');
         const infoStorageUsed = document.getElementById('infoStorageUsed');
         const infoLastSync = document.getElementById('infoLastSync');
         
         // Image elements
         const profilePreview = document.getElementById('profilePreview');
         const aboutPreview = document.getElementById('aboutPreview');
+        const expertisePreview = document.getElementById('expertisePreview');
+        const contactPreview = document.getElementById('contactPreview');
+        
         const currentProfileStatus = document.getElementById('currentProfileStatus');
         const currentAboutStatus = document.getElementById('currentAboutStatus');
+        const currentExpertiseStatus = document.getElementById('currentExpertiseStatus');
+        const currentContactStatus = document.getElementById('currentContactStatus');
         
         // File inputs
         const profileFileInput = document.getElementById('profileFileInput');
         const aboutFileInput = document.getElementById('aboutFileInput');
+        const expertiseFileInput = document.getElementById('expertiseFileInput');
+        const contactFileInput = document.getElementById('contactFileInput');
         const certificateFileInput = document.getElementById('certificateFileInput');
+        
         const profileFileName = document.getElementById('profileFileName');
         const aboutFileName = document.getElementById('aboutFileName');
+        const expertiseFileName = document.getElementById('expertiseFileName');
+        const contactFileName = document.getElementById('contactFileName');
         const certificateFileName = document.getElementById('certificateFileName');
+        
         const uploadProfileBtn = document.getElementById('uploadProfileBtn');
         const uploadAboutBtn = document.getElementById('uploadAboutBtn');
+        const uploadExpertiseBtn = document.getElementById('uploadExpertiseBtn');
+        const uploadContactBtn = document.getElementById('uploadContactBtn');
+        
         const imageCount = document.getElementById('imageCount');
 
         // Utility Functions
@@ -1540,46 +1724,45 @@
             return storageText;
         }
 
-        // Load images
-        function loadImagePreviews() {
+        // Load all images
+        function loadAllImagePreviews() {
             const images = ImageManager.getImages();
-            profilePreview.src = images.profile;
-            aboutPreview.src = images.about;
             
-            currentProfileStatus.textContent = images.profile === YOUR_FACEBOOK_IMAGE ? 'Default Facebook' : 'Custom Upload';
-            currentAboutStatus.textContent = images.about.includes('base64') ? 'Custom Upload' : 'Default';
+            profilePreview.src = images.profile || DEFAULT_IMAGES.profile;
+            aboutPreview.src = images.about || DEFAULT_IMAGES.about;
+            expertisePreview.src = images.expertise || DEFAULT_IMAGES.expertise;
+            contactPreview.src = images.contact || DEFAULT_IMAGES.contact;
             
-            // Count images
-            imageCount.textContent = '2';
+            currentProfileStatus.textContent = images.profile === DEFAULT_IMAGES.profile ? 'Default Facebook' : 'Custom Upload';
+            currentAboutStatus.textContent = images.about && images.about.includes('base64') ? 'Custom Upload' : 'Default';
+            currentExpertiseStatus.textContent = images.expertise && images.expertise.includes('base64') ? 'Custom Upload' : 'Default';
+            currentContactStatus.textContent = images.contact && images.contact.includes('base64') ? 'Custom Upload' : 'Default';
+            
+            imageCount.textContent = '4';
+            infoImageCount.textContent = '4';
         }
 
         // File selection handlers
-        profileFileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showMessage(adminMessage, 'File too large! Maximum 5MB', 'error');
-                    this.value = '';
-                    return;
+        function setupFileInput(input, fileNameSpan, uploadBtn) {
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        showMessage(adminMessage, 'File too large! Maximum 5MB', 'error');
+                        this.value = '';
+                        return;
+                    }
+                    fileNameSpan.textContent = `📷 ${file.name}`;
+                    if (uploadBtn) uploadBtn.disabled = false;
                 }
-                profileFileName.textContent = `📷 ${file.name}`;
-                uploadProfileBtn.disabled = false;
-            }
-        });
+            });
+        }
 
-        aboutFileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showMessage(adminMessage, 'File too large! Maximum 5MB', 'error');
-                    this.value = '';
-                    return;
-                }
-                aboutFileName.textContent = `📷 ${file.name}`;
-                uploadAboutBtn.disabled = false;
-            }
-        });
-
+        setupFileInput(profileFileInput, profileFileName, uploadProfileBtn);
+        setupFileInput(aboutFileInput, aboutFileName, uploadAboutBtn);
+        setupFileInput(expertiseFileInput, expertiseFileName, uploadExpertiseBtn);
+        setupFileInput(contactFileInput, contactFileName, uploadContactBtn);
+        
         certificateFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -1592,49 +1775,127 @@
             }
         });
 
-        // Upload functions
-        async function uploadProfileImage() {
-            const file = profileFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
-            
-            uploadProfileBtn.disabled = true;
-            uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-            
-            await ImageManager.storeImageAsBase64(file, 'profile');
-            loadImagePreviews();
-            showMessage(adminMessage, 'Profile image updated successfully!', 'success');
-            
-            profileFileInput.value = '';
-            profileFileName.textContent = '';
-            uploadProfileBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile Image';
-            calculateStorageUsed();
+        // Generic upload function
+        function createUploadHandler(fileInput, fileNameSpan, uploadBtn, imageKey, successMessage) {
+            return async function() {
+                const file = fileInput.files[0];
+                if (!file) {
+                    showMessage(adminMessage, 'Please select an image first', 'error');
+                    return;
+                }
+                
+                uploadBtn.disabled = true;
+                uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                
+                await ImageManager.storeImageAsBase64(file, imageKey);
+                loadAllImagePreviews();
+                showMessage(adminMessage, successMessage, 'success');
+                
+                fileInput.value = '';
+                fileNameSpan.textContent = '';
+                uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                calculateStorageUsed();
+            };
         }
 
-        async function uploadAboutImage() {
-            const file = aboutFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
-            
-            uploadAboutBtn.disabled = true;
-            uploadAboutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-            
-            await ImageManager.storeImageAsBase64(file, 'about');
-            loadImagePreviews();
-            showMessage(adminMessage, 'About image updated successfully!', 'success');
-            
-            aboutFileInput.value = '';
-            aboutFileName.textContent = '';
-            uploadAboutBtn.innerHTML = '<i class="fas fa-upload"></i> Upload About Image';
-            calculateStorageUsed();
+        // Upload functions
+        const uploadProfileImage = createUploadHandler(
+            profileFileInput, profileFileName, uploadProfileBtn, 'profile', 
+            'Profile image updated successfully!'
+        );
+        
+        const uploadAboutImage = createUploadHandler(
+            aboutFileInput, aboutFileName, uploadAboutBtn, 'about',
+            'About image updated successfully!'
+        );
+        
+        const uploadExpertiseImage = createUploadHandler(
+            expertiseFileInput, expertiseFileName, uploadExpertiseBtn, 'expertise',
+            'Expertise image updated successfully!'
+        );
+        
+        const uploadContactImage = createUploadHandler(
+            contactFileInput, contactFileName, uploadContactBtn, 'contact',
+            'Contact image updated successfully!'
+        );
+
+        // Reset functions
+        function resetProfileImage() {
+            ImageManager.resetImage('profile');
+            loadAllImagePreviews();
+            showMessage(adminMessage, 'Profile image reset to default', 'success');
+        }
+        
+        function resetAboutImage() {
+            ImageManager.resetImage('about');
+            loadAllImagePreviews();
+            showMessage(adminMessage, 'About image reset to default', 'success');
+        }
+        
+        function resetExpertiseImage() {
+            ImageManager.resetImage('expertise');
+            loadAllImagePreviews();
+            showMessage(adminMessage, 'Expertise image reset to default', 'success');
+        }
+        
+        function resetContactImage() {
+            ImageManager.resetImage('contact');
+            loadAllImagePreviews();
+            showMessage(adminMessage, 'Contact image reset to default', 'success');
         }
 
         window.uploadProfileImage = uploadProfileImage;
         window.uploadAboutImage = uploadAboutImage;
+        window.uploadExpertiseImage = uploadExpertiseImage;
+        window.uploadContactImage = uploadContactImage;
+        window.resetProfileImage = resetProfileImage;
+        window.resetAboutImage = resetAboutImage;
+        window.resetExpertiseImage = resetExpertiseImage;
+        window.resetContactImage = resetContactImage;
+
+        // Load messages
+        function loadMessages() {
+            const messages = MessageManager.getMessages();
+            
+            if (messages.length === 0) {
+                messagesList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <h3>No Messages Yet</h3>
+                        <p style="margin-top: 8px;">Contact form submissions will appear here</p>
+                    </div>
+                `;
+                infoMessageCount.textContent = '0';
+                return;
+            }
+            
+            let html = '';
+            messages.slice().reverse().forEach(msg => {
+                html += `
+                    <div class="message-item">
+                        <div class="message-header">
+                            <span class="message-sender"><i class="fas fa-user"></i> ${msg.name || 'Unknown'}</span>
+                            <span class="message-date">${msg.timestamp ? formatDate(msg.timestamp) : 'Unknown'}</span>
+                        </div>
+                        <div class="message-subject"><i class="fas fa-tag"></i> ${msg.subject || 'No subject'}</div>
+                        <div class="message-preview-text">${msg.message || 'No message'}</div>
+                    </div>
+                `;
+            });
+            
+            messagesList.innerHTML = html;
+            infoMessageCount.textContent = messages.length;
+        }
+
+        // Clear all messages
+        function clearAllMessages() {
+            if (!confirm('Are you sure you want to delete all contact messages?')) return;
+            MessageManager.clearMessages();
+            loadMessages();
+            showMessage(adminMessage, 'All messages cleared', 'success');
+        }
+
+        window.clearAllMessages = clearAllMessages;
 
         // Tab Switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1650,9 +1911,11 @@
                 document.getElementById(tabId + 'Tab').classList.add('active');
                 
                 if (tabId === 'images') {
-                    loadImagePreviews();
+                    loadAllImagePreviews();
                 } else if (tabId === 'manage') {
                     renderCertificatesList();
+                } else if (tabId === 'messages') {
+                    loadMessages();
                 }
                 calculateStorageUsed();
             });
@@ -1703,6 +1966,8 @@
         // Update system info
         function updateSystemInfo() {
             const certificates = CertificateManager.getCertificates();
+            const messages = MessageManager.getMessages();
+            
             totalCertCount.textContent = certificates.length;
             infoCertCount.textContent = certificates.length;
             
@@ -1710,6 +1975,8 @@
             const lastUpdatedText = lastUpdated ? formatDateTime(lastUpdated) : 'Never';
             lastUpdatedTime.textContent = lastUpdatedText;
             infoLastSync.textContent = lastUpdatedText;
+            
+            infoMessageCount.textContent = messages.length;
             
             calculateStorageUsed();
         }
@@ -1759,7 +2026,6 @@
                 renderCertificatesList();
                 updateSystemInfo();
                 
-                // Switch to manage tab
                 document.querySelector('[data-tab="manage"]').click();
             } catch (error) {
                 showMessage(adminMessage, 'Error uploading certificate', 'error');
@@ -1787,7 +2053,6 @@
             submitBtn.dataset.mode = 'update';
             submitBtn.dataset.id = id;
             
-            // Switch to upload tab
             document.querySelector('[data-tab="upload"]').click();
             certificateForm.scrollIntoView({ behavior: 'smooth' });
             
@@ -1845,7 +2110,6 @@
                     renderCertificatesList();
                     updateSystemInfo();
                     
-                    // Switch to manage tab
                     document.querySelector('[data-tab="manage"]').click();
                 } catch (error) {
                     showMessage(adminMessage, 'Error updating certificate', 'error');
@@ -1865,6 +2129,9 @@
             renderCertificatesList();
             updateSystemInfo();
         }
+
+        window.editCertificate = editCertificate;
+        window.deleteCertificate = deleteCertificate;
 
         // Password form
         passwordForm.addEventListener('submit', function(e) {
@@ -1902,16 +2169,22 @@
             if (!confirm('⚠️ This will reset all certificates and images to default. Continue?')) return;
             
             CertificateManager.resetToDefault();
-            ImageManager.saveImages(ImageManager.defaultImages);
-            loadImagePreviews();
+            ImageManager.saveImages(DEFAULT_IMAGES);
+            loadAllImagePreviews();
             renderCertificatesList();
             updateSystemInfo();
             showMessage(adminMessage, 'Reset to default completed!', 'success');
         };
         
         window.exportData = function() {
-            const data = CertificateManager.exportData();
-            const blob = new Blob([data], { type: 'application/json' });
+            const data = {
+                certificates: CertificateManager.getCertificates(),
+                images: ImageManager.getImages(),
+                messages: MessageManager.getMessages(),
+                exportDate: new Date().toISOString(),
+                version: "2.0.0"
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -1931,12 +2204,18 @@
                 const file = e.target.files[0];
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    if (CertificateManager.importData(e.target.result)) {
-                        loadImagePreviews();
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (data.certificates) CertificateManager.saveCertificates(data.certificates);
+                        if (data.images) ImageManager.saveImages(data.images);
+                        if (data.messages) MessageManager.saveMessages(data.messages);
+                        
+                        loadAllImagePreviews();
                         renderCertificatesList();
+                        loadMessages();
                         updateSystemInfo();
                         showMessage(adminMessage, 'Data imported successfully!', 'success');
-                    } else {
+                    } catch (error) {
                         showMessage(adminMessage, 'Invalid backup file', 'error');
                     }
                 };
@@ -1963,8 +2242,9 @@
                 loginPage.style.display = 'none';
                 adminDashboard.style.display = 'block';
                 
-                loadImagePreviews();
+                loadAllImagePreviews();
                 renderCertificatesList();
+                loadMessages();
                 updateSystemInfo();
                 
                 const today = new Date().toISOString().split('T')[0];
@@ -1982,6 +2262,8 @@
         // Click handlers for upload areas
         document.getElementById('profileUploadArea').addEventListener('click', () => profileFileInput.click());
         document.getElementById('aboutUploadArea').addEventListener('click', () => aboutFileInput.click());
+        document.getElementById('expertiseUploadArea').addEventListener('click', () => expertiseFileInput.click());
+        document.getElementById('contactUploadArea').addEventListener('click', () => contactFileInput.click());
         document.getElementById('certificateUploadArea').addEventListener('click', () => certificateFileInput.click());
 
         // Initialize
@@ -1990,8 +2272,9 @@
                 loginPage.style.display = 'none';
                 adminDashboard.style.display = 'block';
                 
-                loadImagePreviews();
+                loadAllImagePreviews();
                 renderCertificatesList();
+                loadMessages();
                 updateSystemInfo();
                 
                 const today = new Date().toISOString().split('T')[0];
