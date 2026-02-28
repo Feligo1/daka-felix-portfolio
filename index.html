@@ -339,14 +339,14 @@
             }
         }
         
-        /* Updated Dropdown Menu Styles */
-        .mobile-menu-container {
+        /* Updated Dropdown Menu Styles - Always in corner */
+        .menu-container {
             position: relative;
             display: flex;
             align-items: center;
         }
         
-        .mobile-dropdown-btn {
+        .menu-btn {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -355,84 +355,91 @@
             color: var(--text-light);
             font-size: 0.9rem;
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
-            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            gap: 8px;
             transition: var(--transition);
             z-index: 1001;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .mobile-dropdown-btn i {
+        .menu-btn i {
             font-size: 1rem;
         }
         
-        .mobile-dropdown-btn:active {
-            background-color: rgba(255, 255, 255, 0.15);
+        .menu-btn:hover {
+            background: var(--dark-blue);
+            border-color: var(--accent);
         }
         
-        @media (min-width: 768px) {
-            .mobile-dropdown-btn {
-                display: none;
-            }
+        .menu-btn:active {
+            transform: scale(0.97);
+            background: var(--dark-blue);
         }
         
-        .mobile-dropdown-content {
+        .menu-content {
             display: none;
             position: absolute;
-            top: 50px;
+            top: 55px;
             right: 0;
             background-color: var(--dark-blue-lighter);
-            min-width: 200px;
-            border-radius: 10px;
+            min-width: 220px;
+            border-radius: 16px;
             box-shadow: var(--box-shadow-hover);
             border: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
         
-        .mobile-dropdown-content.show {
+        .menu-content.show {
             display: block;
-            animation: fadeIn 0.2s ease;
+            animation: slideDown 0.2s ease;
         }
         
-        .mobile-dropdown-content a {
+        .menu-content a {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 16px;
+            padding: 14px 20px;
             color: var(--text-light);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             transition: var(--transition);
         }
         
-        .mobile-dropdown-content a:last-child {
+        .menu-content a:last-child {
             border-bottom: none;
         }
         
-        .mobile-dropdown-content a:active {
-            background-color: rgba(255, 255, 255, 0.1);
+        .menu-content a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            padding-left: 25px;
         }
         
-        .mobile-dropdown-content a i {
+        .menu-content a:active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .menu-content a i {
             width: 20px;
             color: var(--accent);
             font-size: 1rem;
         }
         
-        .mobile-dropdown-content a.active {
-            background-color: rgba(252, 209, 22, 0.15);
+        .menu-content a.active {
+            background: rgba(252, 209, 22, 0.15);
             color: var(--accent);
         }
         
-        .mobile-dropdown-content a.active i {
+        .menu-content a.active i {
             color: var(--accent);
         }
         
-        @keyframes fadeIn {
+        @keyframes slideDown {
             from {
                 opacity: 0;
                 transform: translateY(-10px);
@@ -443,72 +450,9 @@
             }
         }
         
-        nav {
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 0;
-        }
-        
-        @media (max-width: 767px) {
-            .nav-menu {
-                display: none;
-            }
-        }
-        
-        @media (min-width: 768px) {
-            .nav-menu {
-                display: flex;
-                gap: 20px;
-            }
-            
-            .nav-menu li a {
-                text-decoration: none;
-                color: var(--text-light);
-                font-weight: 600;
-                font-size: 0.95rem;
-                padding: 6px 0;
-                position: relative;
-                transition: var(--transition);
-                display: block;
-                white-space: nowrap;
-            }
-            
-            .nav-menu li a:hover,
-            .nav-menu li a.active {
-                color: var(--accent);
-            }
-            
-            .nav-menu li a:after {
-                content: '';
-                position: absolute;
-                width: 0;
-                height: 3px;
-                background-color: var(--accent);
-                bottom: 0;
-                left: 0;
-                transition: width 0.3s ease;
-                border-radius: 2px;
-            }
-            
-            .nav-menu li a:hover:after,
-            .nav-menu li a.active:after {
-                width: 100%;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .nav-menu {
-                gap: 25px;
-            }
-            
-            .nav-menu li a {
-                font-size: 1rem;
-            }
+        /* Hide desktop nav on all devices - we'll use dropdown for everything */
+        .desktop-nav {
+            display: none;
         }
         
         /* Hero Section - Mobile Optimized */
@@ -1634,13 +1578,13 @@
                 <span>Daka Felix <span class="logo-nickname">(Tech Guy)</span></span>
             </a>
             
-            <!-- Mobile Dropdown Menu in Corner -->
-            <div class="mobile-menu-container">
-                <button class="mobile-dropdown-btn" id="mobileDropdownBtn">
+            <!-- Corner Menu for All Devices -->
+            <div class="menu-container">
+                <button class="menu-btn" id="menuBtn">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="mobile-dropdown-content" id="mobileDropdownContent">
+                <div class="menu-content" id="menuContent">
                     <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
                     <a href="expertise.html"><i class="fas fa-cogs"></i> Expertise</a>
                     <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
@@ -1649,16 +1593,6 @@
                     <a href="admin.html"><i class="fas fa-lock" style="color: var(--accent);"></i> Admin</a>
                 </div>
             </div>
-            
-            <nav>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="expertise.html">Expertise</a></li>
-                    <li><a href="certificates.html">Certificates</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
@@ -1929,10 +1863,10 @@
     </footer>
 
     <script>
-        // Your Facebook Profile Image URL
+        // Your Facebook Profile Image URL (only default photo)
         const YOUR_FACEBOOK_IMAGE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3";
         
-        // Alternative backup image if Facebook image fails
+        // Backup image (still your Facebook, but using a reliable placeholder if FB fails)
         const BACKUP_IMAGE = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
         const BACKUP_ABOUT_IMAGE = "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
 
@@ -2011,9 +1945,10 @@
         const imageUpdateNotification = document.getElementById('imageUpdateNotification');
         const notificationMessage = document.getElementById('notificationMessage');
         
-        // Dropdown Elements
-        const mobileDropdownBtn = document.getElementById('mobileDropdownBtn');
-        const mobileDropdownContent = document.getElementById('mobileDropdownContent');
+        // Menu Elements
+        const menuBtn = document.getElementById('menuBtn');
+        const menuContent = document.getElementById('menuContent');
+        const menuLinks = document.querySelectorAll('.menu-content a');
 
         // Show notification
         function showNotification(message) {
@@ -2070,30 +2005,69 @@
             certificatesPreview.innerHTML = html;
         }
 
-        // Dropdown Toggle
-        if (mobileDropdownBtn) {
-            mobileDropdownBtn.addEventListener('click', (e) => {
+        // Menu Toggle Functionality
+        if (menuBtn) {
+            menuBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                mobileDropdownContent.classList.toggle('show');
+                menuContent.classList.toggle('show');
+                
+                // Change icon when menu is open
+                const icon = menuBtn.querySelector('i');
+                if (menuContent.classList.contains('show')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             });
         }
 
-        // Close dropdown when clicking outside
+        // Close menu when clicking outside
         document.addEventListener('click', (event) => {
-            if (mobileDropdownContent && mobileDropdownContent.classList.contains('show')) {
-                const isClickInside = mobileDropdownBtn.contains(event.target) || mobileDropdownContent.contains(event.target);
+            if (menuContent && menuContent.classList.contains('show')) {
+                const isClickInside = menuBtn.contains(event.target) || menuContent.contains(event.target);
                 if (!isClickInside) {
-                    mobileDropdownContent.classList.remove('show');
+                    menuContent.classList.remove('show');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
             }
         });
 
-        // Close dropdown when clicking a link
-        if (mobileDropdownContent) {
-            mobileDropdownContent.querySelectorAll('a').forEach(link => {
+        // Close menu when clicking a link
+        if (menuLinks) {
+            menuLinks.forEach(link => {
                 link.addEventListener('click', () => {
-                    mobileDropdownContent.classList.remove('show');
+                    menuContent.classList.remove('show');
+                    const icon = menuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 });
+            });
+        }
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuContent.classList.contains('show')) {
+                menuContent.classList.remove('show');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Set active menu item based on current page
+        function setActiveMenuItem() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            menuLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
+                    link.classList.add('active');
+                }
             });
         }
 
@@ -2127,7 +2101,7 @@
             });
         });
 
-        // Image error handling
+        // Image error handling - use Facebook image as default
         profileImage.addEventListener('error', function() {
             console.log('Facebook image failed to load, using backup');
             this.src = BACKUP_IMAGE;
@@ -2200,6 +2174,7 @@
             
             loadImages();
             loadCertificatesPreview();
+            setActiveMenuItem();
             
             document.body.style.opacity = '1';
             
@@ -2210,8 +2185,11 @@
 
         // Handle window resize
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 767 && mobileDropdownContent?.classList.contains('show')) {
-                mobileDropdownContent.classList.remove('show');
+            if (menuContent?.classList.contains('show')) {
+                menuContent.classList.remove('show');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
         });
     </script>
