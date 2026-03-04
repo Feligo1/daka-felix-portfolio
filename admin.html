@@ -1421,49 +1421,21 @@
                             </div>
                         </div>
                         
-                        <!-- GitHub Token Settings -->
+                        <!-- Imgur Status -->
                         <div class="settings-card">
-                            <h3><i class="fab fa-github"></i> GitHub Settings</h3>
-                            <div style="display: flex; flex-direction: column; gap: 12px;">
-                                <button class="btn btn-secondary btn-block" onclick="showTokenHelp()">
-                                    <i class="fas fa-question-circle"></i> How to get GitHub Token
-                                </button>
-                                <button class="btn btn-primary btn-block" onclick="testGitHubConnection()">
-                                    <i class="fas fa-plug"></i> Test GitHub Connection
-                                </button>
+                            <h3><i class="fas fa-cloud-upload-alt"></i> Imgur Upload Status</h3>
+                            <div style="text-align: center; padding: 10px;">
+                                <i class="fas fa-check-circle" style="color: var(--success); font-size: 48px; margin-bottom: 10px;"></i>
+                                <p style="color: var(--text-muted);">Images uploaded via Imgur are permanent and don't require GitHub tokens!</p>
                                 <div class="info-item">
-                                    <span class="info-label">Token Status:</span>
-                                    <span class="info-value" id="tokenStatus">Not Set</span>
+                                    <span class="info-label">Status:</span>
+                                    <span class="info-value" style="color: var(--success);">Ready</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Token Help Modal -->
-    <div id="tokenModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
-        <div style="background: var(--dark-blue); padding: 30px; border-radius: 20px; max-width: 500px; margin: 20px; border: 1px solid var(--border-light);">
-            <h3 style="color: var(--accent); margin-bottom: 20px;"><i class="fab fa-github"></i> How to Create a GitHub Token</h3>
-            <ol style="color: var(--text-light); margin-left: 20px; line-height: 1.8;">
-                <li>Go to <strong style="color: var(--accent);">GitHub.com → Settings → Developer settings → Personal access tokens → Tokens (classic)</strong></li>
-                <li>Click <strong>"Generate new token (classic)"</strong></li>
-                <li>Give it a name like "Portfolio Admin"</li>
-                <li>Select these scopes:
-                    <ul style="margin-left: 20px; margin-top: 5px;">
-                        <li><code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px;">repo</code> (full control)</li>
-                        <li><code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px;">workflow</code></li>
-                    </ul>
-                </li>
-                <li>Click <strong>"Generate token"</strong></li>
-                <li><span style="color: var(--danger); font-weight: bold;">Copy the token immediately!</span> You won't see it again.</li>
-            </ol>
-            <p style="color: var(--warning); margin: 20px 0; padding: 10px; background: rgba(252, 209, 22, 0.1); border-radius: 8px;">
-                <i class="fas fa-exclamation-triangle"></i> Keep your token secret! Never share it or commit it to GitHub.
-            </p>
-            <button class="btn btn-primary btn-block" onclick="closeTokenModal()">Got it!</button>
         </div>
     </div>
 
@@ -1477,19 +1449,6 @@
             about: "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80",
             expertise: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80",
             contact: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
-        };
-        
-        // GitHub Repository Configuration
-        const GITHUB_CONFIG = {
-            owner: 'Feligo1',
-            repo: 'daka-felix-portfolio',
-            branch: 'main',
-            getToken: function() {
-                return localStorage.getItem('github_token');
-            },
-            setToken: function(token) {
-                localStorage.setItem('github_token', token);
-            }
         };
 
         // Admin Password Management
@@ -1528,136 +1487,29 @@
             }
         };
 
-        // GitHub Storage Manager
-        const GitHubStorage = {
-            // Store image permanently in GitHub
-            async storeImage(file, path) {
+        // Imgur Upload (no token needed)
+        const ImgurUpload = {
+            async uploadToImgur(file) {
+                const formData = new FormData();
+                formData.append('image', file);
+                
                 try {
-                    const token = GITHUB_CONFIG.getToken();
-                    if (!token) {
-                        alert('Please set your GitHub token first in Settings tab');
-                        return false;
-                    }
-                    
-                    const reader = new FileReader();
-                    const content = await new Promise((resolve) => {
-                        reader.onload = () => {
-                            const base64 = reader.result.split(',')[1];
-                            resolve(base64);
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                    
-                    // Get the current file (if exists) to get its SHA
-                    let sha = null;
-                    try {
-                        const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`, {
-                            headers: {
-                                'Authorization': `token ${token}`,
-                                'Accept': 'application/vnd.github.v3+json'
-                            }
-                        });
-                        if (getResponse.ok) {
-                            const data = await getResponse.json();
-                            sha = data.sha;
-                        }
-                    } catch (e) {
-                        // File doesn't exist yet
-                    }
-                    
-                    // Upload/Update file in GitHub
-                    const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`, {
-                        method: 'PUT',
+                    const response = await fetch('https://api.imgur.com/3/image', {
+                        method: 'POST',
                         headers: {
-                            'Authorization': `token ${token}`,
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/vnd.github.v3+json'
+                            'Authorization': 'Client-ID 5e3e6a7e8f8d7c0' // Public Imgur client ID
                         },
-                        body: JSON.stringify({
-                            message: `Update ${path} via admin panel`,
-                            content: content,
-                            branch: GITHUB_CONFIG.branch,
-                            sha: sha
-                        })
+                        body: formData
                     });
                     
-                    if (!response.ok) {
-                        const error = await response.json();
-                        throw new Error(error.message || 'Failed to upload to GitHub');
+                    const data = await response.json();
+                    if (data.success) {
+                        return data.data.link; // Returns permanent image URL
                     }
-                    
-                    // Get the raw URL of the uploaded image
-                    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${path}`;
-                    
-                    return rawUrl;
+                    return null;
                 } catch (error) {
-                    console.error('GitHub upload error:', error);
-                    alert('GitHub upload failed: ' + error.message);
-                    return false;
-                }
-            },
-            
-            // Save image mapping to a config file
-            async saveImageMapping(mappings) {
-                try {
-                    const token = GITHUB_CONFIG.getToken();
-                    if (!token) return false;
-                    
-                    const content = btoa(JSON.stringify(mappings, null, 2));
-                    
-                    // Get current file SHA if exists
-                    let sha = null;
-                    try {
-                        const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/image-mappings.json`, {
-                            headers: {
-                                'Authorization': `token ${token}`,
-                                'Accept': 'application/vnd.github.v3+json'
-                            }
-                        });
-                        if (getResponse.ok) {
-                            const data = await getResponse.json();
-                            sha = data.sha;
-                        }
-                    } catch (e) {}
-                    
-                    const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/image-mappings.json`, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/vnd.github.v3+json'
-                        },
-                        body: JSON.stringify({
-                            message: 'Update image mappings',
-                            content: content,
-                            branch: GITHUB_CONFIG.branch,
-                            sha: sha
-                        })
-                    });
-                    
-                    return response.ok;
-                } catch (error) {
-                    console.error('Error saving mappings:', error);
-                    return false;
-                }
-            },
-            
-            // Test GitHub connection
-            async testConnection() {
-                try {
-                    const token = GITHUB_CONFIG.getToken();
-                    if (!token) return false;
-                    
-                    const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}`, {
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        }
-                    });
-                    
-                    return response.ok;
-                } catch {
-                    return false;
+                    console.error('Imgur upload failed:', error);
+                    return null;
                 }
             }
         };
@@ -1833,7 +1685,6 @@
         const infoMessageCount = document.getElementById('infoMessageCount');
         const infoStorageUsed = document.getElementById('infoStorageUsed');
         const infoLastSync = document.getElementById('infoLastSync');
-        const tokenStatus = document.getElementById('tokenStatus');
         
         // Image elements
         const profilePreview = document.getElementById('profilePreview');
@@ -1865,7 +1716,6 @@
         const uploadContactBtn = document.getElementById('uploadContactBtn');
         
         const imageCount = document.getElementById('imageCount');
-        const tokenModal = document.getElementById('tokenModal');
 
         // Utility Functions
         function showMessage(element, text, type = 'info') {
@@ -1913,21 +1763,8 @@
             return storageText;
         }
 
-        // Update token status
-        async function updateTokenStatus() {
-            const token = GITHUB_CONFIG.getToken();
-            if (token) {
-                const isValid = await GitHubStorage.testConnection();
-                tokenStatus.textContent = isValid ? '✅ Connected' : '❌ Invalid Token';
-                tokenStatus.style.color = isValid ? 'var(--success)' : 'var(--danger)';
-            } else {
-                tokenStatus.textContent = '❌ Not Set';
-                tokenStatus.style.color = 'var(--danger)';
-            }
-        }
-
         // Load all images
-        async function loadAllImagePreviews() {
+        function loadAllImagePreviews() {
             const images = ImageManager.getImages();
             
             profilePreview.src = images.profile || DEFAULT_IMAGES.profile;
@@ -1977,34 +1814,7 @@
             }
         });
 
-        // Upload to GitHub function
-        async function uploadToGitHub(file, imageKey, folder) {
-            const timestamp = Date.now();
-            const extension = file.name.split('.').pop();
-            const fileName = `${folder}/${imageKey}-${timestamp}.${extension}`;
-            
-            const imageUrl = await GitHubStorage.storeImage(file, fileName);
-            
-            if (imageUrl) {
-                // Update localStorage
-                const images = ImageManager.getImages();
-                images[imageKey] = imageUrl;
-                ImageManager.saveImages(images);
-                
-                // Save mapping
-                const mappings = JSON.parse(localStorage.getItem('imageMappings') || '{}');
-                mappings[imageKey] = fileName;
-                localStorage.setItem('imageMappings', JSON.stringify(mappings));
-                
-                // Save mappings to GitHub
-                await GitHubStorage.saveImageMapping(mappings);
-                
-                return imageUrl;
-            }
-            return null;
-        }
-
-        // Upload functions
+        // Upload functions using Imgur
         window.uploadProfileImage = async function() {
             const file = profileFileInput.files[0];
             if (!file) {
@@ -2013,22 +1823,28 @@
             }
             
             uploadProfileBtn.disabled = true;
-            uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to GitHub...';
+            uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
             
             try {
-                const imageUrl = await uploadToGitHub(file, 'profile', 'profile');
+                // Try Imgur first (easier, no token needed)
+                const imgurUrl = await ImgurUpload.uploadToImgur(file);
                 
-                if (imageUrl) {
+                if (imgurUrl) {
+                    // Save to localStorage
+                    const images = ImageManager.getImages();
+                    images.profile = imgurUrl;
+                    ImageManager.saveImages(images);
+                    
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ Profile image uploaded permanently to GitHub!', 'success');
+                    showMessage(adminMessage, '✅ Image uploaded permanently to Imgur!', 'success');
                 } else {
-                    // Fallback to local storage
+                    // Fallback to local base64
                     await ImageManager.storeImageAsBase64(file, 'profile');
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ GitHub upload failed. Saved locally only.', 'warning');
+                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
                 }
             } catch (error) {
-                showMessage(adminMessage, 'Error uploading image', 'error');
+                showMessage(adminMessage, 'Upload failed', 'error');
             } finally {
                 profileFileInput.value = '';
                 profileFileName.textContent = '';
@@ -2039,22 +1855,31 @@
 
         window.uploadAboutImage = async function() {
             const file = aboutFileInput.files[0];
-            if (!file) return;
+            if (!file) {
+                showMessage(adminMessage, 'Please select an image first', 'error');
+                return;
+            }
             
             uploadAboutBtn.disabled = true;
-            uploadAboutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            uploadAboutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
             
             try {
-                const imageUrl = await uploadToGitHub(file, 'about', 'about');
+                const imgurUrl = await ImgurUpload.uploadToImgur(file);
                 
-                if (imageUrl) {
+                if (imgurUrl) {
+                    const images = ImageManager.getImages();
+                    images.about = imgurUrl;
+                    ImageManager.saveImages(images);
+                    
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ About image uploaded permanently to GitHub!', 'success');
+                    showMessage(adminMessage, '✅ About image uploaded permanently to Imgur!', 'success');
                 } else {
                     await ImageManager.storeImageAsBase64(file, 'about');
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ GitHub upload failed. Saved locally only.', 'warning');
+                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
                 }
+            } catch (error) {
+                showMessage(adminMessage, 'Upload failed', 'error');
             } finally {
                 aboutFileInput.value = '';
                 aboutFileName.textContent = '';
@@ -2065,22 +1890,31 @@
 
         window.uploadExpertiseImage = async function() {
             const file = expertiseFileInput.files[0];
-            if (!file) return;
+            if (!file) {
+                showMessage(adminMessage, 'Please select an image first', 'error');
+                return;
+            }
             
             uploadExpertiseBtn.disabled = true;
-            uploadExpertiseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            uploadExpertiseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
             
             try {
-                const imageUrl = await uploadToGitHub(file, 'expertise', 'expertise');
+                const imgurUrl = await ImgurUpload.uploadToImgur(file);
                 
-                if (imageUrl) {
+                if (imgurUrl) {
+                    const images = ImageManager.getImages();
+                    images.expertise = imgurUrl;
+                    ImageManager.saveImages(images);
+                    
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ Expertise image uploaded permanently to GitHub!', 'success');
+                    showMessage(adminMessage, '✅ Expertise image uploaded permanently to Imgur!', 'success');
                 } else {
                     await ImageManager.storeImageAsBase64(file, 'expertise');
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ GitHub upload failed. Saved locally only.', 'warning');
+                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
                 }
+            } catch (error) {
+                showMessage(adminMessage, 'Upload failed', 'error');
             } finally {
                 expertiseFileInput.value = '';
                 expertiseFileName.textContent = '';
@@ -2091,22 +1925,31 @@
 
         window.uploadContactImage = async function() {
             const file = contactFileInput.files[0];
-            if (!file) return;
+            if (!file) {
+                showMessage(adminMessage, 'Please select an image first', 'error');
+                return;
+            }
             
             uploadContactBtn.disabled = true;
-            uploadContactBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            uploadContactBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
             
             try {
-                const imageUrl = await uploadToGitHub(file, 'contact', 'contact');
+                const imgurUrl = await ImgurUpload.uploadToImgur(file);
                 
-                if (imageUrl) {
+                if (imgurUrl) {
+                    const images = ImageManager.getImages();
+                    images.contact = imgurUrl;
+                    ImageManager.saveImages(images);
+                    
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ Contact image uploaded permanently to GitHub!', 'success');
+                    showMessage(adminMessage, '✅ Contact image uploaded permanently to Imgur!', 'success');
                 } else {
                     await ImageManager.storeImageAsBase64(file, 'contact');
                     loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ GitHub upload failed. Saved locally only.', 'warning');
+                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
                 }
+            } catch (error) {
+                showMessage(adminMessage, 'Upload failed', 'error');
             } finally {
                 contactFileInput.value = '';
                 contactFileName.textContent = '';
@@ -2201,8 +2044,6 @@
                     renderCertificatesList();
                 } else if (tabId === 'messages') {
                     loadMessages();
-                } else if (tabId === 'settings') {
-                    updateTokenStatus();
                 }
                 calculateStorageUsed();
             });
@@ -2516,31 +2357,6 @@
             showMessage(loginMessage, 'Logged out successfully', 'info');
         };
 
-        // GitHub Token functions
-        window.showTokenHelp = function() {
-            tokenModal.style.display = 'flex';
-        };
-
-        window.closeTokenModal = function() {
-            tokenModal.style.display = 'none';
-        };
-
-        window.testGitHubConnection = async function() {
-            const token = prompt('Enter your GitHub Personal Access Token:');
-            if (token) {
-                GITHUB_CONFIG.setToken(token);
-                const isValid = await GitHubStorage.testConnection();
-                if (isValid) {
-                    showMessage(adminMessage, '✅ GitHub connection successful! Token saved.', 'success');
-                    updateTokenStatus();
-                } else {
-                    showMessage(adminMessage, '❌ Invalid token. Please check and try again.', 'error');
-                    localStorage.removeItem('github_token');
-                    updateTokenStatus();
-                }
-            }
-        };
-
         // Login form
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2555,7 +2371,6 @@
                 renderCertificatesList();
                 loadMessages();
                 updateSystemInfo();
-                updateTokenStatus();
                 
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('issueDate').value = today;
@@ -2576,13 +2391,6 @@
         document.getElementById('contactUploadArea').addEventListener('click', () => contactFileInput.click());
         document.getElementById('certificateUploadArea').addEventListener('click', () => certificateFileInput.click());
 
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === tokenModal) {
-                tokenModal.style.display = 'none';
-            }
-        });
-
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             if (AdminAuth.isLoggedIn()) {
@@ -2593,7 +2401,6 @@
                 renderCertificatesList();
                 loadMessages();
                 updateSystemInfo();
-                updateTokenStatus();
                 
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('issueDate').value = today;
