@@ -591,7 +591,6 @@
         const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC'
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
         
-        // Helper functions
         function escapeHtml(str) {
             if (!str) return ''
             return str.replace(/[&<>]/g, function(m) {
@@ -605,6 +604,32 @@
         function formatDate(dateString) {
             if (!dateString) return 'Unknown'
             return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+        }
+        
+        // Get the latest image from storage (most recently uploaded)
+        async function getLatestImageFromStorage(folder) {
+            try {
+                const { data, error } = await supabase.storage
+                    .from('portfolio-images')
+                    .list(folder, {
+                        sortBy: { column: 'created_at', order: 'desc' },
+                        limit: 1
+                    })
+                
+                if (error || !data || data.length === 0) {
+                    return null
+                }
+                
+                const latestFile = data[0]
+                const { data: urlData } = supabase.storage
+                    .from('portfolio-images')
+                    .getPublicUrl(`${folder}/${latestFile.name}`)
+                
+                return urlData.publicUrl
+            } catch (err) {
+                console.error('Error fetching latest image:', err)
+                return null
+            }
         }
         
         // Load Hero Section
@@ -626,18 +651,46 @@
             specialtiesContainer.innerHTML = tagsArray.map(tag => `<span class="specialty-tag">${escapeHtml(tag.trim())}</span>`).join('')
         }
         
-        // Load Profile Image
+        // Load Profile Image - from storage (latest uploaded)
         async function loadProfileImage() {
-            const { data } = await supabase.from('site_settings').select('*').eq('setting_key', 'profile_image_url').single()
-            const imgUrl = data?.setting_value || 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg'
-            document.getElementById('profileImage').src = imgUrl
+            // First try to get from site_settings (admin uploaded)
+            const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'profile_image_url').single()
+            
+            if (settingsData?.setting_value && settingsData.setting_value.startsWith('http')) {
+                document.getElementById('profileImage').src = settingsData.setting_value
+                return
+            }
+            
+            // If no custom image, try to get latest from storage
+            const latestImage = await getLatestImageFromStorage('profile_image_url')
+            if (latestImage) {
+                document.getElementById('profileImage').src = latestImage
+                return
+            }
+            
+            // Default fallback
+            document.getElementById('profileImage').src = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg'
         }
         
-        // Load About Image
+        // Load About Image - from storage (latest uploaded)
         async function loadAboutImage() {
-            const { data } = await supabase.from('site_settings').select('*').eq('setting_key', 'about_image_url').single()
-            const imgUrl = data?.setting_value || 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
-            document.getElementById('aboutImage').src = imgUrl
+            // First try to get from site_settings
+            const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'about_image_url').single()
+            
+            if (settingsData?.setting_value && settingsData.setting_value.startsWith('http')) {
+                document.getElementById('aboutImage').src = settingsData.setting_value
+                return
+            }
+            
+            // If no custom image, try to get latest from storage
+            const latestImage = await getLatestImageFromStorage('about_image_url')
+            if (latestImage) {
+                document.getElementById('aboutImage').src = latestImage
+                return
+            }
+            
+            // Default fallback
+            document.getElementById('aboutImage').src = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
         }
         
         // Load Projects/Services
