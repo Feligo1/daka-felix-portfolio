@@ -3,27 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | Daka Felix</title>
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #0A1931, #1A2C47);
+            background: #0A1931;
             color: #F9FAFB;
             min-height: 100vh;
+        }
+        
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0A1931, #1A2C47);
+        }
+        
+        .login-box {
+            background: rgba(26, 44, 71, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-box h1 {
+            color: #FCD116;
+            margin-bottom: 10px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 14px;
+            margin: 20px 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: #007749;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .admin-panel {
+            display: none;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 20px;
         }
         
-        .container { max-width: 1200px; margin: 0 auto; }
-        
-        .header {
-            background: rgba(255,255,255,0.05);
+        .admin-header {
+            background: rgba(26, 44, 71, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
             padding: 20px 24px;
             margin-bottom: 24px;
@@ -34,369 +90,695 @@
             gap: 16px;
         }
         
-        .header h1 { font-size: 24px; display: flex; align-items: center; gap: 12px; }
-        .header h1 i { color: #FCD116; }
-        
-        .stats { display: flex; gap: 20px; }
-        .stat {
-            background: rgba(0,0,0,0.3);
-            padding: 8px 16px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .stat .number { font-size: 24px; font-weight: bold; color: #FCD116; }
-        .stat .label { font-size: 12px; color: #9CA3AF; }
-        
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
+        .admin-header h1 {
+            color: #FCD116;
+            font-size: 24px;
         }
         
-        .tab-btn {
-            padding: 12px 24px;
-            background: rgba(255,255,255,0.05);
+        .logout-btn {
+            background: #dc2626;
+            padding: 10px 20px;
             border: none;
-            color: #9CA3AF;
-            border-radius: 12px;
+            border-radius: 8px;
+            color: white;
             cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
         }
         
-        .tab-btn.active { background: #007749; color: white; }
-        
-        .tab-content { display: none; animation: fadeIn 0.3s ease; }
-        .tab-content.active { display: block; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .card h2 { margin-bottom: 20px; font-size: 20px; display: flex; align-items: center; gap: 8px; }
-        
-        .image-grid {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
         }
         
-        .image-card {
-            background: rgba(0,0,0,0.2);
-            border-radius: 16px;
+        .stat-card {
+            background: rgba(26, 44, 71, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
             padding: 20px;
             text-align: center;
         }
         
-        .image-preview {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 16px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #007749;
+        .stat-card h3 {
+            font-size: 28px;
+            color: #FCD116;
         }
         
-        .image-preview.square { border-radius: 16px; }
-        
-        .upload-area {
-            border: 2px dashed #007749;
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            background: rgba(26, 44, 71, 0.8);
             border-radius: 12px;
-            padding: 16px;
-            margin: 12px 0;
+            padding: 8px;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: #9CA3AF;
             cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
             transition: all 0.3s;
         }
         
-        .upload-area:hover { background: rgba(0,119,73,0.1); border-color: #FCD116; }
+        .tab-btn.active {
+            background: #007749;
+            color: white;
+        }
+        
+        .card {
+            background: rgba(26, 44, 71, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card h2 {
+            color: #FCD116;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
         
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
         
-        .form-group { margin-bottom: 16px; }
-        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group {
+            margin-bottom: 16px;
+        }
         
-        label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 13px; color: #FCD116; }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 13px;
+            color: #9CA3AF;
+        }
         
-        input, select, textarea {
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
             width: 100%;
             padding: 12px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
+            border-radius: 8px;
             color: white;
             font-size: 14px;
         }
         
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #007749;
+        .file-upload-area {
+            border: 2px dashed #007749;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-area:hover {
+            background: rgba(0,119,73,0.1);
         }
         
         button {
-            padding: 12px 24px;
             background: #007749;
-            border: none;
-            border-radius: 12px;
             color: white;
-            font-weight: 600;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 600;
             transition: all 0.3s;
         }
         
-        button:hover { background: #005a3f; transform: translateY(-2px); }
-        button.secondary { background: rgba(255,255,255,0.1); }
-        button.danger { background: #EF4444; }
-        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        button:hover {
+            background: #005a3f;
+            transform: translateY(-2px);
+        }
         
-        .cert-list {
+        button.danger {
+            background: #dc2626;
+        }
+        
+        button.danger:hover {
+            background: #b91c1c;
+        }
+        
+        .items-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            max-height: 500px;
+            overflow-y: auto;
         }
         
-        .cert-item {
+        .item-row {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
             padding: 16px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 16px;
             flex-wrap: wrap;
-            border: 1px solid rgba(255,255,255,0.05);
+            gap: 16px;
         }
         
-        .cert-item:hover { border-color: #007749; transform: translateX(5px); }
+        .item-info {
+            flex: 1;
+        }
         
-        .cert-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
+        .item-info h4 {
+            color: #FCD116;
+            margin-bottom: 5px;
+        }
+        
+        .item-info p {
+            color: #9CA3AF;
+            font-size: 12px;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .edit-btn {
+            background: #F59E0B;
+        }
+        
+        .image-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             object-fit: cover;
+            margin-top: 10px;
         }
         
-        .cert-info { flex: 1; }
-        .cert-info h4 { margin-bottom: 4px; color: #FCD116; }
-        .cert-info p { color: #9CA3AF; font-size: 12px; margin-top: 4px; }
+        .image-preview.square {
+            border-radius: 12px;
+        }
         
         .message {
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            background: #007749;
+            color: white;
+            z-index: 1000;
             display: none;
         }
         
-        .message.success { background: rgba(16,185,129,0.2); border: 1px solid #10B981; color: #10B981; display: block; }
-        .message.error { background: rgba(239,68,68,0.2); border: 1px solid #EF4444; color: #EF4444; display: block; }
+        .message.error {
+            background: #dc2626;
+        }
         
-        .loading { text-align: center; padding: 40px; color: #9CA3AF; }
-        .loading i { animation: spin 1s linear infinite; display: inline-block; font-size: 32px; margin-bottom: 12px; }
+        .tab-content {
+            display: none;
+        }
         
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .tab-content.active {
+            display: block;
         }
         
         @media (max-width: 768px) {
-            .header { flex-direction: column; text-align: center; }
-            .cert-item { flex-direction: column; text-align: center; }
+            .item-row {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-cogs"></i> Portfolio Admin Panel</h1>
-            <div class="stats">
-                <div class="stat"><div class="number" id="certCount">0</div><div class="label">Certificates</div></div>
-                <div class="stat"><div class="number" id="imgCount">2</div><div class="label">Images</div></div>
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <i class="fas fa-laptop-code" style="font-size: 48px; color: #FCD116; margin-bottom: 20px;"></i>
+            <h1>Admin Login</h1>
+            <input type="text" id="adminUsername" placeholder="Username">
+            <input type="password" id="adminPassword" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+    
+    <div class="admin-panel" id="adminPanel">
+        <div class="container">
+            <div class="admin-header">
+                <h1><i class="fas fa-cogs"></i> Portfolio Admin</h1>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
-        </div>
-        
-        <div id="messageBox" class="message"></div>
-        
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="images"><i class="fas fa-images"></i> Images</button>
-            <button class="tab-btn" data-tab="certificates"><i class="fas fa-certificate"></i> Certificates</button>
-            <button class="tab-btn" data-tab="add"><i class="fas fa-plus"></i> Add Certificate</button>
-        </div>
-        
-        <!-- Images Tab -->
-        <div class="tab-content active" id="imagesTab">
-            <div class="card">
-                <h2><i class="fas fa-user"></i> Profile Images</h2>
-                <div class="image-grid">
-                    <div class="image-card">
-                        <h3>Profile Photo</h3>
-                        <img src="" id="profilePreview" class="image-preview" alt="Profile">
-                        <div class="upload-area" id="profileUploadArea">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to select image (JPG, PNG)</p>
-                            <input type="file" id="profileInput" accept="image/jpeg,image/png,image/gif" hidden>
-                            <div id="profileFileName" style="font-size:12px;margin-top:8px;"></div>
-                        </div>
-                        <button id="uploadProfileBtn"><i class="fas fa-upload"></i> Upload Profile</button>
-                        <button id="resetProfileBtn" class="secondary" style="margin-left:8px;"><i class="fas fa-undo"></i> Reset</button>
-                    </div>
-                    
-                    <div class="image-card">
-                        <h3>About Section Image</h3>
-                        <img src="" id="aboutPreview" class="image-preview square" alt="About">
-                        <div class="upload-area" id="aboutUploadArea">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to select image (JPG, PNG)</p>
-                            <input type="file" id="aboutInput" accept="image/jpeg,image/png,image/gif" hidden>
-                            <div id="aboutFileName" style="font-size:12px;margin-top:8px;"></div>
-                        </div>
-                        <button id="uploadAboutBtn"><i class="fas fa-upload"></i> Upload About</button>
-                        <button id="resetAboutBtn" class="secondary" style="margin-left:8px;"><i class="fas fa-undo"></i> Reset</button>
-                    </div>
-                </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card"><h3 id="statCerts">0</h3><p>Certificates</p></div>
+                <div class="stat-card"><h3 id="statProjects">0</h3><p>Projects</p></div>
+                <div class="stat-card"><h3 id="statMessages">0</h3><p>Messages</p></div>
             </div>
-        </div>
-        
-        <!-- Certificates List Tab -->
-        <div class="tab-content" id="certificatesTab">
-            <div class="card">
-                <h2><i class="fas fa-list"></i> Manage Certificates</h2>
-                <div id="certificatesList" class="cert-list">
-                    <div class="loading"><i class="fas fa-spinner"></i><br>Loading certificates...</div>
-                </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="certificates">Certificates</button>
+                <button class="tab-btn" data-tab="projects">Projects</button>
+                <button class="tab-btn" data-tab="images">Images</button>
+                <button class="tab-btn" data-tab="messages">Messages</button>
             </div>
-        </div>
-        
-        <!-- Add Certificate Tab -->
-        <div class="tab-content" id="addTab">
-            <div class="card">
-                <h2><i class="fas fa-plus"></i> Add New Certificate</h2>
-                <form id="certForm">
-                    <div class="form-grid">
-                        <div class="form-group"><label>Certificate Name *</label><input type="text" id="certName" required placeholder="e.g., Introduction to AI"></div>
-                        <div class="form-group"><label>Issuer *</label><input type="text" id="certIssuer" required placeholder="e.g., Cisco"></div>
-                        <div class="form-group"><label>Date Earned *</label><input type="date" id="certDate" required></div>
-                        <div class="form-group"><label>Type</label><select id="certType"><option value="certificate">Certificate</option><option value="badge">Badge</option></select></div>
-                        <div class="form-group full-width"><label>Description</label><textarea id="certDescription" rows="3" placeholder="Brief description..."></textarea></div>
-                        <div class="form-group full-width">
-                            <label>Certificate Image</label>
-                            <div class="upload-area" id="certUploadArea">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to upload image (JPG, PNG)</p>
-                                <input type="file" id="certImageInput" accept="image/jpeg,image/png,image/gif" hidden>
-                                <div id="certFileName" style="font-size:12px;margin-top:8px;"></div>
+            
+            <!-- Certificates Tab -->
+            <div id="certificatesTab" class="tab-content active">
+                <div class="card">
+                    <h2>Add Certificate</h2>
+                    <form id="addCertForm">
+                        <div class="form-grid">
+                            <div class="form-group"><label>Name</label><input type="text" id="certName" required></div>
+                            <div class="form-group"><label>Issuer</label><input type="text" id="certIssuer" required></div>
+                            <div class="form-group"><label>Date</label><input type="date" id="certDate" required></div>
+                            <div class="form-group"><label>Type</label>
+                                <select id="certType">
+                                    <option value="certificate">Certificate</option>
+                                    <option value="badge">Badge</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width"><label>Description</label><textarea id="certDesc" rows="3"></textarea></div>
+                            <div class="form-group full-width">
+                                <label>Certificate Image</label>
+                                <div class="file-upload-area" id="certUploadArea">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Click to upload image</p>
+                                    <input type="file" id="certImageFile" accept="image/*" hidden>
+                                </div>
+                                <div id="certFileName" style="font-size:12px;color:#9CA3AF;"></div>
                             </div>
                         </div>
+                        <button type="submit">Add Certificate</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h2>Manage Certificates</h2>
+                    <div id="certsList" class="items-list">Loading...</div>
+                </div>
+            </div>
+            
+            <!-- Projects Tab -->
+            <div id="projectsTab" class="tab-content">
+                <div class="card">
+                    <h2>Add Project</h2>
+                    <form id="addProjectForm">
+                        <div class="form-grid">
+                            <div class="form-group"><label>Title</label><input type="text" id="projectTitle" required></div>
+                            <div class="form-group"><label>Description</label><textarea id="projectDesc" rows="3" required></textarea></div>
+                            <div class="form-group"><label>Icon Class</label><input type="text" id="projectIcon" value="fas fa-cog"></div>
+                            <div class="form-group"><label>Color</label>
+                                <select id="projectColor">
+                                    <option value="">Green</option>
+                                    <option value="red">Red</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="blue">Blue</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><label>Category</label>
+                                <select id="projectCategory">
+                                    <option value="networking">Networking</option>
+                                    <option value="web">Web</option>
+                                    <option value="security">Security</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="database">Database</option>
+                                    <option value="consulting">Consulting</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><label>Display Order</label><input type="number" id="projectOrder" value="0"></div>
+                        </div>
+                        <button type="submit">Add Project</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h2>Manage Projects</h2>
+                    <div id="projectsList" class="items-list">Loading...</div>
+                </div>
+            </div>
+            
+            <!-- Images Tab -->
+            <div id="imagesTab" class="tab-content">
+                <div class="card">
+                    <h2>Profile Picture</h2>
+                    <img id="profilePreview" class="image-preview">
+                    <div class="file-upload-area" id="profileUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload profile picture</p>
+                        <input type="file" id="profileImageFile" accept="image/*" hidden>
                     </div>
-                    <button type="submit" id="submitCertBtn"><i class="fas fa-save"></i> Add Certificate</button>
-                </form>
+                    <button id="uploadProfileBtn">Upload Profile Picture</button>
+                </div>
+                
+                <div class="card">
+                    <h2>About Page Image</h2>
+                    <img id="aboutPreview" class="image-preview square">
+                    <div class="file-upload-area" id="aboutUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload about image</p>
+                        <input type="file" id="aboutImageFile" accept="image/*" hidden>
+                    </div>
+                    <button id="uploadAboutBtn">Upload About Image</button>
+                </div>
+            </div>
+            
+            <!-- Messages Tab -->
+            <div id="messagesTab" class="tab-content">
+                <div class="card">
+                    <h2>Contact Messages</h2>
+                    <div id="messagesList" class="items-list">Loading...</div>
+                    <button onclick="clearAllMessages()" class="danger" style="margin-top:16px;">Clear All Messages</button>
+                </div>
             </div>
         </div>
     </div>
+    
+    <div id="message" class="message"></div>
 
-    <script type="module">
-        import { 
-            getCertificates, 
-            addCertificate, 
-            deleteCertificate,
-            getSiteSettings,
-            updateSiteSetting
-        } from './supabase-client.js'
+    <script>
+        const SUPABASE_URL = 'https://pthcviwhcsluovdekjub.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC';
+        const ADMIN_USERNAME = 'Feligo';
+        const ADMIN_PASSWORD = '56451051';
         
-        const DEFAULT_PROFILE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg";
-        const DEFAULT_ABOUT = "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
+        let supabase;
         
-        function showMessage(text, type) {
-            const box = document.getElementById('messageBox');
-            box.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${text}`;
-            box.className = `message ${type}`;
-            setTimeout(() => box.style.display = 'none', 4000);
+        async function initSupabase() {
+            const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+            supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+        
+        function showMessage(text, isError = false) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = 'message ' + (isError ? 'error' : '');
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 3000);
         }
         
         async function uploadToImgur(file) {
             const formData = new FormData();
             formData.append('image', file);
-            try {
-                const res = await fetch('https://api.imgur.com/3/image', {
-                    method: 'POST',
-                    headers: { 'Authorization': 'Client-ID 5e3e6a7e8f8d7c0' },
-                    body: formData
-                });
-                const data = await res.json();
-                return data.success ? data.data.link : null;
-            } catch (error) {
-                console.error('Imgur error:', error);
-                return null;
-            }
+            const res = await fetch('https://api.imgur.com/3/image', {
+                method: 'POST',
+                headers: { 'Authorization': 'Client-ID 5e3e6a7e8f8d7c0' },
+                body: formData
+            });
+            const data = await res.json();
+            return data.success ? data.data.link : null;
         }
         
-        async function loadImages() {
-            const settings = await getSiteSettings();
-            document.getElementById('profilePreview').src = settings.profile_image_url || DEFAULT_PROFILE;
-            document.getElementById('aboutPreview').src = settings.about_image_url || DEFAULT_ABOUT;
-        }
-        
+        // Certificates
         async function loadCertificates() {
-            const container = document.getElementById('certificatesList');
-            try {
-                const certs = await getCertificates();
-                document.getElementById('certCount').textContent = certs.length;
-                
-                if (certs.length === 0) {
-                    container.innerHTML = '<div class="loading"><i class="fas fa-certificate"></i><br>No certificates yet</div>';
-                    return;
-                }
-                
-                container.innerHTML = '';
-                for (const cert of certs) {
-                    const div = document.createElement('div');
-                    div.className = 'cert-item';
-                    div.innerHTML = `
-                        <img src="${cert.image_url || ''}" class="cert-img" onerror="this.src='https://via.placeholder.com/60'">
-                        <div class="cert-info">
-                            <h4>${escapeHtml(cert.name)}</h4>
-                            <p>${escapeHtml(cert.issuer || 'Unknown')} • ${cert.date_earned || ''}</p>
-                            ${cert.description ? `<p>${escapeHtml(cert.description)}</p>` : ''}
-                        </div>
-                        <button class="delete-cert" data-id="${cert.id}"><i class="fas fa-trash"></i> Delete</button>
-                    `;
-                    container.appendChild(div);
-                }
-                
-                document.querySelectorAll('.delete-cert').forEach(btn => {
-                    btn.addEventListener('click', async () => {
-                        if (confirm('Delete this certificate?')) {
-                            const result = await deleteCertificate(btn.dataset.id);
-                            if (result.success) {
-                                await loadCertificates();
-                                showMessage('Certificate deleted', 'success');
-                            } else {
-                                showMessage('Delete failed', 'error');
-                            }
-                        }
-                    });
-                });
-            } catch (error) {
-                container.innerHTML = '<div class="loading"><i class="fas fa-exclamation-triangle"></i><br>Error loading</div>';
+            const { data, error } = await supabase.from('certificates').select('*').order('date_earned', { ascending: false });
+            if (error) return;
+            document.getElementById('statCerts').textContent = data.length;
+            const container = document.getElementById('certsList');
+            if (data.length === 0) { container.innerHTML = '<div class="item-row">No certificates</div>'; return; }
+            container.innerHTML = '';
+            for (const cert of data) {
+                const div = document.createElement('div');
+                div.className = 'item-row';
+                div.innerHTML = `
+                    <div class="item-info">
+                        <h4>${escapeHtml(cert.name)}</h4>
+                        <p>${escapeHtml(cert.issuer)} • ${cert.date_earned || ''}</p>
+                        <p>${escapeHtml(cert.description || '')}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="edit-btn" onclick="editCertificate('${cert.id}')">Edit</button>
+                        <button class="danger" onclick="deleteCertificate('${cert.id}')">Delete</button>
+                    </div>
+                `;
+                container.appendChild(div);
             }
         }
+        
+        document.getElementById('addCertForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('certImageFile').files[0];
+            let imageUrl = null;
+            if (file) {
+                showMessage('Uploading image...');
+                imageUrl = await uploadToImgur(file);
+            }
+            const { error } = await supabase.from('certificates').insert({
+                name: document.getElementById('certName').value,
+                issuer: document.getElementById('certIssuer').value,
+                date_earned: document.getElementById('certDate').value,
+                certificate_type: document.getElementById('certType').value,
+                description: document.getElementById('certDesc').value,
+                image_url: imageUrl,
+                is_active: true
+            });
+            if (error) { showMessage('Error: ' + error.message, true); return; }
+            showMessage('Certificate added');
+            document.getElementById('addCertForm').reset();
+            document.getElementById('certFileName').textContent = '';
+            loadCertificates();
+        });
+        
+        window.deleteCertificate = async (id) => {
+            if (!confirm('Delete this certificate?')) return;
+            const { error } = await supabase.from('certificates').delete().eq('id', id);
+            if (error) { showMessage('Error', true); return; }
+            showMessage('Deleted');
+            loadCertificates();
+        };
+        
+        window.editCertificate = async (id) => {
+            const { data, error } = await supabase.from('certificates').select('*').eq('id', id).single();
+            if (error) return;
+            document.getElementById('certName').value = data.name;
+            document.getElementById('certIssuer').value = data.issuer;
+            document.getElementById('certDate').value = data.date_earned;
+            document.getElementById('certType').value = data.certificate_type;
+            document.getElementById('certDesc').value = data.description || '';
+            document.getElementById('certImageFile').value = '';
+            const btn = document.querySelector('#addCertForm button');
+            btn.textContent = 'Update';
+            btn.onclick = async (e) => {
+                e.preventDefault();
+                const file = document.getElementById('certImageFile').files[0];
+                let imageUrl = data.image_url;
+                if (file) {
+                    imageUrl = await uploadToImgur(file);
+                }
+                const { error: updateError } = await supabase.from('certificates').update({
+                    name: document.getElementById('certName').value,
+                    issuer: document.getElementById('certIssuer').value,
+                    date_earned: document.getElementById('certDate').value,
+                    certificate_type: document.getElementById('certType').value,
+                    description: document.getElementById('certDesc').value,
+                    image_url: imageUrl
+                }).eq('id', id);
+                if (updateError) { showMessage('Error', true); return; }
+                showMessage('Updated');
+                document.getElementById('addCertForm').reset();
+                document.getElementById('certFileName').textContent = '';
+                btn.textContent = 'Add Certificate';
+                btn.onclick = null;
+                loadCertificates();
+            };
+        };
+        
+        // Projects
+        async function loadProjects() {
+            const { data, error } = await supabase.from('projects').select('*').order('display_order');
+            if (error) return;
+            document.getElementById('statProjects').textContent = data.length;
+            const container = document.getElementById('projectsList');
+            if (data.length === 0) { container.innerHTML = '<div class="item-row">No projects</div>'; return; }
+            container.innerHTML = '';
+            for (const proj of data) {
+                const div = document.createElement('div');
+                div.className = 'item-row';
+                div.innerHTML = `
+                    <div class="item-info">
+                        <h4>${escapeHtml(proj.title)}</h4>
+                        <p>${escapeHtml(proj.description)}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="edit-btn" onclick="editProject('${proj.id}')">Edit</button>
+                        <button class="danger" onclick="deleteProject('${proj.id}')">Delete</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            }
+        }
+        
+        document.getElementById('addProjectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const { error } = await supabase.from('projects').insert({
+                title: document.getElementById('projectTitle').value,
+                description: document.getElementById('projectDesc').value,
+                icon_class: document.getElementById('projectIcon').value,
+                color_style: document.getElementById('projectColor').value,
+                category: document.getElementById('projectCategory').value,
+                display_order: parseInt(document.getElementById('projectOrder').value),
+                is_active: true
+            });
+            if (error) { showMessage('Error: ' + error.message, true); return; }
+            showMessage('Project added');
+            document.getElementById('addProjectForm').reset();
+            loadProjects();
+        });
+        
+        window.deleteProject = async (id) => {
+            if (!confirm('Delete this project?')) return;
+            const { error } = await supabase.from('projects').delete().eq('id', id);
+            if (error) { showMessage('Error', true); return; }
+            showMessage('Deleted');
+            loadProjects();
+        };
+        
+        window.editProject = async (id) => {
+            const { data, error } = await supabase.from('projects').select('*').eq('id', id).single();
+            if (error) return;
+            document.getElementById('projectTitle').value = data.title;
+            document.getElementById('projectDesc').value = data.description;
+            document.getElementById('projectIcon').value = data.icon_class;
+            document.getElementById('projectColor').value = data.color_style || '';
+            document.getElementById('projectCategory').value = data.category;
+            document.getElementById('projectOrder').value = data.display_order;
+            const btn = document.querySelector('#addProjectForm button');
+            btn.textContent = 'Update';
+            btn.onclick = async (e) => {
+                e.preventDefault();
+                const { error: updateError } = await supabase.from('projects').update({
+                    title: document.getElementById('projectTitle').value,
+                    description: document.getElementById('projectDesc').value,
+                    icon_class: document.getElementById('projectIcon').value,
+                    color_style: document.getElementById('projectColor').value,
+                    category: document.getElementById('projectCategory').value,
+                    display_order: parseInt(document.getElementById('projectOrder').value)
+                }).eq('id', id);
+                if (updateError) { showMessage('Error', true); return; }
+                showMessage('Updated');
+                document.getElementById('addProjectForm').reset();
+                btn.textContent = 'Add Project';
+                btn.onclick = null;
+                loadProjects();
+            };
+        };
+        
+        // Images
+        async function loadImages() {
+            const { data } = await supabase.from('site_settings').select('*');
+            const profile = data?.find(s => s.setting_key === 'profile_image_url');
+            const about = data?.find(s => s.setting_key === 'about_image_url');
+            if (profile) document.getElementById('profilePreview').src = profile.setting_value;
+            if (about) document.getElementById('aboutPreview').src = about.setting_value;
+        }
+        
+        document.getElementById('uploadProfileBtn').addEventListener('click', async () => {
+            const file = document.getElementById('profileImageFile').files[0];
+            if (!file) { showMessage('Select an image', true); return; }
+            const btn = document.getElementById('uploadProfileBtn');
+            btn.innerHTML = 'Uploading...';
+            btn.disabled = true;
+            const url = await uploadToImgur(file);
+            if (url) {
+                await supabase.from('site_settings').upsert({ setting_key: 'profile_image_url', setting_value: url });
+                await loadImages();
+                showMessage('Profile picture updated');
+            } else {
+                showMessage('Upload failed', true);
+            }
+            btn.innerHTML = 'Upload Profile Picture';
+            btn.disabled = false;
+            document.getElementById('profileImageFile').value = '';
+        });
+        
+        document.getElementById('uploadAboutBtn').addEventListener('click', async () => {
+            const file = document.getElementById('aboutImageFile').files[0];
+            if (!file) { showMessage('Select an image', true); return; }
+            const btn = document.getElementById('uploadAboutBtn');
+            btn.innerHTML = 'Uploading...';
+            btn.disabled = true;
+            const url = await uploadToImgur(file);
+            if (url) {
+                await supabase.from('site_settings').upsert({ setting_key: 'about_image_url', setting_value: url });
+                await loadImages();
+                showMessage('About image updated');
+            } else {
+                showMessage('Upload failed', true);
+            }
+            btn.innerHTML = 'Upload About Image';
+            btn.disabled = false;
+            document.getElementById('aboutImageFile').value = '';
+        });
+        
+        // Messages
+        async function loadMessages() {
+            const { data, error } = await supabase.from('contact_submissions').select('*').order('submitted_at', { ascending: false });
+            if (error) return;
+            document.getElementById('statMessages').textContent = data.length;
+            const container = document.getElementById('messagesList');
+            if (data.length === 0) { container.innerHTML = '<div class="item-row">No messages</div>'; return; }
+            container.innerHTML = '';
+            for (const msg of data) {
+                const div = document.createElement('div');
+                div.className = 'item-row';
+                div.innerHTML = `
+                    <div class="item-info">
+                        <h4>${escapeHtml(msg.name)} (${escapeHtml(msg.email)})</h4>
+                        <p><strong>Subject:</strong> ${escapeHtml(msg.subject || 'No subject')}</p>
+                        <p>${escapeHtml(msg.message)}</p>
+                        <p style="font-size:11px;">${new Date(msg.submitted_at).toLocaleString()}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="danger" onclick="deleteMessage('${msg.id}')">Delete</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            }
+        }
+        
+        window.deleteMessage = async (id) => {
+            if (!confirm('Delete this message?')) return;
+            await supabase.from('contact_submissions').delete().eq('id', id);
+            showMessage('Deleted');
+            loadMessages();
+        };
+        
+        window.clearAllMessages = async () => {
+            if (!confirm('Delete ALL messages?')) return;
+            await supabase.from('contact_submissions').delete().neq('id', 0);
+            showMessage('All messages cleared');
+            loadMessages();
+        };
+        
+        // Tab switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+            if (tabId === 'certificates') loadCertificates();
+            if (tabId === 'projects') loadProjects();
+            if (tabId === 'images') loadImages();
+            if (tabId === 'messages') loadMessages();
+        }
+        
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+        
+        // File upload areas
+        document.getElementById('certUploadArea').addEventListener('click', () => document.getElementById('certImageFile').click());
+        document.getElementById('profileUploadArea').addEventListener('click', () => document.getElementById('profileImageFile').click());
+        document.getElementById('aboutUploadArea').addEventListener('click', () => document.getElementById('aboutImageFile').click());
+        
+        document.getElementById('certImageFile').addEventListener('change', (e) => {
+            if (e.target.files[0]) document.getElementById('certFileName').textContent = e.target.files[0].name;
+        });
         
         function escapeHtml(str) {
             if (!str) return '';
@@ -408,129 +790,40 @@
             });
         }
         
-        // Tab switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabId = btn.dataset.tab;
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(tabId + 'Tab').classList.add('active');
-                if (tabId === 'images') loadImages();
-                if (tabId === 'certificates') loadCertificates();
+        // Login
+        window.login = async () => {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                await initSupabase();
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadCertificates();
+                loadProjects();
+                loadImages();
+                loadMessages();
+            } else {
+                showMessage('Invalid credentials', true);
+            }
+        };
+        
+        window.logout = () => {
+            sessionStorage.removeItem('adminLoggedIn');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminPanel').style.display = 'none';
+        };
+        
+        if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+            initSupabase().then(() => {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadCertificates();
+                loadProjects();
+                loadImages();
+                loadMessages();
             });
-        });
-        
-        // Upload profile
-        document.getElementById('uploadProfileBtn').addEventListener('click', async () => {
-            const file = document.getElementById('profileInput').files[0];
-            if (!file) { showMessage('Select an image', 'error'); return; }
-            const btn = document.getElementById('uploadProfileBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-            btn.disabled = true;
-            const url = await uploadToImgur(file);
-            if (url) {
-                await updateSiteSetting('profile_image_url', url, 'image');
-                await loadImages();
-                showMessage('Profile updated!', 'success');
-            } else {
-                showMessage('Upload failed', 'error');
-            }
-            btn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile';
-            btn.disabled = false;
-            document.getElementById('profileInput').value = '';
-            document.getElementById('profileFileName').textContent = '';
-        });
-        
-        // Upload about
-        document.getElementById('uploadAboutBtn').addEventListener('click', async () => {
-            const file = document.getElementById('aboutInput').files[0];
-            if (!file) { showMessage('Select an image', 'error'); return; }
-            const btn = document.getElementById('uploadAboutBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-            btn.disabled = true;
-            const url = await uploadToImgur(file);
-            if (url) {
-                await updateSiteSetting('about_image_url', url, 'image');
-                await loadImages();
-                showMessage('About image updated!', 'success');
-            } else {
-                showMessage('Upload failed', 'error');
-            }
-            btn.innerHTML = '<i class="fas fa-upload"></i> Upload About';
-            btn.disabled = false;
-            document.getElementById('aboutInput').value = '';
-            document.getElementById('aboutFileName').textContent = '';
-        });
-        
-        // Reset images
-        document.getElementById('resetProfileBtn').addEventListener('click', async () => {
-            await updateSiteSetting('profile_image_url', DEFAULT_PROFILE, 'image');
-            await loadImages();
-            showMessage('Profile reset', 'success');
-        });
-        
-        document.getElementById('resetAboutBtn').addEventListener('click', async () => {
-            await updateSiteSetting('about_image_url', DEFAULT_ABOUT, 'image');
-            await loadImages();
-            showMessage('About image reset', 'success');
-        });
-        
-        // Add certificate
-        document.getElementById('certForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const file = document.getElementById('certImageInput').files[0];
-            let imageUrl = null;
-            if (file) {
-                const btn = document.getElementById('submitCertBtn');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-                btn.disabled = true;
-                imageUrl = await uploadToImgur(file);
-                btn.innerHTML = '<i class="fas fa-save"></i> Add Certificate';
-                btn.disabled = false;
-            }
-            const result = await addCertificate({
-                name: document.getElementById('certName').value,
-                issuer: document.getElementById('certIssuer').value,
-                description: document.getElementById('certDescription').value,
-                date_earned: document.getElementById('certDate').value,
-                certificate_type: document.getElementById('certType').value,
-                image_url: imageUrl,
-                is_active: true
-            });
-            if (result.success) {
-                showMessage('Certificate added!', 'success');
-                document.getElementById('certForm').reset();
-                document.getElementById('certImageInput').value = '';
-                document.getElementById('certFileName').textContent = '';
-                document.getElementById('certDate').value = new Date().toISOString().split('T')[0];
-                await loadCertificates();
-                document.querySelector('[data-tab="certificates"]').click();
-            } else {
-                showMessage('Failed to add', 'error');
-            }
-        });
-        
-        // File upload areas
-        document.getElementById('profileUploadArea').addEventListener('click', () => document.getElementById('profileInput').click());
-        document.getElementById('aboutUploadArea').addEventListener('click', () => document.getElementById('aboutInput').click());
-        document.getElementById('certUploadArea').addEventListener('click', () => document.getElementById('certImageInput').click());
-        
-        document.getElementById('profileInput').addEventListener('change', (e) => {
-            if (e.target.files[0]) document.getElementById('profileFileName').textContent = e.target.files[0].name;
-        });
-        document.getElementById('aboutInput').addEventListener('change', (e) => {
-            if (e.target.files[0]) document.getElementById('aboutFileName').textContent = e.target.files[0].name;
-        });
-        document.getElementById('certImageInput').addEventListener('change', (e) => {
-            if (e.target.files[0]) document.getElementById('certFileName').textContent = e.target.files[0].name;
-        });
-        
-        document.getElementById('certDate').value = new Date().toISOString().split('T')[0];
-        
-        // Initialize
-        loadImages();
-        loadCertificates();
+        }
     </script>
 </body>
 </html>
