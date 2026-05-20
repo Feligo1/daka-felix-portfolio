@@ -428,7 +428,7 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3000);
         }
         
-        // Upload to Supabase Storage (direct, reliable)
+        // Upload to Supabase Storage
         async function uploadToStorage(file, folder) {
             const fileExt = file.name.split('.').pop();
             const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
@@ -447,31 +447,28 @@
             return urlData.publicUrl;
         }
         
-        function updateProgress(progressDiv, percent) {
-            const bar = progressDiv.querySelector('.progress-bar');
-            progressDiv.style.display = 'block';
-            bar.style.width = percent + '%';
-            if (percent >= 100) {
-                setTimeout(() => {
-                    progressDiv.style.display = 'none';
-                    bar.style.width = '0%';
-                }, 1000);
-            }
-        }
-        
-        // Simulate progress for better UX
         function simulateProgress(progressDiv) {
+            progressDiv.style.display = 'block';
             let percent = 0;
             const interval = setInterval(() => {
                 percent += 10;
+                const bar = progressDiv.querySelector('.progress-bar');
                 if (percent <= 90) {
-                    const bar = progressDiv.querySelector('.progress-bar');
                     bar.style.width = percent + '%';
                 } else {
                     clearInterval(interval);
                 }
             }, 100);
             return interval;
+        }
+        
+        function completeProgress(progressDiv) {
+            const bar = progressDiv.querySelector('.progress-bar');
+            bar.style.width = '100%';
+            setTimeout(() => {
+                progressDiv.style.display = 'none';
+                bar.style.width = '0%';
+            }, 1000);
         }
         
         // ============ CERTIFICATE CRUD ============
@@ -524,7 +521,7 @@
             try {
                 const imageUrl = await uploadToStorage(file, 'certificates');
                 clearInterval(progressInterval);
-                updateProgress(progressDiv, 100);
+                completeProgress(progressDiv);
                 
                 const { error } = await supabase.from('certificates').insert({
                     name: document.getElementById('certName').value,
@@ -572,8 +569,6 @@
             
             const btn = document.querySelector('#addCertForm button');
             btn.textContent = 'Update';
-            
-            const originalSubmit = btn.onclick;
             btn.onclick = async (e) => {
                 e.preventDefault();
                 const file = document.getElementById('certImageFile').files[0];
@@ -584,7 +579,7 @@
                     const progressInterval = simulateProgress(progressDiv);
                     imageUrl = await uploadToStorage(file, 'certificates');
                     clearInterval(progressInterval);
-                    updateProgress(progressDiv, 100);
+                    completeProgress(progressDiv);
                 }
                 
                 const { error } = await supabase.from('certificates').update({
@@ -722,12 +717,11 @@
             try {
                 const imageUrl = await uploadToStorage(file, key);
                 clearInterval(progressInterval);
-                updateProgress(progressDiv, 100);
+                completeProgress(progressDiv);
                 
                 const { error } = await supabase.from('site_settings').upsert({
                     setting_key: key,
-                    setting_value: imageUrl,
-                    updated_at: new Date()
+                    setting_value: imageUrl
                 });
                 
                 if (error) throw error;
