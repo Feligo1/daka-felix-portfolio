@@ -2,251 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Admin Dashboard | Daka Felix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Daka Felix</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Modern Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        :root {
-            --primary: #007749;
-            --primary-dark: #005a3f;
-            --primary-light: rgba(0, 119, 73, 0.1);
-            --secondary: #EF3340;
-            --accent: #FCD116;
-            --dark: #0A1931;
-            --dark-blue: #0A1931;
-            --dark-blue-light: #1A2C47;
-            --dark-blue-lighter: #2A3C57;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --text-light: #F9FAFB;
-            --text-muted: #9CA3AF;
-            --text-dark: #1F2937;
-            --border-light: rgba(255, 255, 255, 0.1);
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            --gradient-accent: linear-gradient(135deg, var(--accent), #e6b800);
-            --gradient-dark: linear-gradient(135deg, var(--dark-blue), var(--dark-blue-light));
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
         }
         
         body {
-            background: var(--gradient-dark);
-            color: var(--text-light);
+            background: linear-gradient(135deg, #0A1931, #1A2C47);
+            color: #F9FAFB;
             min-height: 100vh;
-            font-size: 14px;
-            line-height: 1.5;
+            padding: 20px;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 16px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
         
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-        }
-        
-        /* Login Page */
-        .login-page {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            background: radial-gradient(circle at top right, rgba(0, 119, 73, 0.2), transparent 50%),
-                        radial-gradient(circle at bottom left, rgba(252, 209, 22, 0.2), transparent 50%);
-        }
-        
-        .login-container {
-            background: rgba(26, 44, 71, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 32px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: var(--shadow-xl);
-            animation: slideUp 0.5s ease;
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        
-        .login-header .logo-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            font-size: 28px;
-            color: white;
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .login-header h1 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .login-header p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-light);
-            font-weight: 500;
-            font-size: 14px;
-        }
-        
-        .input-wrapper {
-            position: relative;
-        }
-        
-        .input-wrapper i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 16px;
-        }
-        
-        .input-wrapper input {
-            width: 100%;
-            padding: 14px 14px 14px 45px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            color: var(--text-light);
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .input-wrapper input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 119, 73, 0.2);
-        }
-        
-        .input-wrapper input::placeholder {
-            color: var(--text-muted);
-            opacity: 0.5;
-        }
-        
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-        
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-            border: 1px solid var(--border-light);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        .btn-accent {
-            background: var(--gradient-accent);
-            color: var(--dark);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #dc2626);
-            color: white;
-        }
-        
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 13px;
-        }
-        
-        .btn-block {
-            width: 100%;
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        /* Admin Dashboard */
-        .admin-dashboard {
-            display: none;
-        }
-        
-        /* Dashboard Header */
-        .dashboard-header {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
+        .header {
+            background: rgba(255,255,255,0.05);
             border-radius: 16px;
             padding: 20px 24px;
             margin-bottom: 24px;
@@ -257,172 +34,60 @@
             gap: 16px;
         }
         
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .header h1 { font-size: 24px; display: flex; align-items: center; gap: 12px; }
+        .header h1 i { color: #FCD116; }
         
-        .header-title i {
-            font-size: 28px;
-            color: var(--accent);
-            background: rgba(252, 209, 22, 0.1);
-            padding: 10px;
+        .stats { display: flex; gap: 20px; }
+        .stat {
+            background: rgba(0,0,0,0.3);
+            padding: 8px 16px;
             border-radius: 12px;
+            text-align: center;
         }
+        .stat .number { font-size: 24px; font-weight: bold; color: #FCD116; }
+        .stat .label { font-size: 12px; color: #9CA3AF; }
         
-        .header-title h1 {
-            font-size: 20px;
-            font-weight: 600;
-        }
-        
-        .header-title p {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-top: 4px;
-        }
-        
-        .header-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
-        
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary-light);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--primary);
-        }
-        
-        .stat-info h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .stat-info p {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        
-        /* Tabs */
         .tabs {
             display: flex;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 8px;
             margin-bottom: 24px;
             flex-wrap: wrap;
         }
         
         .tab-btn {
-            flex: 1;
-            padding: 12px 20px;
-            background: none;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
             border: none;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
+            color: #9CA3AF;
             border-radius: 12px;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            min-width: 100px;
+            transition: all 0.3s;
         }
         
-        .tab-btn i {
-            font-size: 16px;
+        .tab-btn.active { background: #007749; color: white; }
+        
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .tab-btn:hover {
-            color: var(--text-light);
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .tab-btn.active {
-            background: var(--gradient-primary);
-            color: white;
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Content Cards */
-        .content-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
+        .card {
+            background: rgba(255,255,255,0.05);
             border-radius: 20px;
             padding: 24px;
             margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+        .card h2 { margin-bottom: 20px; font-size: 20px; display: flex; align-items: center; gap: 8px; }
         
-        .card-header h2 {
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .card-header h2 i {
-            color: var(--accent);
-        }
-        
-        /* Image Management */
         .image-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -430,1991 +95,442 @@
         }
         
         .image-card {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0,0,0,0.2);
             border-radius: 16px;
             padding: 20px;
             text-align: center;
-            border: 1px solid var(--border-light);
         }
         
-        .image-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--accent);
-        }
-        
-        .preview-container {
-            position: relative;
-            width: 160px;
-            height: 160px;
+        .image-preview {
+            width: 150px;
+            height: 150px;
             margin: 0 auto 16px;
-        }
-        
-        .preview-image {
-            width: 100%;
-            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--primary);
-            box-shadow: var(--shadow-lg);
+            border: 3px solid #007749;
         }
         
-        .preview-image.square {
-            border-radius: 16px;
-        }
+        .image-preview.square { border-radius: 16px; }
         
-        .preview-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .preview-container:hover .preview-overlay {
-            opacity: 1;
-        }
-        
-        .preview-overlay.square {
-            border-radius: 16px;
-        }
-        
-        .preview-overlay i {
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-        }
-        
-        .file-upload-area {
-            border: 2px dashed var(--primary);
+        .upload-area {
+            border: 2px dashed #007749;
             border-radius: 12px;
-            padding: 20px;
-            margin: 16px 0;
-            background: rgba(0, 119, 73, 0.05);
+            padding: 16px;
+            margin: 12px 0;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
         
-        .file-upload-area:hover {
-            background: rgba(0, 119, 73, 0.1);
-            transform: scale(1.02);
-        }
+        .upload-area:hover { background: rgba(0,119,73,0.1); border-color: #FCD116; }
         
-        .file-upload-area i {
-            font-size: 28px;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-        
-        .file-upload-area p {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        
-        .file-name {
-            color: var(--accent);
-            font-size: 12px;
-            margin-top: 8px;
-            word-break: break-all;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 6px;
-            border-radius: 6px;
-        }
-        
-        /* Forms */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
         
-        .form-group {
-            margin-bottom: 16px;
-        }
+        .form-group { margin-bottom: 16px; }
+        .form-group.full-width { grid-column: 1 / -1; }
         
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
+        label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 13px; color: #FCD116; }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: var(--text-light);
-            font-weight: 500;
-            font-size: 13px;
-        }
-        
-        .form-group label i {
-            color: var(--accent);
-            margin-right: 6px;
-        }
-        
-        .form-control {
+        input, select, textarea {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-light);
+            padding: 12px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
-            color: var(--text-light);
+            color: white;
             font-size: 14px;
-            transition: all 0.3s ease;
         }
         
-        .form-control:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 119, 73, 0.2);
+            border-color: #007749;
         }
         
-        .form-control::placeholder {
-            color: var(--text-muted);
-            opacity: 0.5;
-        }
-        
-        select.form-control {
+        button {
+            padding: 12px 24px;
+            background: #007749;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
         }
         
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-        }
+        button:hover { background: #005a3f; transform: translateY(-2px); }
+        button.secondary { background: rgba(255,255,255,0.1); }
+        button.danger { background: #EF4444; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         
-        .form-actions {
-            grid-column: 1 / -1;
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
-        
-        /* Certificate List */
-        .certificates-list {
+        .cert-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
         
-        .certificate-item {
-            background: rgba(0, 0, 0, 0.2);
+        .cert-item {
+            background: rgba(0,0,0,0.2);
             border-radius: 12px;
             padding: 16px;
             display: flex;
             align-items: center;
             gap: 16px;
             flex-wrap: wrap;
-            border: 1px solid var(--border-light);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
         }
         
-        .certificate-item:hover {
-            border-color: var(--primary);
-            transform: translateX(4px);
-        }
+        .cert-item:hover { border-color: #007749; transform: translateX(5px); }
         
-        .certificate-preview {
+        .cert-img {
             width: 60px;
             height: 60px;
             border-radius: 8px;
             object-fit: cover;
-            border: 2px solid var(--primary);
         }
         
-        .certificate-info {
-            flex: 1;
-            min-width: 200px;
-        }
+        .cert-info { flex: 1; }
+        .cert-info h4 { margin-bottom: 4px; color: #FCD116; }
+        .cert-info p { color: #9CA3AF; font-size: 12px; margin-top: 4px; }
         
-        .certificate-info h4 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .certificate-info p {
-            color: var(--text-muted);
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .certificate-info p i {
-            color: var(--accent);
-        }
-        
-        .certificate-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .action-btn {
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-        }
-        
-        .edit-btn {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        
-        .edit-btn:hover {
-            background: rgba(16, 185, 129, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .delete-btn {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-        
-        .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        /* Messages */
         .message {
-            padding: 14px 20px;
+            padding: 12px 16px;
             border-radius: 12px;
             margin-bottom: 20px;
             display: none;
-            animation: slideIn 0.3s ease;
         }
         
-        .message.success {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: var(--success);
-            display: block;
-        }
+        .message.success { background: rgba(16,185,129,0.2); border: 1px solid #10B981; color: #10B981; display: block; }
+        .message.error { background: rgba(239,68,68,0.2); border: 1px solid #EF4444; color: #EF4444; display: block; }
         
-        .message.error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--danger);
-            display: block;
-        }
-        
-        .message.info {
-            background: rgba(0, 119, 73, 0.1);
-            border: 1px solid rgba(0, 119, 73, 0.3);
-            color: var(--primary);
-            display: block;
-        }
-        
-        .message i {
-            margin-right: 8px;
-        }
-        
-        /* Info Box */
-        .info-box {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 20px;
-        }
-        
-        .info-box h3 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--accent);
-        }
-        
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-light);
-        }
-        
-        .info-item:last-child {
-            border-bottom: none;
-        }
-        
-        .info-label {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        
-        .info-value {
-            color: var(--text-light);
-            font-weight: 500;
-            font-size: 13px;
-        }
-        
-        /* Settings Grid */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-        
-        .settings-card {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 16px;
-            padding: 20px;
-        }
-        
-        .settings-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--accent);
-        }
-        
-        /* Message Contacts Section */
-        .messages-preview {
-            margin-top: 24px;
-        }
-        
-        .message-item {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-        
-        .message-item:hover {
-            border-color: var(--primary);
-            transform: translateX(4px);
-        }
-        
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        
-        .message-sender {
-            font-weight: 600;
-            color: var(--accent);
-        }
-        
-        .message-date {
-            color: var(--text-muted);
-            font-size: 11px;
-        }
-        
-        .message-subject {
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
-        
-        .message-preview-text {
-            color: var(--text-muted);
-            font-size: 12px;
-            line-height: 1.4;
-        }
-        
-        /* Animations */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
-        /* Loading Spinner */
-        .spinner {
-            animation: spin 1s linear infinite;
-        }
+        .loading { text-align: center; padding: 40px; color: #9CA3AF; }
+        .loading i { animation: spin 1s linear infinite; display: inline-block; font-size: 32px; margin-bottom: 12px; }
         
         @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 12px;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .header-actions {
-                justify-content: center;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .tab-btn {
-                width: 100%;
-            }
-            
-            .image-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-            }
-            
-            .certificate-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .certificate-info p {
-                justify-content: center;
-            }
-            
-            .certificate-actions {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 24px 20px;
-            }
-            
-            .header-title h1 {
-                font-size: 18px;
-            }
-            
-            .stat-card {
-                padding: 16px;
-            }
-            
-            .content-card {
-                padding: 16px;
-            }
-            
-            .action-btn {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
+            .header { flex-direction: column; text-align: center; }
+            .cert-item { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <!-- Login Page -->
-    <div class="login-page" id="loginPage">
-        <div class="login-container">
-            <div class="login-header">
-                <div class="logo-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <h1>Welcome Back</h1>
-                <p>Enter your credentials to access the admin panel</p>
-            </div>
-            
-            <div class="message" id="loginMessage"></div>
-            
-            <form class="login-form" id="loginForm">
-                <div class="input-group">
-                    <label for="adminPassword">Password</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="adminPassword" placeholder="Enter your password" required>
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-block">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Login to Dashboard
-                </button>
-            </form>
-            
-            <div style="margin-top: 20px; text-align: center;">
-                <p style="color: var(--text-muted); font-size: 13px;">
-                    <i class="fas fa-info-circle"></i> Default password: <strong style="color: var(--accent);">Felix</strong>
-                </p>
-                <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;">
-                    <i class="fas fa-arrow-left"></i> Back to Home
-                </a>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-cogs"></i> Portfolio Admin Panel</h1>
+            <div class="stats">
+                <div class="stat"><div class="number" id="certCount">0</div><div class="label">Certificates</div></div>
+                <div class="stat"><div class="number" id="imgCount">2</div><div class="label">Images</div></div>
             </div>
         </div>
-    </div>
-    
-    <!-- Admin Dashboard -->
-    <div class="admin-dashboard" id="adminDashboard">
-        <div class="container">
-            <!-- Dashboard Header -->
-            <div class="dashboard-header">
-                <div class="header-title">
-                    <i class="fas fa-cogs"></i>
-                    <div>
-                        <h1>Portfolio Management</h1>
-                        <p>Manage your certificates, profile images, and site content</p>
-                    </div>
-                </div>
-                
-                <div class="header-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="syncWithPublic()">
-                        <i class="fas fa-sync-alt"></i> Sync
-                    </button>
-                    <button class="btn btn-secondary btn-sm" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                    <a href="index.html" class="btn btn-primary btn-sm">
-                        <i class="fas fa-eye"></i> View Site
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-certificate"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalCertCount">0</h3>
-                        <p>Total Certificates</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="color: var(--accent);">
-                        <i class="fas fa-images"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="imageCount">2</h3>
-                        <p>Profile Images</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="color: var(--success);">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="storageUsed">0 KB</h3>
-                        <p>Storage Used</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="color: var(--warning);">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="lastUpdatedTime">Never</h3>
-                        <p>Last Updated</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Messages -->
-            <div class="message" id="adminMessage"></div>
-            
-            <!-- Tabs -->
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="images">
-                    <i class="fas fa-images"></i> Images
-                </button>
-                <button class="tab-btn" data-tab="upload">
-                    <i class="fas fa-cloud-upload-alt"></i> Upload
-                </button>
-                <button class="tab-btn" data-tab="manage">
-                    <i class="fas fa-list"></i> Manage
-                </button>
-                <button class="tab-btn" data-tab="messages">
-                    <i class="fas fa-envelope"></i> Messages
-                </button>
-                <button class="tab-btn" data-tab="settings">
-                    <i class="fas fa-cog"></i> Settings
-                </button>
-            </div>
-            
-            <!-- Images Tab -->
-            <div class="tab-content active" id="imagesTab">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-images"></i> Profile Images</h2>
-                    </div>
-                    
-                    <div class="image-grid">
-                        <!-- Profile Image Card -->
-                        <div class="image-card">
-                            <h3><i class="fas fa-user-circle"></i> Profile Photo</h3>
-                            
-                            <div class="preview-container">
-                                <img src="" alt="Profile" class="preview-image" id="profilePreview">
-                                <div class="preview-overlay" onclick="document.getElementById('profileFileInput').click()">
-                                    <i class="fas fa-camera"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="file-upload-area" id="profileUploadArea">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to select image</p>
-                                <p style="font-size: 11px;">JPG, PNG, GIF • Max 5MB</p>
-                                <input type="file" id="profileFileInput" accept="image/*" hidden>
-                                <div class="file-name" id="profileFileName"></div>
-                            </div>
-                            
-                            <button class="btn btn-primary btn-block" id="uploadProfileBtn" onclick="uploadProfileImage()" disabled>
-                                <i class="fas fa-upload"></i> Upload Profile Image
-                            </button>
-                            <button class="btn btn-secondary btn-block" onclick="resetProfileImage()" style="margin-top: 8px;">
-                                <i class="fas fa-undo"></i> Reset to Default
-                            </button>
-                        </div>
-                        
-                        <!-- About Image Card -->
-                        <div class="image-card">
-                            <h3><i class="fas fa-briefcase"></i> About Section</h3>
-                            
-                            <div class="preview-container">
-                                <img src="" alt="About" class="preview-image square" id="aboutPreview">
-                                <div class="preview-overlay square" onclick="document.getElementById('aboutFileInput').click()">
-                                    <i class="fas fa-camera"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="file-upload-area" id="aboutUploadArea">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to select image</p>
-                                <p style="font-size: 11px;">JPG, PNG, GIF • Max 5MB</p>
-                                <input type="file" id="aboutFileInput" accept="image/*" hidden>
-                                <div class="file-name" id="aboutFileName"></div>
-                            </div>
-                            
-                            <button class="btn btn-primary btn-block" id="uploadAboutBtn" onclick="uploadAboutImage()" disabled>
-                                <i class="fas fa-upload"></i> Upload About Image
-                            </button>
-                            <button class="btn btn-secondary btn-block" onclick="resetAboutImage()" style="margin-top: 8px;">
-                                <i class="fas fa-undo"></i> Reset to Default
-                            </button>
-                        </div>
-                        
-                        <!-- Expertise Page Image Card -->
-                        <div class="image-card">
-                            <h3><i class="fas fa-cogs"></i> Expertise Header</h3>
-                            
-                            <div class="preview-container">
-                                <img src="" alt="Expertise" class="preview-image square" id="expertisePreview">
-                                <div class="preview-overlay square" onclick="document.getElementById('expertiseFileInput').click()">
-                                    <i class="fas fa-camera"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="file-upload-area" id="expertiseUploadArea">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to select image</p>
-                                <p style="font-size: 11px;">JPG, PNG, GIF • Max 5MB</p>
-                                <input type="file" id="expertiseFileInput" accept="image/*" hidden>
-                                <div class="file-name" id="expertiseFileName"></div>
-                            </div>
-                            
-                            <button class="btn btn-primary btn-block" id="uploadExpertiseBtn" onclick="uploadExpertiseImage()" disabled>
-                                <i class="fas fa-upload"></i> Upload Expertise Image
-                            </button>
-                            <button class="btn btn-secondary btn-block" onclick="resetExpertiseImage()" style="margin-top: 8px;">
-                                <i class="fas fa-undo"></i> Reset to Default
-                            </button>
-                        </div>
-                        
-                        <!-- Contact Page Image Card -->
-                        <div class="image-card">
-                            <h3><i class="fas fa-envelope"></i> Contact Header</h3>
-                            
-                            <div class="preview-container">
-                                <img src="" alt="Contact" class="preview-image square" id="contactPreview">
-                                <div class="preview-overlay square" onclick="document.getElementById('contactFileInput').click()">
-                                    <i class="fas fa-camera"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="file-upload-area" id="contactUploadArea">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to select image</p>
-                                <p style="font-size: 11px;">JPG, PNG, GIF • Max 5MB</p>
-                                <input type="file" id="contactFileInput" accept="image/*" hidden>
-                                <div class="file-name" id="contactFileName"></div>
-                            </div>
-                            
-                            <button class="btn btn-primary btn-block" id="uploadContactBtn" onclick="uploadContactImage()" disabled>
-                                <i class="fas fa-upload"></i> Upload Contact Image
-                            </button>
-                            <button class="btn btn-secondary btn-block" onclick="resetContactImage()" style="margin-top: 8px;">
-                                <i class="fas fa-undo"></i> Reset to Default
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="info-box">
-                        <h3><i class="fas fa-info-circle"></i> Image Status</h3>
-                        <div class="info-item">
-                            <span class="info-label">Profile Image:</span>
-                            <span class="info-value" id="currentProfileStatus">Default</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">About Image:</span>
-                            <span class="info-value" id="currentAboutStatus">Default</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Expertise Image:</span>
-                            <span class="info-value" id="currentExpertiseStatus">Default</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Contact Image:</span>
-                            <span class="info-value" id="currentContactStatus">Default</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Upload Tab -->
-            <div class="tab-content" id="uploadTab">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-cloud-upload-alt"></i> Add New Certificate</h2>
-                    </div>
-                    
-                    <form id="certificateForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label><i class="fas fa-tag"></i> Certificate Name *</label>
-                                <input type="text" class="form-control" id="certificateName" placeholder="e.g., Introduction to AI" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label><i class="fas fa-building"></i> Issuing Organization *</label>
-                                <input type="text" class="form-control" id="issuer" placeholder="e.g., Cisco" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label><i class="fas fa-calendar"></i> Issue Date *</label>
-                                <input type="date" class="form-control" id="issueDate" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label><i class="fas fa-hourglass-end"></i> Expiry Date</label>
-                                <input type="date" class="form-control" id="expiryDate">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label><i class="fas fa-filter"></i> Certificate Type *</label>
-                                <select class="form-control" id="certificateType" required>
-                                    <option value="">Select type</option>
-                                    <option value="certificate">Certificate</option>
-                                    <option value="badge">Digital Badge</option>
-                                    <option value="achievement">Achievement</option>
-                                    <option value="professional">Professional</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label><i class="fas fa-id-card"></i> Credential ID</label>
-                                <input type="text" class="form-control" id="credentialId" placeholder="e.g., CISCO-2024-001">
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label><i class="fas fa-align-left"></i> Description</label>
-                                <textarea class="form-control" id="description" placeholder="Brief description of the certificate..."></textarea>
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label><i class="fas fa-image"></i> Certificate Image *</label>
-                                <div class="file-upload-area" id="certificateUploadArea">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>Click to upload certificate image</p>
-                                    <p style="font-size: 11px;">JPG, PNG, GIF • Max 5MB</p>
-                                    <input type="file" id="certificateFileInput" accept="image/*" required hidden>
-                                    <div class="file-name" id="certificateFileName"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button type="reset" class="btn btn-danger">
-                                    <i class="fas fa-times"></i> Clear
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-cloud-upload-alt"></i> Upload Certificate
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <!-- Manage Tab -->
-            <div class="tab-content" id="manageTab">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-list"></i> Manage Certificates</h2>
-                    </div>
-                    
-                    <div id="certificatesList" class="certificates-list">
-                        <!-- Certificates will be dynamically added here -->
-                        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                            <i class="fas fa-certificate" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                            <h3>No Certificates Yet</h3>
-                            <p style="margin-top: 8px;">Upload your first certificate to get started</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Messages Tab -->
-            <div class="tab-content" id="messagesTab">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-envelope"></i> Contact Messages</h2>
-                    </div>
-                    
-                    <div id="messagesList" class="messages-preview">
-                        <!-- Messages will be dynamically added here -->
-                        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                            <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                            <h3>No Messages Yet</h3>
-                            <p style="margin-top: 8px;">Contact form submissions will appear here</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Settings Tab -->
-            <div class="tab-content" id="settingsTab">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-cog"></i> Settings</h2>
-                    </div>
-                    
-                    <div class="settings-grid">
-                        <!-- Password Settings -->
-                        <div class="settings-card">
-                            <h3><i class="fas fa-key"></i> Change Password</h3>
-                            <form id="passwordForm">
-                                <div class="form-group">
-                                    <label>Current Password</label>
-                                    <input type="password" class="form-control" id="currentPassword" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>New Password</label>
-                                    <input type="password" class="form-control" id="newPassword" required minlength="4">
-                                </div>
-                                <div class="form-group">
-                                    <label>Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirmPassword" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block">
-                                    <i class="fas fa-save"></i> Update Password
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <!-- Data Management -->
-                        <div class="settings-card">
-                            <h3><i class="fas fa-database"></i> Data Management</h3>
-                            <div style="display: flex; flex-direction: column; gap: 12px;">
-                                <button class="btn btn-secondary btn-block" onclick="exportData()">
-                                    <i class="fas fa-download"></i> Export Data
-                                </button>
-                                <button class="btn btn-secondary btn-block" onclick="importData()">
-                                    <i class="fas fa-upload"></i> Import Data
-                                </button>
-                                <button class="btn btn-danger btn-block" onclick="clearAllMessages()">
-                                    <i class="fas fa-trash"></i> Clear All Messages
-                                </button>
-                                <button class="btn btn-danger btn-block" onclick="resetToDefault()">
-                                    <i class="fas fa-redo-alt"></i> Reset to Default
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- System Info -->
-                        <div class="settings-card">
-                            <h3><i class="fas fa-info-circle"></i> System Information</h3>
-                            <div class="info-item">
-                                <span class="info-label">Certificates:</span>
-                                <span class="info-value" id="infoCertCount">0</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Images:</span>
-                                <span class="info-value" id="infoImageCount">4</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Messages:</span>
-                                <span class="info-value" id="infoMessageCount">0</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Storage:</span>
-                                <span class="info-value" id="infoStorageUsed">0 KB</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Last Sync:</span>
-                                <span class="info-value" id="infoLastSync">Never</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Version:</span>
-                                <span class="info-value">2.0.0</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Imgur Status -->
-                        <div class="settings-card">
-                            <h3><i class="fas fa-cloud-upload-alt"></i> Imgur Upload Status</h3>
-                            <div style="text-align: center; padding: 10px;">
-                                <i class="fas fa-check-circle" style="color: var(--success); font-size: 48px; margin-bottom: 10px;"></i>
-                                <p style="color: var(--text-muted);">Images uploaded via Imgur are permanent and don't require GitHub tokens!</p>
-                                <div class="info-item">
-                                    <span class="info-label">Status:</span>
-                                    <span class="info-value" style="color: var(--success);">Ready</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Your Facebook Profile Image URL
-        const YOUR_FACEBOOK_IMAGE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeERmR9SDQNN779BQCIC3BRL1_clvGteVabX9yW8a15Vpnwie4g7ICb6b7J12BuoLL-Dz6lk7W82fVpReVtul2Ie&_nc_ohc=VSLWuar56IEQ7kNvwGFMzaP&_nc_oc=AdkF6j4G7yfrMylBOmmizH-Gl2P2RF8WDjIuJTy_Y3SFbCjd_B1u_HMxJH2dZrd4k2M&_nc_zt=23&_nc_ht=scontent.fhre1-1.fna&_nc_gid=QLaTsidNcn2GYRRI1qYF0w&oh=00_AfuhWBDVGwyJEI6NWeWRUpHmJo0brkGteyFzbUM_npoOOQ&oe=6987F7A3";
         
-        // Default images for all pages
-        const DEFAULT_IMAGES = {
-            profile: YOUR_FACEBOOK_IMAGE,
-            about: "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80",
-            expertise: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80",
-            contact: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
-        };
-
-        // Admin Password Management
-        const AdminAuth = {
-            defaultPassword: "Felix",
-            
-            getPassword: function() {
-                const stored = localStorage.getItem('adminPassword');
-                return stored || this.defaultPassword;
-            },
-            
-            setPassword: function(newPassword) {
-                localStorage.setItem('adminPassword', newPassword);
-                return true;
-            },
-            
-            checkPassword: function(password) {
-                return password === this.getPassword();
-            },
-            
-            isLoggedIn: function() {
-                return localStorage.getItem('adminLoggedIn') === 'true';
-            },
-            
-            login: function(password) {
-                if (this.checkPassword(password)) {
-                    localStorage.setItem('adminLoggedIn', 'true');
-                    return true;
-                }
-                return false;
-            },
-            
-            logout: function() {
-                localStorage.removeItem('adminLoggedIn');
-                return true;
-            }
-        };
-
-        // Imgur Upload (no token needed)
-        const ImgurUpload = {
-            async uploadToImgur(file) {
-                const formData = new FormData();
-                formData.append('image', file);
-                
-                try {
-                    const response = await fetch('https://api.imgur.com/3/image', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': 'Client-ID 5e3e6a7e8f8d7c0' // Public Imgur client ID
-                        },
-                        body: formData
-                    });
+        <div id="messageBox" class="message"></div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="images"><i class="fas fa-images"></i> Images</button>
+            <button class="tab-btn" data-tab="certificates"><i class="fas fa-certificate"></i> Certificates</button>
+            <button class="tab-btn" data-tab="add"><i class="fas fa-plus"></i> Add Certificate</button>
+        </div>
+        
+        <!-- Images Tab -->
+        <div class="tab-content active" id="imagesTab">
+            <div class="card">
+                <h2><i class="fas fa-user"></i> Profile Images</h2>
+                <div class="image-grid">
+                    <div class="image-card">
+                        <h3>Profile Photo</h3>
+                        <img src="" id="profilePreview" class="image-preview" alt="Profile">
+                        <div class="upload-area" id="profileUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to select image (JPG, PNG)</p>
+                            <input type="file" id="profileInput" accept="image/jpeg,image/png,image/gif" hidden>
+                            <div id="profileFileName" style="font-size:12px;margin-top:8px;"></div>
+                        </div>
+                        <button id="uploadProfileBtn"><i class="fas fa-upload"></i> Upload Profile</button>
+                        <button id="resetProfileBtn" class="secondary" style="margin-left:8px;"><i class="fas fa-undo"></i> Reset</button>
+                    </div>
                     
-                    const data = await response.json();
-                    if (data.success) {
-                        return data.data.link; // Returns permanent image URL
-                    }
-                    return null;
-                } catch (error) {
-                    console.error('Imgur upload failed:', error);
-                    return null;
-                }
-            }
-        };
+                    <div class="image-card">
+                        <h3>About Section Image</h3>
+                        <img src="" id="aboutPreview" class="image-preview square" alt="About">
+                        <div class="upload-area" id="aboutUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to select image (JPG, PNG)</p>
+                            <input type="file" id="aboutInput" accept="image/jpeg,image/png,image/gif" hidden>
+                            <div id="aboutFileName" style="font-size:12px;margin-top:8px;"></div>
+                        </div>
+                        <button id="uploadAboutBtn"><i class="fas fa-upload"></i> Upload About</button>
+                        <button id="resetAboutBtn" class="secondary" style="margin-left:8px;"><i class="fas fa-undo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Certificates List Tab -->
+        <div class="tab-content" id="certificatesTab">
+            <div class="card">
+                <h2><i class="fas fa-list"></i> Manage Certificates</h2>
+                <div id="certificatesList" class="cert-list">
+                    <div class="loading"><i class="fas fa-spinner"></i><br>Loading certificates...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add Certificate Tab -->
+        <div class="tab-content" id="addTab">
+            <div class="card">
+                <h2><i class="fas fa-plus"></i> Add New Certificate</h2>
+                <form id="certForm">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Certificate Name *</label><input type="text" id="certName" required placeholder="e.g., Introduction to AI"></div>
+                        <div class="form-group"><label>Issuer *</label><input type="text" id="certIssuer" required placeholder="e.g., Cisco"></div>
+                        <div class="form-group"><label>Date Earned *</label><input type="date" id="certDate" required></div>
+                        <div class="form-group"><label>Type</label><select id="certType"><option value="certificate">Certificate</option><option value="badge">Badge</option></select></div>
+                        <div class="form-group full-width"><label>Description</label><textarea id="certDescription" rows="3" placeholder="Brief description..."></textarea></div>
+                        <div class="form-group full-width">
+                            <label>Certificate Image</label>
+                            <div class="upload-area" id="certUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload image (JPG, PNG)</p>
+                                <input type="file" id="certImageInput" accept="image/jpeg,image/png,image/gif" hidden>
+                                <div id="certFileName" style="font-size:12px;margin-top:8px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" id="submitCertBtn"><i class="fas fa-save"></i> Add Certificate</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-        // Image Management - Handles all site images
-        const ImageManager = {
-            defaultImages: DEFAULT_IMAGES,
-            
-            getImages: function() {
-                const stored = localStorage.getItem('siteImages');
-                if (stored) {
-                    try {
-                        return JSON.parse(stored);
-                    } catch (e) {
-                        console.error('Error parsing images:', e);
-                        return this.defaultImages;
-                    }
-                }
-                return this.defaultImages;
-            },
-            
-            saveImages: function(images) {
-                localStorage.setItem('siteImages', JSON.stringify(images));
-                window.dispatchEvent(new Event('storage'));
-            },
-            
-            storeImageAsBase64: function(file, key) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const base64String = e.target.result;
-                        const images = this.getImages();
-                        images[key] = base64String;
-                        this.saveImages(images);
-                        resolve(base64String);
-                    };
-                    reader.onerror = (error) => reject(error);
-                    reader.readAsDataURL(file);
+    <script type="module">
+        import { 
+            getCertificates, 
+            addCertificate, 
+            deleteCertificate,
+            getSiteSettings,
+            updateSiteSetting
+        } from './supabase-client.js'
+        
+        const DEFAULT_PROFILE = "https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg";
+        const DEFAULT_ABOUT = "https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80";
+        
+        function showMessage(text, type) {
+            const box = document.getElementById('messageBox');
+            box.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${text}`;
+            box.className = `message ${type}`;
+            setTimeout(() => box.style.display = 'none', 4000);
+        }
+        
+        async function uploadToImgur(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            try {
+                const res = await fetch('https://api.imgur.com/3/image', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Client-ID 5e3e6a7e8f8d7c0' },
+                    body: formData
                 });
-            },
-            
-            resetImage: function(key) {
-                const images = this.getImages();
-                images[key] = this.defaultImages[key];
-                this.saveImages(images);
-            }
-        };
-
-        // Certificate Management
-        const CertificateManager = {
-            defaultCertificates: [
-                {
-                    id: 1,
-                    name: "Introduction to Modern AI",
-                    issuer: "Cisco Networking Academy",
-                    date: "2026-02-03",
-                    type: "certificate",
-                    credentialId: "CISCO-AI-2026-001",
-                    description: "Certificate earned for completing Introduction to Modern AI course.",
-                    fileName: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                },
-                {
-                    id: 2,
-                    name: "Introduction to Data Science",
-                    issuer: "Cisco Networking Academy",
-                    date: "2025-07-08",
-                    type: "certificate",
-                    credentialId: "CISCO-DS-2025-001",
-                    description: "Certificate and Badge earned for completing Introduction to Data Science course.",
-                    fileName: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                },
-                {
-                    id: 3,
-                    name: "Cybersecurity Fundamentals",
-                    issuer: "Cisco Networking Academy",
-                    date: "2026-02-01",
-                    type: "badge",
-                    credentialId: "CISCO-CYB-2026-B001",
-                    description: "Digital badge earned for cybersecurity course completion.",
-                    fileName: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                }
-            ],
-
-            getCertificates: function() {
-                const stored = localStorage.getItem('certificates');
-                if (stored) {
-                    try {
-                        return JSON.parse(stored);
-                    } catch (e) {
-                        console.error('Error parsing certificates:', e);
-                        return this.defaultCertificates;
-                    }
-                }
-                return this.defaultCertificates;
-            },
-
-            saveCertificates: function(certificates) {
-                localStorage.setItem('certificates', JSON.stringify(certificates));
-                localStorage.setItem('lastUpdated', new Date().toISOString());
-                window.dispatchEvent(new Event('storage'));
-            },
-
-            addCertificate: function(certificate) {
-                const certificates = this.getCertificates();
-                certificate.id = certificates.length > 0 ? Math.max(...certificates.map(c => c.id)) + 1 : 1;
-                certificates.push(certificate);
-                this.saveCertificates(certificates);
-                return certificate;
-            },
-
-            updateCertificate: function(id, updates) {
-                const certificates = this.getCertificates();
-                const index = certificates.findIndex(c => c.id === id);
-                if (index !== -1) {
-                    certificates[index] = { ...certificates[index], ...updates };
-                    this.saveCertificates(certificates);
-                    return certificates[index];
-                }
+                const data = await res.json();
+                return data.success ? data.data.link : null;
+            } catch (error) {
+                console.error('Imgur error:', error);
                 return null;
-            },
-
-            deleteCertificate: function(id) {
-                const certificates = this.getCertificates();
-                const filtered = certificates.filter(c => c.id !== id);
-                this.saveCertificates(filtered);
-                return filtered.length !== certificates.length;
-            },
-
-            resetToDefault: function() {
-                this.saveCertificates(this.defaultCertificates);
-                return this.defaultCertificates;
             }
-        };
-
-        // Message Management
-        const MessageManager = {
-            getMessages: function() {
-                const stored = localStorage.getItem('contactMessages');
-                if (stored) {
-                    try {
-                        return JSON.parse(stored);
-                    } catch (e) {
-                        return [];
-                    }
-                }
-                return [];
-            },
-            
-            saveMessages: function(messages) {
-                localStorage.setItem('contactMessages', JSON.stringify(messages));
-            },
-            
-            clearMessages: function() {
-                localStorage.removeItem('contactMessages');
-            }
-        };
-
-        // DOM Elements
-        const loginPage = document.getElementById('loginPage');
-        const adminDashboard = document.getElementById('adminDashboard');
-        const loginForm = document.getElementById('loginForm');
-        const loginMessage = document.getElementById('loginMessage');
-        const adminMessage = document.getElementById('adminMessage');
-        const certificateForm = document.getElementById('certificateForm');
-        const certificatesList = document.getElementById('certificatesList');
-        const messagesList = document.getElementById('messagesList');
-        const passwordForm = document.getElementById('passwordForm');
-        const totalCertCount = document.getElementById('totalCertCount');
-        const lastUpdatedTime = document.getElementById('lastUpdatedTime');
-        const storageUsed = document.getElementById('storageUsed');
-        const infoCertCount = document.getElementById('infoCertCount');
-        const infoImageCount = document.getElementById('infoImageCount');
-        const infoMessageCount = document.getElementById('infoMessageCount');
-        const infoStorageUsed = document.getElementById('infoStorageUsed');
-        const infoLastSync = document.getElementById('infoLastSync');
-        
-        // Image elements
-        const profilePreview = document.getElementById('profilePreview');
-        const aboutPreview = document.getElementById('aboutPreview');
-        const expertisePreview = document.getElementById('expertisePreview');
-        const contactPreview = document.getElementById('contactPreview');
-        
-        const currentProfileStatus = document.getElementById('currentProfileStatus');
-        const currentAboutStatus = document.getElementById('currentAboutStatus');
-        const currentExpertiseStatus = document.getElementById('currentExpertiseStatus');
-        const currentContactStatus = document.getElementById('currentContactStatus');
-        
-        // File inputs
-        const profileFileInput = document.getElementById('profileFileInput');
-        const aboutFileInput = document.getElementById('aboutFileInput');
-        const expertiseFileInput = document.getElementById('expertiseFileInput');
-        const contactFileInput = document.getElementById('contactFileInput');
-        const certificateFileInput = document.getElementById('certificateFileInput');
-        
-        const profileFileName = document.getElementById('profileFileName');
-        const aboutFileName = document.getElementById('aboutFileName');
-        const expertiseFileName = document.getElementById('expertiseFileName');
-        const contactFileName = document.getElementById('contactFileName');
-        const certificateFileName = document.getElementById('certificateFileName');
-        
-        const uploadProfileBtn = document.getElementById('uploadProfileBtn');
-        const uploadAboutBtn = document.getElementById('uploadAboutBtn');
-        const uploadExpertiseBtn = document.getElementById('uploadExpertiseBtn');
-        const uploadContactBtn = document.getElementById('uploadContactBtn');
-        
-        const imageCount = document.getElementById('imageCount');
-
-        // Utility Functions
-        function showMessage(element, text, type = 'info') {
-            element.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> ${text}`;
-            element.className = 'message ' + type;
-            element.style.display = 'block';
-            
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, 3000);
         }
-
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-US', options);
-        }
-
-        function formatDateTime(dateString) {
-            const options = { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            return new Date(dateString).toLocaleDateString('en-US', options);
-        }
-
-        // Calculate storage
-        function calculateStorageUsed() {
-            let total = 0;
-            for (let key in localStorage) {
-                if (localStorage.hasOwnProperty(key)) {
-                    total += localStorage[key].length * 2;
-                }
-            }
-            
-            let storageText;
-            if (total < 1024) storageText = total + ' B';
-            else if (total < 1024 * 1024) storageText = (total / 1024).toFixed(2) + ' KB';
-            else storageText = (total / (1024 * 1024)).toFixed(2) + ' MB';
-            
-            storageUsed.textContent = storageText;
-            infoStorageUsed.textContent = storageText;
-            return storageText;
-        }
-
-        // Load all images
-        function loadAllImagePreviews() {
-            const images = ImageManager.getImages();
-            
-            profilePreview.src = images.profile || DEFAULT_IMAGES.profile;
-            aboutPreview.src = images.about || DEFAULT_IMAGES.about;
-            expertisePreview.src = images.expertise || DEFAULT_IMAGES.expertise;
-            contactPreview.src = images.contact || DEFAULT_IMAGES.contact;
-            
-            currentProfileStatus.textContent = images.profile === DEFAULT_IMAGES.profile ? 'Default Facebook' : 'Custom Upload';
-            currentAboutStatus.textContent = images.about && images.about.includes('base64') ? 'Custom Upload' : 'Default';
-            currentExpertiseStatus.textContent = images.expertise && images.expertise.includes('base64') ? 'Custom Upload' : 'Default';
-            currentContactStatus.textContent = images.contact && images.contact.includes('base64') ? 'Custom Upload' : 'Default';
-            
-            imageCount.textContent = '4';
-            infoImageCount.textContent = '4';
-        }
-
-        // File selection handlers
-        function setupFileInput(input, fileNameSpan, uploadBtn) {
-            input.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    if (file.size > 5 * 1024 * 1024) {
-                        showMessage(adminMessage, 'File too large! Maximum 5MB', 'error');
-                        this.value = '';
-                        return;
-                    }
-                    fileNameSpan.textContent = `📷 ${file.name}`;
-                    if (uploadBtn) uploadBtn.disabled = false;
-                }
-            });
-        }
-
-        setupFileInput(profileFileInput, profileFileName, uploadProfileBtn);
-        setupFileInput(aboutFileInput, aboutFileName, uploadAboutBtn);
-        setupFileInput(expertiseFileInput, expertiseFileName, uploadExpertiseBtn);
-        setupFileInput(contactFileInput, contactFileName, uploadContactBtn);
         
-        certificateFileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showMessage(adminMessage, 'File too large! Maximum 5MB', 'error');
-                    this.value = '';
+        async function loadImages() {
+            const settings = await getSiteSettings();
+            document.getElementById('profilePreview').src = settings.profile_image_url || DEFAULT_PROFILE;
+            document.getElementById('aboutPreview').src = settings.about_image_url || DEFAULT_ABOUT;
+        }
+        
+        async function loadCertificates() {
+            const container = document.getElementById('certificatesList');
+            try {
+                const certs = await getCertificates();
+                document.getElementById('certCount').textContent = certs.length;
+                
+                if (certs.length === 0) {
+                    container.innerHTML = '<div class="loading"><i class="fas fa-certificate"></i><br>No certificates yet</div>';
                     return;
                 }
-                certificateFileName.textContent = `📷 ${file.name}`;
-            }
-        });
-
-        // Upload functions using Imgur
-        window.uploadProfileImage = async function() {
-            const file = profileFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
-            
-            uploadProfileBtn.disabled = true;
-            uploadProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
-            
-            try {
-                // Try Imgur first (easier, no token needed)
-                const imgurUrl = await ImgurUpload.uploadToImgur(file);
                 
-                if (imgurUrl) {
-                    // Save to localStorage
-                    const images = ImageManager.getImages();
-                    images.profile = imgurUrl;
-                    ImageManager.saveImages(images);
-                    
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ Image uploaded permanently to Imgur!', 'success');
-                } else {
-                    // Fallback to local base64
-                    await ImageManager.storeImageAsBase64(file, 'profile');
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
-                }
-            } catch (error) {
-                showMessage(adminMessage, 'Upload failed', 'error');
-            } finally {
-                profileFileInput.value = '';
-                profileFileName.textContent = '';
-                uploadProfileBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile Image';
-                uploadProfileBtn.disabled = false;
-            }
-        };
-
-        window.uploadAboutImage = async function() {
-            const file = aboutFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
-            
-            uploadAboutBtn.disabled = true;
-            uploadAboutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
-            
-            try {
-                const imgurUrl = await ImgurUpload.uploadToImgur(file);
-                
-                if (imgurUrl) {
-                    const images = ImageManager.getImages();
-                    images.about = imgurUrl;
-                    ImageManager.saveImages(images);
-                    
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ About image uploaded permanently to Imgur!', 'success');
-                } else {
-                    await ImageManager.storeImageAsBase64(file, 'about');
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
-                }
-            } catch (error) {
-                showMessage(adminMessage, 'Upload failed', 'error');
-            } finally {
-                aboutFileInput.value = '';
-                aboutFileName.textContent = '';
-                uploadAboutBtn.innerHTML = '<i class="fas fa-upload"></i> Upload About Image';
-                uploadAboutBtn.disabled = false;
-            }
-        };
-
-        window.uploadExpertiseImage = async function() {
-            const file = expertiseFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
-            
-            uploadExpertiseBtn.disabled = true;
-            uploadExpertiseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
-            
-            try {
-                const imgurUrl = await ImgurUpload.uploadToImgur(file);
-                
-                if (imgurUrl) {
-                    const images = ImageManager.getImages();
-                    images.expertise = imgurUrl;
-                    ImageManager.saveImages(images);
-                    
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ Expertise image uploaded permanently to Imgur!', 'success');
-                } else {
-                    await ImageManager.storeImageAsBase64(file, 'expertise');
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
-                }
-            } catch (error) {
-                showMessage(adminMessage, 'Upload failed', 'error');
-            } finally {
-                expertiseFileInput.value = '';
-                expertiseFileName.textContent = '';
-                uploadExpertiseBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Expertise Image';
-                uploadExpertiseBtn.disabled = false;
-            }
-        };
-
-        window.uploadContactImage = async function() {
-            const file = contactFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select an image first', 'error');
-                return;
-            }
-            
-            uploadContactBtn.disabled = true;
-            uploadContactBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to Imgur...';
-            
-            try {
-                const imgurUrl = await ImgurUpload.uploadToImgur(file);
-                
-                if (imgurUrl) {
-                    const images = ImageManager.getImages();
-                    images.contact = imgurUrl;
-                    ImageManager.saveImages(images);
-                    
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '✅ Contact image uploaded permanently to Imgur!', 'success');
-                } else {
-                    await ImageManager.storeImageAsBase64(file, 'contact');
-                    loadAllImagePreviews();
-                    showMessage(adminMessage, '⚠️ Imgur upload failed. Saved locally only.', 'warning');
-                }
-            } catch (error) {
-                showMessage(adminMessage, 'Upload failed', 'error');
-            } finally {
-                contactFileInput.value = '';
-                contactFileName.textContent = '';
-                uploadContactBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Contact Image';
-                uploadContactBtn.disabled = false;
-            }
-        };
-
-        // Reset functions
-        window.resetProfileImage = function() {
-            ImageManager.resetImage('profile');
-            loadAllImagePreviews();
-            showMessage(adminMessage, 'Profile image reset to default', 'success');
-        };
-        
-        window.resetAboutImage = function() {
-            ImageManager.resetImage('about');
-            loadAllImagePreviews();
-            showMessage(adminMessage, 'About image reset to default', 'success');
-        };
-        
-        window.resetExpertiseImage = function() {
-            ImageManager.resetImage('expertise');
-            loadAllImagePreviews();
-            showMessage(adminMessage, 'Expertise image reset to default', 'success');
-        };
-        
-        window.resetContactImage = function() {
-            ImageManager.resetImage('contact');
-            loadAllImagePreviews();
-            showMessage(adminMessage, 'Contact image reset to default', 'success');
-        };
-
-        // Load messages
-        function loadMessages() {
-            const messages = MessageManager.getMessages();
-            
-            if (messages.length === 0) {
-                messagesList.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                        <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                        <h3>No Messages Yet</h3>
-                        <p style="margin-top: 8px;">Contact form submissions will appear here</p>
-                    </div>
-                `;
-                infoMessageCount.textContent = '0';
-                return;
-            }
-            
-            let html = '';
-            messages.slice().reverse().forEach(msg => {
-                html += `
-                    <div class="message-item">
-                        <div class="message-header">
-                            <span class="message-sender"><i class="fas fa-user"></i> ${msg.name || 'Unknown'}</span>
-                            <span class="message-date">${msg.timestamp ? formatDate(msg.timestamp) : 'Unknown'}</span>
+                container.innerHTML = '';
+                for (const cert of certs) {
+                    const div = document.createElement('div');
+                    div.className = 'cert-item';
+                    div.innerHTML = `
+                        <img src="${cert.image_url || ''}" class="cert-img" onerror="this.src='https://via.placeholder.com/60'">
+                        <div class="cert-info">
+                            <h4>${escapeHtml(cert.name)}</h4>
+                            <p>${escapeHtml(cert.issuer || 'Unknown')} • ${cert.date_earned || ''}</p>
+                            ${cert.description ? `<p>${escapeHtml(cert.description)}</p>` : ''}
                         </div>
-                        <div class="message-subject"><i class="fas fa-tag"></i> ${msg.subject || 'No subject'}</div>
-                        <div class="message-preview-text">${msg.message || 'No message'}</div>
-                    </div>
-                `;
-            });
-            
-            messagesList.innerHTML = html;
-            infoMessageCount.textContent = messages.length;
-        }
-
-        // Clear all messages
-        window.clearAllMessages = function() {
-            if (!confirm('Are you sure you want to delete all contact messages?')) return;
-            MessageManager.clearMessages();
-            loadMessages();
-            showMessage(adminMessage, 'All messages cleared', 'success');
-        };
-
-        // Tab Switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const tabId = this.dataset.tab;
-                
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(tabId + 'Tab').classList.add('active');
-                
-                if (tabId === 'images') {
-                    loadAllImagePreviews();
-                } else if (tabId === 'manage') {
-                    renderCertificatesList();
-                } else if (tabId === 'messages') {
-                    loadMessages();
+                        <button class="delete-cert" data-id="${cert.id}"><i class="fas fa-trash"></i> Delete</button>
+                    `;
+                    container.appendChild(div);
                 }
-                calculateStorageUsed();
-            });
-        });
-
-        // Render certificates
-        function renderCertificatesList() {
-            const certificates = CertificateManager.getCertificates();
-            certificatesList.innerHTML = '';
-            
-            if (certificates.length === 0) {
-                certificatesList.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                        <i class="fas fa-certificate" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                        <h3>No Certificates Yet</h3>
-                        <p style="margin-top: 8px;">Upload your first certificate to get started</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            certificates.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            certificates.forEach(cert => {
-                const item = document.createElement('div');
-                item.className = 'certificate-item';
                 
-                item.innerHTML = `
-                    <img src="${cert.fileName}" alt="${cert.name}" class="certificate-preview" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'">
-                    <div class="certificate-info">
-                        <h4>${cert.name}</h4>
-                        <p><i class="fas fa-building"></i> ${cert.issuer} • <i class="far fa-calendar"></i> ${formatDate(cert.date)}</p>
-                    </div>
-                    <div class="certificate-actions">
-                        <button class="action-btn edit-btn" onclick="editCertificate(${cert.id})">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button class="action-btn delete-btn" onclick="deleteCertificate(${cert.id})">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </div>
-                `;
-                
-                certificatesList.appendChild(item);
-            });
-        }
-
-        // Update system info
-        function updateSystemInfo() {
-            const certificates = CertificateManager.getCertificates();
-            const messages = MessageManager.getMessages();
-            
-            totalCertCount.textContent = certificates.length;
-            infoCertCount.textContent = certificates.length;
-            
-            const lastUpdated = localStorage.getItem('lastUpdated');
-            const lastUpdatedText = lastUpdated ? formatDateTime(lastUpdated) : 'Never';
-            lastUpdatedTime.textContent = lastUpdatedText;
-            infoLastSync.textContent = lastUpdatedText;
-            
-            infoMessageCount.textContent = messages.length;
-            
-            calculateStorageUsed();
-        }
-
-        // Certificate Form Submit
-        certificateForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const file = certificateFileInput.files[0];
-            if (!file) {
-                showMessage(adminMessage, 'Please select a certificate image', 'error');
-                return;
-            }
-            
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-            submitBtn.disabled = true;
-            
-            try {
-                const reader = new FileReader();
-                const base64Promise = new Promise((resolve) => {
-                    reader.onload = () => resolve(reader.result);
-                    reader.readAsDataURL(file);
+                document.querySelectorAll('.delete-cert').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        if (confirm('Delete this certificate?')) {
+                            const result = await deleteCertificate(btn.dataset.id);
+                            if (result.success) {
+                                await loadCertificates();
+                                showMessage('Certificate deleted', 'success');
+                            } else {
+                                showMessage('Delete failed', 'error');
+                            }
+                        }
+                    });
                 });
-                
-                const base64Image = await base64Promise;
-                
-                const formData = {
-                    name: document.getElementById('certificateName').value,
-                    issuer: document.getElementById('issuer').value,
-                    date: document.getElementById('issueDate').value,
-                    expiryDate: document.getElementById('expiryDate').value || null,
-                    type: document.getElementById('certificateType').value,
-                    credentialId: document.getElementById('credentialId').value || null,
-                    description: document.getElementById('description').value,
-                    fileName: base64Image
-                };
-                
-                const newCert = CertificateManager.addCertificate(formData);
-                showMessage(adminMessage, `✅ "${newCert.name}" added successfully!`, 'success');
-                
-                certificateForm.reset();
-                certificateFileName.textContent = '';
-                document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
-                
-                renderCertificatesList();
-                updateSystemInfo();
-                
-                document.querySelector('[data-tab="manage"]').click();
             } catch (error) {
-                showMessage(adminMessage, 'Error uploading certificate', 'error');
-            } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                container.innerHTML = '<div class="loading"><i class="fas fa-exclamation-triangle"></i><br>Error loading</div>';
             }
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(tabId + 'Tab').classList.add('active');
+                if (tabId === 'images') loadImages();
+                if (tabId === 'certificates') loadCertificates();
+            });
         });
-
-        // Edit certificate
-        window.editCertificate = function(id) {
-            const cert = CertificateManager.getCertificates().find(c => c.id === id);
-            if (!cert) return;
-            
-            document.getElementById('certificateName').value = cert.name;
-            document.getElementById('issuer').value = cert.issuer;
-            document.getElementById('issueDate').value = cert.date;
-            document.getElementById('expiryDate').value = cert.expiryDate || '';
-            document.getElementById('certificateType').value = cert.type;
-            document.getElementById('credentialId').value = cert.credentialId || '';
-            document.getElementById('description').value = cert.description || '';
-            
-            const submitBtn = certificateForm.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Certificate';
-            submitBtn.dataset.mode = 'update';
-            submitBtn.dataset.id = id;
-            
-            document.querySelector('[data-tab="upload"]').click();
-            certificateForm.scrollIntoView({ behavior: 'smooth' });
-            
-            showMessage(adminMessage, `Editing: ${cert.name}`, 'info');
-        };
-
-        // Handle certificate update
-        certificateForm.addEventListener('submit', async function(e) {
-            const submitBtn = this.querySelector('button[type="submit"]');
-            
-            if (submitBtn.dataset.mode === 'update') {
-                e.preventDefault();
-                
-                const id = parseInt(submitBtn.dataset.id);
-                const file = certificateFileInput.files[0];
-                
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
-                submitBtn.disabled = true;
-                
-                try {
-                    let fileName;
-                    if (file) {
-                        const reader = new FileReader();
-                        fileName = await new Promise(resolve => {
-                            reader.onload = () => resolve(reader.result);
-                            reader.readAsDataURL(file);
-                        });
-                    } else {
-                        const cert = CertificateManager.getCertificates().find(c => c.id === id);
-                        fileName = cert.fileName;
-                    }
-                    
-                    const formData = {
-                        name: document.getElementById('certificateName').value,
-                        issuer: document.getElementById('issuer').value,
-                        date: document.getElementById('issueDate').value,
-                        expiryDate: document.getElementById('expiryDate').value || null,
-                        type: document.getElementById('certificateType').value,
-                        credentialId: document.getElementById('credentialId').value || null,
-                        description: document.getElementById('description').value,
-                        fileName: fileName
-                    };
-                    
-                    CertificateManager.updateCertificate(id, formData);
-                    showMessage(adminMessage, 'Certificate updated successfully!', 'success');
-                    
-                    certificateForm.reset();
-                    certificateFileName.textContent = '';
-                    submitBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Upload Certificate';
-                    delete submitBtn.dataset.mode;
-                    delete submitBtn.dataset.id;
-                    
-                    document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
-                    
-                    renderCertificatesList();
-                    updateSystemInfo();
-                    
-                    document.querySelector('[data-tab="manage"]').click();
-                } catch (error) {
-                    showMessage(adminMessage, 'Error updating certificate', 'error');
-                } finally {
-                    submitBtn.disabled = false;
-                }
-            }
-        });
-
-        // Delete certificate
-        window.deleteCertificate = function(id) {
-            if (!confirm('Are you sure you want to delete this certificate?')) return;
-            
-            const cert = CertificateManager.getCertificates().find(c => c.id === id);
-            CertificateManager.deleteCertificate(id);
-            showMessage(adminMessage, `"${cert.name}" deleted`, 'success');
-            renderCertificatesList();
-            updateSystemInfo();
-        };
-
-        // Password form
-        passwordForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const current = document.getElementById('currentPassword').value;
-            const newPass = document.getElementById('newPassword').value;
-            const confirm = document.getElementById('confirmPassword').value;
-            
-            if (!AdminAuth.checkPassword(current)) {
-                showMessage(adminMessage, 'Current password is incorrect', 'error');
-                return;
-            }
-            if (newPass.length < 4) {
-                showMessage(adminMessage, 'Password must be at least 4 characters', 'error');
-                return;
-            }
-            if (newPass !== confirm) {
-                showMessage(adminMessage, 'Passwords do not match', 'error');
-                return;
-            }
-            
-            AdminAuth.setPassword(newPass);
-            showMessage(adminMessage, 'Password changed successfully!', 'success');
-            passwordForm.reset();
-        });
-
-        // Other functions
-        window.syncWithPublic = function() { 
-            showMessage(adminMessage, 'Data synced with public pages!', 'success'); 
-            updateSystemInfo();
-        };
         
-        window.resetToDefault = function() {
-            if (!confirm('⚠️ This will reset all certificates and images to default. Continue?')) return;
-            
-            CertificateManager.resetToDefault();
-            ImageManager.saveImages(DEFAULT_IMAGES);
-            loadAllImagePreviews();
-            renderCertificatesList();
-            updateSystemInfo();
-            showMessage(adminMessage, 'Reset to default completed!', 'success');
-        };
-        
-        window.exportData = function() {
-            const data = {
-                certificates: CertificateManager.getCertificates(),
-                images: ImageManager.getImages(),
-                messages: MessageManager.getMessages(),
-                exportDate: new Date().toISOString(),
-                version: "2.0.0"
-            };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `portfolio-backup-${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showMessage(adminMessage, 'Data exported successfully!', 'success');
-        };
-        
-        window.importData = function() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const data = JSON.parse(e.target.result);
-                        if (data.certificates) CertificateManager.saveCertificates(data.certificates);
-                        if (data.images) ImageManager.saveImages(data.images);
-                        if (data.messages) MessageManager.saveMessages(data.messages);
-                        
-                        loadAllImagePreviews();
-                        renderCertificatesList();
-                        loadMessages();
-                        updateSystemInfo();
-                        showMessage(adminMessage, 'Data imported successfully!', 'success');
-                    } catch (error) {
-                        showMessage(adminMessage, 'Invalid backup file', 'error');
-                    }
-                };
-                reader.readAsText(file);
-            };
-            input.click();
-        };
-        
-        window.logout = function() {
-            if (!confirm('Logout of admin panel?')) return;
-            AdminAuth.logout();
-            loginPage.style.display = 'flex';
-            adminDashboard.style.display = 'none';
-            showMessage(loginMessage, 'Logged out successfully', 'info');
-        };
-
-        // Login form
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const password = document.getElementById('adminPassword').value;
-            
-            if (AdminAuth.login(password)) {
-                loginPage.style.display = 'none';
-                adminDashboard.style.display = 'block';
-                
-                loadAllImagePreviews();
-                renderCertificatesList();
-                loadMessages();
-                updateSystemInfo();
-                
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('issueDate').value = today;
-                document.getElementById('issueDate').max = today;
-                
-                showMessage(adminMessage, 'Welcome back, Admin!', 'success');
+        // Upload profile
+        document.getElementById('uploadProfileBtn').addEventListener('click', async () => {
+            const file = document.getElementById('profileInput').files[0];
+            if (!file) { showMessage('Select an image', 'error'); return; }
+            const btn = document.getElementById('uploadProfileBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            btn.disabled = true;
+            const url = await uploadToImgur(file);
+            if (url) {
+                await updateSiteSetting('profile_image_url', url, 'image');
+                await loadImages();
+                showMessage('Profile updated!', 'success');
             } else {
-                showMessage(loginMessage, 'Incorrect password. Try again.', 'error');
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminPassword').focus();
+                showMessage('Upload failed', 'error');
+            }
+            btn.innerHTML = '<i class="fas fa-upload"></i> Upload Profile';
+            btn.disabled = false;
+            document.getElementById('profileInput').value = '';
+            document.getElementById('profileFileName').textContent = '';
+        });
+        
+        // Upload about
+        document.getElementById('uploadAboutBtn').addEventListener('click', async () => {
+            const file = document.getElementById('aboutInput').files[0];
+            if (!file) { showMessage('Select an image', 'error'); return; }
+            const btn = document.getElementById('uploadAboutBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            btn.disabled = true;
+            const url = await uploadToImgur(file);
+            if (url) {
+                await updateSiteSetting('about_image_url', url, 'image');
+                await loadImages();
+                showMessage('About image updated!', 'success');
+            } else {
+                showMessage('Upload failed', 'error');
+            }
+            btn.innerHTML = '<i class="fas fa-upload"></i> Upload About';
+            btn.disabled = false;
+            document.getElementById('aboutInput').value = '';
+            document.getElementById('aboutFileName').textContent = '';
+        });
+        
+        // Reset images
+        document.getElementById('resetProfileBtn').addEventListener('click', async () => {
+            await updateSiteSetting('profile_image_url', DEFAULT_PROFILE, 'image');
+            await loadImages();
+            showMessage('Profile reset', 'success');
+        });
+        
+        document.getElementById('resetAboutBtn').addEventListener('click', async () => {
+            await updateSiteSetting('about_image_url', DEFAULT_ABOUT, 'image');
+            await loadImages();
+            showMessage('About image reset', 'success');
+        });
+        
+        // Add certificate
+        document.getElementById('certForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('certImageInput').files[0];
+            let imageUrl = null;
+            if (file) {
+                const btn = document.getElementById('submitCertBtn');
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                btn.disabled = true;
+                imageUrl = await uploadToImgur(file);
+                btn.innerHTML = '<i class="fas fa-save"></i> Add Certificate';
+                btn.disabled = false;
+            }
+            const result = await addCertificate({
+                name: document.getElementById('certName').value,
+                issuer: document.getElementById('certIssuer').value,
+                description: document.getElementById('certDescription').value,
+                date_earned: document.getElementById('certDate').value,
+                certificate_type: document.getElementById('certType').value,
+                image_url: imageUrl,
+                is_active: true
+            });
+            if (result.success) {
+                showMessage('Certificate added!', 'success');
+                document.getElementById('certForm').reset();
+                document.getElementById('certImageInput').value = '';
+                document.getElementById('certFileName').textContent = '';
+                document.getElementById('certDate').value = new Date().toISOString().split('T')[0];
+                await loadCertificates();
+                document.querySelector('[data-tab="certificates"]').click();
+            } else {
+                showMessage('Failed to add', 'error');
             }
         });
-
-        // Click handlers for upload areas
-        document.getElementById('profileUploadArea').addEventListener('click', () => profileFileInput.click());
-        document.getElementById('aboutUploadArea').addEventListener('click', () => aboutFileInput.click());
-        document.getElementById('expertiseUploadArea').addEventListener('click', () => expertiseFileInput.click());
-        document.getElementById('contactUploadArea').addEventListener('click', () => contactFileInput.click());
-        document.getElementById('certificateUploadArea').addEventListener('click', () => certificateFileInput.click());
-
+        
+        // File upload areas
+        document.getElementById('profileUploadArea').addEventListener('click', () => document.getElementById('profileInput').click());
+        document.getElementById('aboutUploadArea').addEventListener('click', () => document.getElementById('aboutInput').click());
+        document.getElementById('certUploadArea').addEventListener('click', () => document.getElementById('certImageInput').click());
+        
+        document.getElementById('profileInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) document.getElementById('profileFileName').textContent = e.target.files[0].name;
+        });
+        document.getElementById('aboutInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) document.getElementById('aboutFileName').textContent = e.target.files[0].name;
+        });
+        document.getElementById('certImageInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) document.getElementById('certFileName').textContent = e.target.files[0].name;
+        });
+        
+        document.getElementById('certDate').value = new Date().toISOString().split('T')[0];
+        
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            if (AdminAuth.isLoggedIn()) {
-                loginPage.style.display = 'none';
-                adminDashboard.style.display = 'block';
-                
-                loadAllImagePreviews();
-                renderCertificatesList();
-                loadMessages();
-                updateSystemInfo();
-                
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('issueDate').value = today;
-                document.getElementById('issueDate').max = today;
-            } else {
-                loginPage.style.display = 'flex';
-                adminDashboard.style.display = 'none';
-            }
-            
-            if (!localStorage.getItem('passwordHintShown')) {
-                showMessage(loginMessage, 'Default password: Felix', 'info');
-                localStorage.setItem('passwordHintShown', 'true');
-            }
-        });
+        loadImages();
+        loadCertificates();
     </script>
 </body>
 </html>
