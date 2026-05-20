@@ -26,9 +26,11 @@
             --dark-blue-lighter: #2A3C57;
             --text-light: #E2E8F0;
             --text-muted: #94A3B8;
-            --transition: all 0.3s ease;
+            --success: #10B981;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             --box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.3);
+            --box-shadow-glow: 0 0 30px rgba(252, 209, 22, 0.2);
         }
         
         html {
@@ -63,6 +65,15 @@
         h1 {
             font-size: 2.5rem;
             text-align: center;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 0px rgba(252,209,22,0)); }
+            50% { filter: drop-shadow(0 0 10px rgba(252,209,22,0.5)); }
         }
         
         h2 {
@@ -81,6 +92,7 @@
             bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 2px;
         }
         
         .btn {
@@ -95,6 +107,23 @@
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
         }
         
         .btn:hover {
@@ -110,6 +139,29 @@
         
         .btn-accent:hover {
             background-color: #e6b800;
+        }
+        
+        /* Skeleton Loading */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, var(--dark-blue-lighter) 25%, var(--dark-blue-light) 50%, var(--dark-blue-lighter) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        .skeleton-card {
+            height: 380px;
+            border-radius: 16px;
+        }
+        
+        .skeleton-stat {
+            height: 80px;
+            border-radius: 12px;
         }
         
         /* Header */
@@ -175,6 +227,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             z-index: 1000;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
         
         .menu-content.show { display: block; animation: slideDown 0.2s ease; }
@@ -190,12 +243,13 @@
             transition: var(--transition);
         }
         
+        .menu-content a:last-child { border-bottom: none; }
         .menu-content a:hover { background: rgba(255,255,255,0.1); padding-left: 25px; }
         .menu-content a i { width: 20px; color: var(--accent); }
         .menu-content a.active { background: rgba(252,209,22,0.15); color: var(--accent); }
         
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -224,6 +278,12 @@
             padding-top: 100px;
             padding-bottom: 40px;
             text-align: center;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .page-subtitle {
@@ -247,9 +307,16 @@
             text-align: center;
             border-top: 4px solid var(--primary);
             transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
         }
         
-        .stat-card:hover { transform: translateY(-5px); box-shadow: var(--box-shadow-hover); }
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        .stat-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--box-shadow-hover); border-top-color: var(--accent); }
         .stat-card.red { border-top-color: var(--secondary); }
         .stat-card.yellow { border-top-color: var(--accent); }
         
@@ -262,6 +329,9 @@
             border-radius: 16px;
             padding: 25px;
             margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s 0.2s forwards;
         }
         
         .filter-group {
@@ -285,6 +355,8 @@
         .filter-btn.active {
             background-color: var(--primary);
             border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
         }
         
         .search-box {
@@ -301,6 +373,13 @@
             border-radius: 50px;
             color: white;
             font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(252,209,22,0.2);
         }
         
         .search-box i {
@@ -324,18 +403,38 @@
             overflow: hidden;
             transition: var(--transition);
             border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: cardReveal 0.6s forwards;
         }
         
+        @keyframes cardReveal {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .certificate-card:nth-child(1) { animation-delay: 0.1s; }
+        .certificate-card:nth-child(2) { animation-delay: 0.2s; }
+        .certificate-card:nth-child(3) { animation-delay: 0.3s; }
+        .certificate-card:nth-child(4) { animation-delay: 0.4s; }
+        .certificate-card:nth-child(5) { animation-delay: 0.5s; }
+        .certificate-card:nth-child(6) { animation-delay: 0.6s; }
+        
         .certificate-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-12px) scale(1.02);
             box-shadow: var(--box-shadow-hover);
-            border-color: var(--primary);
+            border-color: var(--accent);
         }
         
         .certificate-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .certificate-card:hover .certificate-image {
+            transform: scale(1.05);
         }
         
         .certificate-badge {
@@ -347,6 +446,13 @@
             font-size: 0.7rem;
             font-weight: 600;
             margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        
+        .certificate-card:hover .certificate-badge {
+            transform: scale(1.05);
+            background-color: var(--accent);
+            color: var(--dark);
         }
         
         .certificate-badge.badge { background-color: var(--secondary); }
@@ -354,7 +460,9 @@
         
         .certificate-content { padding: 20px; }
         
-        .certificate-title { font-size: 1.2rem; margin-bottom: 8px; }
+        .certificate-title { font-size: 1.2rem; margin-bottom: 8px; transition: var(--transition); }
+        .certificate-card:hover .certificate-title { color: var(--accent); }
+        
         .certificate-issuer { color: var(--primary); font-size: 0.85rem; margin-bottom: 12px; display: flex; align-items: center; gap: 5px; }
         .certificate-description { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; }
         
@@ -374,6 +482,7 @@
             background-color: var(--dark-blue-light);
             border-radius: 16px;
             grid-column: 1 / -1;
+            animation: fadeInUp 0.6s ease;
         }
         
         /* Modal */
@@ -384,14 +493,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(8px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
-        .modal.active { display: flex; }
+        .modal.active { display: flex; opacity: 1; animation: modalFadeIn 0.3s ease; }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         
         .modal-content {
             background: var(--dark-blue-light);
@@ -400,6 +517,14 @@
             width: 100%;
             max-height: 90vh;
             overflow: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--accent);
+            box-shadow: var(--box-shadow-glow);
+        }
+        
+        .modal.active .modal-content {
+            transform: scale(1);
         }
         
         .modal-header {
@@ -408,19 +533,60 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: linear-gradient(135deg, var(--dark-blue-lighter), var(--dark-blue-light));
         }
         
-        .modal-header h3 { margin-bottom: 0; }
+        .modal-header h3 { margin-bottom: 0; color: var(--accent); }
         .modal-close {
             background: none;
             border: none;
             color: white;
             font-size: 28px;
             cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            transform: rotate(90deg);
+            color: var(--secondary);
         }
         
         .modal-body { padding: 20px; }
-        .modal-image { width: 100%; border-radius: 12px; margin-bottom: 20px; }
+        .modal-image { width: 100%; border-radius: 12px; margin-bottom: 20px; transition: var(--transition); }
+        
+        /* Toast Notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 2100;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--box-shadow-hover);
+            font-weight: 500;
+        }
+        
+        .toast-notification.show {
+            transform: translateX(0);
+        }
+        
+        .toast-notification i {
+            font-size: 1.2rem;
+        }
         
         /* Footer */
         footer {
@@ -444,8 +610,8 @@
         .footer-links h4 { color: var(--accent); margin-bottom: 16px; font-size: 1.1rem; }
         .footer-links ul { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); }
-        .footer-links a:hover { color: var(--accent); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; }
+        .footer-links a:hover { color: var(--accent); transform: translateX(5px); }
         
         .social-icons { display: flex; gap: 15px; }
         .social-icons a {
@@ -461,14 +627,22 @@
             transition: var(--transition);
         }
         
-        .social-icons a:hover { background: var(--primary); transform: translateY(-3px); }
+        .social-icons a:hover { background: var(--primary); transform: translateY(-5px) rotate(360deg); }
         
         .copyright { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.85rem; }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             h2 { font-size: 1.6rem; }
             .certificates-grid { grid-template-columns: 1fr; }
+            .toast-notification { bottom: 20px; right: 20px; left: 20px; transform: translateY(100px); }
+            .toast-notification.show { transform: translateY(0); }
         }
     </style>
 </head>
@@ -490,7 +664,6 @@
                     <a href="certificates.html" class="active"><i class="fas fa-certificate"></i> Certificates</a>
                     <a href="about.html"><i class="fas fa-user"></i> About</a>
                     <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                    <a href="admin.html"><i class="fas fa-lock"></i> Admin</a>
                 </div>
             </div>
         </div>
@@ -522,7 +695,9 @@
         </div>
 
         <div id="certificatesGrid" class="certificates-grid">
-            <div class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading certificates...</div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
         </div>
     </div>
 
@@ -537,6 +712,11 @@
                 <div id="modalDetails"></div>
             </div>
         </div>
+    </div>
+
+    <div id="toast" class="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Certificates loaded successfully!</span>
     </div>
 
     <footer>
@@ -589,35 +769,72 @@
             return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
         }
         
-        // Load certificates from database
-        async function loadCertificates() {
-            const { data, error } = await supabase
-                .from('certificates')
-                .select('*')
-                .eq('is_active', true)
-                .order('date_earned', { ascending: false })
-            
-            if (error) {
-                console.error('Error loading certificates:', error)
-                document.getElementById('certificatesGrid').innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i> Error loading certificates. Please refresh.</div>'
-                return
-            }
-            
-            allCertificates = data || []
-            updateStats()
-            renderCertificates()
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast')
+            toast.querySelector('i').className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'
+            toast.querySelector('span').textContent = message
+            toast.classList.add('show')
+            setTimeout(() => {
+                toast.classList.remove('show')
+            }, 3000)
         }
         
-        // Update statistics
+        // Load certificates from database
+        async function loadCertificates() {
+            try {
+                const { data, error } = await supabase
+                    .from('certificates')
+                    .select('*')
+                    .eq('is_active', true)
+                    .order('date_earned', { ascending: false })
+                
+                if (error) {
+                    console.error('Error loading certificates:', error)
+                    document.getElementById('certificatesGrid').innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i> Error loading certificates. Please refresh.</div>'
+                    showToast('Error loading certificates', 'error')
+                    return
+                }
+                
+                allCertificates = data || []
+                updateStats()
+                renderCertificates()
+                
+                if (allCertificates.length > 0) {
+                    showToast(`${allCertificates.length} certificates loaded successfully!`, 'success')
+                } else {
+                    showToast('No certificates found. Add some in admin panel.', 'info')
+                }
+            } catch (error) {
+                console.error('Error:', error)
+                showToast('Failed to load certificates', 'error')
+            }
+        }
+        
+        // Update statistics with animation
         function updateStats() {
             const currentYear = new Date().getFullYear()
             const total = allCertificates.length
             const thisYear = allCertificates.filter(c => c.date_earned && new Date(c.date_earned).getFullYear() === currentYear).length
             const issuers = [...new Set(allCertificates.map(c => c.issuer).filter(Boolean))].length
             
-            document.getElementById('totalCerts').textContent = total
-            document.getElementById('thisYearCerts').textContent = thisYear
-            document.getElementById('totalIssuers').textContent = issuers
+            animateNumber('totalCerts', total)
+            animateNumber('thisYearCerts', thisYear)
+            animateNumber('totalIssuers', issuers)
+        }
+        
+        function animateNumber(elementId, target) {
+            const element = document.getElementById(elementId)
+            let current = 0
+            const increment = target / 30
+            const timer = setInterval(() => {
+                current += increment
+                if (current >= target) {
+                    element.textContent = target
+                    clearInterval(timer)
+                } else {
+                    element.textContent = Math.floor(current)
+                }
+            }, 20)
         }
         
         // Render certificates with filters
@@ -646,7 +863,7 @@
                 return
             }
             
-            container.innerHTML = filtered.map(cert => {
+            container.innerHTML = filtered.map((cert, index) => {
                 let badgeClass = 'certificate-badge'
                 let badgeText = 'Certificate'
                 if (cert.certificate_type === 'badge') {
@@ -660,7 +877,7 @@
                 const imageUrl = cert.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
                 
                 return `
-                    <div class="certificate-card">
+                    <div class="certificate-card" style="animation-delay: ${index * 0.05}s">
                         <img src="${imageUrl}" 
                              class="certificate-image" 
                              onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
@@ -672,7 +889,7 @@
                             <p class="certificate-description">${escapeHtml(cert.description || 'Professional certification demonstrating expertise in the field.')}</p>
                             <div class="certificate-meta">
                                 <span><i class="far fa-calendar"></i> ${formatDate(cert.date_earned)}</span>
-                                <button onclick="viewCertificate('${cert.id}')" class="btn" style="padding:6px 12px;font-size:12px;">View Details</button>
+                                <button onclick="viewCertificate('${cert.id}')" class="btn" style="padding:6px 12px;font-size:12px;">View Details →</button>
                             </div>
                         </div>
                     </div>
@@ -689,11 +906,13 @@
             document.getElementById('modalImage').src = cert.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
             
             document.getElementById('modalDetails').innerHTML = `
-                <p><strong><i class="fas fa-building"></i> Issuer:</strong> ${escapeHtml(cert.issuer || 'Unknown')}</p>
-                <p><strong><i class="far fa-calendar"></i> Date Earned:</strong> ${formatDate(cert.date_earned)}</p>
-                <p><strong><i class="fas fa-tag"></i> Type:</strong> ${cert.certificate_type || 'Certificate'}</p>
-                ${cert.description ? `<p><strong><i class="fas fa-align-left"></i> Description:</strong></p><p>${escapeHtml(cert.description)}</p>` : ''}
-                ${cert.image_url ? `<p><strong><i class="fas fa-image"></i> Certificate Image:</strong></p><img src="${cert.image_url}" style="max-width:100%; border-radius:8px; margin-top:10px;" onerror="this.style.display='none'">` : ''}
+                <div style="animation: fadeInUp 0.4s ease">
+                    <p><strong><i class="fas fa-building" style="color: var(--accent);"></i> Issuer:</strong> ${escapeHtml(cert.issuer || 'Unknown')}</p>
+                    <p><strong><i class="far fa-calendar" style="color: var(--accent);"></i> Date Earned:</strong> ${formatDate(cert.date_earned)}</p>
+                    <p><strong><i class="fas fa-tag" style="color: var(--accent);"></i> Type:</strong> ${cert.certificate_type || 'Certificate'}</p>
+                    ${cert.description ? `<p><strong><i class="fas fa-align-left" style="color: var(--accent);"></i> Description:</strong></p><p style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-top: 10px;">${escapeHtml(cert.description)}</p>` : ''}
+                    ${cert.image_url ? `<p><strong><i class="fas fa-image" style="color: var(--accent);"></i> Certificate Image:</strong></p><img src="${cert.image_url}" style="max-width:100%; border-radius:12px; margin-top:10px; box-shadow: var(--box-shadow);" onerror="this.style.display='none'">` : ''}
+                </div>
             `
             
             document.getElementById('certModal').classList.add('active')
