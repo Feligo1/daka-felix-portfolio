@@ -522,7 +522,7 @@
         </div>
 
         <div id="certificatesGrid" class="certificates-grid">
-            <div class="empty-state">Loading certificates...</div>
+            <div class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading certificates...</div>
         </div>
     </div>
 
@@ -599,6 +599,7 @@
             
             if (error) {
                 console.error('Error loading certificates:', error)
+                document.getElementById('certificatesGrid').innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i> Error loading certificates. Please refresh.</div>'
                 return
             }
             
@@ -611,7 +612,7 @@
         function updateStats() {
             const currentYear = new Date().getFullYear()
             const total = allCertificates.length
-            const thisYear = allCertificates.filter(c => new Date(c.date_earned).getFullYear() === currentYear).length
+            const thisYear = allCertificates.filter(c => c.date_earned && new Date(c.date_earned).getFullYear() === currentYear).length
             const issuers = [...new Set(allCertificates.map(c => c.issuer).filter(Boolean))].length
             
             document.getElementById('totalCerts').textContent = total
@@ -632,9 +633,9 @@
             
             if (search) {
                 filtered = filtered.filter(c => 
-                    c.name?.toLowerCase().includes(search) ||
-                    c.issuer?.toLowerCase().includes(search) ||
-                    c.description?.toLowerCase().includes(search)
+                    (c.name?.toLowerCase().includes(search)) ||
+                    (c.issuer?.toLowerCase().includes(search)) ||
+                    (c.description?.toLowerCase().includes(search))
                 )
             }
             
@@ -656,9 +657,11 @@
                     badgeText = 'Achievement'
                 }
                 
+                const imageUrl = cert.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                
                 return `
                     <div class="certificate-card">
-                        <img src="${cert.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
+                        <img src="${imageUrl}" 
                              class="certificate-image" 
                              onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
                              alt="${escapeHtml(cert.name)}">
@@ -690,13 +693,16 @@
                 <p><strong><i class="far fa-calendar"></i> Date Earned:</strong> ${formatDate(cert.date_earned)}</p>
                 <p><strong><i class="fas fa-tag"></i> Type:</strong> ${cert.certificate_type || 'Certificate'}</p>
                 ${cert.description ? `<p><strong><i class="fas fa-align-left"></i> Description:</strong></p><p>${escapeHtml(cert.description)}</p>` : ''}
+                ${cert.image_url ? `<p><strong><i class="fas fa-image"></i> Certificate Image:</strong></p><img src="${cert.image_url}" style="max-width:100%; border-radius:8px; margin-top:10px;" onerror="this.style.display='none'">` : ''}
             `
             
             document.getElementById('certModal').classList.add('active')
+            document.body.style.overflow = 'hidden'
         }
         
         window.closeModal = () => {
             document.getElementById('certModal').classList.remove('active')
+            document.body.style.overflow = ''
         }
         
         // Load social links
@@ -757,10 +763,14 @@
             })
         })
         
-        // Search input
+        // Search input with debounce
+        let searchTimeout
         const searchInput = document.getElementById('searchInput')
         if (searchInput) {
-            searchInput.addEventListener('input', () => renderCertificates())
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout)
+                searchTimeout = setTimeout(() => renderCertificates(), 300)
+            })
         }
         
         // Header scroll effect
@@ -773,6 +783,11 @@
         // Close modal on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal()
+        })
+        
+        // Close modal on outside click
+        document.getElementById('certModal')?.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('certModal')) closeModal()
         })
         
         // Set current year
