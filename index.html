@@ -26,7 +26,8 @@
             --dark-blue-lighter: #2A3C57;
             --text-light: #E2E8F0;
             --text-muted: #94A3B8;
-            --transition: all 0.3s ease;
+            --success: #10B981;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             --box-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
@@ -72,6 +73,7 @@
             bottom: -16px;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 2px;
         }
         
         .btn {
@@ -87,6 +89,23 @@
             font-weight: 600;
             transition: var(--transition);
             min-width: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
         }
         
         .btn:hover {
@@ -99,6 +118,35 @@
         .btn-red:hover { background-color: #d9202d; }
         .btn-accent { background-color: var(--accent); color: var(--dark); }
         .btn-accent:hover { background-color: #e6b800; }
+        
+        /* Loading Skeleton Animation */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, var(--dark-blue-lighter) 25%, var(--dark-blue-light) 50%, var(--dark-blue-lighter) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        .skeleton-text {
+            height: 20px;
+            margin: 10px 0;
+        }
+        
+        .skeleton-title {
+            height: 32px;
+            width: 60%;
+            margin: 0 auto 20px;
+        }
+        
+        .skeleton-card {
+            height: 280px;
+            border-radius: 16px;
+        }
         
         /* Header */
         header {
@@ -163,6 +211,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             z-index: 1000;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
         
         .menu-content.show { display: block; animation: slideDown 0.2s ease; }
@@ -178,12 +227,13 @@
             transition: var(--transition);
         }
         
+        .menu-content a:last-child { border-bottom: none; }
         .menu-content a:hover { background: rgba(255,255,255,0.1); padding-left: 25px; }
         .menu-content a i { width: 20px; color: var(--accent); }
         .menu-content a.active { background: rgba(252,209,22,0.15); color: var(--accent); }
         
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -195,6 +245,8 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .hero:before {
@@ -218,7 +270,7 @@
             .hero-content { flex-direction: row; text-align: left; gap: 50px; }
         }
         
-        .hero-text { text-align: center; }
+        .hero-text { text-align: center; animation: fadeInUp 0.8s ease; }
         @media (min-width: 768px) { .hero-text { text-align: left; flex: 1; } }
         
         .hero-text .nickname {
@@ -249,12 +301,23 @@
             font-size: 0.85rem;
             font-weight: 500;
             border: 1px solid rgba(0,119,73,0.3);
+            transition: var(--transition);
+        }
+        
+        .specialty-tag:hover {
+            transform: translateY(-2px);
+            background: rgba(0,119,73,0.3);
         }
         
         .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         @media (min-width: 768px) { .hero-buttons { justify-content: flex-start; } }
         
-        .hero-image { width: 100%; max-width: 280px; margin: 0 auto; }
+        .hero-image {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            animation: fadeInRight 0.8s ease;
+        }
         @media (min-width: 768px) { .hero-image { flex: 1; max-width: 350px; } }
         
         .profile-img {
@@ -264,6 +327,12 @@
             box-shadow: var(--box-shadow-hover);
             aspect-ratio: 1/1;
             object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.02);
+            border-color: var(--accent);
         }
         
         /* Services */
@@ -286,20 +355,37 @@
             text-align: center;
             border-top: 3px solid var(--primary);
             height: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
         }
         
-        .service-card:hover { transform: translateY(-6px); box-shadow: var(--box-shadow-hover); }
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+        .service-card:nth-child(4) { animation-delay: 0.4s; }
+        .service-card:nth-child(5) { animation-delay: 0.5s; }
+        .service-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-hover);
+            border-color: var(--accent);
+        }
+        
         .service-card.red { border-top-color: var(--secondary); }
         .service-card.yellow { border-top-color: var(--accent); }
         .service-card.blue { border-top-color: #0066B3; }
         
-        .service-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        .service-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; transition: var(--transition); }
+        .service-card:hover .service-icon { transform: scale(1.1) rotate(5deg); }
         .service-card.red .service-icon { color: var(--secondary); }
         .service-card.yellow .service-icon { color: var(--accent); }
         
         .service-card h3 { font-size: 1.3rem; margin-bottom: 12px; }
-        .service-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
-        .service-card a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        .service-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.7; }
+        .service-card a { color: var(--primary); text-decoration: none; font-weight: 500; transition: var(--transition); display: inline-flex; align-items: center; gap: 5px; }
+        .service-card a:hover { gap: 10px; color: var(--accent); }
         
         /* Certificates Preview */
         .cert-preview-grid {
@@ -318,14 +404,26 @@
             padding: 20px;
             border-left: 3px solid var(--primary);
             transition: var(--transition);
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: fadeInLeft 0.6s forwards;
         }
         
-        .cert-preview-card:hover { transform: translateX(5px); box-shadow: var(--box-shadow-hover); }
+        .cert-preview-card:nth-child(1) { animation-delay: 0.1s; }
+        .cert-preview-card:nth-child(2) { animation-delay: 0.2s; }
+        .cert-preview-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        .cert-preview-card:hover {
+            transform: translateX(8px);
+            box-shadow: var(--box-shadow-hover);
+            border-left-color: var(--accent);
+        }
+        
         .cert-preview-card.red { border-left-color: var(--secondary); }
         .cert-preview-card.yellow { border-left-color: var(--accent); }
         
         .cert-preview-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-        .cert-preview-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
+        .cert-preview-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
         
         .cert-preview-meta {
             display: flex;
@@ -333,6 +431,16 @@
             align-items: center;
             font-size: 0.8rem;
             color: var(--text-muted);
+        }
+        
+        .cert-preview-meta a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .cert-preview-meta a:hover {
+            color: var(--accent);
         }
         
         /* About */
@@ -345,10 +453,15 @@
         
         @media (min-width: 768px) { .about-content { flex-direction: row; gap: 50px; } }
         
-        .about-text { text-align: center; }
+        .about-text { text-align: center; animation: fadeInLeft 0.8s ease; }
         @media (min-width: 768px) { .about-text { text-align: left; flex: 1; } }
         
-        .about-image { width: 100%; max-width: 350px; position: relative; }
+        .about-image {
+            width: 100%;
+            max-width: 350px;
+            position: relative;
+            animation: fadeInRight 0.8s ease;
+        }
         @media (min-width: 768px) { .about-image { flex: 1; } }
         
         .about-img {
@@ -357,6 +470,12 @@
             box-shadow: var(--box-shadow-hover);
             aspect-ratio: 4/3;
             object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .about-img:hover {
+            transform: scale(1.02);
+            box-shadow: var(--box-shadow-hover);
         }
         
         .zambian-connection {
@@ -364,12 +483,14 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             padding: 6px 16px;
             border-radius: 50px;
             font-weight: 600;
             font-size: 0.8rem;
             white-space: nowrap;
+            box-shadow: var(--box-shadow);
+            animation: pulse 2s infinite;
         }
         
         /* Contact Preview */
@@ -379,6 +500,12 @@
             padding: 30px;
             max-width: 500px;
             margin: 0 auto;
+            transition: var(--transition);
+        }
+        
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
         }
         
         .contact-detail {
@@ -387,6 +514,12 @@
             gap: 16px;
             padding: 12px 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+        
+        .contact-detail:hover {
+            transform: translateX(5px);
+            border-bottom-color: var(--accent);
         }
         
         .contact-detail i { color: var(--primary); width: 30px; font-size: 1.1rem; }
@@ -398,6 +531,39 @@
             margin-top: 40px;
             background: rgba(255,255,255,0.05);
             border-radius: 50px;
+            transition: var(--transition);
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .visitor-counter:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.02);
+        }
+        
+        /* Toast Notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1100;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .toast-notification.show {
+            transform: translateX(0);
+        }
+        
+        .toast-notification i {
+            font-size: 1.2rem;
         }
         
         /* Footer */
@@ -421,8 +587,15 @@
         .footer-links h4 { color: var(--accent); margin-bottom: 16px; font-size: 1.1rem; }
         .footer-links ul { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); }
-        .footer-links a:hover { color: var(--accent); }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-links a:hover { color: var(--accent); transform: translateX(5px); }
         
         .social-icons { display: flex; gap: 15px; }
         .social-icons a {
@@ -438,20 +611,37 @@
             transition: var(--transition);
         }
         
-        .social-icons a:hover { background: var(--primary); transform: translateY(-3px); }
+        .social-icons a:hover { background: var(--primary); transform: translateY(-5px) rotate(360deg); }
         
         .copyright { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.85rem; }
         
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             h2 { font-size: 1.6rem; }
             section { padding: 50px 0; }
             .hero { padding-top: 80px; }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -473,7 +663,6 @@
                     <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
                     <a href="about.html"><i class="fas fa-user"></i> About</a>
                     <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                    <a href="admin.html"><i class="fas fa-lock"></i> Admin</a>
                 </div>
             </div>
         </div>
@@ -485,7 +674,11 @@
                 <span class="nickname" id="heroNickname">Loading...</span>
                 <h1 id="heroTitle">Daka Felix</h1>
                 <p id="heroDescription">Loading...</p>
-                <div class="specialties" id="specialtiesContainer"></div>
+                <div class="specialties" id="specialtiesContainer">
+                    <span class="specialty-tag skeleton" style="width: 80px; height: 30px; display: inline-block;"></span>
+                    <span class="specialty-tag skeleton" style="width: 100px; height: 30px; display: inline-block;"></span>
+                    <span class="specialty-tag skeleton" style="width: 90px; height: 30px; display: inline-block;"></span>
+                </div>
                 <div class="hero-buttons">
                     <a href="contact.html" class="btn btn-red">Hire Me</a>
                     <a href="about.html" class="btn">Learn More</a>
@@ -501,7 +694,9 @@
         <div class="container">
             <h2>My Expertise</h2>
             <div class="services-grid" id="projectsContainer">
-                <div style="text-align:center;padding:40px;">Loading services...</div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
             </div>
             <div style="text-align: center; margin-top: 40px;">
                 <a href="expertise.html" class="btn btn-accent">View All Expertise</a>
@@ -513,7 +708,9 @@
         <div class="container">
             <h2>Recent Certifications</h2>
             <div class="cert-preview-grid" id="certificatesContainer">
-                <div style="text-align:center;padding:40px;">Loading certificates...</div>
+                <div class="skeleton" style="height: 120px; border-radius: 16px;"></div>
+                <div class="skeleton" style="height: 120px; border-radius: 16px;"></div>
+                <div class="skeleton" style="height: 120px; border-radius: 16px;"></div>
             </div>
             <div style="text-align: center; margin-top: 40px;">
                 <a href="certificates.html" class="btn btn-accent">View All Certificates</a>
@@ -584,6 +781,11 @@
         </div>
     </footer>
 
+    <div id="toast" class="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Content loaded successfully!</span>
+    </div>
+
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
         
@@ -606,187 +808,178 @@
             return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
         }
         
-        // Get the latest image from storage (most recently uploaded)
-        async function getLatestImageFromStorage(folder) {
-            try {
-                const { data, error } = await supabase.storage
-                    .from('portfolio-images')
-                    .list(folder, {
-                        sortBy: { column: 'created_at', order: 'desc' },
-                        limit: 1
-                    })
-                
-                if (error || !data || data.length === 0) {
-                    return null
-                }
-                
-                const latestFile = data[0]
-                const { data: urlData } = supabase.storage
-                    .from('portfolio-images')
-                    .getPublicUrl(`${folder}/${latestFile.name}`)
-                
-                return urlData.publicUrl
-            } catch (err) {
-                console.error('Error fetching latest image:', err)
-                return null
-            }
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast')
+            toast.querySelector('i').className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'
+            toast.querySelector('span').textContent = message
+            toast.classList.add('show')
+            setTimeout(() => {
+                toast.classList.remove('show')
+            }, 3000)
         }
         
         // Load Hero Section
         async function loadHero() {
-            const { data } = await supabase.from('site_settings').select('*')
-            const title = data?.find(s => s.setting_key === 'hero_title')?.setting_value || 'Daka Felix'
-            const nickname = data?.find(s => s.setting_key === 'hero_nickname')?.setting_value || '"Tech Guy" - Zambian Computer Scientist'
-            const description = data?.find(s => s.setting_key === 'hero_description')?.setting_value || 'Bringing innovative technology solutions with a unique Zambian perspective.'
-            const tags = data?.find(s => s.setting_key === 'specialty_tags')?.setting_value || '["Networking","Web Design","Cyber Security","Computer Engineering","Database Admin"]'
-            
-            document.getElementById('heroTitle').textContent = title
-            document.getElementById('heroNickname').textContent = nickname
-            document.getElementById('heroDescription').textContent = description
-            
-            let tagsArray = []
-            try { tagsArray = JSON.parse(tags) } catch { tagsArray = tags.split(',') }
-            
-            const specialtiesContainer = document.getElementById('specialtiesContainer')
-            specialtiesContainer.innerHTML = tagsArray.map(tag => `<span class="specialty-tag">${escapeHtml(tag.trim())}</span>`).join('')
+            try {
+                const { data } = await supabase.from('site_settings').select('*')
+                const title = data?.find(s => s.setting_key === 'hero_title')?.setting_value || 'Daka Felix'
+                const nickname = data?.find(s => s.setting_key === 'hero_nickname')?.setting_value || '"Tech Guy" - Zambian Computer Scientist'
+                const description = data?.find(s => s.setting_key === 'hero_description')?.setting_value || 'Bringing innovative technology solutions with a unique Zambian perspective.'
+                const tags = data?.find(s => s.setting_key === 'specialty_tags')?.setting_value || '["Networking","Web Design","Cyber Security","Computer Engineering","Database Admin"]'
+                
+                document.getElementById('heroTitle').textContent = title
+                document.getElementById('heroNickname').textContent = nickname
+                document.getElementById('heroDescription').textContent = description
+                
+                let tagsArray = []
+                try { tagsArray = JSON.parse(tags) } catch { tagsArray = tags.split(',') }
+                
+                const specialtiesContainer = document.getElementById('specialtiesContainer')
+                specialtiesContainer.innerHTML = tagsArray.map(tag => `<span class="specialty-tag">${escapeHtml(tag.trim())}</span>`).join('')
+            } catch (error) {
+                console.error('Error loading hero:', error)
+            }
         }
         
-        // Load Profile Image - from storage (latest uploaded)
+        // Load Profile Image
         async function loadProfileImage() {
-            // First try to get from site_settings (admin uploaded)
-            const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'profile_image_url').single()
-            
-            if (settingsData?.setting_value && settingsData.setting_value.startsWith('http')) {
-                document.getElementById('profileImage').src = settingsData.setting_value
-                return
+            try {
+                const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'profile_image_url').single()
+                const defaultProfile = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg'
+                document.getElementById('profileImage').src = settingsData?.setting_value || defaultProfile
+            } catch (error) {
+                document.getElementById('profileImage').src = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg'
             }
-            
-            // If no custom image, try to get latest from storage
-            const latestImage = await getLatestImageFromStorage('profile_image_url')
-            if (latestImage) {
-                document.getElementById('profileImage').src = latestImage
-                return
-            }
-            
-            // Default fallback
-            document.getElementById('profileImage').src = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg'
         }
         
-        // Load About Image - from storage (latest uploaded)
+        // Load About Image
         async function loadAboutImage() {
-            // First try to get from site_settings
-            const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'about_image_url').single()
-            
-            if (settingsData?.setting_value && settingsData.setting_value.startsWith('http')) {
-                document.getElementById('aboutImage').src = settingsData.setting_value
-                return
+            try {
+                const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'about_image_url').single()
+                const defaultAbout = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
+                document.getElementById('aboutImage').src = settingsData?.setting_value || defaultAbout
+            } catch (error) {
+                document.getElementById('aboutImage').src = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
             }
-            
-            // If no custom image, try to get latest from storage
-            const latestImage = await getLatestImageFromStorage('about_image_url')
-            if (latestImage) {
-                document.getElementById('aboutImage').src = latestImage
-                return
-            }
-            
-            // Default fallback
-            document.getElementById('aboutImage').src = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
         }
         
         // Load Projects/Services
         async function loadProjects() {
-            const { data, error } = await supabase.from('projects').select('*').eq('is_active', true).order('display_order')
-            if (error || !data || data.length === 0) {
-                document.getElementById('projectsContainer').innerHTML = '<div style="text-align:center;padding:40px;">No services available</div>'
-                return
-            }
-            
-            const container = document.getElementById('projectsContainer')
-            container.innerHTML = data.map(project => {
-                let cardClass = 'service-card'
-                if (project.color_style === 'red') cardClass += ' red'
-                if (project.color_style === 'yellow') cardClass += ' yellow'
-                if (project.color_style === 'blue') cardClass += ' blue'
+            try {
+                const { data, error } = await supabase.from('projects').select('*').eq('is_active', true).order('display_order')
+                if (error || !data || data.length === 0) {
+                    document.getElementById('projectsContainer').innerHTML = '<div style="text-align:center;padding:40px;">No services available</div>'
+                    return
+                }
                 
-                return `
-                    <div class="${cardClass}">
-                        <div class="service-icon"><i class="${project.icon_class || 'fas fa-cog'}"></i></div>
-                        <h3>${escapeHtml(project.title)}</h3>
-                        <p>${escapeHtml(project.description)}</p>
-                        <a href="expertise.html">Learn More →</a>
-                    </div>
-                `
-            }).join('')
+                const container = document.getElementById('projectsContainer')
+                container.innerHTML = data.map((project, index) => {
+                    let cardClass = 'service-card'
+                    if (project.color_style === 'red') cardClass += ' red'
+                    if (project.color_style === 'yellow') cardClass += ' yellow'
+                    if (project.color_style === 'blue') cardClass += ' blue'
+                    
+                    return `
+                        <div class="${cardClass}" style="animation-delay: ${index * 0.1}s">
+                            <div class="service-icon"><i class="${project.icon_class || 'fas fa-cog'}"></i></div>
+                            <h3>${escapeHtml(project.title)}</h3>
+                            <p>${escapeHtml(project.description)}</p>
+                            <a href="expertise.html">Learn More →</a>
+                        </div>
+                    `
+                }).join('')
+            } catch (error) {
+                console.error('Error loading projects:', error)
+                document.getElementById('projectsContainer').innerHTML = '<div style="text-align:center;padding:40px;">Error loading services</div>'
+            }
         }
         
         // Load Certificates (latest 3)
         async function loadCertificates() {
-            const { data, error } = await supabase.from('certificates').select('*').eq('is_active', true).order('date_earned', { ascending: false }).limit(3)
-            if (error || !data || data.length === 0) {
-                document.getElementById('certificatesContainer').innerHTML = '<div style="text-align:center;padding:40px;">No certificates yet</div>'
-                return
-            }
-            
-            const container = document.getElementById('certificatesContainer')
-            container.innerHTML = data.map((cert, index) => {
-                const borderClass = index === 0 ? '' : (index === 1 ? 'red' : 'yellow')
-                return `
-                    <div class="cert-preview-card ${borderClass}">
-                        <h3>${escapeHtml(cert.name)}</h3>
-                        <p>${escapeHtml(cert.description || `Certificate from ${cert.issuer || 'Unknown'}`)}</p>
-                        <div class="cert-preview-meta">
-                            <span><i class="far fa-calendar"></i> ${formatDate(cert.date_earned)}</span>
-                            <a href="certificates.html">View</a>
+            try {
+                const { data, error } = await supabase.from('certificates').select('*').eq('is_active', true).order('date_earned', { ascending: false }).limit(3)
+                if (error || !data || data.length === 0) {
+                    document.getElementById('certificatesContainer').innerHTML = '<div style="text-align:center;padding:40px;">No certificates yet</div>'
+                    return
+                }
+                
+                const container = document.getElementById('certificatesContainer')
+                container.innerHTML = data.map((cert, index) => {
+                    const borderClass = index === 0 ? '' : (index === 1 ? 'red' : 'yellow')
+                    return `
+                        <div class="cert-preview-card ${borderClass}" style="animation-delay: ${index * 0.1}s">
+                            <h3>${escapeHtml(cert.name)}</h3>
+                            <p>${escapeHtml(cert.description || `Certificate from ${cert.issuer || 'Unknown'}`)}</p>
+                            <div class="cert-preview-meta">
+                                <span><i class="far fa-calendar"></i> ${formatDate(cert.date_earned)}</span>
+                                <a href="certificates.html">View →</a>
+                            </div>
                         </div>
-                    </div>
-                `
-            }).join('')
+                    `
+                }).join('')
+            } catch (error) {
+                console.error('Error loading certificates:', error)
+                document.getElementById('certificatesContainer').innerHTML = '<div style="text-align:center;padding:40px;">Error loading certificates</div>'
+            }
         }
         
         // Load Contact Info
         async function loadContactInfo() {
-            const { data } = await supabase.from('site_settings').select('*')
-            const phone = data?.find(s => s.setting_key === 'contact_phone')?.setting_value || '+260 774496821'
-            const email = data?.find(s => s.setting_key === 'contact_email')?.setting_value || 'felixddaka@gmail.com'
-            
-            document.getElementById('contactInfo').innerHTML = `
-                <div class="contact-detail"><i class="fas fa-user"></i><div><strong>Name</strong><br>Daka Felix (Tech Guy)</div></div>
-                <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><div><strong>Location</strong><br>Zambia, Africa</div></div>
-                <div class="contact-detail"><i class="fas fa-phone"></i><div><strong>Phone & WhatsApp</strong><br>${escapeHtml(phone)}</div></div>
-                <div class="contact-detail"><i class="fas fa-envelope"></i><div><strong>Email</strong><br>${escapeHtml(email)}</div></div>
-            `
+            try {
+                const { data } = await supabase.from('site_settings').select('*')
+                const phone = data?.find(s => s.setting_key === 'contact_phone')?.setting_value || '+260 774496821'
+                const email = data?.find(s => s.setting_key === 'contact_email')?.setting_value || 'felixddaka@gmail.com'
+                
+                document.getElementById('contactInfo').innerHTML = `
+                    <div class="contact-detail"><i class="fas fa-user"></i><div><strong>Name</strong><br>Daka Felix (Tech Guy)</div></div>
+                    <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><div><strong>Location</strong><br>Zambia, Africa</div></div>
+                    <div class="contact-detail"><i class="fas fa-phone"></i><div><strong>Phone & WhatsApp</strong><br>${escapeHtml(phone)}</div></div>
+                    <div class="contact-detail"><i class="fas fa-envelope"></i><div><strong>Email</strong><br>${escapeHtml(email)}</div></div>
+                `
+            } catch (error) {
+                console.error('Error loading contact:', error)
+            }
         }
         
         // Load Social Links
         async function loadSocialLinks() {
-            const { data } = await supabase.from('site_settings').select('*')
-            const github = data?.find(s => s.setting_key === 'contact_github')?.setting_value || 'https://github.com/Feligo1'
-            const linkedin = data?.find(s => s.setting_key === 'contact_linkedin')?.setting_value || 'https://www.linkedin.com/in/felix-daka-5b6058212'
-            const facebook = data?.find(s => s.setting_key === 'contact_facebook')?.setting_value || 'https://www.facebook.com/share/1AJKpFspAB/'
-            const whatsapp = data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value || 'https://wa.me/260774496821'
-            
-            document.getElementById('socialIcons').innerHTML = `
-                <a href="${escapeHtml(github)}" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="${escapeHtml(linkedin)}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="${escapeHtml(facebook)}" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="${escapeHtml(whatsapp)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
-            `
+            try {
+                const { data } = await supabase.from('site_settings').select('*')
+                const github = data?.find(s => s.setting_key === 'contact_github')?.setting_value || 'https://github.com/Feligo1'
+                const linkedin = data?.find(s => s.setting_key === 'contact_linkedin')?.setting_value || 'https://www.linkedin.com/in/felix-daka-5b6058212'
+                const facebook = data?.find(s => s.setting_key === 'contact_facebook')?.setting_value || 'https://www.facebook.com/share/1AJKpFspAB/'
+                const whatsapp = data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value || 'https://wa.me/260774496821'
+                
+                document.getElementById('socialIcons').innerHTML = `
+                    <a href="${escapeHtml(github)}" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="${escapeHtml(linkedin)}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="${escapeHtml(facebook)}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="${escapeHtml(whatsapp)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                `
+            } catch (error) {
+                console.error('Error loading social links:', error)
+            }
         }
         
         // Visitor Tracking
         async function trackVisitor() {
-            const today = new Date().toISOString().split('T')[0]
-            const { data: existing } = await supabase.from('visitors').select('visitor_count, id').eq('visit_date', today).single()
-            
-            if (existing) {
-                await supabase.from('visitors').update({ visitor_count: existing.visitor_count + 1 }).eq('id', existing.id)
-            } else {
-                await supabase.from('visitors').insert([{ visit_date: today, visitor_count: 1 }])
+            try {
+                const today = new Date().toISOString().split('T')[0]
+                const { data: existing } = await supabase.from('visitors').select('visitor_count, id').eq('visit_date', today).single()
+                
+                if (existing) {
+                    await supabase.from('visitors').update({ visitor_count: existing.visitor_count + 1 }).eq('id', existing.id)
+                } else {
+                    await supabase.from('visitors').insert([{ visit_date: today, visitor_count: 1 }])
+                }
+                
+                const { data: allVisitors } = await supabase.from('visitors').select('visitor_count')
+                const total = allVisitors?.reduce((sum, day) => sum + day.visitor_count, 0) || 0
+                document.getElementById('visitorCounter').innerHTML = total === 1 ? '🎉 You\'re visitor #1! Welcome to my portfolio!' : `<i class="fas fa-eye"></i> Total visitors: ${total.toLocaleString()}`
+            } catch (error) {
+                console.error('Error tracking visitor:', error)
+                document.getElementById('visitorCounter').innerHTML = '<i class="fas fa-eye"></i> Welcome to my portfolio!'
             }
-            
-            const { data: allVisitors } = await supabase.from('visitors').select('visitor_count')
-            const total = allVisitors?.reduce((sum, day) => sum + day.visitor_count, 0) || 0
-            document.getElementById('visitorCounter').innerHTML = total === 1 ? '🎉 You\'re visitor #1! Welcome!' : `👋 Total visitors: ${total}`
         }
         
         // Menu functionality
@@ -843,16 +1036,24 @@
         // Set current year
         document.getElementById('currentYear').textContent = new Date().getFullYear()
         
-        // Initialize all
+        // Initialize all with loading feedback
         async function init() {
-            await loadHero()
-            await loadProfileImage()
-            await loadAboutImage()
-            await loadProjects()
-            await loadCertificates()
-            await loadContactInfo()
-            await loadSocialLinks()
-            await trackVisitor()
+            try {
+                await Promise.all([
+                    loadHero(),
+                    loadProfileImage(),
+                    loadAboutImage(),
+                    loadProjects(),
+                    loadCertificates(),
+                    loadContactInfo(),
+                    loadSocialLinks(),
+                    trackVisitor()
+                ])
+                showToast('Portfolio loaded successfully!', 'success')
+            } catch (error) {
+                console.error('Error initializing:', error)
+                showToast('Some content may be loading slowly', 'error')
+            }
         }
         
         init()
