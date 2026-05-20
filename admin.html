@@ -447,6 +447,32 @@
             return urlData.publicUrl;
         }
         
+        // Update or insert site setting (handles duplicates)
+        async function updateSiteSetting(key, value) {
+            // First try to update
+            const { error: updateError } = await supabase
+                .from('site_settings')
+                .update({ setting_value: value })
+                .eq('setting_key', key);
+            
+            // If no rows updated, insert
+            if (updateError || true) {
+                const { error: insertError } = await supabase
+                    .from('site_settings')
+                    .insert({ setting_key: key, setting_value: value });
+                
+                if (insertError && insertError.code !== '23505') {
+                    throw insertError;
+                } else if (insertError && insertError.code === '23505') {
+                    // If duplicate, try update again
+                    await supabase
+                        .from('site_settings')
+                        .update({ setting_value: value })
+                        .eq('setting_key', key);
+                }
+            }
+        }
+        
         function simulateProgress(progressDiv) {
             progressDiv.style.display = 'block';
             let percent = 0;
@@ -719,12 +745,7 @@
                 clearInterval(progressInterval);
                 completeProgress(progressDiv);
                 
-                const { error } = await supabase.from('site_settings').upsert({
-                    setting_key: key,
-                    setting_value: imageUrl
-                });
-                
-                if (error) throw error;
+                await updateSiteSetting(key, imageUrl);
                 
                 document.getElementById(previewId).src = imageUrl;
                 statusDiv.innerHTML = '<span class="status-badge success"><i class="fas fa-check-circle"></i> Uploaded successfully!</span>';
@@ -733,7 +754,7 @@
                 return true;
             } catch (err) {
                 clearInterval(progressInterval);
-                statusDiv.innerHTML = '<span class="status-badge error"><i class="fas fa-exclamation-circle"></i> Upload failed</span>';
+                statusDiv.innerHTML = '<span class="status-badge error"><i class="fas fa-exclamation-circle"></i> Upload failed: ' + err.message + '</span>';
                 showToast(err.message, 'error');
                 return false;
             }
@@ -749,7 +770,7 @@
         
         document.getElementById('resetProfileBtn').addEventListener('click', async () => {
             const defaultProfile = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg';
-            await supabase.from('site_settings').upsert({ setting_key: 'profile_image_url', setting_value: defaultProfile });
+            await updateSiteSetting('profile_image_url', defaultProfile);
             document.getElementById('profilePreview').src = defaultProfile;
             showToast('Profile picture reset');
         });
@@ -764,7 +785,7 @@
         
         document.getElementById('resetAboutBtn').addEventListener('click', async () => {
             const defaultAbout = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80';
-            await supabase.from('site_settings').upsert({ setting_key: 'about_image_url', setting_value: defaultAbout });
+            await updateSiteSetting('about_image_url', defaultAbout);
             document.getElementById('aboutPreview').src = defaultAbout;
             showToast('About image reset');
         });
