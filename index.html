@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Daka Felix (Tech Guy) | Zambian Computer Scientist</title>
+    <title>Felix Daka | Computer Science Graduate</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -421,6 +421,14 @@
         
         .cert-preview-card.red { border-left-color: var(--secondary); }
         .cert-preview-card.yellow { border-left-color: var(--accent); }
+
+        .cert-preview-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
         
         .cert-preview-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
         .cert-preview-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
@@ -644,6 +652,7 @@
             .hero { padding-top: 80px; }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
     <header id="mainHeader">
@@ -673,7 +682,7 @@
             <div class="hero-text">
                 <span class="nickname" id="heroNickname">Loading...</span>
                 <h1 id="heroTitle">Daka Felix</h1>
-                <p id="heroDescription">Loading...</p>
+                <p id="heroDescription">Computer Science graduate seeking an ICT internship, with practical IT support and networking experience.</p>
                 <div class="specialties" id="specialtiesContainer">
                     <span class="specialty-tag skeleton" style="width: 80px; height: 30px; display: inline-block;"></span>
                     <span class="specialty-tag skeleton" style="width: 100px; height: 30px; display: inline-block;"></span>
@@ -681,11 +690,11 @@
                 </div>
                 <div class="hero-buttons">
                     <a href="contact.html" class="btn btn-red">Hire Me</a>
-                    <a href="about.html" class="btn">Learn More</a>
+                    <a href="about.html" class="btn">View My CV</a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="" alt="Daka Felix" class="profile-img" id="profileImage">
+                <img src="profile/profile-1772620176208.jpg" alt="Daka Felix" class="profile-img" id="profileImage" fetchpriority="high" decoding="async">
             </div>
         </div>
     </section>
@@ -706,7 +715,7 @@
 
     <section class="certifications-preview">
         <div class="container">
-            <h2>Recent Certifications</h2>
+            <h2>My Certificates</h2>
             <div class="cert-preview-grid" id="certificatesContainer">
                 <div class="skeleton" style="height: 120px; border-radius: 16px;"></div>
                 <div class="skeleton" style="height: 120px; border-radius: 16px;"></div>
@@ -732,7 +741,7 @@
                     <div class="zambian-connection">
                         <i class="fas fa-globe-africa"></i> Proudly Zambian
                     </div>
-                    <img src="" alt="Daka Felix" class="about-img" id="aboutImage">
+                    <img src="" alt="Daka Felix" class="about-img" id="aboutImage" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -792,15 +801,25 @@
         const SUPABASE_URL = 'https://pthcviwhcsluovdekjub.supabase.co'
         const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC'
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+        let siteSettingsPromise
+
+        function getSiteSettings() {
+            if (!siteSettingsPromise) {
+                siteSettingsPromise = supabase.from('site_settings')
+                    .select('setting_key, setting_value')
+                    .then(({ data, error }) => {
+                        if (error) throw error
+                        return Object.fromEntries((data || []).map(item => [item.setting_key, item.setting_value]))
+                    })
+            }
+            return siteSettingsPromise
+        }
         
         function escapeHtml(str) {
             if (!str) return ''
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;'
-                if (m === '<') return '&lt;'
-                if (m === '>') return '&gt;'
-                return m
-            })
+            return String(str).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[char])
         }
         
         function formatDate(dateString) {
@@ -821,11 +840,11 @@
         // Load Hero Section
         async function loadHero() {
             try {
-                const { data } = await supabase.from('site_settings').select('*')
-                const title = data?.find(s => s.setting_key === 'hero_title')?.setting_value || 'Daka Felix'
-                const nickname = data?.find(s => s.setting_key === 'hero_nickname')?.setting_value || '"Tech Guy" - Zambian Computer Scientist'
-                const description = data?.find(s => s.setting_key === 'hero_description')?.setting_value || 'Bringing innovative technology solutions with a unique Zambian perspective.'
-                const tags = data?.find(s => s.setting_key === 'specialty_tags')?.setting_value || '["Networking","Web Design","Cyber Security","Computer Engineering","Database Admin"]'
+                const settings = await getSiteSettings()
+                const title = settings.hero_title || 'Felix Daka'
+                const nickname = settings.hero_nickname || 'Computer Science Graduate | IT Support & Networking'
+                const description = settings.hero_description || 'BSc Computer Science (Credit) graduate with hands-on IT support experience, seeking an ICT internship.'
+                const tags = settings.specialty_tags || '["IT Support","Networking","Cybersecurity","Java","Cloud Computing"]'
                 
                 document.getElementById('heroTitle').textContent = title
                 document.getElementById('heroNickname').textContent = nickname
@@ -844,20 +863,20 @@
         // Load Profile Image
         async function loadProfileImage() {
             try {
-                const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'profile_image_url').single()
-                const defaultProfile = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg'
-                document.getElementById('profileImage').src = settingsData?.setting_value || defaultProfile
+                const settings = await getSiteSettings()
+                const defaultProfile = 'profile/profile-1772620176208.jpg'
+                document.getElementById('profileImage').src = settings.profile_image_url || defaultProfile
             } catch (error) {
-                document.getElementById('profileImage').src = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg'
+                document.getElementById('profileImage').src = 'profile/profile-1772620176208.jpg'
             }
         }
         
         // Load About Image
         async function loadAboutImage() {
             try {
-                const { data: settingsData } = await supabase.from('site_settings').select('*').eq('setting_key', 'about_image_url').single()
+                const settings = await getSiteSettings()
                 const defaultAbout = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
-                document.getElementById('aboutImage').src = settingsData?.setting_value || defaultAbout
+                document.getElementById('aboutImage').src = settings.about_image_url || defaultAbout
             } catch (error) {
                 document.getElementById('aboutImage').src = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
             }
@@ -894,11 +913,12 @@
             }
         }
         
-        // Load Certificates (latest 3)
+        // Load all saved certificates
         async function loadCertificates() {
             try {
-                const { data, error } = await supabase.from('certificates').select('*').eq('is_active', true).order('date_earned', { ascending: false }).limit(3)
-                if (error || !data || data.length === 0) {
+                const { data, error } = await supabase.from('certificates').select('*').order('date_earned', { ascending: false })
+                if (error) throw error
+                if (!data || data.length === 0) {
                     document.getElementById('certificatesContainer').innerHTML = '<div style="text-align:center;padding:40px;">No certificates yet</div>'
                     return
                 }
@@ -908,6 +928,7 @@
                     const borderClass = index === 0 ? '' : (index === 1 ? 'red' : 'yellow')
                     return `
                         <div class="cert-preview-card ${borderClass}" style="animation-delay: ${index * 0.1}s">
+                            ${cert.image_url ? `<img class="cert-preview-image" src="${escapeHtml(cert.image_url)}" alt="${escapeHtml(cert.name)}" loading="lazy" decoding="async">` : ''}
                             <h3>${escapeHtml(cert.name)}</h3>
                             <p>${escapeHtml(cert.description || `Certificate from ${cert.issuer || 'Unknown'}`)}</p>
                             <div class="cert-preview-meta">
@@ -926,9 +947,9 @@
         // Load Contact Info
         async function loadContactInfo() {
             try {
-                const { data } = await supabase.from('site_settings').select('*')
-                const phone = data?.find(s => s.setting_key === 'contact_phone')?.setting_value || '+260 774496821'
-                const email = data?.find(s => s.setting_key === 'contact_email')?.setting_value || 'felixddaka@gmail.com'
+                const settings = await getSiteSettings()
+                const phone = settings.contact_phone || '+260 774 496 821'
+                const email = settings.contact_email || 'felixddaka@gmail.com'
                 
                 document.getElementById('contactInfo').innerHTML = `
                     <div class="contact-detail"><i class="fas fa-user"></i><div><strong>Name</strong><br>Daka Felix (Tech Guy)</div></div>
@@ -944,11 +965,11 @@
         // Load Social Links
         async function loadSocialLinks() {
             try {
-                const { data } = await supabase.from('site_settings').select('*')
-                const github = data?.find(s => s.setting_key === 'contact_github')?.setting_value || 'https://github.com/Feligo1'
-                const linkedin = data?.find(s => s.setting_key === 'contact_linkedin')?.setting_value || 'https://www.linkedin.com/in/felix-daka-5b6058212'
-                const facebook = data?.find(s => s.setting_key === 'contact_facebook')?.setting_value || 'https://www.facebook.com/share/1AJKpFspAB/'
-                const whatsapp = data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value || 'https://wa.me/260774496821'
+                const settings = await getSiteSettings()
+                const github = settings.contact_github || 'https://github.com/Feligo1'
+                const linkedin = settings.contact_linkedin || 'https://www.linkedin.com/in/felix-daka-5b6058212'
+                const facebook = settings.contact_facebook || 'https://www.facebook.com/share/1AJKpFspAB/'
+                const whatsapp = settings.contact_whatsapp || 'https://wa.me/260774496821'
                 
                 document.getElementById('socialIcons').innerHTML = `
                     <a href="${escapeHtml(github)}" target="_blank"><i class="fab fa-github"></i></a>
@@ -965,6 +986,12 @@
         async function trackVisitor() {
             try {
                 const today = new Date().toISOString().split('T')[0]
+                if (sessionStorage.getItem('visitorTracked') === today) {
+                    const { data: allVisitors } = await supabase.from('visitors').select('visitor_count')
+                    const total = allVisitors?.reduce((sum, day) => sum + day.visitor_count, 0) || 0
+                    document.getElementById('visitorCounter').innerHTML = `<i class="fas fa-eye"></i> Total visitors: ${total.toLocaleString()}`
+                    return
+                }
                 const { data: existing } = await supabase.from('visitors').select('visitor_count, id').eq('visit_date', today).single()
                 
                 if (existing) {
@@ -972,6 +999,7 @@
                 } else {
                     await supabase.from('visitors').insert([{ visit_date: today, visitor_count: 1 }])
                 }
+                sessionStorage.setItem('visitorTracked', today)
                 
                 const { data: allVisitors } = await supabase.from('visitors').select('visitor_count')
                 const total = allVisitors?.reduce((sum, day) => sum + day.visitor_count, 0) || 0
@@ -1047,7 +1075,6 @@
                     loadCertificates(),
                     loadContactInfo(),
                     loadSocialLinks(),
-                    trackVisitor()
                 ])
                 showToast('Portfolio loaded successfully!', 'success')
             } catch (error) {
@@ -1056,6 +1083,7 @@
             }
         }
         
+        trackVisitor()
         init()
     </script>
 </body>

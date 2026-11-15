@@ -1,0 +1,248 @@
+/* Shared layout safeguards for small phones, tablets, and narrow windows. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    max-width: 100%;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg,
+iframe {
+    max-width: 100%;
+}
+
+.container,
+.admin-panel,
+.card,
+.item-row,
+.item-info,
+.menu-container,
+.about-content,
+.footer-content {
+    min-width: 0;
+}
+
+.menu-content {
+    width: min(300px, calc(100vw - 24px));
+    min-width: 0;
+    max-width: calc(100vw - 24px);
+}
+
+button,
+input,
+select,
+textarea {
+    max-width: 100%;
+    font: inherit;
+}
+
+button,
+input,
+select {
+    min-height: 44px;
+}
+
+input,
+select,
+textarea {
+    min-width: 0;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    section {
+        padding-top: clamp(36px, 8vw, 56px);
+        padding-bottom: clamp(36px, 8vw, 56px);
+    }
+
+    h1 {
+        font-size: clamp(1.8rem, 7vw, 2.25rem);
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    h2 {
+        font-size: clamp(1.45rem, 5.5vw, 1.8rem);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    p,
+    li,
+    .contact-detail,
+    .contact-item,
+    .certificate-description,
+    .expertise-description {
+        overflow-wrap: anywhere;
+    }
+
+    .header-container,
+    .admin-header {
+        gap: 12px;
+    }
+
+    .logo {
+        max-width: calc(100vw - 92px);
+        overflow-wrap: anywhere;
+    }
+
+    .hero,
+    .hero-content,
+    .about-content,
+    .footer-content {
+        min-width: 0;
+    }
+
+    .about-content,
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .services-grid,
+    .cert-preview-grid,
+    .expertise-grid,
+    .certificates-grid,
+    .stats-grid,
+    .contact-grid,
+    .contact-content,
+    .form-grid,
+    .values-grid,
+    .value-grid,
+    .cards-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .expertise-card,
+    .certificate-card,
+    .contact-form-container,
+    .card {
+        min-width: 0;
+        padding: clamp(16px, 4vw, 24px);
+    }
+
+    .contact-item {
+        min-width: 0;
+    }
+
+    .modal {
+        padding: 12px;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-width: 100%;
+        max-height: calc(100dvh - 24px);
+        overflow-y: auto;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tabs > * {
+        flex: 0 0 auto;
+    }
+
+    .item-row {
+        width: 100%;
+        min-width: 0;
+        gap: 14px;
+    }
+
+    .item-actions {
+        flex-wrap: wrap;
+    }
+
+    .login-box {
+        width: calc(100% - 32px);
+        padding: clamp(20px, 6vw, 32px);
+    }
+
+    .admin-panel .container {
+        padding: 12px;
+    }
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 420px) {
+    .container {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .admin-panel .container {
+        padding: 8px;
+    }
+
+    .menu-btn {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .menu-btn span {
+        display: none;
+    }
+
+    .hero-buttons,
+    .social-icons,
+    .contact-actions {
+        flex-wrap: wrap;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .contact-form-container,
+    .modal-content {
+        padding: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -645,6 +645,7 @@
             .toast-notification.show { transform: translateY(0); }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
     <header id="mainHeader">
@@ -756,12 +757,9 @@
         
         function escapeHtml(str) {
             if (!str) return ''
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;'
-                if (m === '<') return '&lt;'
-                if (m === '>') return '&gt;'
-                return m
-            })
+            return String(str).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[char])
         }
         
         function formatDate(dateString) {
@@ -778,6 +776,17 @@
                 toast.classList.remove('show')
             }, 3000)
         }
+
+        function showCertificatesError() {
+            document.getElementById('certificatesGrid').innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Certificates could not be loaded</h3>
+                    <p>Please check your connection and try again.</p>
+                    <button class="btn" type="button" onclick="window.location.reload()">Try Again</button>
+                </div>`
+            showToast('Could not load certificates', 'error')
+        }
         
         // Load certificates from database
         async function loadCertificates() {
@@ -785,13 +794,11 @@
                 const { data, error } = await supabase
                     .from('certificates')
                     .select('*')
-                    .eq('is_active', true)
                     .order('date_earned', { ascending: false })
                 
                 if (error) {
                     console.error('Error loading certificates:', error)
-                    document.getElementById('certificatesGrid').innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i> Error loading certificates. Please refresh.</div>'
-                    showToast('Error loading certificates', 'error')
+                    showCertificatesError()
                     return
                 }
                 
@@ -806,7 +813,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error)
-                showToast('Failed to load certificates', 'error')
+                showCertificatesError()
             }
         }
         
@@ -874,14 +881,13 @@
                     badgeText = 'Achievement'
                 }
                 
-                const imageUrl = cert.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                const imageMarkup = cert.image_url
+                    ? `<img src="${escapeHtml(cert.image_url)}" loading="lazy" decoding="async" class="certificate-image" alt="${escapeHtml(cert.name)}">`
+                    : `<div class="certificate-image" style="display:grid;place-items:center;background:rgba(0,119,73,.12);color:var(--accent);font-size:3rem;"><i class="fas ${cert.document_url ? 'fa-file-word' : 'fa-certificate'}"></i></div>`
                 
                 return `
                     <div class="certificate-card" style="animation-delay: ${index * 0.05}s">
-                        <img src="${imageUrl}" 
-                             class="certificate-image" 
-                             onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
-                             alt="${escapeHtml(cert.name)}">
+                        ${imageMarkup}
                         <div class="certificate-content">
                             <span class="${badgeClass}">${badgeText}</span>
                             <h3 class="certificate-title">${escapeHtml(cert.name)}</h3>
@@ -889,6 +895,7 @@
                             <p class="certificate-description">${escapeHtml(cert.description || 'Professional certification demonstrating expertise in the field.')}</p>
                             <div class="certificate-meta">
                                 <span><i class="far fa-calendar"></i> ${formatDate(cert.date_earned)}</span>
+                                ${cert.document_url ? `<a href="${escapeHtml(cert.document_url)}" target="_blank" rel="noopener" class="btn" style="padding:6px 12px;font-size:12px;">Open file</a>` : ''}
                                 <button onclick="viewCertificate('${cert.id}')" class="btn" style="padding:6px 12px;font-size:12px;">View Details →</button>
                             </div>
                         </div>
@@ -903,7 +910,9 @@
             if (!cert) return
             
             document.getElementById('modalTitle').textContent = cert.name
-            document.getElementById('modalImage').src = cert.image_url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            const modalImage = document.getElementById('modalImage')
+            modalImage.style.display = cert.image_url ? 'block' : 'none'
+            if (cert.image_url) modalImage.src = cert.image_url
             
             document.getElementById('modalDetails').innerHTML = `
                 <div style="animation: fadeInUp 0.4s ease">
@@ -911,7 +920,8 @@
                     <p><strong><i class="far fa-calendar" style="color: var(--accent);"></i> Date Earned:</strong> ${formatDate(cert.date_earned)}</p>
                     <p><strong><i class="fas fa-tag" style="color: var(--accent);"></i> Type:</strong> ${cert.certificate_type || 'Certificate'}</p>
                     ${cert.description ? `<p><strong><i class="fas fa-align-left" style="color: var(--accent);"></i> Description:</strong></p><p style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-top: 10px;">${escapeHtml(cert.description)}</p>` : ''}
-                    ${cert.image_url ? `<p><strong><i class="fas fa-image" style="color: var(--accent);"></i> Certificate Image:</strong></p><img src="${cert.image_url}" style="max-width:100%; border-radius:12px; margin-top:10px; box-shadow: var(--box-shadow);" onerror="this.style.display='none'">` : ''}
+                    ${cert.image_url ? `<p><strong><i class="fas fa-image" style="color: var(--accent);"></i> Certificate Image:</strong></p><img src="${escapeHtml(cert.image_url)}" loading="lazy" decoding="async" style="max-width:100%; border-radius:12px; margin-top:10px; box-shadow: var(--box-shadow);" onerror="this.style.display='none'">` : ''}
+                    ${cert.document_url ? `<p><strong><i class="fas fa-file-word" style="color: var(--accent);"></i> Certificate Document:</strong></p><a href="${escapeHtml(cert.document_url)}" target="_blank" rel="noopener" class="btn">Open ${escapeHtml(cert.document_name || 'certificate document')}</a>` : ''}
                 </div>
             `
             

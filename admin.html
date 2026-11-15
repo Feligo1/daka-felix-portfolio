@@ -56,6 +56,14 @@
             font-weight: bold;
             cursor: pointer;
         }
+        .auth-link {
+            width: auto !important;
+            padding: 10px 12px !important;
+            margin-top: 8px;
+            background: transparent !important;
+            color: #FCD116 !important;
+            font-size: 14px !important;
+        }
         .admin-panel { display: none; }
         .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
         .admin-header {
@@ -246,15 +254,39 @@
             .image-preview { width: 100px; height: 100px; }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
             <i class="fas fa-laptop-code" style="font-size: 48px; color: #FCD116; margin-bottom: 20px;"></i>
-            <h1>Admin Login</h1>
-            <input type="text" id="adminUsername" placeholder="Username">
-            <input type="password" id="adminPassword" placeholder="Password">
-            <button onclick="login()">Login</button>
+            <div id="loginView">
+                <h1>Admin Login</h1>
+                <form id="loginForm">
+                    <input type="email" id="adminEmail" placeholder="Admin email" autocomplete="username" required>
+                    <input type="password" id="adminPassword" placeholder="Password" autocomplete="current-password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <button type="button" class="auth-link" id="forgotPasswordBtn">Forgot password?</button>
+            </div>
+            <div id="forgotPasswordView" style="display:none;">
+                <h1>Reset Password</h1>
+                <p>We’ll email you a secure link to choose a new password.</p>
+                <p style="font-size:12px;color:#9CA3AF;margin-top:8px;">Your deployed admin page must be allowed in Supabase Authentication → URL Configuration.</p>
+                <form id="forgotPasswordForm">
+                    <input type="email" id="recoveryEmail" placeholder="Admin email" autocomplete="email" required>
+                    <button type="submit" id="recoverySubmitBtn">Send recovery link</button>
+                </form>
+                <button type="button" class="auth-link" id="backToLoginBtn">Back to login</button>
+            </div>
+            <div id="setPasswordView" style="display:none;">
+                <h1>Choose a New Password</h1>
+                <form id="setPasswordForm">
+                    <input type="password" id="newPassword" placeholder="New password" autocomplete="new-password" minlength="8" required>
+                    <input type="password" id="confirmNewPassword" placeholder="Confirm new password" autocomplete="new-password" minlength="8" required>
+                    <button type="submit" id="setPasswordBtn">Save new password</button>
+                </form>
+            </div>
         </div>
     </div>
     
@@ -273,10 +305,43 @@
             
             <div class="tabs">
                 <button class="tab-btn active" data-tab="certificates">Certificates</button>
+                <button class="tab-btn" data-tab="documents">Documents</button>
                 <button class="tab-btn" data-tab="projects">Projects</button>
                 <button class="tab-btn" data-tab="profile">Profile Image</button>
                 <button class="tab-btn" data-tab="about">About Image</button>
                 <button class="tab-btn" data-tab="messages">Messages</button>
+                <button class="tab-btn" data-tab="security">Security</button>
+            </div>
+
+            <div id="securityTab" class="tab-content">
+                <div class="card">
+                    <h2><i class="fas fa-lock"></i> Change Admin Password</h2>
+                    <p style="color:#9CA3AF;margin-bottom:20px;">Set a new password for the account you are signed in with.</p>
+                    <form id="changePasswordForm" style="max-width:480px;">
+                        <div class="form-group"><label for="changePassword">New password</label><input type="password" id="changePassword" autocomplete="new-password" minlength="8" required></div>
+                        <div class="form-group"><label for="confirmChangePassword">Confirm new password</label><input type="password" id="confirmChangePassword" autocomplete="new-password" minlength="8" required></div>
+                        <button type="submit" id="changePasswordBtn">Update Password</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Documents Tab -->
+            <div id="documentsTab" class="tab-content">
+                <div class="card">
+                    <h2>Upload a Document</h2>
+                    <form id="addDocumentForm">
+                        <div class="form-grid">
+                            <div class="form-group"><label for="documentTitle">Title</label><input type="text" id="documentTitle" required maxlength="160"></div>
+                            <div class="form-group"><label for="documentFile">File (PDF, Office, CSV, RTF, Markdown, or text; max 20MB)</label><input type="file" id="documentFile" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.rtf,.md,.txt" required></div>
+                            <div class="form-group full-width"><label for="documentDescription">Description</label><textarea id="documentDescription" rows="3" maxlength="2000"></textarea></div>
+                        </div>
+                        <button type="submit" id="documentSubmitBtn">Upload Document</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h2>Stored Documents</h2>
+                    <div id="documentsList" class="items-list">Loading...</div>
+                </div>
             </div>
             
             <!-- Certificates Tab -->
@@ -296,12 +361,12 @@
                             </div>
                             <div class="form-group full-width"><label>Description</label><textarea id="certDesc" rows="3"></textarea></div>
                             <div class="form-group full-width">
-                                <label>Certificate Image</label>
+                                <label>Certificate file (picture, PDF or Word document)</label>
                                 <div class="image-upload-area" id="certUploadArea">
                                     <i class="fas fa-cloud-upload-alt" style="font-size: 32px;"></i>
-                                    <p>Click or drag & drop to upload image</p>
-                                    <p style="font-size: 12px; margin-top: 8px;">JPG, PNG, GIF (Max 5MB)</p>
-                                    <input type="file" id="certImageFile" accept="image/*" hidden>
+                                    <p>Click or drag &amp; drop to upload a certificate file</p>
+                                    <p style="font-size: 12px; margin-top: 8px;">JPG, PNG, GIF, PDF, DOC or DOCX (Max 20MB)</p>
+                                    <input type="file" id="certImageFile" accept="image/*,.pdf,.doc,.docx" hidden>
                                 </div>
                                 <div class="upload-progress" id="certProgress"><div class="progress-bar"></div></div>
                                 <div id="certFileName" style="font-size:12px;color:#9CA3AF; margin-top:8px;"></div>
@@ -413,12 +478,10 @@
     <script>
         const SUPABASE_URL = 'https://pthcviwhcsluovdekjub.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC';
-        const ADMIN_USERNAME = 'Feligo';
-        const ADMIN_PASSWORD = '56451051';
-        
         let supabase;
         let allCertificates = [];
         let allProjects = [];
+        let allDocuments = [];
         
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
@@ -429,14 +492,36 @@
         }
         
         // Upload to Supabase Storage
+        async function optimizeImage(file) {
+            if (!file.type.startsWith('image/')) {
+                throw new Error('Choose an image file.');
+            }
+            if (file.size > 20 * 1024 * 1024) {
+                throw new Error('Image is too large. Choose an image under 20MB.');
+            }
+
+            const bitmap = await createImageBitmap(file);
+            const maxDimension = 1600;
+            const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+            canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+            canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+            bitmap.close();
+
+            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', 0.82));
+            if (!blob) throw new Error('Could not optimize this image. Try another file.');
+            return blob;
+        }
+
         async function uploadToStorage(file, folder) {
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+            const optimizedImage = await optimizeImage(file);
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.webp`;
             const filePath = `${folder}/${fileName}`;
             
             const { data, error } = await supabase.storage
                 .from('portfolio-images')
-                .upload(filePath, file);
+                .upload(filePath, optimizedImage, { contentType: 'image/webp', cacheControl: '31536000', upsert: false });
             
             if (error) throw error;
             
@@ -446,30 +531,70 @@
             
             return urlData.publicUrl;
         }
+
+        async function uploadDocumentToStorage(file) {
+            if (file.size > 20 * 1024 * 1024) throw new Error('Document must be smaller than 20MB.');
+            const allowedTypes = new Set([
+                'application/pdf', 'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                'text/plain', 'text/csv', 'text/markdown', 'application/rtf'
+            ]);
+            if (!allowedTypes.has(file.type)) throw new Error('Choose a supported PDF, Office, CSV, RTF, Markdown, or text document.');
+
+            const safeName = file.name.normalize('NFKD').replace(/[^a-zA-Z0-9._-]/g, '_').slice(-120);
+            const filePath = `${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
+            const { error } = await supabase.storage.from('portfolio-documents').upload(filePath, file, {
+                contentType: file.type,
+                cacheControl: '3600',
+                upsert: false
+            });
+            if (error) throw error;
+            return filePath;
+        }
+
+        async function uploadCertificateDocument(file) {
+            if (file.size > 20 * 1024 * 1024) throw new Error('Certificate document must be smaller than 20MB.');
+            const extension = file.name.split('.').pop().toLowerCase();
+            const allowedTypes = new Set([
+                'application/pdf', 'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ]);
+            if (!allowedTypes.has(file.type) && !['pdf', 'doc', 'docx'].includes(extension)) {
+                throw new Error('Choose a PDF, DOC, or DOCX certificate document.');
+            }
+
+            const safeName = file.name.normalize('NFKD').replace(/[^a-zA-Z0-9._-]/g, '_').slice(-120);
+            const filePath = `${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
+            const { error } = await supabase.storage.from('portfolio-certificate-files').upload(filePath, file, {
+                contentType: file.type || (extension === 'pdf' ? 'application/pdf' : extension === 'doc' ? 'application/msword' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+                cacheControl: '3600',
+                upsert: false
+            });
+            if (error) throw error;
+            const { data } = supabase.storage.from('portfolio-certificate-files').getPublicUrl(filePath);
+            return { url: data.publicUrl, path: filePath, name: file.name, mimeType: file.type };
+        }
         
-        // Update or insert site setting (handles duplicates)
+        // Update an existing site setting, inserting it only when it is missing.
         async function updateSiteSetting(key, value) {
-            // First try to update
-            const { error: updateError } = await supabase
+            const { data, error: updateError } = await supabase
                 .from('site_settings')
                 .update({ setting_value: value })
-                .eq('setting_key', key);
+                .eq('setting_key', key)
+                .select('setting_key');
             
-            // If no rows updated, insert
-            if (updateError || true) {
+            if (updateError) throw updateError;
+
+            if (!data || data.length === 0) {
                 const { error: insertError } = await supabase
                     .from('site_settings')
                     .insert({ setting_key: key, setting_value: value });
                 
-                if (insertError && insertError.code !== '23505') {
-                    throw insertError;
-                } else if (insertError && insertError.code === '23505') {
-                    // If duplicate, try update again
-                    await supabase
-                        .from('site_settings')
-                        .update({ setting_value: value })
-                        .eq('setting_key', key);
-                }
+                if (insertError) throw insertError;
             }
         }
         
@@ -528,62 +653,171 @@
                 container.appendChild(div);
             }
         }
+
+        async function loadDocuments() {
+            const container = document.getElementById('documentsList');
+            const { data, error } = await supabase.from('documents').select('*').order('created_at', { ascending: false });
+            if (error) {
+                container.textContent = `Could not load documents: ${error.message}`;
+                return;
+            }
+            allDocuments = data || [];
+            if (allDocuments.length === 0) {
+                container.textContent = 'No documents uploaded yet.';
+                return;
+            }
+
+            const rows = await Promise.all(allDocuments.map(async storedDocument => {
+                const { data: linkData, error: linkError } = await supabase.storage
+                    .from('portfolio-documents').createSignedUrl(storedDocument.file_path, 60 * 10);
+                const link = linkError ? '' : linkData.signedUrl;
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                const title = document.createElement('h4');
+                title.textContent = storedDocument.title;
+                const details = document.createElement('p');
+                details.textContent = `${storedDocument.file_name} · ${(storedDocument.file_size / 1024 / 1024).toFixed(2)} MB`;
+                const description = document.createElement('p');
+                description.textContent = storedDocument.description || '';
+                const info = document.createElement('div');
+                info.className = 'item-info';
+                info.append(title, details, description);
+                const actions = document.createElement('div');
+                actions.className = 'item-actions';
+                if (link) {
+                    const open = document.createElement('a');
+                    open.href = link;
+                    open.target = '_blank';
+                    open.rel = 'noopener noreferrer';
+                    open.textContent = 'Open';
+                    actions.appendChild(open);
+                }
+                const remove = document.createElement('button');
+                remove.className = 'danger';
+                remove.textContent = 'Delete';
+                remove.addEventListener('click', () => window.deleteDocument(storedDocument.id));
+                actions.appendChild(remove);
+                row.append(info, actions);
+                return row;
+            }));
+            container.replaceChildren(...rows);
+        }
+
+        document.getElementById('addDocumentForm').addEventListener('submit', async event => {
+            event.preventDefault();
+            const file = document.getElementById('documentFile').files[0];
+            const button = document.getElementById('documentSubmitBtn');
+            button.disabled = true;
+            try {
+                const filePath = await uploadDocumentToStorage(file);
+                const { error } = await supabase.from('documents').insert({
+                    title: document.getElementById('documentTitle').value.trim(),
+                    description: document.getElementById('documentDescription').value.trim(),
+                    file_name: file.name,
+                    file_path: filePath,
+                    mime_type: file.type,
+                    file_size: file.size
+                });
+                if (error) {
+                    await supabase.storage.from('portfolio-documents').remove([filePath]);
+                    throw error;
+                }
+                event.target.reset();
+                showToast('Document uploaded');
+                await loadDocuments();
+            } catch (error) {
+                showToast(error.message || 'Document upload failed', 'error');
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        window.deleteDocument = async id => {
+            const document = allDocuments.find(item => item.id === id);
+            if (!document || !confirm(`Delete “${document.title}”?`)) return;
+            const { error: storageError } = await supabase.storage.from('portfolio-documents').remove([document.file_path]);
+            if (storageError) { showToast(storageError.message, 'error'); return; }
+            const { error } = await supabase.from('documents').delete().eq('id', id);
+            if (error) { showToast(error.message, 'error'); return; }
+            showToast('Document deleted');
+            await loadDocuments();
+        };
         
         document.getElementById('addCertForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const file = document.getElementById('certImageFile').files[0];
-            if (!file) {
-                showToast('Please select an image', 'error');
-                return;
-            }
-            
             const btn = document.getElementById('certSubmitBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
             const progressDiv = document.getElementById('certProgress');
-            const progressInterval = simulateProgress(progressDiv);
-            
+            let progressInterval;
+            const editId = document.getElementById('addCertForm').dataset.editId;
+            const previousCert = editId ? allCertificates.find(cert => cert.id == editId) : null;
             try {
-                const imageUrl = await uploadToStorage(file, 'certificates');
-                clearInterval(progressInterval);
-                completeProgress(progressDiv);
-                
-                const { error } = await supabase.from('certificates').insert({
+                const values = {
                     name: document.getElementById('certName').value,
                     issuer: document.getElementById('certIssuer').value,
                     date_earned: document.getElementById('certDate').value,
                     certificate_type: document.getElementById('certType').value,
                     description: document.getElementById('certDesc').value,
-                    image_url: imageUrl,
                     is_active: true
-                });
-                
+                };
+                if (file) {
+                    progressInterval = simulateProgress(progressDiv);
+                    if (file.type.startsWith('image/')) {
+                        values.image_url = await uploadToStorage(file, 'certificates');
+                        values.document_url = null;
+                        values.document_path = null;
+                        values.document_name = null;
+                    } else {
+                        const uploaded = await uploadCertificateDocument(file);
+                        values.image_url = null;
+                        values.document_url = uploaded.url;
+                        values.document_path = uploaded.path;
+                        values.document_name = uploaded.name;
+                    }
+                    clearInterval(progressInterval);
+                    completeProgress(progressDiv);
+                } else if (!editId) {
+                    throw new Error('Choose a certificate picture, PDF, or Word document.');
+                }
+
+                const { error } = editId
+                    ? await supabase.from('certificates').update(values).eq('id', editId)
+                    : await supabase.from('certificates').insert(values);
                 if (error) throw error;
-                
-                showToast('Certificate added successfully!');
+                if (file && previousCert?.document_path && values.document_path !== previousCert.document_path) {
+                    await supabase.storage.from('portfolio-certificate-files').remove([previousCert.document_path]);
+                }
+                showToast(editId ? 'Certificate updated successfully!' : 'Certificate added successfully!');
                 document.getElementById('addCertForm').reset();
-                document.getElementById('certImageFile').value = '';
                 document.getElementById('certFileName').textContent = '';
+                delete document.getElementById('addCertForm').dataset.editId;
+                btn.textContent = 'Add Certificate';
                 loadCertificates();
             } catch (err) {
-                clearInterval(progressInterval);
+                if (progressInterval) clearInterval(progressInterval);
                 showToast(err.message, 'error');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = 'Add Certificate';
+                if (!document.getElementById('addCertForm').dataset.editId) btn.textContent = 'Add Certificate';
             }
         });
         
         window.deleteCertificate = async (id) => {
             if (!confirm('Delete this certificate?')) return;
+            const cert = allCertificates.find(item => item.id == id);
             const { error } = await supabase.from('certificates').delete().eq('id', id);
             if (error) { showToast('Error deleting', 'error'); return; }
+            if (cert?.document_path) {
+                const { error: fileError } = await supabase.storage.from('portfolio-certificate-files').remove([cert.document_path]);
+                if (fileError) showToast(`Certificate deleted, but its file could not be removed: ${fileError.message}`, 'error');
+            }
             showToast('Certificate deleted');
             loadCertificates();
         };
         
-        window.editCertificate = async (id) => {
+        window.editCertificate = (id) => {
             const cert = allCertificates.find(c => c.id == id);
             if (!cert) return;
             
@@ -593,39 +827,10 @@
             document.getElementById('certType').value = cert.certificate_type;
             document.getElementById('certDesc').value = cert.description || '';
             
-            const btn = document.querySelector('#addCertForm button');
-            btn.textContent = 'Update';
-            btn.onclick = async (e) => {
-                e.preventDefault();
-                const file = document.getElementById('certImageFile').files[0];
-                let imageUrl = cert.image_url;
-                
-                if (file) {
-                    const progressDiv = document.getElementById('certProgress');
-                    const progressInterval = simulateProgress(progressDiv);
-                    imageUrl = await uploadToStorage(file, 'certificates');
-                    clearInterval(progressInterval);
-                    completeProgress(progressDiv);
-                }
-                
-                const { error } = await supabase.from('certificates').update({
-                    name: document.getElementById('certName').value,
-                    issuer: document.getElementById('certIssuer').value,
-                    date_earned: document.getElementById('certDate').value,
-                    certificate_type: document.getElementById('certType').value,
-                    description: document.getElementById('certDesc').value,
-                    image_url: imageUrl
-                }).eq('id', id);
-                
-                if (error) { showToast('Error updating', 'error'); return; }
-                showToast('Certificate updated');
-                document.getElementById('addCertForm').reset();
-                document.getElementById('certImageFile').value = '';
-                document.getElementById('certFileName').textContent = '';
-                btn.textContent = 'Add Certificate';
-                btn.onclick = null;
-                loadCertificates();
-            };
+            const form = document.getElementById('addCertForm');
+            form.dataset.editId = id;
+            document.getElementById('certSubmitBtn').textContent = 'Update Certificate';
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
         
         // ============ PROJECT CRUD ============
@@ -729,11 +934,6 @@
                 showToast('Select an image', 'error');
                 return false;
             }
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('Image too large (max 5MB)', 'error');
-                return false;
-            }
-            
             const statusDiv = document.getElementById(statusId);
             statusDiv.innerHTML = '<span class="status-badge"><i class="fas fa-spinner fa-spin"></i> Uploading...</span>';
             
@@ -842,6 +1042,7 @@
             if (tabId === 'certificates') loadCertificates();
             if (tabId === 'projects') loadProjects();
             if (tabId === 'messages') loadMessages();
+            if (tabId === 'documents') loadDocuments();
         }
         
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -861,7 +1062,10 @@
                 e.preventDefault();
                 area.classList.remove('dragover');
                 const file = e.dataTransfer.files[0];
-                if (file && file.type.startsWith('image/')) {
+                const isCertificateFile = areaId === 'certUploadArea' && (
+                    file?.type.startsWith('image/') || /\.(pdf|doc|docx)$/i.test(file?.name || '')
+                );
+                if (file && (file.type.startsWith('image/') || isCertificateFile)) {
                     input.files = e.dataTransfer.files;
                     if (fileNameSpanId) {
                         document.getElementById(fileNameSpanId).textContent = file.name;
@@ -893,41 +1097,149 @@
             const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
             supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
         }
+
+        async function showAdminPanel() {
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            if (userError || !user) throw new Error('Please sign in again.');
+
+            const { data: adminRole, error: roleError } = await supabase
+                .from('portfolio_admins')
+                .select('user_id')
+                .eq('user_id', user.id)
+                .maybeSingle();
+            if (roleError) {
+                throw new Error('Could not verify the admin role. Run supabase-admin-role.sql and grant your account the admin role.');
+            }
+            if (!adminRole) {
+                await supabase.auth.signOut();
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('adminPanel').style.display = 'none';
+                showToast('This account does not have the admin role.', 'error');
+                return false;
+            }
+
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadCertificates();
+            loadProjects();
+            loadImages();
+            loadMessages();
+            loadDocuments();
+            return true;
+        }
         
         window.login = async () => {
-            const username = document.getElementById('adminUsername').value;
+            const email = document.getElementById('adminEmail').value.trim();
             const password = document.getElementById('adminPassword').value;
-            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+            try {
                 await initSupabase();
-                sessionStorage.setItem('adminLoggedIn', 'true');
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadCertificates();
-                loadProjects();
-                loadImages();
-                loadMessages();
-                showToast('Welcome back!');
-            } else {
-                showToast('Invalid credentials', 'error');
+                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                if (await showAdminPanel()) showToast('Welcome back!');
+            } catch (error) {
+                showToast(error.message || 'Login failed', 'error');
             }
         };
+
+        document.getElementById('loginForm').addEventListener('submit', event => {
+            event.preventDefault();
+            window.login();
+        });
+
+        function showAuthView(viewId) {
+            ['loginView', 'forgotPasswordView', 'setPasswordView'].forEach(id => {
+                document.getElementById(id).style.display = id === viewId ? 'block' : 'none';
+            });
+        }
+
+        document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
+            document.getElementById('recoveryEmail').value = document.getElementById('adminEmail').value.trim();
+            showAuthView('forgotPasswordView');
+        });
+
+        document.getElementById('backToLoginBtn').addEventListener('click', () => showAuthView('loginView'));
+
+        document.getElementById('forgotPasswordForm').addEventListener('submit', async event => {
+            event.preventDefault();
+            const button = document.getElementById('recoverySubmitBtn');
+            button.disabled = true;
+            try {
+                await initSupabase();
+                const email = document.getElementById('recoveryEmail').value.trim();
+                const redirectTo = `${window.location.origin}${window.location.pathname}?recovery=1`;
+                const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+                if (error) throw error;
+                showToast('If this account exists, a password recovery link has been sent.');
+            } catch (error) {
+                showToast(error.message || 'Could not send the recovery email.', 'error');
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        async function submitNewPassword(password) {
+            const { error } = await supabase.auth.updateUser({ password });
+            if (error) throw error;
+            history.replaceState({}, document.title, window.location.pathname);
+            showAuthView('loginView');
+            document.getElementById('setPasswordForm').reset();
+            document.getElementById('changePasswordForm').reset();
+            showToast('Password updated successfully.');
+        }
+
+        document.getElementById('setPasswordForm').addEventListener('submit', async event => {
+            event.preventDefault();
+            const password = document.getElementById('newPassword').value;
+            if (password !== document.getElementById('confirmNewPassword').value) {
+                showToast('The passwords do not match.', 'error');
+                return;
+            }
+            const button = document.getElementById('setPasswordBtn');
+            button.disabled = true;
+            try {
+                await submitNewPassword(password);
+                if (await showAdminPanel()) showToast('You are signed in with your new password.');
+            } catch (error) {
+                showToast(error.message || 'Could not update the password.', 'error');
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.getElementById('changePasswordForm').addEventListener('submit', async event => {
+            event.preventDefault();
+            const password = document.getElementById('changePassword').value;
+            if (password !== document.getElementById('confirmChangePassword').value) {
+                showToast('The passwords do not match.', 'error');
+                return;
+            }
+            const button = document.getElementById('changePasswordBtn');
+            button.disabled = true;
+            try {
+                await submitNewPassword(password);
+            } catch (error) {
+                showToast(error.message || 'Could not update the password.', 'error');
+            } finally {
+                button.disabled = false;
+            }
+        });
         
-        window.logout = () => {
-            sessionStorage.removeItem('adminLoggedIn');
+        window.logout = async () => {
+            if (supabase) await supabase.auth.signOut();
             document.getElementById('loginScreen').style.display = 'flex';
             document.getElementById('adminPanel').style.display = 'none';
         };
         
-        if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-            initSupabase().then(() => {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadCertificates();
-                loadProjects();
-                loadImages();
-                loadMessages();
-            });
-        }
+        initSupabase().then(async () => {
+            if (new URLSearchParams(window.location.search).get('recovery') === '1') {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('adminPanel').style.display = 'none';
+                showAuthView('setPasswordView');
+                return;
+            }
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) await showAdminPanel();
+        }).catch(error => showToast(error.message || 'Could not connect to Supabase', 'error'));
     </script>
 </body>
 </html>
