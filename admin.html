@@ -305,6 +305,7 @@
                 <div class="stat-card"><h3 id="statCerts">0</h3><p>Certificates</p></div>
                 <div class="stat-card"><h3 id="statProjects">0</h3><p>Projects</p></div>
                 <div class="stat-card"><h3 id="statMessages">0</h3><p>Messages</p></div>
+                <div class="stat-card"><h3 id="statPageVisits">0</h3><p>Page visits</p></div>
             </div>
             
             <div class="tabs">
@@ -314,6 +315,7 @@
                 <button class="tab-btn" data-tab="profile">Profile Image</button>
                 <button class="tab-btn" data-tab="about">About Image</button>
                 <button class="tab-btn" data-tab="messages">Messages</button>
+                <button class="tab-btn" data-tab="deviceVisits">Visitors</button>
                 <button class="tab-btn" data-tab="security">Security</button>
             </div>
 
@@ -326,6 +328,15 @@
                         <div class="form-group"><label for="confirmChangePassword">Confirm new password</label><input type="password" id="confirmChangePassword" autocomplete="new-password" minlength="8" required></div>
                         <button type="submit" id="changePasswordBtn">Update Password</button>
                     </form>
+                </div>
+            </div>
+
+            <div id="deviceVisitsTab" class="tab-content">
+                <div class="card">
+                    <h2><i class="fas fa-mobile-alt"></i> Visitor Devices</h2>
+                    <p style="color:#9CA3AF;margin-bottom:16px;">Anonymous visit records show a temporary browser session ID, device category, browser, operating system, page and time. Names, email addresses and IP addresses are not collected for this list.</p>
+                    <button type="button" onclick="loadDeviceVisits()">Refresh visits</button>
+                    <div id="deviceVisitsList" class="items-list" style="margin-top:16px;">Loading visits...</div>
                 </div>
             </div>
 
@@ -1022,6 +1033,43 @@
                 container.appendChild(div);
             }
         }
+
+        async function loadDeviceVisits() {
+            const container = document.getElementById('deviceVisitsList');
+            const count = document.getElementById('statPageVisits');
+            const { data, error, count: totalCount } = await supabase
+                .from('device_visits')
+                .select('*', { count: 'exact' })
+                .order('visited_at', { ascending: false })
+                .limit(100);
+
+            if (error) {
+                count.textContent = '—';
+                container.textContent = 'Visit tracking is not set up yet. Run supabase-device-visits.sql in Supabase SQL Editor, then reload this page.';
+                return;
+            }
+
+            count.textContent = totalCount ?? data.length;
+            if (!data.length) {
+                container.textContent = 'No device visits recorded yet. Visits will appear after the database setup is complete and someone opens a public page.';
+                return;
+            }
+
+            container.innerHTML = '';
+            for (const visit of data) {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                const sessionLabel = String(visit.session_id || '').slice(0, 8);
+                row.innerHTML = `
+                    <div class="item-info">
+                        <h4>${escapeHtml(visit.device_type)} · ${escapeHtml(visit.browser)} · ${escapeHtml(visit.operating_system)}</h4>
+                        <p>Page: ${escapeHtml(visit.page_path)}</p>
+                        <p>Session: ${escapeHtml(sessionLabel)} · Visited: ${escapeHtml(new Date(visit.visited_at).toLocaleString())}</p>
+                    </div>
+                `;
+                container.appendChild(row);
+            }
+        }
         
         window.deleteMessage = async (id) => {
             if (!confirm('Delete this message?')) return;
@@ -1046,6 +1094,7 @@
             if (tabId === 'certificates') loadCertificates();
             if (tabId === 'projects') loadProjects();
             if (tabId === 'messages') loadMessages();
+            if (tabId === 'deviceVisits') loadDeviceVisits();
             if (tabId === 'documents') loadDocuments();
         }
         
@@ -1129,6 +1178,7 @@
             loadImages();
             loadMessages();
             loadDocuments();
+            loadDeviceVisits();
             return true;
         }
         

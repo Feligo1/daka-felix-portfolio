@@ -742,6 +742,7 @@
                     <div class="social-icons" id="socialIcons"></div>
                 </div>
             </div>
+            <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
             <div class="copyright"><p>&copy; <span id="currentYear"></span> Daka Felix (Tech Guy). All rights reserved.</p></div>
         </div>
     </footer>
@@ -1025,6 +1026,10 @@
         // Initialize
         loadCertificates()
         loadSocialLinks()
+    </script>
+    <script type="module">
+        import { trackDeviceVisit } from './supabase-client.js'
+        trackDeviceVisit()
     </script>
 </body>
 </html>

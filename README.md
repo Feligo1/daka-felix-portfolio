@@ -16,3 +16,7 @@ Supabase Free includes 1 GB of file storage and a 50 MB upload ceiling; this sit
 ## Certificate file uploads
 
 For an existing Supabase setup, run [`supabase-admin-role.sql`](supabase-admin-role.sql) first, then [`supabase-certificate-files.sql`](supabase-certificate-files.sql) if certificate document storage has not already been configured. This enables PDF, DOC, and DOCX certificates. Certificate files are public so visitors can open them from the Certificates page. In `admin.html`, use the Certificates, Profile Image, and About Image tabs to upload certificate files and replace the site photos.
+
+## Anonymous visitor devices
+
+For an existing Supabase setup, run [`supabase-device-visits.sql`](supabase-device-visits.sql) in **SQL Editor**. The public pages record one row per page per browser tab session with a random session ID, approximate device category, browser, operating system, and page path. They do not store names, email addresses, IP addresses, or the full browser user-agent string. Admins can view the latest records in the **Visitors** tab.
