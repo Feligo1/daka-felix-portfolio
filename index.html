@@ -653,6 +653,7 @@
         }
     </style>
     <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="portfolio-refresh.css">
 </head>
 <body>
     <header id="mainHeader">
@@ -904,7 +905,7 @@
                             <div class="service-icon"><i class="${project.icon_class || 'fas fa-cog'}"></i></div>
                             <h3>${escapeHtml(project.title)}</h3>
                             <p>${escapeHtml(project.description)}</p>
-                            <a href="expertise.html">Learn More →</a>
+                            <a href="expertise.html">Learn More</a>
                         </div>
                     `
                 }).join('')
@@ -934,7 +935,7 @@
                             <p>${escapeHtml(cert.description || `Certificate from ${cert.issuer || 'Unknown'}`)}</p>
                             <div class="cert-preview-meta">
                                 <span><i class="far fa-calendar"></i> ${formatDate(cert.date_earned)}</span>
-                                <a href="certificates.html">View →</a>
+                                <a href="certificates.html">View</a>
                             </div>
                         </div>
                     `
@@ -1004,7 +1005,7 @@
                 
                 const { data: allVisitors } = await supabase.from('visitors').select('visitor_count')
                 const total = allVisitors?.reduce((sum, day) => sum + day.visitor_count, 0) || 0
-                document.getElementById('visitorCounter').innerHTML = total === 1 ? '🎉 You\'re visitor #1! Welcome to my portfolio!' : `<i class="fas fa-eye"></i> Total visitors: ${total.toLocaleString()}`
+                document.getElementById('visitorCounter').innerHTML = total === 1 ? 'ðŸŽ‰ You\'re visitor #1! Welcome to my portfolio!' : `<i class="fas fa-eye"></i> Total visitors: ${total.toLocaleString()}`
             } catch (error) {
                 console.error('Error tracking visitor:', error)
                 document.getElementById('visitorCounter').innerHTML = '<i class="fas fa-eye"></i> Welcome to my portfolio!'
@@ -1065,27 +1066,15 @@
         // Set current year
         document.getElementById('currentYear').textContent = new Date().getFullYear()
         
-        // Initialize all with loading feedback
-        async function init() {
-            try {
-                await Promise.all([
-                    loadHero(),
-                    loadProfileImage(),
-                    loadAboutImage(),
-                    loadProjects(),
-                    loadCertificates(),
-                    loadContactInfo(),
-                    loadSocialLinks(),
-                ])
-                showToast('Portfolio loaded successfully!', 'success')
-            } catch (error) {
-                console.error('Error initializing:', error)
-                showToast('Some content may be loading slowly', 'error')
-            }
-        }
-        
         trackVisitor()
-        init()
+        // Start each section independently so a slow request cannot hold up the rest.
+        loadHero()
+        loadProfileImage()
+        loadAboutImage()
+        loadProjects()
+        loadCertificates()
+        loadContactInfo()
+        loadSocialLinks()
     </script>
     <script type="module">
         import { trackDeviceVisit } from './supabase-client.js'

@@ -646,6 +646,7 @@
         }
     </style>
     <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="portfolio-refresh.css">
 </head>
 <body>
     <header id="mainHeader">
@@ -709,7 +710,6 @@
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <img id="modalImage" class="modal-image" src="">
                 <div id="modalDetails"></div>
             </div>
         </div>
@@ -897,7 +897,7 @@
                             <div class="certificate-meta">
                                 <span><i class="far fa-calendar"></i> ${formatDate(cert.date_earned)}</span>
                                 ${cert.document_url ? `<a href="${escapeHtml(cert.document_url)}" target="_blank" rel="noopener" class="btn" style="padding:6px 12px;font-size:12px;">Open file</a>` : ''}
-                                <button onclick="viewCertificate('${cert.id}')" class="btn" style="padding:6px 12px;font-size:12px;">View Details →</button>
+                                <button onclick="viewCertificate('${cert.id}')" class="btn" style="padding:6px 12px;font-size:12px;">View Details ?</button>
                             </div>
                         </div>
                     </div>
@@ -911,20 +911,26 @@
             if (!cert) return
             
             document.getElementById('modalTitle').textContent = cert.name
-            const modalImage = document.getElementById('modalImage')
-            modalImage.style.display = cert.image_url ? 'block' : 'none'
-            if (cert.image_url) modalImage.src = cert.image_url
-            
             document.getElementById('modalDetails').innerHTML = `
                 <div style="animation: fadeInUp 0.4s ease">
                     <p><strong><i class="fas fa-building" style="color: var(--accent);"></i> Issuer:</strong> ${escapeHtml(cert.issuer || 'Unknown')}</p>
                     <p><strong><i class="far fa-calendar" style="color: var(--accent);"></i> Date Earned:</strong> ${formatDate(cert.date_earned)}</p>
                     <p><strong><i class="fas fa-tag" style="color: var(--accent);"></i> Type:</strong> ${cert.certificate_type || 'Certificate'}</p>
                     ${cert.description ? `<p><strong><i class="fas fa-align-left" style="color: var(--accent);"></i> Description:</strong></p><p style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-top: 10px;">${escapeHtml(cert.description)}</p>` : ''}
-                    ${cert.image_url ? `<p><strong><i class="fas fa-image" style="color: var(--accent);"></i> Certificate Image:</strong></p><img src="${escapeHtml(cert.image_url)}" loading="lazy" decoding="async" style="max-width:100%; border-radius:12px; margin-top:10px; box-shadow: var(--box-shadow);" onerror="this.style.display='none'">` : ''}
                     ${cert.document_url ? `<p><strong><i class="fas fa-file-word" style="color: var(--accent);"></i> Certificate Document:</strong></p><a href="${escapeHtml(cert.document_url)}" target="_blank" rel="noopener" class="btn">Open ${escapeHtml(cert.document_name || 'certificate document')}</a>` : ''}
                 </div>
             `
+
+            const modalDetails = document.getElementById('modalDetails')
+            if (cert.image_url) {
+                const image = document.createElement('img')
+                image.className = 'modal-image'
+                image.src = cert.image_url
+                image.alt = cert.name
+                image.loading = 'lazy'
+                image.decoding = 'async'
+                modalDetails.prepend(image)
+            }
             
             document.getElementById('certModal').classList.add('active')
             document.body.style.overflow = 'hidden'

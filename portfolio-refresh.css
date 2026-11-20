@@ -1,0 +1,147 @@
+/* Shared visual layer: warmer editorial contrast and a consistent portfolio frame. */
+:root {
+    --primary: #0b8062;
+    --primary-dark: #075b48;
+    --dark-blue: #101b2c;
+    --dark-blue-light: #19283a;
+    --dark-blue-lighter: #26384b;
+    --accent: #f3c969;
+    --text-light: #f2f0e9;
+    --text-muted: #b1bdc7;
+}
+
+body {
+    background-color: #101b2c;
+    background-image: radial-gradient(ellipse at 78% 4%, rgba(11,128,98,.19), transparent 38%),
+                      linear-gradient(180deg, rgba(255,255,255,.018), transparent 28%);
+}
+
+#mainHeader {
+    background: rgba(13, 24, 39, .94);
+    border-bottom: 1px solid rgba(243,201,105,.22);
+    backdrop-filter: blur(16px);
+}
+
+#mainHeader.scrolled {
+    background: rgba(10, 20, 33, .98);
+    box-shadow: 0 10px 32px rgba(0,0,0,.24);
+}
+
+.hero, .page-header, .page-header, .cta-card {
+    position: relative;
+}
+
+.hero {
+    background: radial-gradient(ellipse at 78% 35%, rgba(11,128,98,.24), transparent 34%),
+                linear-gradient(125deg, #101b2c 12%, #19283a 72%, #203c3c 100%);
+}
+
+.hero h1, .page-header h1, .section-title h2, .services h2,
+.certifications-preview h2, .about-preview h2, .contact-preview h2 {
+    letter-spacing: -.035em;
+}
+
+.hero h1 { font-size: clamp(2.8rem, 7vw, 5.4rem); line-height: 1.02; }
+.certificate-card {
+    border: 1px solid rgba(226,232,240,.1);
+    box-shadow: 0 18px 46px rgba(0,0,0,.2);
+}
+
+.certificate-card {
+    background: linear-gradient(145deg, rgba(38,56,75,.94), rgba(25,40,58,.96));
+    border-radius: 16px;
+}
+
+.certificate-card:hover {
+    border-color: rgba(243,201,105,.55);
+    transform: translateY(-6px);
+}
+
+.btn, button, .filter-btn {
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    cursor: pointer;
+}
+.btn:hover, button:hover, .filter-btn:hover { box-shadow: 0 8px 24px rgba(0,0,0,.22); transform: translateY(-2px); }
+.btn:active, button:active, .filter-btn:active { transform: translateY(0) scale(.98); }
+:is(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.menu-content { transition: opacity .2s ease, transform .2s ease, visibility .2s ease; }
+.certificate-card, .social-icons a, .menu-btn {
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background-color .22s ease;
+}
+.certificate-card:hover { box-shadow: 0 20px 48px rgba(0,0,0,.3); }
+.filter-btn.active { box-shadow: inset 0 -2px 0 var(--accent); }
+
+/* Keep certificates as the only card grid; present the rest as clean editorial lists. */
+.services-grid, .expertise-grid { display: block !important; }
+.service-card, .expertise-card {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    align-items: start;
+    gap: 0 18px;
+    padding: 24px 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(226,232,240,.16);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+}
+.service-card:hover, .expertise-card:hover {
+    background: rgba(255,255,255,.035);
+    border-color: rgba(243,201,105,.42);
+    box-shadow: none;
+    transform: none;
+}
+.service-icon, .expertise-icon { grid-row: span 3; margin: 2px 0 0; }
+.service-card h3, .expertise-card h3, .service-card p, .expertise-card p,
+.service-card a, .expertise-card .expertise-footer { grid-column: 2; }
+.expertise-card .skill-tags { grid-column: 2; }
+.contact-form-container, .contact-info, .cta-card {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.contact-form-container { border-top: 1px solid rgba(226,232,240,.18) !important; }
+.about-image .image-wrapper { overflow: hidden; aspect-ratio: 4 / 3; border-radius: 18px; }
+.about-image .image-wrapper img, .about-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
+}
+.profile-img { display: block; aspect-ratio: 1; object-fit: cover; object-position: center 35%; }
+.cert-preview-image, .certificate-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    background: rgba(0,0,0,.18);
+}
+.certificate-card { overflow: hidden; }
+.certificate-card .certificate-image { padding: 8px; }
+img { max-width: 100%; }
+img[loading="lazy"] { content-visibility: auto; }
+@media (max-width: 560px) {
+    .service-card, .expertise-card { grid-template-columns: 38px minmax(0, 1fr); gap: 0 12px; }
+}
+
+/* More useful first paint while remote content loads. */
+#heroNickname { display: inline-block; min-width: 5ch; }
+#aboutText:empty::after { content: 'A Computer Science graduate focused on practical technology and reliable support.'; }
+#certificatesContainer:empty::after, #projectsContainer:empty::after {
+    content: 'Loading content…'; display: block; padding: 28px; color: var(--text-muted); text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

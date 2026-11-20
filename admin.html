@@ -222,6 +222,8 @@
         }
         .item-info { flex: 1; }
         .item-info h4 { color: #FCD116; margin-bottom: 5px; }
+        .document-preview { display: block; width: min(100%, 360px); max-height: 240px; object-fit: contain; margin: 12px 0; border-radius: 8px; background: rgba(0,0,0,.25); }
+        .document-preview-frame { display: block; width: min(100%, 520px); height: 360px; margin: 12px 0; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: white; }
         .item-actions { display: flex; gap: 8px; }
         .edit-btn { background: #F59E0B; }
         .toast {
@@ -697,6 +699,20 @@
                 const info = document.createElement('div');
                 info.className = 'item-info';
                 info.append(title, details, description);
+                if (link && storedDocument.mime_type.startsWith('image/')) {
+                    const preview = document.createElement('img');
+                    preview.className = 'document-preview';
+                    preview.src = link;
+                    preview.alt = `Preview of ${storedDocument.file_name}`;
+                    preview.loading = 'lazy';
+                    info.appendChild(preview);
+                } else if (link && storedDocument.mime_type === 'application/pdf') {
+                    const preview = document.createElement('iframe');
+                    preview.className = 'document-preview-frame';
+                    preview.src = `${link}#toolbar=0&view=FitH`;
+                    preview.title = `Preview of ${storedDocument.file_name}`;
+                    info.appendChild(preview);
+                }
                 const actions = document.createElement('div');
                 actions.className = 'item-actions';
                 if (link) {
