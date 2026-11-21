@@ -974,10 +974,10 @@
                 const whatsapp = settings.contact_whatsapp || 'https://wa.me/260774496821'
                 
                 document.getElementById('socialIcons').innerHTML = `
-                    <a href="${escapeHtml(github)}" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="${escapeHtml(linkedin)}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="${escapeHtml(facebook)}" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="${escapeHtml(whatsapp)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="${escapeHtml(github)}" target="_blank">GitHub</a>
+                    <a href="${escapeHtml(linkedin)}" target="_blank">LinkedIn</a>
+                    <a href="${escapeHtml(facebook)}" target="_blank">Facebook</a>
+                    <a href="${escapeHtml(whatsapp)}" target="_blank">WhatsApp</a>
                 `
             } catch (error) {
                 console.error('Error loading social links:', error)
@@ -1005,10 +1005,10 @@
                 
                 const { data: allVisitors } = await supabase.from('visitors').select('visitor_count')
                 const total = allVisitors?.reduce((sum, day) => sum + day.visitor_count, 0) || 0
-                document.getElementById('visitorCounter').innerHTML = total === 1 ? 'ðŸŽ‰ You\'re visitor #1! Welcome to my portfolio!' : `<i class="fas fa-eye"></i> Total visitors: ${total.toLocaleString()}`
+                document.getElementById('visitorCounter').textContent = total === 1 ? 'You are visitor #1. Welcome to my portfolio.' : `Total visitors: ${total.toLocaleString()}`
             } catch (error) {
                 console.error('Error tracking visitor:', error)
-                document.getElementById('visitorCounter').innerHTML = '<i class="fas fa-eye"></i> Welcome to my portfolio!'
+                document.getElementById('visitorCounter').textContent = 'Welcome to my portfolio.'
             }
         }
         

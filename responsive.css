@@ -93,6 +93,26 @@ img {
     min-width: 0;
 }
 
+/* Keep the interface text-led; decorative icon glyphs are hidden site-wide. */
+i[class*="fa-"],
+.logo-icon,
+.service-icon,
+.expertise-icon,
+.contact-icon {
+    display: none !important;
+}
+
+.menu-btn span { display: inline !important; }
+
+.social-icons a,
+.social-icon {
+    width: auto !important;
+    min-width: 0;
+    height: auto !important;
+    padding: 8px 12px;
+    border-radius: 6px !important;
+}
+
 .menu-content {
     width: min(300px, calc(100vw - 24px));
     min-width: 0;

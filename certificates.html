@@ -884,7 +884,7 @@
                 
                 const imageMarkup = cert.image_url
                     ? `<img src="${escapeHtml(cert.image_url)}" loading="lazy" decoding="async" class="certificate-image" alt="${escapeHtml(cert.name)}">`
-                    : `<div class="certificate-image" style="display:grid;place-items:center;background:rgba(0,119,73,.12);color:var(--accent);font-size:3rem;"><i class="fas ${cert.document_url ? 'fa-file-word' : 'fa-certificate'}"></i></div>`
+                    : `<div class="certificate-image certificate-placeholder">${cert.document_url ? 'Document' : 'Certificate'}</div>`
                 
                 return `
                     <div class="certificate-card" style="animation-delay: ${index * 0.05}s">
@@ -950,10 +950,10 @@
             const whatsapp = data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value || 'https://wa.me/260774496821'
             
             document.getElementById('socialIcons').innerHTML = `
-                <a href="${escapeHtml(github)}" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="${escapeHtml(linkedin)}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="${escapeHtml(facebook)}" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="${escapeHtml(whatsapp)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="${escapeHtml(github)}" target="_blank">GitHub</a>
+                <a href="${escapeHtml(linkedin)}" target="_blank">LinkedIn</a>
+                <a href="${escapeHtml(facebook)}" target="_blank">Facebook</a>
+                <a href="${escapeHtml(whatsapp)}" target="_blank">WhatsApp</a>
             `
         }
         

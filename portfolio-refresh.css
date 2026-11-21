@@ -79,7 +79,7 @@ body {
 .services-grid, .expertise-grid { display: block !important; }
 .service-card, .expertise-card {
     display: grid;
-    grid-template-columns: 52px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
     gap: 0 18px;
     padding: 24px 0;
@@ -97,10 +97,9 @@ body {
     box-shadow: none;
     transform: none;
 }
-.service-icon, .expertise-icon { grid-row: span 3; margin: 2px 0 0; }
 .service-card h3, .expertise-card h3, .service-card p, .expertise-card p,
-.service-card a, .expertise-card .expertise-footer { grid-column: 2; }
-.expertise-card .skill-tags { grid-column: 2; }
+.service-card a, .expertise-card .expertise-footer { grid-column: 1; }
+.expertise-card .skill-tags { grid-column: 1; }
 .contact-form-container, .contact-info, .cta-card {
     border: 0 !important;
     border-radius: 0 !important;
@@ -146,10 +145,11 @@ body {
 }
 .certificate-card { overflow: hidden; }
 .certificate-card .certificate-image { padding: 8px; }
+.certificate-placeholder { display: grid; place-items: center; color: var(--text-muted); font-size: 1rem; }
 img { max-width: 100%; }
 img[loading="lazy"] { content-visibility: auto; }
 @media (max-width: 560px) {
-    .service-card, .expertise-card { grid-template-columns: 38px minmax(0, 1fr); gap: 0 12px; }
+    .service-card, .expertise-card { grid-template-columns: minmax(0, 1fr); gap: 0; }
 }
 
 /* More useful first paint while remote content loads. */
