@@ -83,7 +83,10 @@
             gap: 16px;
         }
         .admin-header h1 { color: #FCD116; font-size: 24px; }
-        .logout-btn { background: #dc2626; padding: 10px 20px; border: none; border-radius: 8px; color: white; cursor: pointer; }
+        .admin-header-actions { display: flex; align-items: center; gap: 10px; }
+        .home-btn, .logout-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border: none; border-radius: 8px; color: white; cursor: pointer; text-decoration: none; font: inherit; }
+        .home-btn { background: #007749; }
+        .logout-btn { background: #dc2626; }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -300,7 +303,10 @@
         <div class="container">
             <div class="admin-header">
                 <h1><i class="fas fa-cogs"></i> Portfolio Admin</h1>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <div class="admin-header-actions">
+                    <a class="home-btn" href="index.html"><i class="fas fa-house" aria-hidden="true"></i> Home</a>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
             </div>
             
             <div class="stats-grid">
