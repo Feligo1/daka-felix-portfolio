@@ -892,16 +892,22 @@
             stage.replaceChildren()
             const documentUrl = cert.document_url || ''
             const isPdf = /\.pdf(?:$|[?#])/i.test(documentUrl) || /\.pdf$/i.test(cert.document_name || '')
-            if (cert.image_url) {
-                const image = document.createElement('img')
-                image.src = cert.image_url
-                image.alt = cert.name
-                stage.appendChild(image)
-            } else if (documentUrl && isPdf) {
+            const isWordDocument = /\.docx?(?:$|[?#])/i.test(documentUrl) || /\.docx?$/i.test(cert.document_name || '')
+            if (documentUrl && isPdf) {
                 const frame = document.createElement('iframe')
                 frame.src = documentUrl
                 frame.title = cert.name
                 stage.appendChild(frame)
+            } else if (documentUrl && isWordDocument) {
+                const frame = document.createElement('iframe')
+                frame.src = `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(documentUrl)}`
+                frame.title = `${cert.name} document preview`
+                stage.appendChild(frame)
+            } else if (cert.image_url) {
+                const image = document.createElement('img')
+                image.src = cert.image_url
+                image.alt = cert.name
+                stage.appendChild(image)
             } else if (documentUrl) {
                 const link = document.createElement('a')
                 link.href = documentUrl
