@@ -23,8 +23,10 @@ body {
 }
 
 #mainHeader.scrolled {
-    background: rgba(10, 20, 33, .98);
+    background: rgba(10, 20, 33, .72);
     box-shadow: 0 10px 32px rgba(0,0,0,.24);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
 .header-container { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
