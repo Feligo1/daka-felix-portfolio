@@ -1121,7 +1121,7 @@
             
             <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
             <div class="copyright">
-                <p>&copy; <span id="currentYear"></span> Daka Felix (Tech Guy). All rights reserved. <span>Proudly Zambian</span></p>
+                <p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved. <span>Proudly Zambian</span></p>
             </div>
         </div>
     </footer>
@@ -1132,7 +1132,6 @@
         const menuBtn = document.getElementById('menuBtn');
         const menuContent = document.getElementById('menuContent');
         const menuLinks = document.querySelectorAll('.menu-content a');
-        const currentYearSpan = document.getElementById('currentYear');
 
         // Menu Toggle Functionality
         if (menuBtn) {
@@ -1261,11 +1260,6 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            // Set current year
-            if (currentYearSpan) {
-                currentYearSpan.textContent = new Date().getFullYear();
-            }
-            
             setActiveMenuItem();
             handleHeaderScroll();
             setupIntersectionObserver();

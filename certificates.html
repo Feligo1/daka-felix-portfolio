@@ -674,7 +674,7 @@
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
-            <h1><i class="fas fa-certificate"></i> My Certificates</h1>
+            <h1>My Certificates</h1>
             <p class="page-subtitle">Courses and certifications I have completed.</p>
         </div>
 
@@ -743,7 +743,7 @@
                 </div>
             </div>
             <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
-            <div class="copyright"><p>&copy; <span id="currentYear"></span> Daka Felix (Tech Guy). All rights reserved.</p></div>
+            <div class="copyright"><p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved.</p></div>
         </div>
     </footer>
 
@@ -1025,9 +1025,6 @@
         document.getElementById('certModal')?.addEventListener('click', (e) => {
             if (e.target === document.getElementById('certModal')) closeModal()
         })
-        
-        // Set current year
-        document.getElementById('currentYear').textContent = new Date().getFullYear()
         
         // Initialize
         loadCertificates()
