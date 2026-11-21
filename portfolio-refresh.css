@@ -27,6 +27,27 @@ body {
     box-shadow: 0 10px 32px rgba(0,0,0,.24);
 }
 
+.header-container { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.primary-nav { display: flex; align-items: center; gap: clamp(14px, 2.2vw, 30px); }
+.primary-nav a {
+    padding: 9px 0;
+    border-bottom: 2px solid transparent;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: .92rem;
+}
+.primary-nav a:hover, .primary-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+.menu-container { display: none; }
+.section-jump-nav { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 auto 24px; }
+.section-jump-nav a { color: var(--text-light); text-decoration: none; border-bottom: 1px solid rgba(243,201,105,.5); padding: 6px 0; }
+.section-jump-nav a:hover { color: var(--accent); }
+:target { scroll-margin-top: 110px; }
+
+@media (max-width: 1024px) {
+    .primary-nav { display: none; }
+    .menu-container { display: block; }
+}
+
 .hero, .page-header, .page-header, .cta-card {
     position: relative;
 }
@@ -36,27 +57,12 @@ body {
                 linear-gradient(125deg, #101b2c 12%, #19283a 72%, #203c3c 100%);
 }
 
-.hero h1, .page-header h1, .section-title h2, .services h2,
-.certifications-preview h2, .about-preview h2, .contact-preview h2 {
+.hero h1, .page-header h1, .section-title h2, .home-directory h2,
+.about-preview h2, .contact-preview h2 {
     letter-spacing: -.035em;
 }
 
 .hero h1 { font-size: clamp(2.8rem, 7vw, 5.4rem); line-height: 1.02; }
-.certificate-card {
-    border: 1px solid rgba(226,232,240,.1);
-    box-shadow: 0 18px 46px rgba(0,0,0,.2);
-}
-
-.certificate-card {
-    background: linear-gradient(145deg, rgba(38,56,75,.94), rgba(25,40,58,.96));
-    border-radius: 16px;
-}
-
-.certificate-card:hover {
-    border-color: rgba(243,201,105,.55);
-    transform: translateY(-6px);
-}
-
 .btn, button, .filter-btn {
     transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
     cursor: pointer;
@@ -69,42 +75,69 @@ body {
 }
 
 .menu-content { transition: opacity .2s ease, transform .2s ease, visibility .2s ease; }
-.certificate-card, .social-icons a, .menu-btn {
+.social-icons a, .menu-btn {
     transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background-color .22s ease;
 }
-.certificate-card:hover { box-shadow: 0 20px 48px rgba(0,0,0,.3); }
 .filter-btn.active { box-shadow: inset 0 -2px 0 var(--accent); }
 
-/* Keep certificates as the only card grid; present the rest as clean editorial lists. */
-.services-grid, .expertise-grid { display: block !important; }
-.service-card, .expertise-card {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    gap: 0 18px;
+/* Use plain, divided lists for skills and certificates. */
+.expertise-list, .certificates-grid { display: block !important; }
+.expertise-row {
     padding: 24px 0;
-    margin: 0;
-    border: 0;
     border-bottom: 1px solid rgba(226,232,240,.16);
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    transform: none;
 }
-.service-card:hover, .expertise-card:hover {
-    background: rgba(255,255,255,.035);
-    border-color: rgba(243,201,105,.42);
-    box-shadow: none;
-    transform: none;
+.expertise-row h3 { margin: 0 0 8px; font-size: 1.25rem; }
+.expertise-row p { margin: 6px 0; color: var(--text-muted); line-height: 1.65; }
+.expertise-row .expertise-related { font-size: .88rem; }
+.expertise-row .expertise-related strong { color: var(--text-light); font-weight: 600; }
+.expertise-row .expertise-service-heading { margin-top: 16px; color: var(--text-light); }
+.expertise-service-list { margin: 4px 0 0; padding-left: 20px; color: var(--text-muted); line-height: 1.7; }
+.expertise-service-list li { padding-left: 4px; margin: 3px 0; }
+.expertise-list .empty-state { padding: 28px 0; text-align: left; background: transparent; border-radius: 0; color: var(--text-muted); }
+.filters-container {
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(226,232,240,.16) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 0 18px !important;
 }
-.service-card h3, .expertise-card h3, .service-card p, .expertise-card p,
-.service-card a, .expertise-card .expertise-footer { grid-column: 1; }
-.expertise-card .skill-tags { grid-column: 1; }
+.filters-container .filter-btn {
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+.filters-container .filter-btn.active {
+    border-bottom-color: var(--accent) !important;
+    color: var(--accent) !important;
+}
+.filters-container .search-box input {
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(226,232,240,.28) !important;
+    border-radius: 0 !important;
+    padding-left: 4px !important;
+}
 .contact-form-container, .contact-info, .cta-card {
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
+}
+.contact-item,
+.contact-item:hover {
+    margin: 0;
+    padding: 18px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(226,232,240,.16) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: 1;
+    transform: none;
+    animation: none;
 }
 .contact-form-container { border-top: 1px solid rgba(226,232,240,.18) !important; }
 .about-image { width: 100%; display: flex; justify-content: center; align-items: center; }
@@ -134,30 +167,25 @@ body {
     .about-image .image-wrapper { width: min(100%, 520px); }
 }
 .profile-img { display: block; aspect-ratio: 1; object-fit: cover; object-position: center 35%; }
-.cert-preview-image, .certificate-image {
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    height: auto;
-    object-fit: contain;
-    object-position: center;
-    background: rgba(0,0,0,.18);
+.home-directory { padding: 48px 0; }
+.home-links { list-style: none; max-width: 880px; margin: 22px auto 0; padding: 0; }
+.home-links li { border-bottom: 1px solid rgba(226,232,240,.16); }
+.home-links a { display: grid; grid-template-columns: minmax(150px, .7fr) 1fr auto; align-items: center; gap: 16px; padding: 18px 4px; color: var(--text-light); text-decoration: none; }
+.home-links a:hover { color: var(--accent); }
+.home-links strong { font-size: 1.08rem; font-weight: 600; }
+.home-link-description { color: var(--text-muted); font-size: .9rem; }
+.home-link-action { color: var(--accent); font-size: .82rem; }
+.home-links a:hover .home-link-description { color: var(--accent); }
+@media (max-width: 600px) {
+    .home-links a { grid-template-columns: 1fr auto; gap: 5px 12px; }
+    .home-link-description { grid-column: 1; grid-row: 2; }
+    .home-link-action { grid-column: 2; grid-row: 1 / span 2; }
 }
-.certificate-card { overflow: hidden; }
-.certificate-card .certificate-image { padding: 8px; }
-.certificate-placeholder { display: grid; place-items: center; color: var(--text-muted); font-size: 1rem; }
 img { max-width: 100%; }
 img[loading="lazy"] { content-visibility: auto; }
-@media (max-width: 560px) {
-    .service-card, .expertise-card { grid-template-columns: minmax(0, 1fr); gap: 0; }
-}
-
 /* More useful first paint while remote content loads. */
 #heroNickname { display: inline-block; min-width: 5ch; }
 #aboutText:empty::after { content: 'A Computer Science graduate focused on practical technology and reliable support.'; }
-#certificatesContainer:empty::after, #projectsContainer:empty::after {
-    content: 'Loading content…'; display: block; padding: 28px; color: var(--text-muted); text-align: center;
-}
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }

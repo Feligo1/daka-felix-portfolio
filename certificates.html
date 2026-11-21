@@ -294,44 +294,36 @@
         
         /* Stats Grid */
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0;
             margin-bottom: 40px;
+            border-block: 1px solid rgba(255,255,255,.14);
         }
         
         .stat-card {
-            background-color: var(--dark-blue-light);
-            border-radius: 12px;
-            padding: 25px;
+            flex: 1 1 150px;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            padding: 16px;
             text-align: center;
-            border-top: 4px solid var(--primary);
-            transition: var(--transition);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s forwards;
+            opacity: 1;
+            transform: none;
+            animation: none;
         }
-        
-        .stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.3s; }
-        
-        .stat-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--box-shadow-hover); border-top-color: var(--accent); }
-        .stat-card.red { border-top-color: var(--secondary); }
-        .stat-card.yellow { border-top-color: var(--accent); }
+        .stat-card + .stat-card { border-left: 1px solid rgba(255,255,255,.14); }
         
         .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--accent); }
         .stat-label { color: var(--text-muted); font-size: 0.9rem; }
         
         /* Filters */
         .filters-container {
-            background-color: var(--dark-blue-light);
-            border-radius: 16px;
-            padding: 25px;
+            background: transparent;
+            border-bottom: 1px solid rgba(255,255,255,.14);
+            padding: 0 0 20px;
             margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s 0.2s forwards;
         }
         
         .filter-group {
@@ -342,21 +334,23 @@
         }
         
         .filter-btn {
-            background-color: rgba(255,255,255,0.05);
+            background: transparent;
             color: var(--text-light);
-            padding: 8px 20px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 14px;
+            border-radius: 0;
+            border: 0;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
             transition: var(--transition);
         }
         
         .filter-btn:hover,
         .filter-btn.active {
-            background-color: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--box-shadow);
+            background: transparent;
+            border-bottom-color: var(--accent);
+            color: var(--accent);
+            transform: none;
+            box-shadow: none;
         }
         
         .search-box {
@@ -367,10 +361,11 @@
         
         .search-box input {
             width: 100%;
-            padding: 12px 20px 12px 45px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50px;
+            padding: 12px 4px;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid rgba(255,255,255,.22);
+            border-radius: 0;
             color: white;
             font-size: 14px;
             transition: var(--transition);
@@ -390,100 +385,45 @@
             color: var(--text-muted);
         }
         
-        /* Certificates Grid */
-        .certificates-grid {
+        .certificates-grid { display: block; }
+        .certificate-row {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid rgba(255,255,255,.14);
         }
-        
-        .certificate-card {
-            background-color: var(--dark-blue-light);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: var(--transition);
-            border: 1px solid rgba(255,255,255,0.1);
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            animation: cardReveal 0.6s forwards;
-        }
-        
-        @keyframes cardReveal {
-            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        
-        .certificate-card:nth-child(1) { animation-delay: 0.1s; }
-        .certificate-card:nth-child(2) { animation-delay: 0.2s; }
-        .certificate-card:nth-child(3) { animation-delay: 0.3s; }
-        .certificate-card:nth-child(4) { animation-delay: 0.4s; }
-        .certificate-card:nth-child(5) { animation-delay: 0.5s; }
-        .certificate-card:nth-child(6) { animation-delay: 0.6s; }
-        
-        .certificate-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: var(--box-shadow-hover);
-            border-color: var(--accent);
-        }
-        
-        .certificate-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-        
-        .certificate-card:hover .certificate-image {
-            transform: scale(1.05);
+        .certificate-row h3 { margin: 0 0 6px; font-size: 1.1rem; }
+        .certificate-row-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .certificate-row .certificate-badge { margin: 0; }
+        .certificate-issuer { color: var(--text-muted); font-size: .9rem; margin: 4px 0; }
+        .certificate-description { color: var(--text-muted); font-size: .9rem; line-height: 1.5; margin: 8px 0; }
+        .certificate-row-meta { color: var(--text-muted); font-size: .82rem; }
+        .certificate-row-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+        @media (max-width: 600px) {
+            .certificate-row { grid-template-columns: 1fr; align-items: start; gap: 12px; }
+            .certificate-row-actions { justify-content: flex-start; }
+            .stat-card { flex-basis: 33%; padding: 12px 6px; }
+            .stat-number { font-size: 1.8rem; }
         }
         
         .certificate-badge {
             display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            background: transparent;
+            color: var(--accent);
+            padding: 0;
+            border-radius: 0;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 10px;
-            transition: var(--transition);
+            letter-spacing: .04em;
+            text-transform: uppercase;
         }
         
-        .certificate-card:hover .certificate-badge {
-            transform: scale(1.05);
-            background-color: var(--accent);
-            color: var(--dark);
-        }
+        .certificate-badge.badge { color: var(--primary); }
+        .certificate-badge.achievement { color: var(--text-muted); }
         
-        .certificate-badge.badge { background-color: var(--secondary); }
-        .certificate-badge.achievement { background-color: var(--accent); color: var(--dark); }
-        
-        .certificate-content { padding: 20px; }
-        
-        .certificate-title { font-size: 1.2rem; margin-bottom: 8px; transition: var(--transition); }
-        .certificate-card:hover .certificate-title { color: var(--accent); }
-        
-        .certificate-issuer { color: var(--primary); font-size: 0.85rem; margin-bottom: 12px; display: flex; align-items: center; gap: 5px; }
-        .certificate-description { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; }
-        
-        .certificate-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 60px;
-            background-color: var(--dark-blue-light);
-            border-radius: 16px;
-            grid-column: 1 / -1;
-            animation: fadeInUp 0.6s ease;
-        }
+        .empty-state { padding: 28px 0; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,.14); }
         
         /* Modal */
         .modal {
@@ -513,9 +453,9 @@
         .modal-content {
             background: var(--dark-blue-light);
             border-radius: 20px;
-            max-width: 800px;
+            max-width: 1100px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 94vh;
             overflow: auto;
             transform: scale(0.9);
             transition: transform 0.3s ease;
@@ -559,7 +499,25 @@
         }
         
         .modal-body { padding: 20px; }
-        .modal-image { width: 100%; border-radius: 12px; margin-bottom: 20px; transition: var(--transition); }
+        .certificate-reader { background: #10151e; border-radius: 14px; overflow: hidden; }
+        .reader-stage { height: min(68dvh, 720px); max-height: calc(100dvh - 240px); min-height: 220px; display: grid; place-items: center; padding: 16px; background: #252a34; }
+        .reader-stage img { display: block; max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; }
+        .reader-stage iframe { width: 100%; height: 100%; border: 0; background: white; }
+        .reader-placeholder { color: var(--text-muted); text-align: center; }
+        .reader-controls { display: grid; grid-template-columns: auto minmax(100px, 1fr) auto auto; align-items: center; gap: 14px; padding: 14px 18px; }
+        .reader-controls button { background: #303744; border: 0; border-radius: 7px; color: white; padding: 9px 14px; cursor: pointer; }
+        .reader-controls button:disabled { opacity: .45; cursor: default; }
+        .reader-controls input { width: 100%; accent-color: var(--accent); }
+        .reader-count { min-width: 58px; text-align: center; font-weight: 700; color: white; white-space: nowrap; }
+        .reader-progress { height: 4px; background: #454b55; }
+        .reader-progress div { width: 0; height: 100%; background: var(--accent); transition: width .2s ease; }
+        #modalDetails { padding-top: 16px; }
+        @media (max-width: 560px) {
+            .reader-stage { min-height: 200px; height: 50dvh; max-height: calc(100dvh - 230px); padding: 10px; }
+            .reader-controls { grid-template-columns: auto 1fr auto; gap: 8px; padding: 10px; }
+            .reader-controls input { grid-column: 1 / -1; grid-row: 1; }
+            .reader-controls button { padding: 8px 10px; }
+        }
         
         /* Toast Notification */
         .toast-notification {
@@ -640,7 +598,6 @@
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             h2 { font-size: 1.6rem; }
-            .certificates-grid { grid-template-columns: 1fr; }
             .toast-notification { bottom: 20px; right: 20px; left: 20px; transform: translateY(100px); }
             .toast-notification.show { transform: translateY(0); }
         }
@@ -655,6 +612,13 @@
                 <i class="fas fa-laptop-code logo-icon"></i>
                 <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
             </a>
+            <nav class="primary-nav" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="expertise.html">Technical Skills</a>
+                <a href="certificates.html" class="active">Certificates</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
             <div class="menu-container">
                 <button class="menu-btn" id="menuBtn">
                     <i class="fas fa-bars"></i>
@@ -662,7 +626,7 @@
                 </button>
                 <div class="menu-content" id="menuContent">
                     <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                    <a href="expertise.html"><i class="fas fa-cogs"></i> Expertise</a>
+                    <a href="expertise.html"><i class="fas fa-cogs"></i> Technical Skills</a>
                     <a href="certificates.html" class="active"><i class="fas fa-certificate"></i> Certificates</a>
                     <a href="about.html"><i class="fas fa-user"></i> About</a>
                     <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
@@ -673,7 +637,6 @@
 
     <div class="container">
         <div class="page-header">
-            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
             <h1>My Certificates</h1>
             <p class="page-subtitle">Courses and certifications I have completed.</p>
         </div>
@@ -697,9 +660,7 @@
         </div>
 
         <div id="certificatesGrid" class="certificates-grid">
-            <div class="skeleton skeleton-card"></div>
-            <div class="skeleton skeleton-card"></div>
-            <div class="skeleton skeleton-card"></div>
+            <p class="empty-state">Loading certificates...</p>
         </div>
     </div>
 
@@ -710,6 +671,16 @@
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="certificate-reader" aria-label="Certificate viewer">
+                    <div class="reader-stage" id="readerStage"></div>
+                    <div class="reader-controls">
+                        <button type="button" id="previousCertificateBtn" onclick="stepCertificate(-1)">Previous</button>
+                        <input type="range" id="certificatePosition" min="0" max="0" value="0" aria-label="Choose certificate">
+                        <span class="reader-count" id="certificateCount">0 / 0</span>
+                        <button type="button" id="nextCertificateBtn" onclick="stepCertificate(1)">Next</button>
+                    </div>
+                    <div class="reader-progress" aria-hidden="true"><div id="certificateProgress"></div></div>
+                </div>
                 <div id="modalDetails"></div>
             </div>
         </div>
@@ -731,7 +702,7 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="expertise.html">Expertise</a></li>
+                        <li><a href="expertise.html">Technical Skills</a></li>
                         <li><a href="certificates.html">Certificates</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
@@ -755,6 +726,8 @@
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
         
         let allCertificates = []
+        let visibleCertificates = []
+        let currentCertificateIndex = 0
         
         function escapeHtml(str) {
             if (!str) return ''
@@ -865,13 +838,14 @@
             }
             
             const container = document.getElementById('certificatesGrid')
+            visibleCertificates = filtered
             
             if (filtered.length === 0) {
                 container.innerHTML = '<div class="empty-state"><i class="fas fa-certificate" style="font-size:48px;margin-bottom:16px;"></i><h3>No Certificates Found</h3><p>Try adjusting your search or filter</p></div>'
                 return
             }
             
-            container.innerHTML = filtered.map((cert, index) => {
+            container.innerHTML = filtered.map(cert => {
                 let badgeClass = 'certificate-badge'
                 let badgeText = 'Certificate'
                 if (cert.certificate_type === 'badge') {
@@ -882,59 +856,101 @@
                     badgeText = 'Achievement'
                 }
                 
-                const imageMarkup = cert.image_url
-                    ? `<img src="${escapeHtml(cert.image_url)}" loading="lazy" decoding="async" class="certificate-image" alt="${escapeHtml(cert.name)}">`
-                    : `<div class="certificate-image certificate-placeholder">${cert.document_url ? 'Document' : 'Certificate'}</div>`
-                
                 return `
-                    <div class="certificate-card" style="animation-delay: ${index * 0.05}s">
-                        ${imageMarkup}
-                        <div class="certificate-content">
-                            <span class="${badgeClass}">${badgeText}</span>
-                            <h3 class="certificate-title">${escapeHtml(cert.name)}</h3>
-                            <div class="certificate-issuer"><i class="fas fa-building"></i> ${escapeHtml(cert.issuer || 'Unknown Issuer')}</div>
-                            <p class="certificate-description">${escapeHtml(cert.description || 'Professional certification demonstrating expertise in the field.')}</p>
-                            <div class="certificate-meta">
-                                <span><i class="far fa-calendar"></i> ${formatDate(cert.date_earned)}</span>
-                                ${cert.document_url ? `<a href="${escapeHtml(cert.document_url)}" target="_blank" rel="noopener" class="btn" style="padding:6px 12px;font-size:12px;">Open file</a>` : ''}
-                                <button onclick="viewCertificate('${cert.id}')" class="btn" style="padding:6px 12px;font-size:12px;">View Details ?</button>
+                    <article class="certificate-row">
+                        <div class="certificate-row-content">
+                            <div class="certificate-row-heading">
+                                <h3>${escapeHtml(cert.name)}</h3>
+                                <span class="${badgeClass}">${badgeText}</span>
                             </div>
+                            <p class="certificate-issuer">${escapeHtml(cert.issuer || 'Unknown issuer')}</p>
+                            ${cert.description ? `<p class="certificate-description">${escapeHtml(cert.description)}</p>` : ''}
                         </div>
-                    </div>
+                        <div class="certificate-row-actions">
+                            <span class="certificate-row-meta">${formatDate(cert.date_earned)}</span>
+                            <button onclick="viewCertificate('${cert.id}')" class="btn" type="button">View</button>
+                        </div>
+                    </article>
                 `
             }).join('')
         }
         
-        // View certificate details
-        window.viewCertificate = async (id) => {
-            const cert = allCertificates.find(c => c.id == id)
+        function renderCertificateViewer() {
+            const certificates = visibleCertificates.length ? visibleCertificates : allCertificates
+            const cert = certificates[currentCertificateIndex]
             if (!cert) return
-            
-            document.getElementById('modalTitle').textContent = cert.name
-            document.getElementById('modalDetails').innerHTML = `
-                <div style="animation: fadeInUp 0.4s ease">
-                    <p><strong><i class="fas fa-building" style="color: var(--accent);"></i> Issuer:</strong> ${escapeHtml(cert.issuer || 'Unknown')}</p>
-                    <p><strong><i class="far fa-calendar" style="color: var(--accent);"></i> Date Earned:</strong> ${formatDate(cert.date_earned)}</p>
-                    <p><strong><i class="fas fa-tag" style="color: var(--accent);"></i> Type:</strong> ${cert.certificate_type || 'Certificate'}</p>
-                    ${cert.description ? `<p><strong><i class="fas fa-align-left" style="color: var(--accent);"></i> Description:</strong></p><p style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-top: 10px;">${escapeHtml(cert.description)}</p>` : ''}
-                    ${cert.document_url ? `<p><strong><i class="fas fa-file-word" style="color: var(--accent);"></i> Certificate Document:</strong></p><a href="${escapeHtml(cert.document_url)}" target="_blank" rel="noopener" class="btn">Open ${escapeHtml(cert.document_name || 'certificate document')}</a>` : ''}
-                </div>
-            `
 
-            const modalDetails = document.getElementById('modalDetails')
+            document.getElementById('modalTitle').textContent = cert.name
+            document.getElementById('certificateCount').textContent = `${currentCertificateIndex + 1} / ${certificates.length}`
+            document.getElementById('certificatePosition').max = String(Math.max(0, certificates.length - 1))
+            document.getElementById('certificatePosition').value = String(currentCertificateIndex)
+            document.getElementById('previousCertificateBtn').disabled = currentCertificateIndex === 0
+            document.getElementById('nextCertificateBtn').disabled = currentCertificateIndex === certificates.length - 1
+            document.getElementById('certificateProgress').style.width = `${((currentCertificateIndex + 1) / certificates.length) * 100}%`
+
+            const stage = document.getElementById('readerStage')
+            stage.replaceChildren()
+            const documentUrl = cert.document_url || ''
+            const isPdf = /\.pdf(?:$|[?#])/i.test(documentUrl) || /\.pdf$/i.test(cert.document_name || '')
             if (cert.image_url) {
                 const image = document.createElement('img')
-                image.className = 'modal-image'
                 image.src = cert.image_url
                 image.alt = cert.name
-                image.loading = 'lazy'
-                image.decoding = 'async'
-                modalDetails.prepend(image)
+                stage.appendChild(image)
+            } else if (documentUrl && isPdf) {
+                const frame = document.createElement('iframe')
+                frame.src = documentUrl
+                frame.title = cert.name
+                stage.appendChild(frame)
+            } else if (documentUrl) {
+                const link = document.createElement('a')
+                link.href = documentUrl
+                link.target = '_blank'
+                link.rel = 'noopener'
+                link.className = 'btn'
+                link.textContent = `Open ${cert.document_name || 'certificate file'}`
+                stage.appendChild(link)
+            } else {
+                const placeholder = document.createElement('p')
+                placeholder.className = 'reader-placeholder'
+                placeholder.textContent = 'No preview is available for this certificate.'
+                stage.appendChild(placeholder)
             }
-            
+
+            const details = document.getElementById('modalDetails')
+            details.innerHTML = `
+                <p><strong>Issuer:</strong> ${escapeHtml(cert.issuer || 'Unknown')}</p>
+                <p><strong>Date earned:</strong> ${formatDate(cert.date_earned)}</p>
+                <p><strong>Type:</strong> ${escapeHtml(cert.certificate_type || 'Certificate')}</p>
+                ${cert.description ? `<p><strong>Description:</strong> ${escapeHtml(cert.description)}</p>` : ''}
+                ${documentUrl ? `<p><a href="${escapeHtml(documentUrl)}" target="_blank" rel="noopener" class="btn">Open original file</a></p>` : ''}
+            `
+        }
+
+        window.viewCertificate = (id) => {
+            let certificates = visibleCertificates.length ? visibleCertificates : allCertificates
+            currentCertificateIndex = certificates.findIndex(cert => cert.id == id)
+            if (currentCertificateIndex < 0) {
+                certificates = allCertificates
+                currentCertificateIndex = certificates.findIndex(cert => cert.id == id)
+            }
+            if (currentCertificateIndex < 0) return
+
+            renderCertificateViewer()
             document.getElementById('certModal').classList.add('active')
             document.body.style.overflow = 'hidden'
         }
+
+        window.stepCertificate = (direction) => {
+            const certificates = visibleCertificates.length ? visibleCertificates : allCertificates
+            currentCertificateIndex = Math.min(certificates.length - 1, Math.max(0, currentCertificateIndex + direction))
+            renderCertificateViewer()
+        }
+
+        document.getElementById('certificatePosition').addEventListener('input', event => {
+            currentCertificateIndex = Number(event.target.value)
+            renderCertificateViewer()
+        })
         
         window.closeModal = () => {
             document.getElementById('certModal').classList.remove('active')
