@@ -1112,7 +1112,12 @@
         })
         
         // Initialize
-        loadCertificates()
+        loadCertificates().then(() => {
+            const id = new URLSearchParams(location.search).get('certificate')
+            if (id && /^\d+$/.test(id) && allCertificates.some(cert => String(cert.id) === id)) {
+                viewCertificate(id)
+            }
+        })
         loadSocialLinks()
     </script>
     <script type="module">
