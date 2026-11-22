@@ -608,6 +608,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="brand-unified.css?v=1">
     <link rel="stylesheet" href="site-polish-v4.css?v=1">
+    <link rel="stylesheet" href="certificate-preview-v3.css?v=1">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -669,15 +670,16 @@
         </div>
     </div>
 
-    <div id="certModal" class="modal">
+    <div id="certModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">Certificate Details</h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" type="button" aria-label="Close certificate preview" onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="certificate-reader" aria-label="Certificate viewer">
                     <div class="reader-stage" id="readerStage"></div>
+                    <div id="certificateFileActions" class="certificate-file-actions" aria-label="Certificate file actions"></div>
                     <div class="reader-controls">
                         <button type="button" id="previousCertificateBtn" onclick="stepCertificate(-1)">Previous</button>
                         <input type="range" id="certificatePosition" min="0" max="0" value="0" aria-label="Choose certificate">
@@ -778,11 +780,7 @@
                 updateStats()
                 renderCertificates()
                 
-                if (allCertificates.length > 0) {
-                    showToast(`${allCertificates.length} certificates loaded successfully!`, 'success')
-                } else {
-                    showToast('No certificates have been published yet.', 'info')
-                }
+                
             } catch (error) {
                 console.error('Error:', error)
                 showCertificatesError()
@@ -873,99 +871,166 @@
             }).join('')
         }
         
+        let certificateReturnFocus = null;
+        function safeCertificateUrl(value) {
+            try {
+                const url = new URL(value, location.href)
+                if (!['https:', 'http:'].includes(url.protocol)) return ''
+                return url.href
+            } catch { return '' }
+        }
+        function linkForCertificate(url, label, downloadName) {
+            const anchor = document.createElement('a')
+            anchor.href = url
+            anchor.target = '_blank'
+            anchor.rel = 'noopener noreferrer'
+            anchor.textContent = label
+            anchor.className = 'cert-view-action'
+            if (downloadName) anchor.setAttribute('download', downloadName)
+            return anchor
+        }
         function renderCertificateViewer() {
             const certificates = visibleCertificates.length ? visibleCertificates : allCertificates
             const cert = certificates[currentCertificateIndex]
             if (!cert) return
-
             document.getElementById('modalTitle').textContent = cert.name
             document.getElementById('certificateCount').textContent = `${currentCertificateIndex + 1} / ${certificates.length}`
-            document.getElementById('certificatePosition').max = String(Math.max(0, certificates.length - 1))
-            document.getElementById('certificatePosition').value = String(currentCertificateIndex)
+            const slider = document.getElementById('certificatePosition')
+            slider.max = String(Math.max(0, certificates.length - 1))
+            slider.value = String(currentCertificateIndex)
             document.getElementById('previousCertificateBtn').disabled = currentCertificateIndex === 0
             document.getElementById('nextCertificateBtn').disabled = currentCertificateIndex === certificates.length - 1
             document.getElementById('certificateProgress').style.width = `${((currentCertificateIndex + 1) / certificates.length) * 100}%`
-
             const stage = document.getElementById('readerStage')
+            const actions = document.getElementById('certificateFileActions')
             stage.replaceChildren()
-            const documentUrl = cert.document_url || ''
-            const isPdf = /\.pdf(?:$|[?#])/i.test(documentUrl) || /\.pdf$/i.test(cert.document_name || '')
-            const isWordDocument = /\.docx?(?:$|[?#])/i.test(documentUrl) || /\.docx?$/i.test(cert.document_name || '')
-            if (documentUrl && isPdf) {
-                const frame = document.createElement('iframe')
-                frame.src = documentUrl
-                frame.title = cert.name
-                stage.appendChild(frame)
-            } else if (documentUrl && isWordDocument) {
-                const frame = document.createElement('iframe')
-                frame.src = `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(documentUrl)}`
-                frame.title = `${cert.name} document preview`
-                stage.appendChild(frame)
-            } else if (cert.image_url) {
+            actions.replaceChildren()
+            const imageUrl = safeCertificateUrl(cert.image_url)
+            const documentUrl = safeCertificateUrl(cert.document_url)
+            const name = String(cert.document_name || '')
+            const docPath = (documentUrl.split('?')[0] || '').toLowerCase()
+            const isPdf = /\.pdf$/i.test(name) || /\.pdf$/i.test(docPath)
+            const isWord = /\.docx?$/i.test(name) || /\.docx?$/i.test(docPath)
+            const showImage = () => {
+                stage.replaceChildren()
                 const image = document.createElement('img')
-                image.src = cert.image_url
-                image.alt = cert.name
-                stage.appendChild(image)
-            } else if (documentUrl) {
-                const link = document.createElement('a')
-                link.href = documentUrl
-                link.target = '_blank'
-                link.rel = 'noopener'
-                link.className = 'btn'
-                link.textContent = `Open ${cert.document_name || 'certificate file'}`
-                stage.appendChild(link)
+                image.src = imageUrl
+                image.alt = 'Certificate: ' + cert.name
+                image.loading = 'eager'
+                image.addEventListener('error', () => {
+                    stage.replaceChildren()
+                    const errorText = document.createElement('p')
+                    errorText.className = 'reader-placeholder'
+                    errorText.textContent = 'The certificate image could not be loaded. Use Open image to view the original.'
+                    stage.append(errorText)
+                }, {once:true})
+                stage.append(image)
+            }
+            const showDocument = () => {
+                stage.replaceChildren()
+                const frame = document.createElement('iframe')
+                frame.title = cert.name + ' document preview'
+                frame.referrerPolicy = 'strict-origin-when-cross-origin'
+                frame.loading = 'eager'
+                frame.src = isWord
+                    ? 'https://docs.google.com/gview?embedded=1&url=' + encodeURIComponent(documentUrl)
+                    : documentUrl
+                stage.append(frame)
+                if (isWord) {
+                    const note = document.createElement('p')
+                    note.className = 'reader-preview-note'
+                    note.textContent = 'Word documents are displayed using a third-party online viewer. If it cannot load, use Open document.'
+                    actions.append(note)
+                }
+            }
+            if (documentUrl && (isPdf || isWord)) showDocument()
+            else if (imageUrl) showImage()
+            else if (documentUrl) {
+                const p = document.createElement('p')
+                p.className = 'reader-placeholder'
+                p.textContent = 'This file type does not support an inline preview. Choose Open document.'
+                stage.append(p)
             } else {
-                const placeholder = document.createElement('p')
-                placeholder.className = 'reader-placeholder'
-                placeholder.textContent = 'No preview is available for this certificate.'
-                stage.appendChild(placeholder)
+                const p = document.createElement('p')
+                p.className = 'reader-placeholder'
+                p.textContent = 'A certificate image or document has not yet been uploaded for this entry.'
+                stage.append(p)
             }
-
+            if (imageUrl && documentUrl) {
+                const imageButton = document.createElement('button')
+                imageButton.type = 'button'
+                imageButton.textContent = 'Preview image'
+                imageButton.addEventListener('click', showImage)
+                actions.append(imageButton)
+                if (isPdf || isWord) {
+                    const documentButton = document.createElement('button')
+                    documentButton.type = 'button'
+                    documentButton.textContent = 'Preview document'
+                    documentButton.addEventListener('click', showDocument)
+                    actions.append(documentButton)
+                }
+            }
+            if (documentUrl) actions.append(linkForCertificate(documentUrl, 'Open original document', name))
+            if (imageUrl) actions.append(linkForCertificate(imageUrl, 'Open original image', ''))
             const details = document.getElementById('modalDetails')
-            details.innerHTML = `
-                <p><strong>Issuer:</strong> ${escapeHtml(cert.issuer || 'Unknown')}</p>
-                <p><strong>Date earned:</strong> ${formatDate(cert.date_earned)}</p>
-                <p><strong>Type:</strong> ${escapeHtml(cert.certificate_type || 'Certificate')}</p>
-                ${cert.description ? `<p><strong>Description:</strong> ${escapeHtml(cert.description)}</p>` : ''}
-                ${documentUrl ? `<p><a href="${escapeHtml(documentUrl)}" target="_blank" rel="noopener" class="btn">Open original file</a></p>` : ''}
-            `
-        }
-
-        window.viewCertificate = (id) => {
-            let certificates = visibleCertificates.length ? visibleCertificates : allCertificates
-            currentCertificateIndex = certificates.findIndex(cert => cert.id == id)
-            if (currentCertificateIndex < 0) {
-                certificates = allCertificates
-                currentCertificateIndex = certificates.findIndex(cert => cert.id == id)
+            details.replaceChildren()
+            for (const [label, value] of [
+                ['Issuer', cert.issuer || 'Not specified'],
+                ['Date earned', formatDate(cert.date_earned)],
+                ['Type', cert.certificate_type || 'Certificate'],
+                ['Description', cert.description || '']
+            ]) {
+                if (!value) continue
+                const p = document.createElement('p')
+                const strong = document.createElement('strong')
+                strong.textContent = label + ': '
+                p.append(strong, document.createTextNode(String(value)))
+                details.append(p)
             }
-            if (currentCertificateIndex < 0) return
-
-            renderCertificateViewer()
-            document.getElementById('certModal').classList.add('active')
-            document.body.style.overflow = 'hidden'
         }
-
-        window.stepCertificate = (direction) => {
+        window.viewCertificate = id => {
             const certificates = visibleCertificates.length ? visibleCertificates : allCertificates
-            currentCertificateIndex = Math.min(certificates.length - 1, Math.max(0, currentCertificateIndex + direction))
+            currentCertificateIndex = certificates.findIndex(cert => String(cert.id) === String(id))
+            if (currentCertificateIndex < 0) return
+            certificateReturnFocus = document.activeElement
+            renderCertificateViewer()
+            const modal = document.getElementById('certModal')
+            modal.classList.add('active')
+            modal.setAttribute('aria-hidden', 'false')
+            document.body.style.overflow = 'hidden'
+            modal.querySelector('.modal-close')?.focus({preventScroll:true})
+        }
+        window.stepCertificate = direction => {
+            const certificates = visibleCertificates.length ? visibleCertificates : allCertificates
+            currentCertificateIndex = Math.max(0, Math.min(certificates.length - 1, currentCertificateIndex + direction))
             renderCertificateViewer()
         }
-
         document.getElementById('certificatePosition').addEventListener('input', event => {
             currentCertificateIndex = Number(event.target.value)
             renderCertificateViewer()
         })
-        
         window.closeModal = () => {
-            document.getElementById('certModal').classList.remove('active')
+            const modal = document.getElementById('certModal')
+            if (!modal.classList.contains('active')) return
+            modal.classList.remove('active')
+            modal.setAttribute('aria-hidden','true')
+            document.getElementById('readerStage').replaceChildren()
             document.body.style.overflow = ''
+            certificateReturnFocus?.focus?.({preventScroll:true})
         }
+        document.addEventListener('keydown', event => {
+            const modal = document.getElementById('certModal')
+            if (!modal.classList.contains('active')) return
+            if (event.key === 'Escape') { event.preventDefault(); closeModal() }
+            if (event.key === 'ArrowLeft' && !event.target.matches('input,textarea,select')) {event.preventDefault();stepCertificate(-1)}
+            if (event.key === 'ArrowRight' && !event.target.matches('input,textarea,select')) {event.preventDefault();stepCertificate(1)}
+        })
         
         // Load social links
         async function loadSocialLinks() {
             const { data } = await supabase.from('site_settings').select('*')
             const github = data?.find(s => s.setting_key === 'contact_github')?.setting_value || 'https://github.com/Feligo1'
-            const linkedin = data?.find(s => s.setting_key === 'contact_linkedin')?.setting_value || 'https://www.linkedin.com/in/felixdaka-zm'
+            const linkedin = data?.find(s => s.setting_key === 'contact_linkedin')?.setting_value || 'https://www.linkedin.com/in/felix-daka-5b6058212'
             const facebook = data?.find(s => s.setting_key === 'contact_facebook')?.setting_value || 'https://www.facebook.com/share/1AJKpFspAB/'
             const whatsapp = data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value || 'https://wa.me/260774496821'
             
