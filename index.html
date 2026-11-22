@@ -546,6 +546,7 @@
 <link rel="stylesheet" href="editorial-v5.css?v=1">
 <link rel="stylesheet" href="newsroom-theme-v6.css?v=1">
     <link rel="stylesheet" href="natural-media-v7.css?v=1">
+    <link rel="stylesheet" href="home-profile-circle-v9.css?v=1">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -708,10 +709,10 @@
         async function loadProfileImage() {
             try {
                 const settings = await getSiteSettings()
-                const defaultProfile = 'profile/profile-1772620176208.jpg'
+                const defaultProfile = 'https://pthcviwhcsluovdekjub.supabase.co/storage/v1/object/public/portfolio-images/profile_image_url/1794735080386_7mvk2.webp'
                 document.getElementById('profileImage').src = settings.profile_image_url || defaultProfile
             } catch (error) {
-                document.getElementById('profileImage').src = 'profile/profile-1772620176208.jpg'
+                document.getElementById('profileImage').src = 'https://pthcviwhcsluovdekjub.supabase.co/storage/v1/object/public/portfolio-images/profile_image_url/1794735080386_7mvk2.webp'
             }
         }
         
