@@ -25,3 +25,5 @@ jobs:
         run: node scripts/check-newsroom-v6.mjs
       - name: Check photos display fully at natural proportions
         run: node scripts/check-natural-media-v7.mjs
+      - name: Verify About social feed and full photo presentation
+        run: node scripts/check-about-feed-v8.mjs

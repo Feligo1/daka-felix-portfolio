@@ -971,6 +971,7 @@
 <link rel="stylesheet" href="editorial-v5.css?v=1">
 <link rel="stylesheet" href="newsroom-theme-v6.css?v=1">
     <link rel="stylesheet" href="natural-media-v7.css?v=1">
+<link rel="stylesheet" href="about-feed-v8.css?v=1">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -1045,24 +1046,30 @@
         </div>
     </section>
 
-    <section class="career-gallery newsroom-section" id="career-gallery">
+    <section class="career-gallery facebook-about-feed" id="career-gallery" aria-labelledby="aboutFeedHeading">
   <div class="container">
-    <div class="newsroom-heading">
-      <div><span class="eyebrow">BEYOND THE RÉSUMÉ</span><h2>Life &amp; career highlights</h2>
-      <p>A visual journal of graduation, hands-on ICT work, technology and moments worth sharing.</p></div>
-      <a href="recommendations.html" class="newsroom-side-link">Professional recommendations</a>
+    <div class="fb-feed-shell">
+      <div class="fb-feed-heading">
+        <span class="eyebrow">BEYOND THE RÉSUMÉ</span>
+        <h2 id="aboutFeedHeading">Life &amp; career updates</h2>
+        <p>Graduation, practical ICT experiences and milestones — shared as photo and video stories.</p>
+      </div>
+      <div id="careerGalleryFilters" class="gallery-categories" role="group" aria-label="Filter career updates"></div>
+      <div id="careerGalleryGrid" class="fb-post-list" aria-live="polite">
+        <p class="fb-feed-empty">Loading updates…</p>
+      </div>
+      <div class="fb-feed-tail"><a href="recommendations.html">Read professional recommendations</a></div>
     </div>
-    <div id="careerGalleryFilters" class="gallery-categories" role="group" aria-label="Filter photo and video stories"></div>
-    <div id="careerGalleryGrid" class="newsroom-feed" aria-live="polite"><p class="story-empty">Loading stories…</p></div>
   </div>
   <dialog id="careerGalleryDialog" class="newsroom-lightbox" aria-labelledby="careerGalleryModalTitle">
-   <div class="gallery-modal-actions">
-    <button id="careerGalleryPrev" type="button">← Previous</button>
-    <button id="careerGalleryClose" type="button" aria-label="Close story">Close ×</button>
-    <button id="careerGalleryNext" type="button">Next →</button>
-   </div>
-   <div id="careerGalleryModalMedia" class="newsroom-modal-media"></div>
-   <h3 id="careerGalleryModalTitle"></h3><p id="careerGalleryModalCaption"></p>
+    <div class="gallery-modal-actions">
+      <button id="careerGalleryPrev" type="button">← Previous</button>
+      <button id="careerGalleryClose" type="button" aria-label="Close post viewer">Close ×</button>
+      <button id="careerGalleryNext" type="button">Next →</button>
+    </div>
+    <div id="careerGalleryModalMedia" class="newsroom-modal-media"></div>
+    <h3 id="careerGalleryModalTitle"></h3>
+    <p id="careerGalleryModalCaption"></p>
   </dialog>
 </section>
 <section class="journey-section" id="experience">
@@ -1290,6 +1297,6 @@
             .catch(error => console.error('Could not load the saved profile image:', error))
         import('./supabase-client.js').then(({ trackDeviceVisit }) => trackDeviceVisit())
     </script>
-<script type="module" src="about-gallery.js?v=6"></script>
+<script type="module" src="about-gallery.js?v=8"></script>
 </body>
 </html>
