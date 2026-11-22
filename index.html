@@ -602,15 +602,25 @@
         </div>
     </section>
 
-    <section class="home-directory" id="explore">
+    <section class="home-highlights" id="highlights" aria-label="Professional highlights">
         <div class="container">
-            <h2>Explore my portfolio</h2>
-            <ul class="home-links">
-                <li><a href="expertise.html"><strong>Technical Skills</strong><span class="home-link-description">Areas I have studied and worked in</span><span class="home-link-action">Open</span></a></li>
-                <li><a href="certificates.html"><strong>Certificates</strong><span class="home-link-description">Courses and credentials I have completed</span><span class="home-link-action">Open</span></a></li>
-                <li><a href="about.html"><strong>About Me</strong><span class="home-link-description">Education, experience and background</span><span class="home-link-action">Open</span></a></li>
-                <li><a href="contact.html"><strong>Contact</strong><span class="home-link-description">Get in touch about an opportunity or question</span><span class="home-link-action">Open</span></a></li>
-            </ul>
+            <div class="career-facts">
+                <div><strong>BSc Computer Science</strong><span>Credit · Mulungushi University</span></div>
+                <div><strong>2 ICT placements</strong><span>Industry and university IT support</span></div>
+                <div><strong>7 course completions</strong><span>Huawei, Cisco &amp; Smart Zambia</span></div>
+            </div>
+        </div>
+    </section>
+    <section class="featured-work" id="project" aria-labelledby="featured-title">
+        <div class="container">
+            <div class="feature-heading"><div><span class="feature-kicker">What I build</span><h2 id="featured-title">Featured projects</h2><p>Real technical work, challenges and solutions.</p></div><a class="feature-view-all" href="projects.html">Explore all projects</a></div>
+            <div id="homeFeaturedProjects" class="feature-grid" aria-live="polite"><p class="feature-empty">Loading published projects…</p></div>
+        </div>
+    </section>
+    <section class="journal-feature" aria-labelledby="journal-title">
+        <div class="container">
+            <div class="feature-heading"><div><span class="feature-kicker">Practical learning</span><h2 id="journal-title">Technical journal</h2><p>Notes from my work in programming, ICT support, cybersecurity and networking.</p></div><a class="feature-view-all" href="journal.html">Read the journal</a></div>
+            <div id="homeLatestArticle" class="feature-grid" aria-live="polite"><p class="feature-empty">Loading recent writing…</p></div>
         </div>
     </section>
 
@@ -619,7 +629,7 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p id="aboutText">Loading...</p>
+                    <p id="aboutText">A Zambian Computer Science graduate with practical ICT support experience and an interest in building useful digital systems.</p>
                     <div style="margin-top: 24px;">
                         <a href="about.html" class="btn">Read Full Bio</a>
                     </div>
@@ -628,7 +638,7 @@
                     <div class="zambian-connection">
                         <i class="fas fa-globe-africa"></i> Proudly Zambian
                     </div>
-                    <img src="" alt="Daka Felix" class="about-img" id="aboutImage" loading="lazy" decoding="async">
+                    <img src="felix.jpg" alt="Felix Daka" class="about-img" id="aboutImage" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -653,7 +663,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
+                    <div class="footer-logo">Felix Daka <span>(Tech Guy)</span></div>
                     <p id="footerText">Computer Science graduate in Zambia, with experience in IT support and networking.</p>
                 </div>
                 <div class="footer-links">
@@ -673,7 +683,7 @@
             </div>
             <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
             <div class="copyright">
-                <p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved. Proudly Zambian</p>
+                <p>&copy; 2026 Felix Daka (Tech Guy). All rights reserved. Proudly Zambian</p>
             </div>
         </div>
     </footer>
@@ -894,5 +904,6 @@
         import { trackDeviceVisit } from './supabase-client.js'
         trackDeviceVisit()
     </script>
+    <script type="module" src="home-content.js"></script>
 </body>
 </html>
