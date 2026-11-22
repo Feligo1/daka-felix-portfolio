@@ -9,10 +9,52 @@ function validateUrl(value){if(!value)return null;const url=new URL(value);if(ur
 function payload(section,form){const cfg=tables[section];const data={};for(const key of cfg.fields){const element=form.elements.namedItem(key);if(!element)continue;const value=element.value.trim();data[key]=key==='technologies'?value.split(',').map(x=>x.trim()).filter(Boolean):(['github_url','demo_url'].includes(key)?validateUrl(value):value)}if(section==='showcase'||section==='journal'){data.slug=data.slug.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');if(!data.slug)throw Error('Enter a valid URL slug.')}data.is_published=!!form.elements.namedItem('is_published')?.checked;if(section==='recommendations'){data.permission_confirmed=!!form.elements.namedItem('permission_confirmed')?.checked;if(data.is_published&&!data.permission_confirmed)throw Error('Confirm permission before publishing the recommendation.')}return data}
 function setForm(section,data){const form=document.querySelector('#v2-'+section+'-form');form.reset();for(const key of tables[section].fields){const f=form.elements.namedItem(key);if(f)f.value=Array.isArray(data[key])?data[key].join(', '):(data[key]??'')}form.elements.namedItem('record_id').value=data.id||'';form.elements.namedItem('is_published').checked=!!data.is_published;if(section==='recommendations')form.elements.namedItem('permission_confirmed').checked=!!data.permission_confirmed;form.querySelector('button[type=submit]').textContent=data.id?'Save changes':'Save new '+tables[section].title.toLowerCase();form.scrollIntoView({behavior:'smooth',block:'start'})}
 async function refresh(section){if(!authorized)return;const cfg=tables[section],box=document.querySelector('#v2-'+section+'-list');box.replaceChildren(E('p','Loading…'));const{data,error}=await supabase.from(cfg.table).select('*').order('created_at',{ascending:false}).limit(100);if(error){box.replaceChildren(E('p','Could not load data: '+error.message));return}box.replaceChildren();if(!data.length){box.append(E('p','No entries yet. Create the first one.'));return}for(const item of data){const row=E('div','',{class:'v2-row'}),info=E('div'),actions=E('div','',{class:'v2-row-actions'});info.append(E('strong',item.title||item.person_name||'Untitled'),E('small',(item.is_published?'Published':'Draft')+' · '+new Date(item.created_at).toLocaleDateString()));const edit=E('button','Edit',{type:'button'});edit.addEventListener('click',()=>setForm(section,item));const remove=E('button','Delete',{type:'button'});remove.addEventListener('click',async()=>{if(!confirm('Delete this '+cfg.title.toLowerCase()+'? This cannot be undone.'))return;remove.disabled=true;const{error}=await supabase.from(cfg.table).delete().eq('id',item.id);if(error){msg(section,error.message,true);remove.disabled=false}else{msg(section,'Deleted.');refresh(section)}});actions.append(edit,remove);row.append(info,actions);box.append(row)}}
-async function submit(section,event){event.preventDefault();if(!authorized){msg(section,'Unauthorized session.',true);return}const cfg=tables[section],form=event.currentTarget,button=form.querySelector('button[type=submit]');button.disabled=true;msg(section,'Saving…');try{const data=payload(section,form),id=form.elements.namedItem('record_id').value;const file=form.elements.namedItem('media_file')?.files?.[0];if(file){if(!cfg.media)throw Error('No media field');data[cfg.media]=await upload(section,file);if(section==='showcase')data.cover_alt=data.title;}let query=id?supabase.from(cfg.table).update(data).eq('id',id):supabase.from(cfg.table).insert(data);const{error}=await query;if(error)throw error;form.reset();form.elements.namedItem('record_id').value='';button.textContent='Save new '+cfg.title.toLowerCase();msg(section,'Saved successfully.');await refresh(section)}catch(err){msg(section,err.message||'Save failed.',true)}finally{button.disabled=false}}
+async function submit(section,event){event.preventDefault();if(!authorized){msg(section,'Unauthorized session.',true);return}const cfg=tables[section],form=event.currentTarget,button=form.querySelector('button[type=submit]');button.disabled=true;msg(section,'Saving…');try{const data=payload(section,form),id=form.elements.namedItem('record_id').value;const file=form.elements.namedItem('media_file')?.files?.[0];if(file){if(!data.is_published)throw Error('Media uploads go to public buckets. Publish the entry first or save the draft without media.');if(!cfg.media)throw Error('No media field');data[cfg.media]=await upload(section,file);if(section==='showcase')data.cover_alt=data.title;}let query=id?supabase.from(cfg.table).update(data).eq('id',id):supabase.from(cfg.table).insert(data);const{error}=await query;if(error)throw error;form.reset();form.elements.namedItem('record_id').value='';button.textContent='Save new '+cfg.title.toLowerCase();msg(section,'Saved successfully.');await refresh(section)}catch(err){msg(section,err.message||'Save failed.',true)}finally{button.disabled=false}}
 async function diagnostics(){const box=document.querySelector('#v2-storage-status');box.replaceChildren(E('p','Checking schema and bucket access…'));try{await check()}catch(e){box.replaceChildren(E('p',e.message));return}const buckets=['portfolio-images','portfolio-certificate-files','portfolio-documents','portfolio-project-media','portfolio-gallery','portfolio-journal-media'];box.replaceChildren();for(const name of buckets){const row=E('div','',{class:'v2-row'}),label=E('strong',name),status=E('small','Checking…');row.append(label,status);box.append(row);const {error}=await supabase.storage.from(name).list('',{limit:1});status.textContent=error?'Cannot verify: '+error.message:'Accessible (list permission verified)'}for(const section of Object.keys(tables)){const {error}=await supabase.from(tables[section].table).select('*',{count:'exact',head:true});const row=E('div','',{class:'v2-row'});row.append(E('strong',tables[section].table),E('small',error?'Not ready: '+error.message:'Accessible'));box.append(row)}box.append(E('p','Checks confirm read/list access only. A successful upload and owner-only authorization test are still required before production.',{class:'v2-notice'}))}
 const initialized=new Set();
-async function activate(section){if(!document.getElementById('v2-'+section+'-form')&&section!=='storage')return;try{await check();if(section==='storage')await diagnostics();else await refresh(section)}catch(e){msg(section,e.message,true)}}
+async function activate(section){if(!document.getElementById('v2-'+section+'-form')&&section!=='storage')return;try{await check();if(section==='storage')await diagnostics();else {await refresh(section);if(section==='showcase'){await refreshProjectOptions();await refreshProjectMedia()}}}catch(e){msg(section,e.message,true)}}
+
+async function refreshProjectOptions(){
+ if(!authorized)return;
+ const sel=document.querySelector('#v2-media-project');if(!sel)return;
+ const previous=sel.value;
+ const{data,error}=await supabase.from('portfolio_projects').select('id,title,is_published').order('title');
+ sel.replaceChildren(E('option','Choose a published project',{value:''}));
+ if(error){msg('showcase',error.message,true);return}
+ for(const p of data??[]){if(!p.is_published)continue;sel.append(E('option',p.title,{value:p.id}))}
+ if(previous&&[...sel.options].some(o=>o.value===previous))sel.value=previous;
+}
+async function refreshProjectMedia(){
+ if(!authorized)return;
+ const id=document.querySelector('#v2-media-project')?.value,root=document.querySelector('#v2-media-list');
+ if(!root)return;root.replaceChildren();
+ if(!id){root.append(E('p','Choose a published project to manage its media.'));return}
+ const {data,error}=await supabase.from('portfolio_project_media').select('*').eq('project_id',id).order('sort_order');
+ if(error){root.append(E('p',error.message));return}
+ if(!data?.length){root.append(E('p','No demonstration media uploaded for this project.'));return}
+ for(const m of data){const row=E('div','',{class:'v2-row'}),info=E('div');info.append(E('strong',m.caption||m.media_type),E('small',m.media_type+' · '+m.media_url.slice(0,80)));const del=E('button','Delete',{type:'button'});del.addEventListener('click',async()=>{if(!confirm('Delete this media record?'))return;del.disabled=true;const{error}=await supabase.from('portfolio_project_media').delete().eq('id',m.id);if(error)msg('showcase',error.message,true);else refreshProjectMedia()});row.append(info,del);root.append(row)}
+}
+document.querySelector('#v2-media-project')?.addEventListener('change',refreshProjectMedia);
+document.querySelector('#v2-project-media-form')?.addEventListener('submit',async e=>{
+ e.preventDefault();if(!authorized)return;
+ const form=e.currentTarget,button=form.querySelector('button[type=submit]');button.disabled=true;
+ try{
+ const projectId=form.elements.namedItem('project_id').value,caption=form.elements.namedItem('caption').value.trim(),alt=form.elements.namedItem('alt_text').value.trim(),file=form.elements.namedItem('media_file').files[0],external=form.elements.namedItem('external_video').value.trim();
+ if(!projectId)throw Error('Select a published project.');
+ if(!!file===!!external)throw Error('Provide either a media upload or a YouTube embed URL, not both.');
+ let media_url,media_type;
+ if(file){media_url=await upload('showcase',file);media_type=file.type.startsWith('video/')?'video':'image'}
+ else{
+ const url=new URL(external);
+ if(url.protocol!=='https:'||url.hostname!=='www.youtube.com'||!/^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname))throw Error('Use a YouTube embed URL, for example https://www.youtube.com/embed/VIDEO_ID');
+ media_url=url.origin+url.pathname;media_type='external_video'
+ }
+ const{error}=await supabase.from('portfolio_project_media').insert({project_id:projectId,caption,alt_text:alt,media_url,media_type});
+ if(error)throw error;
+ msg('showcase','Project media saved.');form.elements.namedItem('media_file').value='';form.elements.namedItem('external_video').value='';await refreshProjectMedia()
+ }catch(err){msg('showcase',err.message,true)}finally{button.disabled=false}
+});
+
 for(const section of Object.keys(tables)){const form=document.querySelector('#v2-'+section+'-form');if(!form)continue;form.addEventListener('submit',e=>submit(section,e));document.querySelector('#v2-'+section+'-reset')?.addEventListener('click',()=>setForm(section,{}))}
 document.querySelector('#v2-storage-check')?.addEventListener('click',diagnostics);
 document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>b.addEventListener('click',()=>{const tab=b.dataset.tab;if(tab in tables||tab==='storage')activate(tab)}));
