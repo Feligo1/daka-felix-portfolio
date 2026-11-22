@@ -23,3 +23,5 @@ jobs:
         run: node scripts/check-editorial-v5.mjs
       - name: Verify original color palette and editorial media features
         run: node scripts/check-newsroom-v6.mjs
+      - name: Check photos display fully at natural proportions
+        run: node scripts/check-natural-media-v7.mjs

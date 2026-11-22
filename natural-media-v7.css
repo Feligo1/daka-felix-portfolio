@@ -1,0 +1,127 @@
+/* Natural aspect-ratio media: every non-profile picture is displayed in full.
+   Browser scales image to the container width without cutting off any edges.
+   Dedicated profile portraits deliberately keep their portrait styling. */
+:root{--media-bg:#17283a}
+body .newsroom-feed .story-thumb,
+body .newsroom-feed .story-media,
+body .projects-news-list .project-image-wrap,
+body .project-feature-media .project-media-item{
+ min-width:0;max-width:100%;height:auto!important;max-height:none!important;
+}
+body .newsroom-feed .story-media{
+ aspect-ratio:auto!important;min-height:0;
+}
+body .newsroom-feed .story-thumb img,
+body .newsroom-feed .story-photo,
+body .newsroom-feed .story-lead .story-thumb img,
+body .newsroom-feed .story-item img,
+body .newsroom-feed .story-thumb video,
+body .newsroom-feed .story-lead .story-thumb video,
+body .projects-news-list .project-image,
+body .projects-news-list .project-story:first-child .project-image,
+body .project-feature-media .project-media-item img,
+body .project-feature-media .project-media-item video{
+ display:block;
+ width:100%!important;
+ height:auto!important;
+ max-width:100%!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ object-fit:contain!important;
+ object-position:center!important;
+ border-radius:8px;
+}
+body .newsroom-feed .story-thumb,
+body .projects-news-list .project-image-wrap{
+ background:var(--media-bg);
+}
+body .newsroom-feed .story-item .story-open,
+body .projects-news-list .project-story a{align-items:start}
+body .newsroom-feed .story-thumb video,
+body .projects-news-list .project-image-wrap video{
+ background:#102135;
+}
+body .projects-news-list .project-image-placeholder{object-fit:contain}
+/* Journal/article covers and project case-study hero artwork: no fixed ratio or forced crop. */
+body .feature-image,
+body #cover.feature-image,
+body .prose > img,
+body .section.prose > img,
+body #body img,
+body #media .project-media-item img{
+ display:block;
+ width:100%!important;
+ height:auto!important;
+ max-width:100%!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ object-fit:contain!important;
+ object-position:center!important;
+}
+/* Home project previews and journal thumbnails also retain their source proportions. */
+body #homeFeaturedProjects .feature-card img,
+body #homeLatestArticle .feature-card img,
+body #homeFeaturedProjects .feature-card:has(img) img,
+body #projects .card img,
+body #posts .card img,
+body .card .body img{
+ display:block;
+ width:100%!important;
+ height:auto!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ object-fit:contain!important;
+ object-position:center!important;
+}
+/* The About and project viewers scale large originals to the available screen without cropping. */
+body .newsroom-modal-media img,
+body .newsroom-lightbox .newsroom-modal-media img,
+body #viewer img{
+ width:auto!important;
+ height:auto!important;
+ max-width:100%!important;
+ max-height:min(78dvh,1100px)!important;
+ aspect-ratio:auto!important;
+ object-fit:contain!important;
+ object-position:center!important;
+}
+body .newsroom-modal-media video,
+body #viewer video{
+ width:auto!important;
+ max-width:100%!important;
+ max-height:75dvh!important;
+ height:auto!important;
+ object-fit:contain!important;
+}
+body .admin-story-preview img,
+body .admin-story-preview video,
+body .cert-local-preview img{
+ width:100%!important;
+ height:auto!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ object-fit:contain!important;
+}
+/* Uploaded file proportions are preserved independently of container dimensions. */
+body .newsroom-feed .story-lead .story-thumb img,
+body .projects-news-list .project-story:first-child .project-image{
+ max-height:none!important;
+}
+@media(max-width:700px){
+ body .newsroom-modal-media img,
+ body #viewer img{max-height:75dvh!important}
+ body .newsroom-feed .story-item .story-open,
+ body .projects-news-list .project-story a{align-items:start}
+}
+/* Intentional exception: profile headshots are displayed as designed, not natural-aspect galleries. */
+
+/* Certificate viewer has its own constrained document stage: contain the full page inside it. */
+body #certModal .reader-stage img{
+ display:block;
+ width:auto!important;
+ height:auto!important;
+ max-width:100%!important;
+ max-height:100%!important;
+ aspect-ratio:auto!important;
+ object-fit:contain!important;
+}
