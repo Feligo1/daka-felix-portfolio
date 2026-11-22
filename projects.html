@@ -3,6 +3,7 @@
     <script src="site-navigation.js" defer></script>
     <link rel="stylesheet" href="site-polish-v4.css?v=1">
 <link rel="stylesheet" href="editorial-v5.css?v=1">
+<link rel="stylesheet" href="newsroom-theme-v6.css?v=1">
 </head><body><a class="skip-link" href="#main">Skip to content</a><header id="mainHeader" class="site-header">
     <div class="container header-container">
       <a class="logo" href="index.html" aria-label="Felix Daka — Home"><span class="brand-mark" aria-hidden="true">▣</span><span class="brand-name">Felix Daka <span class="brand-alias">(Tech Guy)</span></span></a>
@@ -28,7 +29,7 @@
         </div>
       </div>
     </div>
-  </header><main id="main" class="wrap"><section class="hero"><span class="eyebrow">Selected work</span><h1>Projects & technical solutions</h1><p class="lead">Applications and systems built to solve real problems. Explore project details, technical decisions and demonstrations.</p></section><section class="section"><h2>Explore projects</h2><div class="controls"><input id="search" type="search" placeholder="Search projects" aria-label="Search projects"><select id="filter" aria-label="Project category"><option value="">All categories</option></select></div><div id="projects" class="grid" aria-live="polite"><p>Loading projects…</p></div></section></main><footer class="site-footer">
+  </header><main id="main" class="wrap"><section class="hero"><span class="eyebrow">Selected work</span><h1>Projects &amp; technical solutions</h1><p class="lead">Explore what I build, the problems behind each idea, and the technical work documented through images, videos and project stories.</p></section><section class="section"><h2>Latest project stories</h2><div class="controls"><input id="search" type="search" placeholder="Search projects" aria-label="Search projects"><select id="filter" aria-label="Project category"><option value="">All categories</option></select></div><div id="projects" class="projects-news-list" aria-live="polite"><p>Loading projects…</p></div></section></main><footer class="site-footer">
    <div class="site-footer-inner">
      <div class="site-footer-summary">
        <strong>Felix Daka <span>(Tech Guy)</span></strong>
@@ -45,4 +46,4 @@
      <span>© 2026 Felix Daka. All rights reserved.</span>
      <small>Anonymous analytics are used to understand site visits; no names are collected in visit records.</small>
    </div>
- </footer><script type="module">import {loadPublished,appendTextCard,showError} from './portfolio-v2.js';const root=document.querySelector('#projects'),search=document.querySelector('#search'),filter=document.querySelector('#filter');let items=[];try{items=await loadPublished('portfolio_projects');const categories=[...new Set(items.map(x=>x.category).filter(Boolean))];categories.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;filter.append(o)});render()}catch(e){console.error(e);showError(root,'Projects could not load. Please try again later.')}function render(){root.replaceChildren();const visible=items.filter(x=>(!filter.value||x.category===filter.value)&&(x.title+' '+(x.summary||'')).toLowerCase().includes(search.value.toLowerCase()));if(!visible.length)return showError(root,'No published projects match your search yet.');visible.forEach(x=>appendTextCard(root,x,'project.html?slug='+encodeURIComponent(x.slug)))}search.addEventListener('input',render);filter.addEventListener('change',render)</script></body></html>
+ </footer><script type="module" src="projects-news.js"></script></body></html>
