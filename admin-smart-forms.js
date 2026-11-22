@@ -84,7 +84,7 @@ get('#journalExcerptHelper')?.addEventListener('click',()=>{
  const form=get('#v2-journal-form'),body=form?.elements.namedItem('body')?.value?.trim(),
  excerpt=form?.elements.namedItem('summary');
  if(!excerpt)return;
- if(!body){status('Write some article content first, then generate a short excerpt.',true);return}
+ if(!body){const n=get('#v2-journal-status');if(n)n.textContent='Write some article content before generating an excerpt.';return}
  if(excerpt.value.trim()&&!window.confirm('Replace the existing excerpt with a suggestion from your article?'))return;
  excerpt.value=body.replace(/\s+/g,' ').slice(0,190).trim();
  excerpt.focus();
@@ -166,6 +166,37 @@ async function start(){
  })();
  try{await loading}finally{loading=null}
 }
+
+let localCertificatePreviewUrl=null;
+function resetLocalCertificatePreview(){
+ if(localCertificatePreviewUrl){URL.revokeObjectURL(localCertificatePreviewUrl);localCertificatePreviewUrl=null}
+ const box=get('#certLocalPreview');
+ box?.replaceChildren();
+}
+get('#certImageFile')?.addEventListener('change',event=>{
+ resetLocalCertificatePreview();
+ const file=event.currentTarget.files?.[0],box=get('#certLocalPreview');
+ if(!file||!box)return;
+ const name=document.createElement('p');name.className='cert-local-file-name';name.textContent='Selected: '+file.name;
+ box.append(name);
+ if(file.size>20*1024*1024){
+  const warn=document.createElement('p');warn.className='cert-local-file-error';warn.textContent='This file is above the 20 MB upload limit.';box.append(warn);return;
+ }
+ const image=/^image\/(jpeg|png|webp|gif)$/.test(file.type);
+ const pdf=file.type==='application/pdf'||/\.pdf$/i.test(file.name);
+ if(image||pdf){
+  localCertificatePreviewUrl=URL.createObjectURL(file);
+  const preview=image?document.createElement('img'):document.createElement('iframe');
+  preview.src=localCertificatePreviewUrl;
+  if(image)preview.alt='Selected certificate before upload';
+  else preview.title='Selected PDF preview before upload';
+  box.append(preview);
+ }else{
+  const p=document.createElement('p');p.textContent='Word documents can be opened or previewed from the published certificate viewer after uploading.';box.append(p);
+ }
+});
+get('#addCertForm')?.addEventListener('reset',resetLocalCertificatePreview);
+
 installOptions();
 start();
 supabase.auth.onAuthStateChange((event)=>{
