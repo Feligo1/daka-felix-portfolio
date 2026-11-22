@@ -35,28 +35,41 @@ function renderCaseStudy(raw) {
 function renderMedia(media){
  root.replaceChildren();
  if(!media.length){root.append(el('p','Screenshots and video demonstrations will be published as they become available.','story-empty'));return}
- media.forEach(item=>{
-  const article=el('article','','project-media-item');
-  const caption=el('p',item.caption||'Project demonstration','media-caption');
-  if(item.media_type==='image'){
-   const button=el('button');button.type='button';
-   const image=el('img');image.src=item.media_url;image.alt=item.alt_text||item.caption||'Project screenshot';image.loading='lazy';
-   button.append(image);button.setAttribute('aria-label','Open '+(item.caption||'project image'));
-   button.addEventListener('click',()=>{
-     const full=el('img');full.src=item.media_url;full.alt=image.alt;
-     holder.replaceChildren(full,el('p',item.caption||''));dialog.showModal();
-   });article.append(button,caption);
-  }else if(item.media_type==='video'){
-   const video=el('video');video.controls=true;video.preload='metadata';video.playsInline=true;video.src=item.media_url;
-   video.setAttribute('aria-label',item.caption||'Project demonstration video');article.append(video,caption);
-  }else if(item.media_type==='external_video'){
-   const url=embedUrl(item.media_url);if(!url)return;
-   const iframe=el('iframe');iframe.src=url;iframe.title=item.caption||'Project demonstration video';iframe.loading='lazy';
-   iframe.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');iframe.allowFullscreen=true;
-   article.append(iframe,caption);
-  }else return;
-  root.append(article);
- });
+ const isDiagram=item=>/\/(?:10_system_architecture|11_use_case_diagram|12_database_erd|13_data_flow_diagram|14_incremental_development)\.png(?:\?|$)/i.test(item.media_url||'');
+ const sets=[
+   {title:'Product interface',desc:'Screenshots showing the application, features and user journeys.',entries:media.filter(item=>!isDiagram(item))},
+   {title:'Architecture & design',desc:'Technical diagrams from the capstone report.',entries:media.filter(isDiagram)}
+ ].filter(group=>group.entries.length);
+ for(const group of sets){
+  const section=el('section','','project-media-group');
+  const heading=el('div','','project-media-group-header');
+  heading.append(el('h3',group.title),el('p',group.desc));
+  section.append(heading);
+  const grid=el('div','','project-media-grid');
+  group.entries.forEach((item,i)=>{
+   const article=el('article','','project-media-item');
+   const caption=el('p',item.caption||'Project demonstration','media-caption');
+   if(item.media_type==='image'){
+    const button=el('button','','project-image-button');button.type='button';
+    const image=el('img');image.src=item.media_url;image.alt=item.alt_text||item.caption||'Project screenshot';image.loading='lazy';image.decoding='async';
+    button.append(image);button.setAttribute('aria-label','Open '+(item.caption||'project image'));
+    button.addEventListener('click',()=>{
+      const full=el('img');full.src=item.media_url;full.alt=image.alt;
+      holder.replaceChildren(full,el('p',item.caption||''));dialog.showModal();
+    });article.append(button,caption);
+   }else if(item.media_type==='video'){
+    const video=el('video');video.controls=true;video.preload='metadata';video.playsInline=true;video.src=item.media_url;
+    video.setAttribute('aria-label',item.caption||'Project demonstration video');article.append(video,caption);
+   }else if(item.media_type==='external_video'){
+    const url=embedUrl(item.media_url);if(!url)return;
+    const iframe=el('iframe');iframe.src=url;iframe.title=item.caption||'Project demonstration video';iframe.loading='lazy';
+    iframe.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');iframe.allowFullscreen=true;
+    article.append(iframe,caption);
+   }else return;
+   grid.append(article);
+  });
+  section.append(grid);root.append(section);
+ }
 }
 async function load(){
  if(!slug){$('title').textContent='Select a project';return}
@@ -71,6 +84,8 @@ async function load(){
  const {data:media,error:mediaError}=await supabase.from('portfolio_project_media')
  .select('media_type,media_url,caption,alt_text,sort_order').eq('project_id',p.id).order('sort_order');
  if(mediaError){root.replaceChildren(el('p','Media could not load right now.','story-empty'));return}
+ // The cover is also the first media screenshot on many projects; avoid displaying it twice.
+ if(p.cover_url && (media||[]).some(item=>item.media_url===p.cover_url))$('cover').hidden=true;
  renderMedia(media||[]);
 }
 $('close').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>holder.replaceChildren());
