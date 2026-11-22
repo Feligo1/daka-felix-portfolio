@@ -77,3 +77,13 @@ button{min-height:44px}
 }
 @media(max-width:390px){body .container{padding-inline:12px}.admin-header-actions{gap:7px}.admin-header-actions a,.admin-header-actions button{flex:1;justify-content:center}.stat-card p{font-size:.78rem}.tabs .tab-btn{padding:10px 12px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Consistent quiet feedback; errors remain readable until dismissed or timed out. */
+[hidden]{display:none!important}
+.toast{position:fixed!important;right:clamp(12px,3vw,28px)!important;bottom:clamp(12px,3vw,28px)!important;left:auto!important;top:auto!important;max-width:min(520px,calc(100vw - 24px));min-width:0;padding:16px 20px!important;z-index:9999;border-radius:12px;border:1px solid #37786c;line-height:1.5;font-size:.92rem;box-shadow:0 18px 45px #0006;overflow-wrap:anywhere}
+.toast.success{background:#173c3a;color:#d9fff1;border-color:#4b9380}
+.toast.error{background:#462a37;color:#fff3f2;border-color:#ba7a83}
+.v2-status{background:#132a3c;color:#cde3e8;border:1px solid #476477;border-radius:10px;max-width:100%;line-height:1.5}
+.v2-row-actions button,.item-actions button{border-radius:9px;min-height:44px}
+#v2-storage-status .v2-row{align-items:start}
+#v2-storage-status small{line-height:1.5}
