@@ -29,3 +29,5 @@ jobs:
         run: node scripts/check-about-feed-v8.mjs
       - name: Check project editor draft and media workflow
         run: node scripts/check-project-editor-v10.mjs
+      - name: Validate capstone case study layout
+        run: node scripts/check-capstone-case-study.mjs
