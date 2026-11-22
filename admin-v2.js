@@ -52,7 +52,7 @@ else if(f.tagName==='SELECT' && section!=='gallery'){
  if(link)link.value=data.media_type==='external_video'?(data.media_url||''):'';
 }
 form.elements.namedItem('record_id').value=data.id||'';form.elements.namedItem('is_published').checked=!!data.is_published;if(section==='recommendations')form.elements.namedItem('permission_confirmed').checked=!!data.permission_confirmed;form.querySelector('button[type=submit]').textContent=data.id?'Save changes':'Save new '+tables[section].title.toLowerCase();form.scrollIntoView({behavior:'smooth',block:'start'})}
-async function refresh(section){if(!authorized)return;const cfg=tables[section],box=document.querySelector('#v2-'+section+'-list');box.replaceChildren(E('p','Loading…'));const{data,error}=await supabase.from(cfg.table).select('*').order('created_at',{ascending:false}).limit(100);if(error){box.replaceChildren(E('p','Could not load data: '+error.message));return}box.replaceChildren();if(!data.length){box.append(E('p','No entries yet. Create the first one.'));return}for(const item of data){const row=E('div','',{class:'v2-row'}),info=E('div'),actions=E('div','',{class:'v2-row-actions'});info.append(E('strong',item.title||item.person_name||'Untitled'),E('small',(item.is_published?'Published':'Draft')+' · '+new Date(item.created_at).toLocaleDateString()));const edit=E('button','Edit',{type:'button'});edit.addEventListener('click',()=>setForm(section,item));const remove=E('button','Delete',{type:'button'});remove.addEventListener('click',async()=>{if(!confirm('Delete this '+cfg.title.toLowerCase()+'? This cannot be undone.'))return;remove.disabled=true;let oldMedia=[];
+async function refresh(section){if(!authorized)return;const cfg=tables[section],box=document.querySelector('#v2-'+section+'-list');box.replaceChildren(E('p','Loading…'));const{data,error}=await supabase.from(cfg.table).select('*').order('created_at',{ascending:false}).limit(100);if(error){box.replaceChildren(E('p','Could not load data: '+error.message));return}box.replaceChildren();if(!data.length){box.append(E('p','No entries yet. Create the first one.'));return}for(const item of data){const row=E('div','',{class:'v2-row'}),info=E('div'),actions=E('div','',{class:'v2-row-actions'});info.append(E('strong',item.title||item.person_name||'Untitled'),E('small',(item.is_published?'Published':'Draft')+' · '+(item.category||'Uncategorized')+' · '+new Date(item.created_at).toLocaleDateString()));const edit=E('button','Edit',{type:'button'});edit.addEventListener('click',()=>setForm(section,item));const remove=E('button','Delete',{type:'button'});remove.addEventListener('click',async()=>{if(!confirm('Delete this '+cfg.title.toLowerCase()+'? This cannot be undone.'))return;remove.disabled=true;let oldMedia=[];
 if(section==='showcase'){
  const{data:child,error:childError}=await supabase.from('portfolio_project_media').select('media_url,media_type').eq('project_id',item.id);
  if(childError){msg(section,childError.message,true);remove.disabled=false;return}
@@ -109,7 +109,7 @@ async function submit(section,event){
    data.media_type=existing?.media_type||'image';
   }
   if(file){
-   if(!data.is_published)throw Error('Public media uploads require a published entry. Save a draft without media, then publish with a file.');
+   if(!data.is_published&&section!=='showcase')throw Error('Public media uploads require a published entry. Save a draft without media, then publish with a file.');
    if(!cfg.media)throw Error('Media upload is unsupported for this section.');
    newUpload=await upload(section,file);
    data[cfg.media]=newUpload;
@@ -123,7 +123,10 @@ async function submit(section,event){
   button.textContent='Save new '+cfg.title.toLowerCase();
   msg(section,id?'Changes saved.':'New entry saved.');
   await refresh(section);
-  if(section==='showcase')await refreshProjectOptions();
+  if(section==='showcase'){
+    await refreshProjectOptions();
+    await refreshOverview();
+  }
  }catch(err){
   if(newUpload)await removeManagedUpload(cfg.bucket,newUpload);
   msg(section,err,true);
@@ -199,16 +202,16 @@ async function refreshProjectOptions(){
  const sel=document.querySelector('#v2-media-project');if(!sel)return;
  const previous=sel.value;
  const{data,error}=await supabase.from('portfolio_projects').select('id,title,is_published').order('title');
- sel.replaceChildren(E('option','Choose a published project',{value:''}));
+ sel.replaceChildren(E('option','Choose a saved project',{value:''}));
  if(error){msg('showcase',error.message,true);return}
- for(const p of data??[]){if(!p.is_published)continue;sel.append(E('option',p.title,{value:p.id}))}
+ for(const p of data??[]){sel.append(E('option',p.title+(p.is_published?' · Published':' · Draft'),{value:p.id}))}
  if(previous&&[...sel.options].some(o=>o.value===previous))sel.value=previous;
 }
 async function refreshProjectMedia(){
  if(!authorized)return;
  const id=document.querySelector('#v2-media-project')?.value,root=document.querySelector('#v2-media-list');
  if(!root)return;root.replaceChildren();
- if(!id){root.append(E('p','Choose a published project to manage its media.'));return}
+ if(!id){root.append(E('p','Choose a saved project to manage its media.'));return}
  const {data,error}=await supabase.from('portfolio_project_media').select('*').eq('project_id',id).order('sort_order');
  if(error){root.append(E('p',error.message));return}
  if(!data?.length){root.append(E('p','No demonstration media uploaded for this project.'));return}
@@ -239,6 +242,17 @@ async function refreshProjectMedia(){
     await refreshProjectMedia();
    }
  });
+ // Real media preview in Admin rather than a truncated URL.
+ if(m.media_type==='image'){
+   const image=E('img','',{src:m.media_url,alt:m.alt_text||m.caption||'Project screenshot',loading:'lazy',class:'project-media-preview'});
+   row.prepend(image);
+ }else if(m.media_type==='video'){
+   const video=E('video','',{src:m.media_url,controls:'',preload:'metadata',class:'project-media-preview'});
+   row.prepend(video);
+ }else if(m.media_type==='external_video'){
+   const link=E('a','Open YouTube video',{href:m.media_url,target:'_blank',rel:'noopener noreferrer'});
+   info.append(link);
+ }
  actions.append(edit,del);row.append(info,actions);root.append(row)
 }
 }
@@ -254,7 +268,7 @@ document.querySelector('#v2-project-media-form')?.addEventListener('submit',asyn
     alt=form.elements.namedItem('alt_text').value.trim(),
     file=form.elements.namedItem('media_file').files[0],
     external=form.elements.namedItem('external_video').value.trim();
-  if(!projectId)throw Error('Choose a published project.');
+  if(!projectId)throw Error('Choose a saved project.');
   if(!!file===!!external)throw Error('Provide either one media file or one YouTube embed URL.');
   let media_url,media_type;
   if(file){
