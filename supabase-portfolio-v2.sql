@@ -118,7 +118,10 @@ insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) v
  ('portfolio-project-media','portfolio-project-media',true,20971520,array['image/jpeg','image/png','image/webp','image/gif','video/mp4','video/webm']),
  ('portfolio-gallery','portfolio-gallery',true,10485760,array['image/jpeg','image/png','image/webp','image/gif']),
  ('portfolio-journal-media','portfolio-journal-media',true,10485760,array['image/jpeg','image/png','image/webp','image/gif'])
-on conflict (id) do nothing;
+on conflict (id) do update set
+  public=excluded.public,
+  file_size_limit=excluded.file_size_limit,
+  allowed_mime_types=excluded.allowed_mime_types;
 
 drop policy if exists "Portfolio v2 admin list media" on storage.objects;
 create policy "Portfolio v2 admin list media" on storage.objects for select to authenticated
