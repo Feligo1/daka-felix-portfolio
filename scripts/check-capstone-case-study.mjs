@@ -5,7 +5,8 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=n=>fs.readFileSync(path.join(root,n),'utf8');
 const js=read('project-story.js'),html=read('project.html'),css=read('farmconnect-case-study-v11.css');
 const errors=[];
-for(const phrase of ['renderCaseStudy','project-chapter-title','project-chapter-paragraph','project-chapter-list']){
+if(!js.includes('renderCaseStudy'))errors.push('Project JS missing section renderer');
+for(const phrase of ['project-chapter-title','project-chapter-paragraph','project-chapter-list']){
  if(!js.includes(phrase))errors.push('Project JS missing '+phrase);
  if(!css.includes(phrase))errors.push('Project stylesheet missing '+phrase);
 }
