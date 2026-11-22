@@ -1,13 +1,25 @@
 # Portfolio v2: Admin & Supabase Setup
 
+## Current live backend status (22 November 2026)
+
+The additive portfolio migration has now been applied to Supabase project `pthcviwhcsluovdekjub`. The following buckets are present:
+`portfolio-images`, `portfolio-certificate-files`, `portfolio-documents` (private), `portfolio-project-media`, `portfolio-gallery`, and `portfolio-journal-media`.
+
+The five new content tables exist, and six legacy projects were imported. This is a verified database/bucket existence check, **not** an end-to-end file-upload test with an authenticated browser session. Use **Storage Health** in Admin and test an actual image/document upload. Keep the private documents bucket private.
+
+If a browser still displays an old "Bucket not found" message after this change, hard refresh the page and sign out/in again, then check the exact bucket in Storage Health. A permission error is different from a missing bucket.
+
+---
+
+
 This branch extends the existing `admin.html` dashboard without replacing its current certificates, documents, profile images, visitor analytics, messages, legacy projects or Supabase authentication.
 
 ## Apply in this order
 
 1. Back up the existing Supabase database, storage settings and policy definitions.
 2. If the current site has **not** been initialized, follow `README.md` to run `supabase-setup.sql` and `supabase-admin-role.sql`, then grant your existing Supabase Auth account membership in `public.portfolio_admins`. **Do not rerun destructive policy replacement scripts on an established site without reviewing them.**
-3. On your established project, open Supabase **SQL Editor**, paste `supabase-portfolio-v2.sql`, and run it. It is an additive migration with idempotent `CREATE TABLE IF NOT EXISTS`, `DROP POLICY IF EXISTS` and bucket `ON CONFLICT DO NOTHING`.
-4. Inspect the resulting buckets and their visibility in **Storage**:
+3. The existing project has already received `supabase-portfolio-v2.sql`. On another project, open Supabase **SQL Editor**, review the migration and apply it. It is an additive migration with idempotent `CREATE TABLE IF NOT EXISTS`, `DROP POLICY IF EXISTS` and bucket `ON CONFLICT DO NOTHING`.
+4. Verify the resulting buckets and their visibility in **Storage**:
    - `portfolio-images`: public, legacy profile/about images
    - `portfolio-certificate-files`: public, existing published certificates
    - `portfolio-documents`: **private**, legacy documents
