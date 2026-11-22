@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Felix Daka | Computer Science Graduate</title>
+    <title>Felix Daka | Computer Science Graduate & ICT Professional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -539,13 +539,15 @@
     </style>
     <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="site-responsive-v3.css?v=1">
+    <script src="site-navigation.js" defer></script>
 </head>
 <body>
     <header id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
+                <span>Felix Daka <span style="color: var(--accent);">(Tech Guy)</span></span>
             </a>
             <nav class="primary-nav" aria-label="Main navigation">
                 <a href="index.html" class="active">Home</a>
@@ -558,11 +560,11 @@
                 <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf">Download CV</a>
             </nav>
             <div class="menu-container">
-                <button class="menu-btn" id="menuBtn">
+                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="menu-content" id="menuContent">
+                <div class="menu-content" id="menuContent" aria-label="Mobile navigation">
                     <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
                     <a href="journal.html"><i class="fas fa-book-open"></i> Journal</a>
                     <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf"><i class="fas fa-file-pdf"></i> Download CV</a>
@@ -579,15 +581,15 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text">
-                <span class="nickname" id="heroNickname">Loading...</span>
-                <h1 id="heroTitle">Daka Felix</h1>
+                <span class="nickname" id="heroNickname">IT Support · Networking · Software Development</span>
+                <h1 id="heroTitle">Felix Daka</h1><p class="career-headline">Computer Science Graduate &amp; ICT Professional</p>
                 <p style="margin:12px 0;color:#b8eee0">BSc Computer Science (Credit) · Mulungushi University · 2026</p>
                 <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf" style="display:inline-block;margin:15px 0 20px;padding:12px 22px;border-radius:8px;background:#55d8b9;color:#102233;text-decoration:none;font-weight:700"><i class="fas fa-file-download"></i> Download My CV (PDF)</a>
-                <p id="heroDescription">Computer Science graduate seeking graduate ICT opportunities, with practical IT support and networking experience.</p>
+                <p id="heroDescription">I support people, solve technology problems and build practical software solutions. Experienced in ICT support and networking through placements in Zambia.</p>
                 <div class="specialties" id="specialtiesContainer">
-                    <span class="specialty-tag skeleton" style="width: 80px; height: 30px; display: inline-block;"></span>
-                    <span class="specialty-tag skeleton" style="width: 100px; height: 30px; display: inline-block;"></span>
-                    <span class="specialty-tag skeleton" style="width: 90px; height: 30px; display: inline-block;"></span>
+                    <span class="specialty-tag">IT Support</span>
+                    <span class="specialty-tag">Networking</span>
+                    <span class="specialty-tag">Software Development</span>
                 </div>
                 <div class="hero-buttons">
                     <a href="contact.html" class="btn btn-red">Contact Me</a>
