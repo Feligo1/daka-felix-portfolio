@@ -28,3 +28,16 @@ dialog img{max-height:72dvh}
 @media(max-width:960px){.top .wrap{align-items:flex-start;flex-direction:column;padding-block:16px;gap:10px}.nav{justify-content:flex-start;gap:8px 18px}}
 @media(max-width:650px){.wrap{width:100%;padding-inline:16px}.top .wrap{padding-block:13px}.nav{flex-wrap:nowrap;overflow-x:auto;width:100%;max-width:100vw;scrollbar-width:thin;overscroll-behavior-x:contain;justify-content:flex-start;gap:18px;padding-bottom:7px}.nav a{font-size:.86rem;flex:none}.hero{padding-block:42px 24px}.hero h1{font-size:clamp(2.25rem,10vw,3.3rem);line-height:1.08}.lead{font-size:1rem}.section{padding-block:28px 48px}.actions{display:grid;grid-template-columns:1fr}.actions .button{width:100%}.grid,.gallery{grid-template-columns:1fr}.controls{flex-direction:column;margin:20px 0}.controls input,.controls select{min-width:0}.footer .wrap{padding-block:6px}.feature-image{aspect-ratio:16/10;object-fit:cover}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Accessible compact navigation for all new public pages */
+.top .wrap{position:relative}
+.mobile-nav-toggle{display:none;align-items:center;justify-content:center;gap:10px;background:#203c4d;border:1px solid #47736b;color:#e8fff8;border-radius:10px;padding:10px 14px;min-height:44px;font-weight:700;font:inherit;cursor:pointer}
+.mobile-nav-toggle span{font-size:1.1em}
+@media(max-width:650px){
+ .top .wrap{display:flex;flex-direction:row;justify-content:space-between;align-items:center;min-height:70px;padding-block:10px}
+ .mobile-nav-toggle{display:inline-flex}
+ .top .nav{display:none;position:absolute;left:0;right:0;top:calc(100% - 2px);width:100%;max-width:100%;max-height:calc(100dvh - 88px);overflow-y:auto;overflow-x:hidden;z-index:20;flex-direction:column;gap:4px;background:#182e42;border:1px solid #46687a;border-radius:0 0 14px 14px;box-shadow:0 24px 45px #0007;padding:10px 14px}
+ .top .nav.open{display:flex}
+ .top .nav a{width:100%;display:flex;align-items:center;min-height:44px;padding:9px 12px;border-radius:8px;white-space:normal;font-size:.94rem}
+ .top .nav a:hover,.top .nav a:focus-visible{background:#28505a}
+}
