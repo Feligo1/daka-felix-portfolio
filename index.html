@@ -582,22 +582,19 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text">
-                <span class="nickname" id="heroNickname">IT Support · Networking · Software Development</span>
-                <h1 id="heroTitle">Felix Daka</h1><p class="career-headline">Computer Science Graduate &amp; ICT Professional</p>
-                <p style="margin:12px 0;color:#b8eee0">BSc Computer Science (Credit) · Mulungushi University · 2026</p>
+                <span class="nickname" id="heroNickname">Computer Science graduate</span>
+                <h1 id="heroTitle">Felix Daka</h1><p class="career-headline">IT Support · Networking · Software Development</p>
+                
                 <p id="heroDescription">I support people, solve technology problems and build practical software solutions. Experienced in ICT support and networking through placements in Zambia.</p>
-                <div class="specialties" id="specialtiesContainer">
-                    <span class="specialty-tag">IT Support</span>
-                    <span class="specialty-tag">Networking</span>
-                    <span class="specialty-tag">Software Development</span>
-                </div>
+                <div class="specialties" id="specialtiesContainer" hidden></div>
                 <div class="hero-buttons">
-                    <a href="contact.html" class="btn btn-red">Contact Me</a>
-                    <a href="about.html" class="btn">About Me</a>
+                    <a href="projects.html" class="btn">View Projects</a>
+                    <a href="assets/documents/Felix_Daka_CV.pdf" class="btn btn-secondary" download="Felix_Daka_CV.pdf">Download CV</a>
+                    <a href="contact.html" class="btn btn-outline">Contact Me</a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="profile/profile-1772620176208.jpg" alt="Daka Felix" class="profile-img" id="profileImage" fetchpriority="high" decoding="async">
+                <img src="profile/profile-1772620176208.jpg" alt="Felix Daka" class="profile-img" id="profileImage" fetchpriority="high" decoding="async">
             </div>
         </div>
     </section>
@@ -707,8 +704,8 @@
             try {
                 const settings = await getSiteSettings()
                 const title = settings.hero_title || 'Felix Daka'
-                const nickname = settings.hero_nickname || 'Computer Science Graduate | IT Support & Networking'
-                const description = settings.hero_description || 'BSc Computer Science (Credit) graduate with hands-on IT support experience, seeking an ICT internship.'
+                const nickname = settings.hero_nickname || 'Computer Science graduate'
+                const description = settings.hero_description || 'I support people, solve technology problems and build useful software. My experience includes ICT support and networking placements in Zambia.'
                 const tags = settings.specialty_tags || '["IT Support","Networking","Cybersecurity","Java","Cloud Computing"]'
                 
                 document.getElementById('heroTitle').textContent = title
@@ -719,7 +716,7 @@
                 try { tagsArray = JSON.parse(tags) } catch { tagsArray = tags.split(',') }
                 
                 const specialtiesContainer = document.getElementById('specialtiesContainer')
-                specialtiesContainer.innerHTML = tagsArray.map(tag => `<span class="specialty-tag">${escapeHtml(tag.trim())}</span>`).join('')
+                if (specialtiesContainer && !specialtiesContainer.hidden) specialtiesContainer.innerHTML = tagsArray.map(tag => `<span class="specialty-tag">${escapeHtml(tag.trim())}</span>`).join('')
             } catch (error) {
                 console.error('Error loading hero:', error)
             }
