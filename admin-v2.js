@@ -72,7 +72,16 @@ async function submit(section,event){
   msg(section,'Saving changes…');
   const data=payload(section,form),id=form.elements.namedItem('record_id').value;
   const file=form.elements.namedItem('media_file')?.files?.[0];
-  if(section==='gallery'&&!id&&!file)throw Error('Choose a photo before creating a gallery entry.');
+  if(section==='gallery'&&!id&&!file){
+   if(data.is_published)throw Error('Choose a photo before publishing a new gallery entry.');
+   data.media_url=''; // A draft can be saved safely without a public file.
+  }
+  if(section==='gallery'&&id&&!file&&data.is_published){
+   const{data:existing,error:existingError}=await supabase.from('portfolio_gallery')
+     .select('media_url').eq('id',id).single();
+   if(existingError)throw existingError;
+   if(!existing?.media_url)throw Error('Upload a photo before publishing this draft.');
+  }
   if(file){
    if(!data.is_published)throw Error('Public media uploads require a published entry. Save the draft without media, then publish with a photo.');
    if(!cfg.media)throw Error('Media uploads are not supported for this section.');
