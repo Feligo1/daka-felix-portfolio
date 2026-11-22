@@ -15,3 +15,16 @@
 #v2-journal-form textarea[name="body"]{min-height:230px;resize:vertical}
 #v2-journal-form textarea[name="summary"]{min-height:95px;resize:vertical}
 @media(max-width:700px){#adminOptionList .v2-row{align-items:stretch;flex-direction:column}#adminOptionList .preset-delete{width:100%}#v2-journal-form textarea[name="body"]{min-height:180px}}
+
+/* Certificate media quality checks and genuine in-browser upload preview. */
+.cert-asset-status{margin:8px 0 0!important;font-size:.82rem!important;line-height:1.5}
+.cert-asset-status.uploaded{color:#85e2c6!important}
+.cert-asset-status.missing{color:#f3ce96!important}
+.item-actions a.cert-preview-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 13px;text-decoration:none;border:1px solid #438a7c;color:#d9fff1;background:#1f4a45;border-radius:8px;font-weight:650;font-size:.85rem}
+.item-actions a.cert-preview-link:hover{background:#295e53}
+.cert-local-preview{margin-top:14px;max-width:100%;min-width:0}
+.cert-local-preview img,.cert-local-preview iframe{width:100%;max-width:660px;height:auto;max-height:380px;object-fit:contain;border-radius:10px;border:1px solid #456274;background:#0e2031;display:block}
+.cert-local-preview iframe{height:340px;background:#fff}
+.cert-local-file-name{font-size:.86rem;color:#a9e8da;overflow-wrap:anywhere;margin:0 0 10px}
+.cert-local-file-error{font-size:.86rem;color:#ffb8ad}
+@media(max-width:680px){.cert-local-preview iframe{height:270px}.cert-local-preview img{max-height:250px}}
