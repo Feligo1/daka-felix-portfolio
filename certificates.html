@@ -609,6 +609,7 @@
     <link rel="stylesheet" href="brand-unified.css?v=1">
     <link rel="stylesheet" href="site-polish-v4.css?v=1">
     <link rel="stylesheet" href="certificate-preview-v3.css?v=1">
+<link rel="stylesheet" href="editorial-v5.css?v=1">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -644,20 +645,16 @@
     <div class="container">
         <div class="page-header">
             <h1>My Certificates</h1>
-            <p class="page-subtitle">Courses and certifications I have completed.</p>
+            <p class="page-subtitle">Verified training and course completions, with original files where available.</p>
         </div>
 
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-card"><div class="stat-number" id="totalCerts">0</div><div class="stat-label">Total Certificates</div></div>
-            <div class="stat-card red"><div class="stat-number" id="thisYearCerts">0</div><div class="stat-label">Earned This Year</div></div>
-            <div class="stat-card yellow"><div class="stat-number" id="totalIssuers">0</div><div class="stat-label">Issuers</div></div>
-        </div>
+<div class="certificate-metrics" id="statsGrid" aria-label="Certificate overview"><p><strong id="totalCerts">0</strong> course completions <span aria-hidden="true">·</span> <strong id="thisYearCerts">0</strong> this year <span aria-hidden="true">·</span> <strong id="totalIssuers">0</strong> issuers</p></div>
 
-        <div class="filters-container">
+                <div class="filters-container">
             <div class="filter-group" id="filterGroup">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="certificate">Certificates</button>
-                <button class="filter-btn" data-filter="badge">Badges</button>
+                <button class="filter-btn" data-filter="badge">Badges</button><button class="filter-btn" data-filter="achievement">Achievements</button>
             </div>
             <div class="search-box">
                 <i class="fas fa-search"></i>
@@ -670,25 +667,32 @@
         </div>
     </div>
 
-    <div id="certModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div id="certModal" class="modal certificate-focus-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle" tabindex="-1">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Certificate Details</h3>
+                <h3 id="modalTitle">Certificate preview</h3>
                 <button class="modal-close" type="button" aria-label="Close certificate preview" onclick="closeModal()">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="certificate-reader" aria-label="Certificate viewer">
-                    <div class="reader-stage" id="readerStage"></div>
-                    <div id="certificateFileActions" class="certificate-file-actions" aria-label="Certificate file actions"></div>
-                    <div class="reader-controls">
-                        <button type="button" id="previousCertificateBtn" onclick="stepCertificate(-1)">Previous</button>
-                        <input type="range" id="certificatePosition" min="0" max="0" value="0" aria-label="Choose certificate">
-                        <span class="reader-count" id="certificateCount">0 / 0</span>
-                        <button type="button" id="nextCertificateBtn" onclick="stepCertificate(1)">Next</button>
+            <div class="modal-body certificate-viewer-layout">
+                <div class="certificate-reader" aria-label="Certificate document reader">
+                    <div class="reader-stage" id="readerStage" aria-live="polite"></div>
+                    <div class="certificate-viewer-toolbar" aria-label="Certificate navigation">
+                        <button type="button" id="previousCertificateBtn" onclick="stepCertificate(-1)" aria-label="Previous certificate">← Previous</button>
+                        <span class="reader-count" id="certificateCount" aria-live="polite">0 / 0</span>
+                        <button type="button" id="nextCertificateBtn" onclick="stepCertificate(1)" aria-label="Next certificate">Next →</button>
                     </div>
-                    <div class="reader-progress" aria-hidden="true"><div id="certificateProgress"></div></div>
+                    <div class="reader-controls" hidden aria-hidden="true">
+                        <input type="range" id="certificatePosition" min="0" max="0" value="0" tabindex="-1">
+                    </div>
+                    <div class="reader-progress" hidden aria-hidden="true"><div id="certificateProgress"></div></div>
                 </div>
-                <div id="modalDetails"></div>
+                <div class="certificate-viewer-under">
+                    <div id="certificateFileActions" class="certificate-file-actions" aria-label="Open original certificate"></div>
+                    <details class="certificate-viewer-details">
+                        <summary>Certificate information</summary>
+                        <div id="modalDetails"></div>
+                    </details>
+                </div>
             </div>
         </div>
     </div>
