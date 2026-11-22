@@ -31,3 +31,5 @@ jobs:
         run: node scripts/check-project-editor-v10.mjs
       - name: Validate capstone case study layout
         run: node scripts/check-capstone-case-study.mjs
+      - name: Validate typography and page organization
+        run: node scripts/check-design-system-v12.mjs
