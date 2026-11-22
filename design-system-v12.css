@@ -288,3 +288,13 @@ body .project-feature-media .project-media-grid .media-caption{padding-top:5px}
 body .project-feature-media .project-image-button{display:block;width:100%;padding:0;background:transparent;border:0;border-radius:8px;cursor:zoom-in}
 body .project-feature-media .project-image-button:hover img{opacity:.9}
 @media(max-width:680px){body .project-feature-media .project-media-grid{grid-template-columns:1fr;gap:18px}}
+
+/* Supporting detail remains available without turning the biography into a directory. */
+body .professional-references{border-top:1px solid var(--ui-line);padding-top:18px;margin-top:30px;max-width:790px}
+body .professional-references summary{font-family:var(--ui-heading)!important;font-size:1.06rem;font-weight:700;color:var(--ui-text);cursor:pointer;min-height:44px;display:flex;align-items:center;gap:10px;list-style:none}
+body .professional-references summary::before{content:'+';color:var(--ui-gold);font-size:1.2rem}
+body .professional-references[open] summary::before{content:'−'}
+body .professional-references summary::-webkit-details-marker{display:none}
+body .professional-reference-list{padding:12px 0 3px 22px}
+body .professional-reference-list p{margin:8px 0 13px!important;color:var(--ui-secondary)}
+body .skills-footer-cta{margin-top:32px;text-align:left;padding:28px 0;border-top:1px solid var(--ui-line)}
