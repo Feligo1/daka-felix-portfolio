@@ -27,4 +27,20 @@
         </div>
       </div>
     </div>
-  </header><main id="main" class="wrap"><section class="hero"><span class="eyebrow">Learning in public</span><h1>Technical journal</h1><p class="lead">Practical notes, lessons and articles on IT support, networking, programming, cloud computing and cybersecurity.</p></section><section class="section"><div class="controls"><input id="search" aria-label="Search articles" placeholder="Search articles" type="search"></div><div id="posts" class="grid" aria-live="polite">Loading articles…</div></section></main><footer class="footer"><div class="wrap">© 2026 Felix Daka · <a href="mailto:felixddaka@gmail.com">Email</a> · <a href="https://github.com/Feligo1">GitHub</a> · <a href="https://www.linkedin.com/in/felix-daka-5b6058212">LinkedIn</a></div></footer><script type="module">import{loadPublished,appendTextCard,showError}from './portfolio-v2.js';const root=document.querySelector('#posts'),search=document.querySelector('#search');let posts=[];try{posts=await loadPublished('portfolio_journal','published_at');render()}catch(e){console.error(e);showError(root,'Articles could not load.')}function render(){root.replaceChildren();const matches=posts.filter(p=>(p.title+' '+(p.summary||'')).toLowerCase().includes(search.value.toLowerCase()));if(!matches.length)showError(root,'No published articles yet.');else matches.forEach(p=>appendTextCard(root,p,'article.html?slug='+encodeURIComponent(p.slug)))}search.addEventListener('input',render)</script></body></html>
+  </header><main id="main" class="wrap"><section class="hero"><span class="eyebrow">Learning in public</span><h1>Technical journal</h1><p class="lead">Practical notes, lessons and articles on IT support, networking, programming, cloud computing and cybersecurity.</p></section><section class="section"><div class="controls"><input id="search" aria-label="Search articles" placeholder="Search articles" type="search"></div><div id="posts" class="grid" aria-live="polite">Loading articles…</div></section></main><footer class="site-footer">
+   <div class="site-footer-inner">
+     <div class="site-footer-summary">
+       <strong>Felix Daka <span>(Tech Guy)</span></strong>
+       <p id="footerText">Computer Science graduate · Zambia</p>
+     </div>
+     <div class="site-footer-links" id="socialIcons">
+       <a href="https://github.com/Feligo1" target="_blank" rel="noopener noreferrer">GitHub</a>
+       <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+       <a href="contact.html">Contact</a>
+     </div>
+   </div>
+   <div class="site-footer-bottom">
+     <span>© 2026 Felix Daka. All rights reserved.</span>
+     <small>Anonymous analytics are used to understand site visits; no names are collected in visit records.</small>
+   </div>
+ </footer><script type="module">import{loadPublished,appendTextCard,showError}from './portfolio-v2.js';const root=document.querySelector('#posts'),search=document.querySelector('#search');let posts=[];try{posts=await loadPublished('portfolio_journal','published_at');render()}catch(e){console.error(e);showError(root,'Articles could not load.')}function render(){root.replaceChildren();const matches=posts.filter(p=>(p.title+' '+(p.summary||'')).toLowerCase().includes(search.value.toLowerCase()));if(!matches.length)showError(root,'No published articles yet.');else matches.forEach(p=>appendTextCard(root,p,'article.html?slug='+encodeURIComponent(p.slug)))}search.addEventListener('input',render)</script></body></html>
