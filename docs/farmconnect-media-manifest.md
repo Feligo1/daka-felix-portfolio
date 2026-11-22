@@ -2,7 +2,7 @@
 
 Source: *Cloud-Based Market Information Platform for Farmers*, ICT 432 capstone report, Mulungushi University, 2026.
 
-These are **genuine screenshots and diagrams** embedded in the report. Upload them through **Admin → Project Showcase → Project photos and videos** for the published **FarmConnect Zambia** project. Do not recreate or claim screenshots that were not supplied.
+These are **genuine screenshots and diagrams** embedded in the report. The 14 files are now committed under `assets/farmconnect/` on GitHub Pages and linked to the published project through Supabase. They remain editable through Admin → Project Showcase → Project photos and videos. Do not recreate or claim screenshots that were not supplied.
 
 | Suggested filename | Screenshot / caption | Accessibility description |
 |---|---|---|
@@ -21,9 +21,9 @@ These are **genuine screenshots and diagrams** embedded in the report. Upload th
 | 13_data_flow_diagram.png | Data flow | Diagram showing information exchange between users, Flask and PostgreSQL |
 | 14_incremental_development.png | Incremental methodology | Four system increments used during development |
 
-**Recommended cover:** `01_dashboard.png` (genuine dashboard screenshot).
+**Cover selected:** `01_dashboard.png` (genuine dashboard screenshot).
 
-The admin currently uses signed-in browser uploads for media; placing a text reference to a local attachment or a sandbox path in the database **does not** publish that file to GitHub Pages or Supabase Storage.
+These original screenshots are publicly hosted by GitHub Pages, and their matching URLs are referenced by the portfolio's Supabase project-media records. Future uploads through Admin can use the existing Supabase Storage bucket.
 
 **Project record:** `farmconnect-zambia-market-information-platform`
 
