@@ -1,0 +1,39 @@
+/* Admin V5 — content-first editing workspace, visually related to public portfolio.
+   All form IDs / CRUD functions are retained; only presentation changes. */
+:root{--adm-ink:#eef8fc;--adm-muted:#b5cbd8;--adm-line:#3a5467;--adm-accent:#75e4c9}
+body{background:#0d1a2b!important;color:var(--adm-ink)}
+.admin-panel .container{max-width:1190px!important}
+.admin-header{background:transparent!important;border:0!important;border-bottom:1px solid var(--adm-line)!important;border-radius:0!important;box-shadow:none!important;margin:20px 0 0!important;padding:12px 0 24px!important}
+.admin-header h1{font-size:clamp(1.55rem,3vw,2.15rem)}
+.v2-toolbar{background:transparent!important;border:0!important;border-bottom:1px solid var(--adm-line)!important;border-radius:0!important;margin:0 0 22px!important;padding:26px 0!important}
+.v2-toolbar h2{font-size:clamp(1.4rem,2.6vw,1.85rem)}
+.v2-toolbar p{max-width:740px;color:var(--adm-muted)}
+.tabs{border-bottom:1px solid var(--adm-line)!important;padding:5px 0 0!important;margin:0 0 28px!important;gap:4px;scrollbar-width:thin;flex-wrap:nowrap;overflow-x:auto}
+.tab-btn,.tabs .tab-btn{border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#bbceda!important;min-height:48px;font-weight:650;white-space:nowrap;padding:12px 16px!important}
+.tab-btn:hover,.tabs .tab-btn:hover{background:#182f42!important;color:#f3fafb!important}
+.tab-btn.active,.tabs .tab-btn.active{border-color:#6de1c7!important;background:transparent!important;color:#81efd3!important}
+.tab-content{padding-bottom:32px}
+.tab-content .card,.card{background:transparent!important;border:0!important;border-bottom:1px solid var(--adm-line)!important;border-radius:0!important;box-shadow:none!important;margin:0 0 26px!important;padding:12px 0 28px!important}
+.tab-content .card h2{font-size:clamp(1.3rem,2.3vw,1.75rem);line-height:1.25;margin-bottom:12px}
+.tab-content .card p{color:var(--adm-muted)}
+.v2-dashboard-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0!important;margin:24px 0!important;border-block:1px solid var(--adm-line)}
+.v2-metric{background:transparent!important;border:0!important;border-right:1px solid var(--adm-line)!important;border-radius:0!important;box-shadow:none!important;padding:19px!important;min-width:0}
+.v2-metric:last-child{border-right:0!important}
+.v2-metric strong{color:#75e4c9;font-size:clamp(1.4rem,3vw,2rem)}
+.v2-metric span{color:var(--adm-muted)}
+.v2-form,.form-grid{gap:clamp(12px,2vw,22px)}
+.v2-form label,.form-group label{font-weight:600;color:#e5f3f7}
+.v2-form :is(input,select,textarea),.form-group :is(input,select,textarea){background:#122739!important;border:1px solid #4b697b!important;border-radius:8px!important;max-width:100%;min-height:44px}
+.v2-status{border:0!important;border-left:3px solid #70ddbf!important;border-radius:0!important;background:#162e3f!important;color:#d2e4ec;padding:12px 17px!important;line-height:1.55}
+.v2-row,.item-row{background:transparent!important;border:0!important;border-bottom:1px solid var(--adm-line)!important;border-radius:0!important;box-shadow:none!important;padding:17px 0!important;margin:0!important}
+.v2-row strong,.item-row h4{color:#f2f8fb}
+.v2-row small,.item-row p{color:var(--adm-muted)}
+.v2-row-actions button,.item-actions button{border-radius:8px;min-height:42px}
+.v2-list{margin-top:14px}
+.v2-section-head{align-items:flex-start;gap:16px}
+.v2-section-head a{color:#93ebd6}
+.v2-toolbar a{color:#96efdb;border-color:#579d8d;border-radius:8px;box-shadow:none}
+button:not(.tab-btn),.tab-content .card button{box-shadow:none}
+@media(max-width:960px){.v2-dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.v2-metric:nth-child(2){border-right:0!important}.v2-metric:nth-child(-n+2){border-bottom:1px solid var(--adm-line)!important}}
+@media(max-width:700px){.admin-header{padding:14px 0 20px!important}.v2-toolbar{padding:18px 0!important}.tabs{margin-bottom:20px!important}.tab-btn,.tabs .tab-btn{padding:11px 13px!important}.tab-content .card{padding:12px 0 24px!important}.v2-form,.form-grid{grid-template-columns:1fr!important}.v2-metric{padding:14px!important}.v2-section-head{flex-direction:column}.v2-row,.item-row{align-items:flex-start}.v2-row-actions,.item-actions{width:100%;flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
