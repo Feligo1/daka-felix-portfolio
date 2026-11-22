@@ -21,3 +21,5 @@ jobs:
         run: node scripts/check-certificate-admin.mjs
       - name: Verify editorial layout and certificate viewer
         run: node scripts/check-editorial-v5.mjs
+      - name: Verify original color palette and editorial media features
+        run: node scripts/check-newsroom-v6.mjs
