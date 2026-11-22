@@ -644,20 +644,16 @@
     <div class="container">
         <div class="page-header">
             <h1>My Certificates</h1>
-            <p class="page-subtitle">Courses and certifications I have completed.</p>
+            <p class="page-subtitle">Verified training and course completions, with original files where available.</p>
         </div>
 
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-card"><div class="stat-number" id="totalCerts">0</div><div class="stat-label">Total Certificates</div></div>
-            <div class="stat-card red"><div class="stat-number" id="thisYearCerts">0</div><div class="stat-label">Earned This Year</div></div>
-            <div class="stat-card yellow"><div class="stat-number" id="totalIssuers">0</div><div class="stat-label">Issuers</div></div>
-        </div>
+<div class="certificate-metrics" id="statsGrid" aria-label="Certificate overview"><p><strong id="totalCerts">0</strong> course completions <span aria-hidden="true">·</span> <strong id="thisYearCerts">0</strong> this year <span aria-hidden="true">·</span> <strong id="totalIssuers">0</strong> issuers</p></div>
 
-        <div class="filters-container">
+                <div class="filters-container">
             <div class="filter-group" id="filterGroup">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="certificate">Certificates</button>
-                <button class="filter-btn" data-filter="badge">Badges</button>
+                <button class="filter-btn" data-filter="badge">Badges</button><button class="filter-btn" data-filter="achievement">Achievements</button>
             </div>
             <div class="search-box">
                 <i class="fas fa-search"></i>
