@@ -117,14 +117,17 @@ async function submit(section,event){
    if(section==='gallery')data.media_type=file.type.startsWith('video/')?'video':'image';
   }
   const query=id?supabase.from(cfg.table).update(data).eq('id',id):supabase.from(cfg.table).insert(data);
-  const{error}=await query;
+  const {data:saved,error}=await (section==='showcase'?query.select('id').single():query);
   if(error)throw error;
   form.reset();form.elements.namedItem('record_id').value='';
   button.textContent='Save new '+cfg.title.toLowerCase();
-  msg(section,id?'Changes saved.':'New entry saved.');
+  msg(section,section==='showcase'?(id?'Project changes saved.':'Project saved as '+(data.is_published?'published':'draft')+'. You can now attach screenshots or videos below.'):(id?'Changes saved.':'New entry saved.'));
   await refresh(section);
   if(section==='showcase'){
     await refreshProjectOptions();
+    const mediaSelect=document.querySelector('#v2-media-project');
+    if(mediaSelect&&saved?.id)mediaSelect.value=saved.id;
+    await refreshProjectMedia();
     await refreshOverview();
   }
  }catch(err){
