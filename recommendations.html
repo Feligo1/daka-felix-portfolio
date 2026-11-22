@@ -1,3 +1,47 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Professional recommendations for Felix Daka, Computer Science graduate and ICT professional in Zambia."><title>Recommendations | Felix Daka</title><link rel="stylesheet" href="portfolio-v2.css"><script defer src="portfolio-page-nav.js"></script>    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Professional recommendations for Felix Daka, Computer Science graduate and ICT professional in Zambia."><title>Recommendations | Felix Daka</title><link rel="stylesheet" href="portfolio-v2.css">    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="brand-unified.css?v=1">
-</head><body><header class="top"><div class="wrap"><a href="index.html" class="brand">FELIX DAKA<span>.</span></a><button type="button" class="mobile-nav-toggle" aria-controls="portfolioNav" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button><nav class="nav" id="portfolioNav" aria-label="Main"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="expertise.html">Skills</a><a href="certificates.html">Certificates</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a></nav></div></header><main class="wrap"><section class="hero"><span class="eyebrow">Professional credibility</span><h1>Recommendations</h1><p class="lead">Genuine feedback from people I have had the opportunity to work with. Statements are shown only with their permission.</p><a href="about.html" class="button secondary">← About my experience</a></section><section class="section"><div id="recommendations" class="grid" aria-live="polite"><p>Loading recommendations…</p></div></section></main><footer class="footer"><div class="wrap">© 2026 Felix Daka · <a href="mailto:felixddaka@gmail.com">Contact</a></div></footer><script type="module">import{supabase}from './supabase-client.js';import{el,showError}from './portfolio-v2.js';const root=document.querySelector('#recommendations');const{data,error}=await supabase.from('portfolio_recommendations').select('person_name,job_title,organization,quote').eq('is_published',true).eq('permission_confirmed',true).order('created_at',{ascending:false});root.replaceChildren();if(error){console.error(error);showError(root,'Recommendations are temporarily unavailable.')}else if(!data?.length){showError(root,'Professional recommendations will appear here once they have been verified and approved for publication.')}else for(const r of data){const card=el('article','',{class:'card'}),body=el('div','',{class:'body'});body.append(el('p','“'+r.quote+'”'),el('h3',r.person_name),el('p',[r.job_title,r.organization].filter(Boolean).join(' · ')));card.append(body);root.append(card)}</script></body></html>
+    <script src="site-navigation.js" defer></script>
+    <link rel="stylesheet" href="site-polish-v4.css?v=1">
+</head><body><a class="skip-link" href="#main">Skip to content</a><header id="mainHeader" class="site-header">
+    <div class="container header-container">
+      <a class="logo" href="index.html" aria-label="Felix Daka — Home"><span class="brand-mark" aria-hidden="true">▣</span><span class="brand-name">Felix Daka <span class="brand-alias">(Tech Guy)</span></span></a>
+      <nav class="primary-nav" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active" aria-current="page">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="journal.html">Journal</a>
+                <a href="contact.html">Contact</a>
+      </nav>
+      <div class="menu-container">
+        <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false" aria-label="Open navigation menu"><span class="menu-label">Menu</span><span class="menu-glyph" aria-hidden="true">☰</span></button>
+        <div class="menu-content" id="menuContent" aria-label="Mobile navigation">
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active" aria-current="page">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="journal.html">Journal</a>
+                <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </header><main id="main" class="wrap"><section class="hero"><span class="eyebrow">Professional credibility</span><h1>Recommendations</h1><p class="lead">Genuine feedback from people I have had the opportunity to work with. Statements are shown only with their permission.</p><a href="about.html" class="button secondary">← About my experience</a></section><section class="section"><div id="recommendations" class="grid" aria-live="polite"><p>Loading recommendations…</p></div></section></main><footer class="site-footer">
+   <div class="site-footer-inner">
+     <div class="site-footer-summary">
+       <strong>Felix Daka <span>(Tech Guy)</span></strong>
+       <p id="footerText">Computer Science graduate · Zambia</p>
+     </div>
+     <div class="site-footer-links" id="socialIcons">
+       <a href="https://github.com/Feligo1" target="_blank" rel="noopener noreferrer">GitHub</a>
+       <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+       <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" rel="noopener noreferrer">Facebook</a>
+       <a href="https://wa.me/260774496821" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+     </div>
+   </div>
+   <div class="site-footer-bottom">
+     <span>© 2026 Felix Daka. All rights reserved.</span>
+     <small>Anonymous analytics are used to understand site visits; no names are collected in visit records.</small>
+   </div>
+ </footer><script type="module">import{supabase}from './supabase-client.js';import{el,showError}from './portfolio-v2.js';const root=document.querySelector('#recommendations');const{data,error}=await supabase.from('portfolio_recommendations').select('person_name,job_title,organization,quote').eq('is_published',true).eq('permission_confirmed',true).order('created_at',{ascending:false});root.replaceChildren();if(error){console.error(error);showError(root,'Recommendations are temporarily unavailable.')}else if(!data?.length){showError(root,'Professional recommendations will appear here once they have been verified and approved for publication.')}else for(const r of data){const card=el('article','',{class:'card'}),body=el('div','',{class:'body'});body.append(el('p','“'+r.quote+'”'),el('h3',r.person_name),el('p',[r.job_title,r.organization].filter(Boolean).join(' · ')));card.append(body);root.append(card)}</script></body></html>

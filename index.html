@@ -542,25 +542,36 @@
     <script src="site-navigation.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="brand-unified.css?v=1">
+    <link rel="stylesheet" href="site-polish-v4.css?v=1">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header id="mainHeader">
-        <div class="container header-container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Felix Daka <span style="color: var(--accent);">(Tech Guy)</span></span>
-            </a>
-            <nav class="primary-nav" aria-label="Main navigation"><a href="index.html" class="active" aria-current="page">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="expertise.html">Skills</a><a href="certificates.html">Certificates</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a></nav>
-            <div class="menu-container">
-                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                    <span>Menu</span>
-                </button>
-                <div class="menu-content" id="menuContent" aria-label="Mobile navigation"><a href="index.html" class="active" aria-current="page">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="expertise.html">Skills</a><a href="certificates.html">Certificates</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a></div>
-            </div>
+    <header id="mainHeader" class="site-header">
+    <div class="container header-container">
+      <a class="logo" href="index.html" aria-label="Felix Daka — Home"><span class="brand-mark" aria-hidden="true">▣</span><span class="brand-name">Felix Daka <span class="brand-alias">(Tech Guy)</span></span></a>
+      <nav class="primary-nav" aria-label="Main navigation">
+                <a href="index.html" class="active" aria-current="page">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="journal.html">Journal</a>
+                <a href="contact.html">Contact</a>
+      </nav>
+      <div class="menu-container">
+        <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false" aria-label="Open navigation menu"><span class="menu-label">Menu</span><span class="menu-glyph" aria-hidden="true">☰</span></button>
+        <div class="menu-content" id="menuContent" aria-label="Mobile navigation">
+                <a href="index.html" class="active" aria-current="page">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="journal.html">Journal</a>
+                <a href="contact.html">Contact</a>
         </div>
-    </header>
+      </div>
+    </div>
+  </header>
     <main id="main-content" tabindex="-1">
 
 
@@ -613,24 +624,24 @@
     </div>
 
         </main>
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">Felix Daka <span>(Tech Guy)</span></div>
-                    <p id="footerText">Computer Science graduate in Zambia, with experience in IT support and networking.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Connect</h4>
-                    <div class="social-icons" id="socialIcons"></div>
-                </div>
-            </div>
-            <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
-            <div class="copyright">
-                <p>&copy; 2026 Felix Daka (Tech Guy). All rights reserved. Proudly Zambian</p>
-            </div>
-        </div>
-    </footer>
+    <footer class="site-footer">
+   <div class="site-footer-inner">
+     <div class="site-footer-summary">
+       <strong>Felix Daka <span>(Tech Guy)</span></strong>
+       <p id="footerText">Computer Science graduate · Zambia</p>
+     </div>
+     <div class="site-footer-links" id="socialIcons">
+       <a href="https://github.com/Feligo1" target="_blank" rel="noopener noreferrer">GitHub</a>
+       <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+       <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" rel="noopener noreferrer">Facebook</a>
+       <a href="https://wa.me/260774496821" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+     </div>
+   </div>
+   <div class="site-footer-bottom">
+     <span>© 2026 Felix Daka. All rights reserved.</span>
+     <small>Anonymous analytics are used to understand site visits; no names are collected in visit records.</small>
+   </div>
+ </footer>
 
     <div id="toast" class="toast-notification">
         <i class="fas fa-check-circle"></i>

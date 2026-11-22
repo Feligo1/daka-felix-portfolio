@@ -15,3 +15,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Check required files and relative links
         run: node scripts/verify-site.mjs
+      - name: Check cross-page navigation and responsive layout
+        run: node scripts/check-layout-consistency.mjs
