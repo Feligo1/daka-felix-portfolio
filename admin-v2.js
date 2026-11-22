@@ -5,10 +5,38 @@ let authorized=false;
 const msg=(section,text,err=false)=>{const n=document.querySelector('#v2-'+section+'-status');if(n){n.textContent=text;n.style.borderColor=err?'#d76b74':'#35506a'}};
 async function check(){const{data:{user},error}=await supabase.auth.getUser();if(error||!user)throw Error('Sign in to manage portfolio content.');const{data:role,error:roleError}=await supabase.from('portfolio_admins').select('user_id').eq('user_id',user.id).maybeSingle();if(roleError||!role)throw Error('Your account is not authorized to manage portfolio content.');authorized=true}
 async function upload(section,file){if(!file)return null;const cfg=tables[section];if(!cfg.bucket)throw Error('This section does not support uploads.');const image=/^image\/(jpeg|png|webp|gif)$/.test(file.type);const video=section==='showcase'&&/^video\/(mp4|webm)$/.test(file.type);if(!image&&!video)throw Error('Unsupported media type. Use JPG, PNG, WebP or GIF'+(section==='showcase'?', MP4 or WebM.':'.'));const max=video?20:10;if(file.size>max*1024*1024)throw Error('File too large (limit '+max+' MB).');const extension=(file.type.split('/')[1]||'bin').replace('jpeg','jpg');const path='published/'+crypto.randomUUID()+'.'+extension;const {error}=await supabase.storage.from(cfg.bucket).upload(path,file,{contentType:file.type,cacheControl:'3600',upsert:false});if(error)throw error;return supabase.storage.from(cfg.bucket).getPublicUrl(path).data.publicUrl}
+
+async function removeManagedUpload(bucket,url){
+ if(!bucket||!url)return null;
+ try{
+  const parsed=new URL(url);
+  if(parsed.origin!==new URL('https://pthcviwhcsluovdekjub.supabase.co').origin)return null;
+  const prefix='/storage/v1/object/public/'+bucket+'/';
+  if(!parsed.pathname.startsWith(prefix))return null;
+  const objectPath=decodeURIComponent(parsed.pathname.slice(prefix.length));
+  if(!/^published\/[0-9a-f-]{36}\.(?:jpg|png|webp|gif|mp4|webm)$/i.test(objectPath))return null;
+  const{error}=await supabase.storage.from(bucket).remove([objectPath]);
+  return error?.message||null;
+ }catch(error){return error.message}
+}
+
 function validateUrl(value){if(!value)return null;const url=new URL(value);if(url.protocol!=='https:')throw Error('Use an HTTPS URL.');return url.toString()}
 function payload(section,form){const cfg=tables[section];const data={};for(const key of cfg.fields){const element=form.elements.namedItem(key);if(!element)continue;const value=element.value.trim();data[key]=key==='technologies'?value.split(',').map(x=>x.trim()).filter(Boolean):key==='display_order'?(Number.parseInt(value,10)||0):key==='is_featured'?element.checked:(['github_url','demo_url'].includes(key)?validateUrl(value):value)}if(section==='showcase'||section==='journal'){data.slug=data.slug.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');if(!data.slug)throw Error('Enter a valid URL slug.')}data.is_published=!!form.elements.namedItem('is_published')?.checked;if(section==='recommendations'){data.permission_confirmed=!!form.elements.namedItem('permission_confirmed')?.checked;if(data.is_published&&!data.permission_confirmed)throw Error('Confirm permission before publishing the recommendation.')}return data}
 function setForm(section,data){const form=document.querySelector('#v2-'+section+'-form');form.reset();for(const key of tables[section].fields){const f=form.elements.namedItem(key);if(f){if(f.type==='checkbox')f.checked=!!data[key];else f.value=Array.isArray(data[key])?data[key].join(', '):(data[key]??'')}}form.elements.namedItem('record_id').value=data.id||'';form.elements.namedItem('is_published').checked=!!data.is_published;if(section==='recommendations')form.elements.namedItem('permission_confirmed').checked=!!data.permission_confirmed;form.querySelector('button[type=submit]').textContent=data.id?'Save changes':'Save new '+tables[section].title.toLowerCase();form.scrollIntoView({behavior:'smooth',block:'start'})}
-async function refresh(section){if(!authorized)return;const cfg=tables[section],box=document.querySelector('#v2-'+section+'-list');box.replaceChildren(E('p','Loading…'));const{data,error}=await supabase.from(cfg.table).select('*').order('created_at',{ascending:false}).limit(100);if(error){box.replaceChildren(E('p','Could not load data: '+error.message));return}box.replaceChildren();if(!data.length){box.append(E('p','No entries yet. Create the first one.'));return}for(const item of data){const row=E('div','',{class:'v2-row'}),info=E('div'),actions=E('div','',{class:'v2-row-actions'});info.append(E('strong',item.title||item.person_name||'Untitled'),E('small',(item.is_published?'Published':'Draft')+' · '+new Date(item.created_at).toLocaleDateString()));const edit=E('button','Edit',{type:'button'});edit.addEventListener('click',()=>setForm(section,item));const remove=E('button','Delete',{type:'button'});remove.addEventListener('click',async()=>{if(!confirm('Delete this '+cfg.title.toLowerCase()+'? This cannot be undone.'))return;remove.disabled=true;const{error}=await supabase.from(cfg.table).delete().eq('id',item.id);if(error){msg(section,error.message,true);remove.disabled=false}else{msg(section,'Deleted.');refresh(section)}});actions.append(edit,remove);row.append(info,actions);box.append(row)}}
+async function refresh(section){if(!authorized)return;const cfg=tables[section],box=document.querySelector('#v2-'+section+'-list');box.replaceChildren(E('p','Loading…'));const{data,error}=await supabase.from(cfg.table).select('*').order('created_at',{ascending:false}).limit(100);if(error){box.replaceChildren(E('p','Could not load data: '+error.message));return}box.replaceChildren();if(!data.length){box.append(E('p','No entries yet. Create the first one.'));return}for(const item of data){const row=E('div','',{class:'v2-row'}),info=E('div'),actions=E('div','',{class:'v2-row-actions'});info.append(E('strong',item.title||item.person_name||'Untitled'),E('small',(item.is_published?'Published':'Draft')+' · '+new Date(item.created_at).toLocaleDateString()));const edit=E('button','Edit',{type:'button'});edit.addEventListener('click',()=>setForm(section,item));const remove=E('button','Delete',{type:'button'});remove.addEventListener('click',async()=>{if(!confirm('Delete this '+cfg.title.toLowerCase()+'? This cannot be undone.'))return;remove.disabled=true;let oldMedia=[];
+if(section==='showcase'){
+ const{data:child,error:childError}=await supabase.from('portfolio_project_media').select('media_url,media_type').eq('project_id',item.id);
+ if(childError){msg(section,childError.message,true);remove.disabled=false;return}
+ oldMedia=child.filter(x=>x.media_type!=='external_video').map(x=>x.media_url);
+}
+const{error}=await supabase.from(cfg.table).delete().eq('id',item.id);
+if(error){msg(section,error.message,true);remove.disabled=false}else{
+ const warnings=[];
+ if(cfg.media&&item[cfg.media]){const issue=await removeManagedUpload(cfg.bucket,item[cfg.media]);if(issue)warnings.push(issue)}
+ for(const url of oldMedia){const issue=await removeManagedUpload('portfolio-project-media',url);if(issue)warnings.push(issue)}
+ msg(section,warnings.length?'Record deleted; some media needs cleanup: '+warnings.join('; '):'Entry and managed media deleted.',!!warnings.length);
+ await refresh(section);
+}});actions.append(edit,remove);row.append(info,actions);box.append(row)}}
 async function submit(section,event){event.preventDefault();if(!authorized){msg(section,'Unauthorized session.',true);return}const cfg=tables[section],form=event.currentTarget,button=form.querySelector('button[type=submit]');button.disabled=true;msg(section,'Saving…');try{const data=payload(section,form),id=form.elements.namedItem('record_id').value;const file=form.elements.namedItem('media_file')?.files?.[0];if(file){if(!data.is_published)throw Error('Media uploads go to public buckets. Publish the entry first or save the draft without media.');if(!cfg.media)throw Error('No media field');data[cfg.media]=await upload(section,file);if(section==='showcase')data.cover_alt=data.title;}let query=id?supabase.from(cfg.table).update(data).eq('id',id):supabase.from(cfg.table).insert(data);const{error}=await query;if(error)throw error;form.reset();form.elements.namedItem('record_id').value='';button.textContent='Save new '+cfg.title.toLowerCase();msg(section,'Saved successfully.');await refresh(section);if(section==='showcase')await refreshProjectOptions()}catch(err){msg(section,err.message||'Save failed.',true)}finally{button.disabled=false}}
 
 async function refreshOverview(){
@@ -114,7 +142,11 @@ async function refreshProjectMedia(){
    del.disabled=true;
    const{error}=await supabase.from('portfolio_project_media').delete().eq('id',m.id);
    if(error){msg('showcase',error.message,true);del.disabled=false}
-   else{msg('showcase','Media record deleted. Remove the orphaned storage file using Storage if this was a direct upload.');await refreshProjectMedia()}
+   else{
+    const issue=m.media_type==='external_video'?null:await removeManagedUpload('portfolio-project-media',m.media_url);
+    msg('showcase',issue?'Media record deleted; storage cleanup failed: '+issue:'Media record and managed file deleted.',!!issue);
+    await refreshProjectMedia();
+   }
  });
  actions.append(edit,del);row.append(info,actions);root.append(row)
 }
