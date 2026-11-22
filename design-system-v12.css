@@ -329,3 +329,71 @@ body :where(.feature-grid,.projects-news-list){border-top:0!important}
  body .career-credentials p{font-size:.82rem!important;line-height:1.9!important}
  body .credential-separator{padding-inline:6px!important}
 }
+
+
+/* v14: remove ornamental rules across ALL public portfolio pages.
+   Preserve outlines on interactive inputs, cards and certificate viewer controls. */
+body :is(
+  .career-credentials,.career-credentials .container,
+  .page-header,.wrap>section.hero,.section-title,.feature-heading,
+  .newsroom-heading,.newsroom-section,.featured-work,.journal-feature,
+  .home-cta,.cta-section,.about-content + .journey-section,
+  .section-jump-nav,#education,#career-gallery.facebook-about-feed,
+  .certificate-metrics,.filters-container,.home-highlights,
+  .professional-references,.skills-footer-cta,
+  .response-info,.visitor-counter
+){
+  border:0!important;
+  border-top:0!important;
+  border-bottom:0!important;
+  border-block:0!important;
+  box-shadow:none!important;
+}
+body :is(
+  .timeline-item,.certificate-row,.expertise-row,
+  .contact-item,.contact-detail,
+  .newsroom-feed .story-item,.projects-news-list .project-story,
+  .project-feature-media .project-media-item,
+  .project-feature-media .project-media-grid .project-media-item,
+  .project-feature-media .project-media-group-header,
+  #career-gallery .fb-post-actions
+){
+  border-top:0!important;
+  border-bottom:0!important;
+  border-block:0!important;
+}
+body :is(
+  #projects .card,#posts .card,#recommendations .card,
+  #homeFeaturedProjects .feature-card,#homeLatestArticle .feature-card
+){border-bottom:0!important;}
+body :is(.feature-grid,.projects-news-list,.newsroom-feed){
+ border-top:0!important;border-bottom:0!important;
+}
+body :is(
+  .section-title h2,.feature-heading h2,.newsroom-heading h2,
+  .page-header h1,.about-text h2,.contact-info h2
+)::after{display:none!important;}
+body :is(.career-credentials,.page-header,.section-title,.feature-heading){
+ background-image:none!important;
+}
+body .career-credentials{padding:16px 0 4px!important;}
+body .section-title,body .feature-heading,body .newsroom-heading{
+ padding-bottom:0!important;margin-bottom:30px!important;
+}
+body .page-header{padding-bottom:clamp(30px,4vw,50px)!important;}
+body .timeline-item,body .certificate-row,body .expertise-row{
+ margin-bottom:clamp(10px,2vw,20px)!important;
+}
+body .projects-news-list .project-story,
+body .newsroom-feed .story-item{margin-bottom:14px!important;}
+/* Navigation and footer now separate via space and surface, not hard lines. */
+body #mainHeader,body #mainHeader.scrolled{
+ border-bottom:0!important;box-shadow:none!important;
+}
+body :is(.site-footer,.footer,footer){border-top:0!important;}
+/* Keep section rhythm consistent when ornamental lines are removed. */
+body .featured-work + .journal-feature{padding-top:clamp(44px,6vw,78px)!important;}
+@media(max-width:680px){
+ body .section-title,body .feature-heading,body .newsroom-heading{margin-bottom:22px!important;}
+ body .career-credentials{padding:12px 0 0!important;}
+}
