@@ -772,10 +772,10 @@
         async function loadAboutImage() {
             try {
                 const settings = await getSiteSettings()
-                const defaultAbout = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
+                const defaultAbout = 'felix.jpg'
                 document.getElementById('aboutImage').src = settings.about_image_url || defaultAbout
             } catch (error) {
-                document.getElementById('aboutImage').src = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
+                document.getElementById('aboutImage').src = 'felix.jpg'
             }
         }
         
@@ -787,7 +787,7 @@
                 const email = settings.contact_email || 'felixddaka@gmail.com'
                 
                 document.getElementById('contactInfo').innerHTML = `
-                    <div class="contact-detail"><i class="fas fa-user"></i><div><strong>Name</strong><br>Daka Felix (Tech Guy)</div></div>
+                    <div class="contact-detail"><i class="fas fa-user"></i><div><strong>Name</strong><br>Felix Daka (Tech Guy)</div></div>
                     <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><div><strong>Location</strong><br>Zambia, Africa</div></div>
                     <div class="contact-detail"><i class="fas fa-phone"></i><div><strong>Phone & WhatsApp</strong><br>${escapeHtml(phone)}</div></div>
                     <div class="contact-detail"><i class="fas fa-envelope"></i><div><strong>Email</strong><br>${escapeHtml(email)}</div></div>
@@ -802,7 +802,7 @@
             try {
                 const settings = await getSiteSettings()
                 const github = settings.contact_github || 'https://github.com/Feligo1'
-                const linkedin = settings.contact_linkedin || 'https://www.linkedin.com/in/felixdaka-zm'
+                const linkedin = settings.contact_linkedin || 'https://www.linkedin.com/in/felix-daka-5b6058212'
                 const facebook = settings.contact_facebook || 'https://www.facebook.com/share/1AJKpFspAB/'
                 const whatsapp = settings.contact_whatsapp || 'https://wa.me/260774496821'
                 
