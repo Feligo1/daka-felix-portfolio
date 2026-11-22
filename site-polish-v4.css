@@ -200,3 +200,35 @@ body footer{border-top:1px solid #304758}
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+/* Shared minimal footer: no second navigation directory or repeated biography. */
+body .site-footer{
+ background:#0a1727;border-top:1px solid #304657;
+ margin-top:clamp(40px,6vw,78px);padding:0!important;
+ color:#b6cbd7;position:relative;z-index:1;
+}
+body .site-footer-inner{
+ width:min(calc(100% - 40px),1160px);margin:0 auto;padding:30px 0 22px;
+ display:flex;justify-content:space-between;align-items:center;gap:24px;
+}
+body .site-footer-summary{min-width:0}
+body .site-footer-summary strong{color:#f1f7fb;display:block;font-weight:800;font-size:1.03rem;letter-spacing:-.02em}
+body .site-footer-summary strong span{color:#68e1c2}
+body .site-footer-summary p{margin:6px 0 0;color:#a6bccd;font-size:.91rem;line-height:1.5}
+body .site-footer-links{display:flex!important;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:clamp(14px,2vw,26px)}
+body .site-footer-links a{
+ text-decoration:none;color:#c6d9e3;font-size:.92rem;font-weight:600;display:inline-flex;
+ align-items:center;min-height:44px;background:none!important;border:0;box-shadow:none;
+}
+body .site-footer-links a:hover{color:#81ebcc;text-decoration:underline}
+body .site-footer-bottom{
+ width:min(calc(100% - 40px),1160px);margin:0 auto;border-top:1px solid #30465a;
+ display:flex;justify-content:space-between;align-items:start;gap:20px;
+ padding:15px 0 22px;color:#9eb5c5;font-size:.78rem;line-height:1.5;
+}
+body .site-footer-bottom small{font-size:inherit;max-width:600px;text-align:right}
+@media(max-width:700px){
+ body .site-footer-inner{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;padding:23px 0 13px;gap:12px}
+ body .site-footer-links{justify-content:flex-start;gap:20px}
+ body .site-footer-bottom{width:calc(100% - 32px);flex-direction:column;gap:8px;padding:14px 0 20px}
+ body .site-footer-bottom small{text-align:left}
+}
