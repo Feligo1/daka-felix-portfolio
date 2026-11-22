@@ -271,6 +271,7 @@
 <link rel="stylesheet" href="admin-editorial-v5.css?v=1">
 <link rel="stylesheet" href="newsroom-theme-v6.css?v=1">
     <link rel="stylesheet" href="natural-media-v7.css?v=1">
+<link rel="stylesheet" href="admin-projects-v10.css?v=1">
 </head>
 <body>
     <div class="login-screen" id="loginScreen">
@@ -335,9 +336,67 @@
                 <button class="tab-btn" data-tab="security">Security</button>
             </div>
 
-            <div id="showcaseTab" class="tab-content"><div class="card"><div class="v2-section-head"><div><h2>Project stories</h2><p>Manage real technical work and its supporting media. Published stories appear automatically on the public website.</p></div><a href="projects.html" target="_blank" rel="noopener noreferrer" style="color:#91f5da">View public page ↗</a></div><p id="v2-showcase-status" class="v2-status" role="status" aria-live="polite">Sign in to manage this content.</p><form id="v2-showcase-form" class="v2-form"><input type="hidden" name="record_id"><label class="">Project title<input type="text" name="title" required ></label><label class="">URL slug<input type="text" name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*"></label><label class="full">Short summary<textarea name="summary" rows="4"></textarea></label><label class="full">Detailed case study<textarea name="description" rows="4"></textarea></label><label>Project category<select name="category" id="projectCategory" required><option value="Software Development">Software Development</option><option value="Web Development">Web Development</option><option value="Cloud &amp; AI">Cloud &amp; AI</option><option value="Networking">Networking</option><option value="Cybersecurity">Cybersecurity</option><option value="IT Support">IT Support</option><option value="Previous projects">Previous projects</option><option value="Other">Other</option></select></label><label class="">Technologies (comma separated)<input type="text" name="technologies"  ></label><label class="">GitHub URL<input type="url" name="github_url"  ></label><label class="">Live demo URL<input type="url" name="demo_url"  ></label><label>Display order <input type="number" name="display_order" value="0" step="1"></label>
-<label class="check full"><input type="checkbox" name="is_featured"> Feature on the homepage</label>
-<label class="full">Cover / gallery image (JPG, PNG, WebP, GIF; video uploads need separate project media support)<input type="file" name="media_file" accept="image/jpeg,image/png,image/webp,image/gif"></label><label class="check full"><input type="checkbox" name="is_published"> Publish this entry on the public website</label><div class="full"><button type="submit">Save new project</button> <button type="button" id="v2-showcase-reset">Clear / New</button></div></form></div><div class="card"><h2>Existing projects</h2><div id="v2-showcase-list" class="v2-list" aria-live="polite">Open this section to load records.</div></div><div class="card"><h2>Project media highlights</h2><p>Publish a project above first. Upload real screenshots or MP4/WebM clips up to 20 MB, or use a valid YouTube embed URL.</p><form id="v2-project-media-form" class="v2-form"><label>Published project<select id="v2-media-project" name="project_id" required><option value="">Choose a published project</option></select></label><label>Screenshot or video<input type="file" name="media_file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm"></label><label class="full">Or YouTube embed URL<input type="url" name="external_video" placeholder="https://www.youtube.com/embed/VIDEO_ID"></label><label>Caption<input type="text" name="caption" maxlength="200"></label><label>Image description for accessibility<input type="text" name="alt_text" maxlength="300"></label><div class="full"><button type="submit">Add project media</button></div></form><div id="v2-media-list" class="v2-list" aria-live="polite"></div></div></div>
+            <div id="showcaseTab" class="tab-content">
+  <div class="card">
+    <div class="v2-section-head">
+      <div><h2>Projects · Create &amp; edit</h2><p>Publish actual work with evidence, not general skills or services. Save your project as a draft first, add screenshots or videos, then publish.</p></div>
+      <a href="projects.html" target="_blank" rel="noopener noreferrer">View public projects</a>
+    </div>
+    <p id="v2-showcase-status" class="v2-status" role="status" aria-live="polite">Select a project or create a new one.</p>
+    <form id="v2-showcase-form" class="v2-form project-editor">
+      <input type="hidden" name="record_id">
+      <fieldset class="project-editor-group">
+        <legend>1 · Project information</legend>
+        <div class="project-field-grid">
+          <label>Project title<input type="text" name="title" maxlength="180" placeholder="e.g. Cloud-Based Market Information Platform for Farmers" required></label>
+          <label>URL slug<input type="text" name="slug" maxlength="150" placeholder="Generated from the title" pattern="[a-z0-9]+(-[a-z0-9]+)*" required><small>Used in the project page URL. Generated automatically; you can edit it.</small></label>
+          <label class="full">Short project summary<textarea name="summary" rows="3" maxlength="600" placeholder="What problem does this project address?"></textarea></label>
+          <label class="full">Project case study<textarea name="description" rows="7" placeholder="Explain the problem, your role, approach, technologies, current progress and outcome."></textarea></label>
+          <label>Category<select name="category" id="projectCategory" required>
+            <option value="Software Development">Software Development</option><option value="Web Development">Web Development</option>
+            <option value="Cloud &amp; AI">Cloud &amp; AI</option><option value="Networking">Networking</option>
+            <option value="Cybersecurity">Cybersecurity</option><option value="IT Support">IT Support</option>
+            <option value="Previous projects">Previous projects</option><option value="Other">Other</option>
+          </select></label>
+          <label>Technologies<input type="text" name="technologies" placeholder="Python, Flask, JavaScript (comma separated)"></label>
+        </div>
+      </fieldset>
+      <fieldset class="project-editor-group">
+        <legend>2 · Evidence and visibility</legend>
+        <div class="project-field-grid">
+          <label>GitHub repository URL<input type="url" name="github_url" placeholder="https://github.com/..."></label>
+          <label>Live demonstration URL<input type="url" name="demo_url" placeholder="https://..."></label>
+          <label>Display order<input type="number" name="display_order" value="0" step="1"></label>
+          <label class="project-check"><input type="checkbox" name="is_featured"> Feature this project on Home</label>
+          <label class="full">Project cover image<input type="file" name="media_file" accept="image/jpeg,image/png,image/webp,image/gif"><small>Optional. Use a real screenshot or project photograph; supported formats JPG, PNG, WebP or GIF.</small></label>
+          <label class="project-check full"><input type="checkbox" name="is_published"> Publish this project publicly</label>
+          <p class="full project-editor-hint">Leave Publish unchecked to keep your work as a draft. Drafts remain in Admin and do not appear on the public Projects page. You can attach project media before publishing.</p>
+        </div>
+      </fieldset>
+      <div class="project-editor-actions">
+        <button type="submit">Save new project</button>
+        <button type="button" id="v2-showcase-reset">Clear / New</button>
+      </div>
+    </form>
+  </div>
+  <div class="card">
+    <div class="v2-section-head"><div><h2>Saved projects</h2><p>Published projects appear publicly. Older generic categories were retained as drafts so you can reuse or remove them safely.</p></div></div>
+    <div id="v2-showcase-list" class="v2-list" aria-live="polite">Loading your projects…</div>
+  </div>
+  <div class="card" id="projectMediaManager">
+    <h2>3 · Project photos and videos</h2>
+    <p>Save a project first. Then select it below to attach real screenshots, MP4/WebM demonstrations or a YouTube embed link. Draft projects can have media before you publish them.</p>
+    <form id="v2-project-media-form" class="v2-form">
+      <label class="full">Select a saved project<select id="v2-media-project" name="project_id" required><option value="">Choose project</option></select></label>
+      <label>Screenshot or video<input type="file" name="media_file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm"><small>Images up to 10 MB; MP4/WebM up to 20 MB.</small></label>
+      <label>Or YouTube embed URL<input type="url" name="external_video" placeholder="https://www.youtube.com/embed/VIDEO_ID"></label>
+      <label>Caption<input type="text" name="caption" maxlength="200" placeholder="What does the image or demonstration show?"></label>
+      <label>Accessibility description<input type="text" name="alt_text" maxlength="300" placeholder="Describe what is visible"></label>
+      <div class="full"><button type="submit">Add media to project</button></div>
+    </form>
+    <div id="v2-media-list" class="v2-list" aria-live="polite">Choose a project to view attached media.</div>
+  </div>
+</div>
 <div id="galleryTab" class="tab-content"><div class="card"><div class="v2-section-head"><div><h2>Life &amp; career stories</h2><p>Create, edit, publish or remove your portfolio content.</p></div><a href="about.html" target="_blank" rel="noopener noreferrer" style="color:#91f5da">View public page ↗</a></div><p id="v2-gallery-status" class="v2-status" role="status" aria-live="polite">Sign in to manage this content.</p><form id="v2-gallery-form" class="v2-form"><input type="hidden" name="record_id"><label>Story title<select id="galleryTitlePreset" class="preset-select" aria-label="Suggested gallery photo titles"><option value="">Choose a title suggestion (optional)</option></select><input type="text" name="title" required maxlength="160" placeholder="Choose above or write your own title"></label><label class="">Story category<select name="category" id="galleryCategory" required aria-describedby="galleryCategoryHint"><option value="Graduation">Graduation</option><option value="At Work">At Work</option><option value="Personal" selected>Personal</option><option value="Events">Events</option></select><small id="galleryCategoryHint" style="display:block;color:#b7cad8">Select the correct category for your photo.</small></label><label class="full">Story / video caption<textarea name="caption" rows="4" placeholder="What was happening in this photo?"></textarea></label><label class="">Accessible media description<input type="text" name="alt_text" placeholder="Describe what is visible in the actual photograph"></label><label class="">Event date<input type="date" name="event_date"  ></label><label class="full">Photo or short video (JPG, PNG, WebP, GIF, MP4, WebM; 20 MB limit)<input type="file" name="media_file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm"></label><label class="full">Or YouTube embed URL<input type="url" name="external_video" placeholder="https://www.youtube.com/embed/VIDEO_ID"><small>Use either a file or a YouTube embed link. Leave both empty to save an unpublished draft.</small></label><label class="check full"><input type="checkbox" name="is_published"> Publish this story on the public website</label><div class="full"><button type="submit">Save story</button> <button type="button" id="v2-gallery-reset">Clear / New</button></div></form></div><div class="card"><h2>Published and draft stories</h2><div id="v2-gallery-list" class="v2-list" aria-live="polite">Select this tab to load records.</div></div></div>
 <div id="journalTab" class="tab-content"><div class="card"><div class="v2-section-head"><div><h2>Technical journal</h2><p>Create, edit, publish or remove your portfolio content.</p></div><a href="journal.html" target="_blank" rel="noopener noreferrer" style="color:#91f5da">View public page ↗</a></div><p id="v2-journal-status" class="v2-status" role="status" aria-live="polite">Sign in to manage this content.</p><form id="v2-journal-form" class="v2-form"><input type="hidden" name="record_id"><label>Article title<select id="journalTitlePreset" class="preset-select" aria-label="Suggested journal article titles"><option value="">Choose a title suggestion (optional)</option></select><input type="text" name="title" required maxlength="160" placeholder="Write your article title"></label><label>Article URL slug<input type="text" name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="Generated from title; editable" aria-describedby="journalSlugHint"><small id="journalSlugHint">Generated automatically. Lowercase letters, numbers and hyphens only.</small></label><label class="full">Excerpt<textarea name="summary" rows="3" maxlength="1000" placeholder="Short description of the article"></textarea><button type="button" class="preset-action" id="journalExcerptHelper">Suggest excerpt from article</button></label><label>Topic<select name="category" id="journalTopic" required><option value="Technology">Technology</option><option value="Networking">Networking</option><option value="Cybersecurity">Cybersecurity</option><option value="Programming">Programming</option><option value="Cloud Computing">Cloud Computing</option><option value="IT Support">IT Support</option><option value="Project Updates">Project Updates</option><option value="Artificial Intelligence">Artificial Intelligence</option><option value="Database Systems">Database Systems</option><option value="Web Development">Web Development</option></select></label><label class="full">Article body (plain text; paragraphs supported)<textarea name="body" rows="4"></textarea></label><label class="full">Cover / gallery image<input type="file" name="media_file" accept="image/jpeg,image/png,image/webp,image/gif"></label><label class="check full"><input type="checkbox" name="is_published"> Publish this entry on the public website</label><div class="full"><button type="submit">Save new article</button> <button type="button" id="v2-journal-reset">Clear / New</button></div></form></div><div class="card"><h2>Existing articles</h2><div id="v2-journal-list" class="v2-list" aria-live="polite">Select this tab to load records.</div></div></div>
 <div id="recommendationsTab" class="tab-content"><div class="card"><div class="v2-section-head"><div><h2>Professional recommendations</h2><p>Create, edit, publish or remove your portfolio content.</p></div><a href="about.html" target="_blank" rel="noopener noreferrer" style="color:#91f5da">View public page ↗</a></div><p id="v2-recommendations-status" class="v2-status" role="status" aria-live="polite">Sign in to manage this content.</p><form id="v2-recommendations-form" class="v2-form"><input type="hidden" name="record_id"><label class="">Recommender name<input type="text" name="person_name" required ></label><label class="">Job title<input type="text" name="job_title"  ></label><label class="">Organization<input type="text" name="organization"  ></label><label class="full">Exact approved recommendation<textarea name="quote" rows="4"></textarea></label><label class="check full"><input type="checkbox" name="permission_confirmed"> I have the recommender's permission to publish this statement</label><label class="check full"><input type="checkbox" name="is_published"> Publish this entry on the public website</label><div class="full"><button type="submit">Save new recommendation</button> <button type="button" id="v2-recommendations-reset">Clear / New</button></div></form></div><div class="card"><h2>Existing recommendations</h2><div id="v2-recommendations-list" class="v2-list" aria-live="polite">Select this tab to load records.</div></div></div>
@@ -1428,7 +1487,7 @@
             if (session) await showAdminPanel();
         }).catch(error => showToast(error.message || 'Could not connect to Supabase', 'error'));
     </script>
-    <script type="module" src="admin-v2.js?v=6"></script>
+    <script type="module" src="admin-v2.js?v=10"></script>
 <script type="module" src="admin-smart-forms.js?v=2"></script>
 </body>
 </html>
