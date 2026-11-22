@@ -122,3 +122,31 @@ input,select,textarea{min-width:0;max-width:100%}
 }
 @media(max-width:360px){#mainHeader .logo span{font-size:.82rem}.hero .hero-image{max-width:175px}.hero h1{font-size:2.15rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Recruitment homepage components */
+.career-headline{color:#9ef0dc;font-size:clamp(1.05rem,1.7vw,1.28rem);font-weight:650;line-height:1.4;margin:0 0 17px}
+.home-highlights{padding:30px 0;background:#14273b;border-block:1px solid #324d5d}
+.career-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.career-facts>div{padding:18px 16px;border:1px solid #35586a;border-radius:15px;background:#1c3345}
+.career-facts strong{display:block;font-size:clamp(1rem,1.55vw,1.24rem);color:#effcfa}
+.career-facts span{display:block;color:#b6cdd8;font-size:.89rem}
+.featured-work,.journal-feature{padding-block:clamp(48px,7vw,82px)}
+.journal-feature{background:#12263a}
+.feature-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.feature-heading h2{margin:2px 0 12px;text-align:left}
+.feature-heading h2:after{display:none}
+.feature-heading p{color:#b9cfda;margin:0}
+.feature-kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;font-weight:750;color:#6ce1c6}
+.feature-view-all,.feature-link{display:inline-flex;color:#a0f7df;text-decoration:none;font-weight:700}
+.feature-view-all:hover,.feature-link:hover{text-decoration:underline}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:22px}
+.feature-card{overflow:hidden;border:1px solid #375567;border-radius:18px;background:#1b3347;min-width:0;transition:transform .2s,border-color .2s}
+.feature-card:hover{transform:translateY(-4px);border-color:#69cdb6}
+.feature-card img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.feature-card-body{padding:22px}
+.feature-category{color:#8eead2;text-transform:uppercase;font-size:.76rem;letter-spacing:.1em}
+.feature-card h3{font-size:1.25rem;margin:8px 0}
+.feature-card p{color:#bfd2dc;margin:0 0 15px}
+.feature-empty{grid-column:1/-1;margin:0;padding:28px;border:1px dashed #45677a;border-radius:14px;background:#1a3042;color:#c3d7e1}
+@media(max-width:820px){.career-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.career-facts{grid-template-columns:1fr;gap:10px}.career-facts>div{padding:15px}.feature-heading{align-items:flex-start}.feature-grid{grid-template-columns:1fr}.feature-card-body{padding:18px}.about-preview .about-content{gap:24px}}
