@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Contact | Daka Felix (Tech Guy)</title>
+    <title>Contact Felix Daka | ICT Portfolio</title>
+    <meta name="description" content="Contact Felix Daka about ICT support, networking and graduate technology opportunities in Zambia or internationally.">
+    <link rel="canonical" href="https://feligo1.github.io/daka-felix-portfolio/contact.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact Felix Daka | ICT Portfolio">
+    <meta property="og:description" content="Contact Felix Daka about ICT support, networking and graduate technology opportunities in Zambia or internationally.">
+    <meta property="og:url" content="https://feligo1.github.io/daka-felix-portfolio/contact.html">
+    <meta property="og:image" content="https://feligo1.github.io/daka-felix-portfolio/felix.jpg">
+    <meta property="og:image:alt" content="Portrait of Felix Daka">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
         
@@ -925,45 +933,53 @@
         }
     </style>
     <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="portfolio-refresh.css?v=5">
+    <script src="portfolio-nav.js" defer></script>
+    <link rel="stylesheet" href="editorial.css">
+    <script src="cv-download.js" defer></script>
 </head>
 <body>
     <!-- Header & Navigation -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span class="logo-nickname">(Tech Guy)</span></span>
+                <span>Felix Daka <span class="logo-nickname">(Tech Guy)</span></span>
             </a>
             <nav class="primary-nav" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="expertise.html">Technical Skills</a>
-                <a href="certificates.html">Certificates</a>
                 <a href="about.html">About</a>
-                <a href="contact.html" class="active">Contact</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="contact.html" class="active" aria-current="page">Contact</a>
             </nav>
             
             <!-- Corner Menu for All Devices -->
             <div class="menu-container">
-                <button class="menu-btn" id="menuBtn">
+                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="menu-content" id="menuContent">
-                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                    <a href="expertise.html"><i class="fas fa-cogs"></i> Technical Skills</a>
-                    <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
-                    <a href="about.html"><i class="fas fa-user"></i> About Me</a>
-                    <a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a>
-                </div>
+                <nav class="menu-content" id="menuContent" aria-label="Mobile navigation">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="expertise.html">Skills</a>
+                    <a href="certificates.html">Certificates</a>
+                    <a href="contact.html" class="active" aria-current="page">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
 
+    <main id="main-content" tabindex="-1">
+
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1>Contact Me</h1>
+            <h1>Contact Felix Daka</h1>
             <p>For ICT opportunities, support requests or project enquiries, you can reach me through any of these channels.</p>
         </div>
     </section>
@@ -1003,7 +1019,7 @@
                             </div>
                             <div class="contact-text">
                                 <h4>Phone & WhatsApp</h4>
-                                <p><a href="tel:+260774496821">+260 774 496 821</a></p>
+                                <p><a href="tel:+260774496821">+260 774 496 821</a> &middot; <a href="https://wa.me/260774496821">WhatsApp</a></p>
                             </div>
                         </div>
                         
@@ -1023,7 +1039,7 @@
                             </div>
                             <div class="contact-text">
                                 <h4>LinkedIn</h4>
-                                <p><a href="https://www.linkedin.com/in/felixdaka-zm" target="_blank" rel="noopener">linkedin.com/in/felixdaka-zm</a></p>
+                                <p><a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" rel="noopener">linkedin.com/in/felix-daka-5b6058212</a></p>
                             </div>
                         </div>
                         
@@ -1033,23 +1049,19 @@
                             </div>
                             <div class="contact-text">
                                 <h4>GitHub</h4>
-                                <p><a href="https://github.com/Feligo1" target="_blank">github.com/Feligo1</a></p>
+                                <p><a href="https://github.com/Feligo1" target="_blank" rel="noopener">github.com/Feligo1</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-text">
+                                <h4>Facebook</h4>
+                                <p><a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" rel="noopener">Facebook profile</a></p>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="response-info">
-                        <h4>
-                            Response Time
-                        </h4>
-                        <p>I typically respond within <strong class="response-badge">24 hours</strong>. For urgent matters, please use WhatsApp or phone call.</p>
-                        <p style="margin-top: 15px;">
-                            <i class="fas fa-globe-africa" style="color: var(--accent);"></i> 
-                            Available for projects across Zambia and remote collaborations worldwide.
-                        </p>
-                    </div>
                 </div>
-                
+
                 <!-- Contact Form -->
                 <div class="contact-form-container">
                     <div class="form-header">
@@ -1057,31 +1069,34 @@
                         <p>Leave a message and I will get back to you.</p>
                     </div>
                     
-                    <div class="form-message" id="formMessage"></div>
+                    <div class="form-message" id="formMessage" role="status"></div>
                     
+                    <p class="cv-note"><a href="mailto:felixddaka@gmail.com?subject=CV%20request" data-cv-request>Request CV</a><a data-cv-download download hidden>Download CV</a></p>
                     <form id="contactForm">
+                        <div class="contact-trap" aria-hidden="true"><label>Leave this field blank <input name="_honey" tabindex="-1" autocomplete="off"></label></div>
                         <div class="form-group">
                             <label for="name"><i class="fas fa-user"></i> Your Name *</label>
-                            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                            <input type="text" id="name" name="name" maxlength="120" autocomplete="name" placeholder="Enter your full name" required>
                             <div class="error-message">Please enter your name</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="email"><i class="fas fa-envelope"></i> Your Email *</label>
-                            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                            <input type="email" id="email" name="email" maxlength="254" autocomplete="email" placeholder="Enter your email address" required>
                             <div class="error-message">Please enter a valid email address</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="subject"><i class="fas fa-tag"></i> Subject *</label>
-                            <input type="text" id="subject" name="subject" placeholder="What is this regarding?" required>
+                            <input type="text" id="subject" name="subject" maxlength="160" placeholder="What is this regarding?" required>
                             <div class="error-message">Please enter a subject</div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="service"><i class="fas fa-cogs"></i> Service Needed *</label>
+                            <label for="service"><i class="fas fa-cogs"></i> Topic *</label>
                             <select id="service" name="service" required>
-                                <option value="" disabled selected>Select a service</option>
+                                <option value="" disabled selected>Choose a topic</option>
+                                <option value="recruitment">Recruitment or CV request</option>
                                 <option value="networking">Networking Solutions</option>
                                 <option value="web-design">Web Design & Development</option>
                                 <option value="cybersecurity">Cyber Security</option>
@@ -1091,12 +1106,12 @@
                                 <option value="certification">Certification Guidance</option>
                                 <option value="other">Other Inquiry</option>
                             </select>
-                            <div class="error-message">Please select a service</div>
+                            <div class="error-message">Please select a topic</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="message"><i class="fas fa-comment"></i> Your Message *</label>
-                            <textarea id="message" name="message" placeholder="Describe your project or inquiry in detail..." required></textarea>
+                            <textarea id="message" name="message" maxlength="4000" placeholder="Describe your project or inquiry in detail..." required></textarea>
                             <div class="error-message">Please enter your message</div>
                         </div>
                         
@@ -1107,33 +1122,17 @@
                 </div>
             </div>
             
-            <!-- Social Links -->
-            <div class="social-links">
-                <h3>Connect With Me</h3>
-                <div class="social-icons">
-                    <a href="https://github.com/Feligo1" target="_blank" class="social-icon github" title="GitHub">
-                        GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/felixdaka-zm" target="_blank" rel="noopener" class="social-icon linkedin" title="LinkedIn">
-                        LinkedIn
-                    </a>
-                    <a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank" class="social-icon facebook" title="Facebook">
-                        Facebook
-                    </a>
-                    <a href="https://wa.me/260774496821" target="_blank" class="social-icon whatsapp" title="WhatsApp">
-                        WhatsApp
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 
     <!-- Footer -->
+    </main>
+
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
+                    <div class="footer-logo">Felix Daka <span>(Tech Guy)</span></div>
                     <p>Computer Science graduate based in Zambia, with experience in IT support and networking.</p>
                     <div class="footer-zambia">
                         <i class="fas fa-globe-africa"></i>
@@ -1144,105 +1143,31 @@
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="expertise.html"><i class="fas fa-chevron-right"></i> Technical Skills</a></li>
-                        <li><a href="certificates.html"><i class="fas fa-chevron-right"></i> Certificates</a></li>
-                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Me</a></li>
-                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="expertise.html">Skills</a></li>
+                        <li><a href="certificates.html">Certificates</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
             </div>
             
             <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
             <div class="copyright">
-                <p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved. <span style="color: var(--accent);">Proudly Zambian</span></p>
+                <p>&copy; 2026 Felix Daka (Tech Guy). All rights reserved. <span style="color: var(--accent);">Proudly Zambian</span></p>
             </div>
         </div>
+        <nav class="editorial-footer-links" aria-label="More from Felix Daka">
+            <a href="journal.html">Technical Journal</a>
+            <a href="recommendations.html">Recommendations</a>
+        </nav>
     </footer>
 
     <script>
         // DOM Elements
-        const mainHeader = document.getElementById('mainHeader');
-        const menuBtn = document.getElementById('menuBtn');
-        const menuContent = document.getElementById('menuContent');
-        const menuLinks = document.querySelectorAll('.menu-content a');
         const contactForm = document.getElementById('contactForm');
         const formMessage = document.getElementById('formMessage');
-
-        // Menu Toggle Functionality
-        if (menuBtn) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                menuContent.classList.toggle('show');
-                
-                // Change icon when menu is open
-                const icon = menuBtn.querySelector('i');
-                if (menuContent.classList.contains('show')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-        }
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (event) => {
-            if (menuContent && menuContent.classList.contains('show')) {
-                const isClickInside = menuBtn.contains(event.target) || menuContent.contains(event.target);
-                if (!isClickInside) {
-                    menuContent.classList.remove('show');
-                    const icon = menuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            }
-        });
-
-        // Close menu when clicking a link
-        if (menuLinks) {
-            menuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    menuContent.classList.remove('show');
-                    const icon = menuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                });
-            });
-        }
-
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuContent.classList.contains('show')) {
-                menuContent.classList.remove('show');
-                const icon = menuBtn.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        // Set active menu item based on current page
-        function setActiveMenuItem() {
-            const currentPage = window.location.pathname.split('/').pop() || 'contact.html';
-            
-            menuLinks.forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Header scroll effect
-        function handleHeaderScroll() {
-            if (window.scrollY > 50) {
-                mainHeader.classList.add('scrolled');
-            } else {
-                mainHeader.classList.remove('scrolled');
-            }
-        }
 
         // Validate email format
         function isValidEmail(email) {
@@ -1288,7 +1213,7 @@
             // Check service
             if (!formData.service) {
                 document.querySelector('#service').closest('.form-group').classList.add('error');
-                errors.push('Please select a service');
+                errors.push('Please select a topic');
                 isValid = false;
             }
             
@@ -1300,16 +1225,6 @@
             }
             
             return { isValid, errors };
-        }
-
-        // Save message to localStorage (backup)
-        function saveMessageToLocal(data) {
-            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
-            messages.push({
-                ...data,
-                timestamp: new Date().toISOString()
-            });
-            localStorage.setItem('contactMessages', JSON.stringify(messages));
         }
 
         // Send the contact form submission to Felix's inbox.
@@ -1324,18 +1239,20 @@
                     ...formData,
                     _subject: `Portfolio contact: ${formData.subject || formData.name}`,
                     _replyto: formData.email,
-                    _url: window.location.href
+                    _honey: '',
+                    _url: window.location.origin + window.location.pathname
                 })
             });
 
             const result = await response.json().catch(() => ({}));
-            return response.ok && result.success !== false;
+            return response.ok && (result.success === true || result.success === 'true');
         }
 
         // Handle form submission
         if (contactForm) {
             contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                if (contactForm.elements._honey.value) return;
                 
                 // Get form data
                 const formData = {
@@ -1358,6 +1275,7 @@
                             ${errors.map(error => `<li>? ${error}</li>`).join('')}
                         </ul>
                     `;
+                    formMessage.style.display = 'block';
                     return;
                 }
                 
@@ -1371,10 +1289,6 @@
                 formMessage.style.display = 'none';
                 
                 try {
-                    // Save to localStorage as backup
-                    saveMessageToLocal(formData);
-                    
-                    // Send email via Formspree
                     const sent = await sendEmail(formData);
                     
                     if (sent) {
@@ -1383,75 +1297,36 @@
                         formMessage.innerHTML = `
                             <i class="fas fa-check-circle"></i>
                             <strong>Message Sent Successfully!</strong>
-                            <p style="margin: 10px 0 0 0; font-weight: normal;">Thank you for reaching out. I'll get back to you within 24 hours.</p>
+                            <p style="margin: 10px 0 0 0; font-weight: normal;">Thank you for reaching out. I'll reply by email.</p>
                         `;
                         
                         // Reset form
                         contactForm.reset();
                         
-                        // Scroll to message
-                        formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
                         throw new Error('Failed to send message');
                     }
                 } catch (error) {
                     console.error('Form submission error:', error);
                     
-                    // Show error message with local backup info
+                    // Show error and keep the form values available for retry
                     formMessage.className = 'form-message error';
                     formMessage.innerHTML = `
                         <i class="fas fa-exclamation-circle"></i>
                         <strong>Something went wrong!</strong>
-                        <p style="margin: 10px 0 0 0; font-weight: normal;">Your message has been saved locally. Please try again or contact me directly via email.</p>
+                        <p style="margin: 10px 0 0 0; font-weight: normal;">Your message could not be sent. Please try again or email me directly.</p>
                     `;
                 } finally {
                     // Reset button
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                     
-                    // Auto-hide message after 5 seconds on success
-                    if (formMessage.classList.contains('success')) {
-                        setTimeout(() => {
-                            formMessage.style.display = 'none';
-                        }, 5000);
-                    }
+                    formMessage.style.display = 'block';
+                    formMessage.scrollIntoView({ block: 'center' });
                 }
             });
         }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            setActiveMenuItem();
-            handleHeaderScroll();
-            
-            // Check URL parameters for form submission status (from Formspree redirect)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('success')) {
-                formMessage.className = 'form-message success';
-                formMessage.innerHTML = `
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Message Sent Successfully!</strong>
-                    <p style="margin: 10px 0 0 0; font-weight: normal;">Thank you for your message. I'll get back to you within 24 hours.</p>
-                `;
-                formMessage.style.display = 'block';
-                
-                // Clear URL parameters
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-            
-            // Header scroll effect
-            window.addEventListener('scroll', handleHeaderScroll);
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768 && menuContent?.classList.contains('show')) {
-                    menuContent.classList.remove('show');
-                    const icon = menuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-        });
     </script>
     <script type="module">
         import { trackDeviceVisit } from './supabase-client.js'

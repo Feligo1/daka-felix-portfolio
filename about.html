@@ -3,1305 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>About Me | Daka Felix (Tech Guy)</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>About Felix Daka | Computer Science Graduate</title>
+    <meta name="description" content="Meet Felix Daka, a Zambian Computer Science graduate. Explore his education, ICT placements, and life and career photo gallery.">
+    <link rel="canonical" href="https://feligo1.github.io/daka-felix-portfolio/about.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Felix Daka | Computer Science Graduate">
+    <meta property="og:description" content="Meet Felix Daka, a Zambian Computer Science graduate. Explore his education, ICT placements, and life and career photo gallery.">
+    <meta property="og:url" content="https://feligo1.github.io/daka-felix-portfolio/about.html">
+    <meta property="og:image" content="https://feligo1.github.io/daka-felix-portfolio/profile/felix-portrait.webp">
+    <meta property="og:image:alt" content="Portrait of Felix Daka">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Modern Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        :root {
-            --primary: #007749;
-            --primary-dark: #005a3f;
-            --primary-light: rgba(0, 119, 73, 0.1);
-            --secondary: #EF3340;
-            --accent: #FCD116;
-            --accent-dark: #e6b800;
-            --dark: #0A1931;
-            --dark-blue: #0A1931;
-            --dark-blue-light: #1A2C47;
-            --dark-blue-lighter: #2A3C57;
-            --text-light: #F9FAFB;
-            --text-muted: #9CA3AF;
-            --border-light: rgba(255, 255, 255, 0.1);
-            --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            --gradient-dark: linear-gradient(135deg, var(--dark-blue), var(--dark-blue-light));
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        body {
-            background-color: var(--dark-blue);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 16px;
-            }
-        }
-        
-        /* Header & Navigation - With Corner Menu */
-        header {
-            background-color: rgba(10, 25, 49, 0.98);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            height: 80px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        header.scrolled {
-            height: 70px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            height: 100%;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-light);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 1001;
-        }
-        
-        @media (min-width: 768px) {
-            .logo {
-                font-size: 1.8rem;
-            }
-        }
-        
-        .logo-icon {
-            color: var(--primary);
-            font-size: 1.8rem;
-        }
-        
-        @media (min-width: 768px) {
-            .logo-icon {
-                font-size: 2rem;
-            }
-        }
-        
-        .logo-nickname {
-            color: var(--accent);
-            font-weight: 800;
-            display: none;
-        }
-        
-        @media (min-width: 768px) {
-            .logo-nickname {
-                display: inline;
-            }
-        }
-        
-        /* Corner Menu Styles */
-        .menu-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        
-        .menu-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--dark-blue-lighter);
-            border: 1px solid var(--border-light);
-            color: var(--text-light);
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 12px 24px;
-            border-radius: 40px;
-            gap: 10px;
-            transition: all 0.3s ease;
-            z-index: 1001;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .menu-btn i {
-            font-size: 1.1rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .menu-btn:hover {
-            background: var(--dark-blue);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .menu-btn:hover i {
-            transform: rotate(90deg);
-        }
-        
-        .menu-btn:active {
-            transform: scale(0.97);
-        }
-        
-        .menu-content {
-            display: none;
-            position: absolute;
-            top: 70px;
-            right: 0;
-            background: rgba(42, 60, 87, 0.98);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            min-width: 260px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-2xl);
-            border: 1px solid var(--border-light);
-            z-index: 1000;
-            overflow: hidden;
-            animation: slideDown 0.3s ease;
-        }
-        
-        .menu-content.show {
-            display: block;
-        }
-        
-        .menu-content a {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 16px 20px;
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 0.95rem;
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-        
-        .menu-content a:last-child {
-            border-bottom: none;
-        }
-        
-        .menu-content a:hover {
-            background: var(--primary-light);
-            padding-left: 25px;
-        }
-        
-        .menu-content a i {
-            width: 24px;
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
-        
-        .menu-content a.active {
-            background: rgba(252, 209, 22, 0.15);
-            color: var(--accent);
-            border-left: 3px solid var(--accent);
-        }
-        
-        .menu-content a.active i {
-            color: var(--accent);
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Hide old navigation */
-        .old-nav {
-            display: none;
-        }
-        
-        /* Page Header */
-        .page-header {
-            padding-top: 140px;
-            padding-bottom: 80px;
-            text-align: center;
-            background: radial-gradient(circle at top right, rgba(0, 119, 73, 0.15), transparent 50%),
-                        radial-gradient(circle at bottom left, rgba(252, 209, 22, 0.1), transparent 50%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary), var(--accent), var(--primary));
-        }
-        
-        .page-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), var(--secondary), transparent);
-        }
-        
-        .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 0.8s ease;
-        }
-        
-        @media (min-width: 768px) {
-            .page-header h1 {
-                font-size: 3.5rem;
-            }
-        }
-        
-        .page-header p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 800px;
-            margin: 0 auto;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-        
-        /* Back Button */
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-light);
-            text-decoration: none;
-            margin-bottom: 30px;
-            padding: 10px 20px;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        
-        .back-btn:hover {
-            background: var(--primary-light);
-            color: var(--accent);
-            transform: translateX(-5px);
-            border-color: var(--accent);
-        }
-        
-        .back-btn i {
-            transition: transform 0.3s ease;
-        }
-        
-        .back-btn:hover i {
-            transform: translateX(-3px);
-        }
-        
-        /* Stats Bar */
-        .stats-bar {
-            background: rgba(26, 44, 71, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
-            padding: 20px 0;
-        }
-        
-        .stats-grid {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1.2;
-        }
-        
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        @media (min-width: 768px) {
-            .stat-number {
-                font-size: 2.5rem;
-            }
-            
-            .stat-label {
-                font-size: 0.9rem;
-            }
-        }
-        
-        /* About Content */
-        .about-content {
-            padding: 80px 0;
-        }
-        
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        
-        @media (min-width: 1024px) {
-            .about-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 60px;
-            }
-        }
-        
-        .about-text {
-            animation: fadeInLeft 0.8s ease;
-        }
-        
-        .about-text h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-            text-align: left;
-            position: relative;
-            display: inline-block;
-        }
-        
-        @media (min-width: 768px) {
-            .about-text h2 {
-                font-size: 2.5rem;
-            }
-        }
-        
-        .about-text h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-        }
-        
-        .about-text p {
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            color: var(--text-muted);
-        }
-        
-        @media (min-width: 768px) {
-            .about-text p {
-                font-size: 1.1rem;
-            }
-        }
-        
-        .about-text h3 {
-            color: var(--primary);
-            margin-top: 35px;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        
-        @media (min-width: 768px) {
-            .about-text h3 {
-                font-size: 1.5rem;
-            }
-        }
-        
-        .highlight-text {
-            background: var(--primary-light);
-            padding: 20px;
-            border-radius: 16px;
-            border-left: 4px solid var(--accent);
-            margin: 30px 0;
-        }
-        
-        .highlight-text p {
-            margin-bottom: 0;
-            font-style: italic;
-        }
-        
-        /* About Image */
-        .about-image {
-            position: relative;
-            animation: fadeInRight 0.8s ease;
-        }
-        
-        .image-wrapper {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-2xl);
-        }
-        
-        .image-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 119, 73, 0.2), rgba(252, 209, 22, 0.1));
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-        
-        .image-wrapper:hover img {
-            transform: scale(1.05);
-        }
-        
-        .zambian-badge {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: var(--shadow-lg);
-            z-index: 2;
-            animation: pulse 2s infinite;
-        }
-        
-        @media (min-width: 768px) {
-            .zambian-badge {
-                font-size: 1rem;
-                padding: 15px 30px;
-            }
-        }
-        
-        .zambian-badge i {
-            font-size: 1.2rem;
-        }
-        
-        /* Journey Timeline */
-        .journey-section {
-            padding: 80px 0;
-            background: rgba(26, 44, 71, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .journey-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), var(--secondary), transparent);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-        
-        @media (min-width: 768px) {
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-        }
-        
-        .section-title p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .timeline {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        @media (min-width: 768px) {
-            .timeline {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        .timeline-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--gradient-primary);
-        }
-        
-        .timeline-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary);
-        }
-        
-        .timeline-year {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-        
-        .timeline-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .timeline-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        /* Values Section */
-        .values-section {
-            padding: 80px 0;
-        }
-        
-        .values-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        @media (min-width: 640px) {
-            .values-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .values-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        
-        .value-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 30px 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .value-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .value-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 28px;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .value-card:hover .value-icon {
-            transform: scale(1.1) rotate(360deg);
-        }
-        
-        .value-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--accent);
-        }
-        
-        .value-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 60px 0;
-            text-align: center;
-        }
-        
-        .cta-card {
-            background: linear-gradient(135deg, rgba(0, 119, 73, 0.1), rgba(252, 209, 22, 0.1));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 30px;
-            padding: 50px 30px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .cta-card h3 {
-            font-size: 1.8rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-        
-        .cta-card p {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .btn-accent {
-            background: var(--gradient-accent);
-            color: var(--dark);
-        }
-        
-        .btn-accent:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--text-light);
-        }
-        
-        .btn-outline:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        /* Footer */
-        footer {
-            background: #0A1429;
-            padding: 60px 0 30px;
-            margin-top: 80px;
-            position: relative;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        @media (min-width: 768px) {
-            .footer-content {
-                grid-template-columns: 2fr 1fr 1fr;
-            }
-        }
-        
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .footer-logo span {
-            color: var(--accent);
-        }
-        
-        .footer-about p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-        
-        .footer-links h4 {
-            color: var(--accent);
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-        
-        .footer-links ul {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .footer-links a:hover {
-            color: var(--accent);
-            transform: translateX(5px);
-        }
-        
-        .footer-links i {
-            font-size: 0.8rem;
-            color: var(--primary);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-light);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        .copyright span {
-            color: var(--accent);
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .page-header p {
-                font-size: 1rem;
-                padding: 0 16px;
-            }
-            
-            .about-text h2 {
-                font-size: 2rem;
-            }
-            
-            .cta-card {
-                padding: 30px 20px;
-            }
-            
-            .cta-card h3 {
-                font-size: 1.5rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            .menu-btn {
-                padding: 10px 18px;
-            }
-            
-            .menu-btn span {
-                display: none;
-            }
-            
-            .menu-btn i {
-                margin: 0;
-            }
-            
-            .menu-content {
-                min-width: 220px;
-            }
-        }
-    </style>
     <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="portfolio-refresh.css?v=5">
+    <link rel="stylesheet" href="showcase.css">
+    <link rel="stylesheet" href="about.css">
+    <script src="portfolio-nav.js" defer></script>
+    <script src="cv-download.js" defer></script>
+    <script type="module" src="about-gallery.js"></script>
+    <link rel="stylesheet" href="editorial.css">
 </head>
-<body>
+<body class="showcase-page about-page">
     <!-- Header & Navigation -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo">
-                <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span class="logo-nickname">(Tech Guy)</span></span>
+                Felix Daka <span class="brand-label">Tech Guy</span>
             </a>
             <nav class="primary-nav" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="expertise.html">Technical Skills</a>
+                <a href="about.html" class="active" aria-current="page">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
                 <a href="certificates.html">Certificates</a>
-                <a href="about.html" class="active">About</a>
                 <a href="contact.html">Contact</a>
             </nav>
             
-            <!-- Corner Menu for All Devices -->
             <div class="menu-container">
-                <button class="menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i>
-                    <span>Menu</span>
+                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
+                    Menu
                 </button>
-                <div class="menu-content" id="menuContent">
-                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                    <a href="expertise.html"><i class="fas fa-cogs"></i> Technical Skills</a>
-                    <a href="about.html" class="active"><i class="fas fa-user"></i> About Me</a>
-                    <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
-                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                </div>
+                <nav class="menu-content" id="menuContent" aria-label="Mobile navigation">
+                    <a href="index.html">Home</a>
+                    <a href="about.html" class="active" aria-current="page">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="expertise.html">Skills</a>
+                    <a href="certificates.html">Certificates</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>About Me</h1>
-            <p>Computer Science graduate with hands-on IT support experience, currently looking for an ICT internship.</p>
-        </div>
-    </section>
+    <main id="main-content" tabindex="-1">
+        <section class="container bio-hero" aria-labelledby="bio-heading">
+            <div>
+                <p class="bio-kicker">Computer Science graduate in Zambia</p>
+                <h1 id="bio-heading">Felix Daka</h1>
+                <p class="bio-intro">I like finding out why something stopped working and getting people back on track. My ICT placements gave me the chance to do that for staff and students, and my studies at Mulungushi University made me curious about how to build the software people rely on.</p>
+                <p class="bio-interests">I am interested in ICT support, networking and software development.</p>
+                <nav class="section-jump-nav" aria-label="About page sections">
+                    <a href="#education">Journey</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#connect">Connect</a>
+                </nav>
+            </div>
+            <figure class="bio-portrait">
+                <img src="profile/felix-portrait.webp" id="aboutPageImage" alt="Portrait of Felix Daka" width="800" height="800" fetchpriority="high" decoding="async">
+            </figure>
+        </section>
 
-    <div class="container">
-        <nav class="section-jump-nav" aria-label="About page sections">
-            <a href="#experience">Experience</a>
-            <a href="#education">Education</a>
-            <a href="#languages">Languages</a>
-            <a href="#references">References</a>
+        <section class="bio-journey" id="education" aria-labelledby="journey-heading">
+            <div class="container bio-journey-layout">
+                <div>
+                    <h2 id="journey-heading">My Journey</h2>
+                    <p class="bio-kicker">Ndola and Kabwe, Zambia</p>
+                    <p id="languages">I speak English, Nyanja and Bemba.</p>
+                </div>
+                <ol class="bio-timeline">
+                    <li><p class="bio-date"><time datetime="2020">2020</time></p><h3>Frederick Chiluba Combined School</h3><p>Earned my school certificate in Ndola, with distinctions in Mathematics, Biology and Science.</p></li>
+                    <li><p class="bio-date">University studies</p><h3>Mulungushi University</h3><p>Studied Computer Science in Kabwe. My final-year project focused on <a href="project.html?project=farmers-market-information-platform">market information for Zambian farmers</a>.</p></li>
+                    <li><p class="bio-date">January&ndash;February and July&ndash;August 2026</p><h3>Two ICT placements</h3><p>Worked in university ICT and industrial IT support. <a href="#experience">See placement highlights</a>.</p></li>
+                    <li><p class="bio-date"><time datetime="2026-10-30">30 October 2026</time></p><h3>Graduated with a BSc in Computer Science (Credit)</h3></li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="container bio-section" id="gallery" aria-labelledby="gallery-heading">
+            <h2 id="gallery-heading">Life &amp; Career Gallery</h2>
+            <div class="bio-filters" id="aboutGalleryFilters" role="group" aria-label="Filter photographs by category"></div>
+            <p id="aboutGalleryStatus" class="bio-gallery-status" role="status">Loading photographs...</p>
+            <noscript><p>Enable JavaScript to view published photographs.</p></noscript>
+            <div class="bio-gallery-grid" id="aboutGalleryGrid"></div>
+        </section>
+
+        <section class="container bio-section" id="experience" aria-labelledby="experience-heading">
+            <h2 id="experience-heading">Experience Highlights</h2>
+            <div class="bio-experience-grid">
+                <article>
+                    <p class="bio-kicker">1 July to 30 August 2026 &middot; Ndola</p>
+                    <h3>Zambezi Portland Cement Limited</h3>
+                    <p class="bio-role">IT Support Industrial Attachment</p>
+                    <p>Installed and maintained hardware, software and printers. Helped users resolve day-to-day IT issues and assisted with network and system diagnostics.</p>
+                </article>
+                <article>
+                    <p class="bio-kicker">6 January to 27 February 2026 &middot; Kabwe</p>
+                    <h3>Mulungushi University ICT Department</h3>
+                    <p class="bio-role">ICT Intern</p>
+                    <p>Supported staff and students with troubleshooting and helped with networking, equipment setup and system administration.</p>
+                </article>
+            </div>
+            <p class="bio-cv-link" id="references"><a href="#connect">See CV and contact options</a> for more details or to request references.</p>
+        </section>
+
+        <section class="bio-connect" id="connect" aria-labelledby="connect-heading">
+            <div class="container bio-connect-layout">
+                <div><h2 id="connect-heading">Connect</h2><p>I would like to hear about ICT support, networking and graduate technology roles.</p></div>
+                <div class="bio-actions">
+                    <a class="showcase-action" href="mailto:felixddaka@gmail.com?subject=CV%20request" data-cv-request>Request CV</a>
+                    <a class="showcase-action" data-cv-download download hidden>Download CV</a>
+                    <a class="bio-secondary" href="https://www.linkedin.com/in/felix-daka-5b6058212">LinkedIn</a>
+                    <a class="bio-secondary" href="contact.html">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <dialog id="aboutPhotoDialog" class="bio-dialog" aria-labelledby="aboutPhotoTitle">
+            <button type="button" class="bio-dialog-close" data-close-photo autofocus>Close photo</button>
+            <figure>
+                <img alt="">
+                <figcaption>
+                    <h2 id="aboutPhotoTitle">Photograph</h2>
+                    <p id="aboutPhotoCaption"></p>
+                </figcaption>
+            </figure>
+            <div class="bio-dialog-controls">
+                <button type="button" id="aboutPhotoPrevious">Previous</button>
+                <p id="aboutPhotoPosition" role="status"></p>
+                <button type="button" id="aboutPhotoNext">Next</button>
+            </div>
+        </dialog>
+    </main>
+    <footer class="showcase-footer">
+        <div class="container">
+            <p>&copy; 2026 Felix Daka</p>
+            <div class="bio-footer-links">
+                <a href="https://github.com/Feligo1">GitHub</a>
+                <a href="https://wa.me/260774496821">WhatsApp</a>
+                <a href="https://www.facebook.com/share/1AJKpFspAB/">Facebook</a>
+            </div>
+        </div>
+        <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
+        <nav class="editorial-footer-links" aria-label="More from Felix Daka">
+            <a href="journal.html">Technical Journal</a>
+            <a href="recommendations.html">Recommendations</a>
         </nav>
-    </div>
-
-    <!-- Stats Bar -->
-    <div class="stats-bar">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">BSc</div>
-                    <div class="stat-label">Computer Science (Credit)</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">2</div>
-                    <div class="stat-label">Supervised Placements</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Certificates</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Languages</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- About Content -->
-    <section class="about-content">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-text">
-                    <h2>Felix Daka</h2>
-                    <p><strong style="color: var(--accent);">Computer Science Graduate | IT Support &amp; Networking</strong></p>
-                    <p>I graduated from Mulungushi University with a BSc in Computer Science (Credit). During placements at Zambezi Portland Cement and the university ICT department, I installed and maintained equipment, troubleshot network issues and helped staff with day-to-day IT problems. My studies covered cybersecurity, cloud computing, operating systems and software engineering.</p>
-                    <p>Seeking an ICT internship where I can apply my training and continue to grow.</p>
-                </div>
-                
-                <div class="about-image">
-                    <div class="image-wrapper">
-                        <img src="profile/profile-1772620176208.jpg" id="aboutPageImage" alt="Felix Daka" loading="lazy" decoding="async">
-                        <div class="zambian-badge">
-                            <i class="fas fa-globe-africa"></i>
-                            <span>Proudly Zambian</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="journey-section" id="experience">
-        <div class="container">
-            <div class="section-title"><h2>Experience</h2><p>Supervised industrial placements in ICT support</p></div>
-            <div class="timeline">
-                <div class="timeline-item"><div class="timeline-year">Jul - Aug 2026</div><div class="timeline-title">Industrial Attachment, IT Support</div><div class="timeline-desc"><strong>Zambezi Portland Cement Limited, Ndola</strong><ul><li>Installed and configured computer hardware and software.</li><li>Performed preventive maintenance on ICT equipment.</li><li>Supported and troubleshot the network and ran system diagnostics.</li><li>Installed and maintained printers and provided daily technical help to users.</li><li>Commended by the Head of Department for professionalism, dedication and teamwork.</li></ul></div></div>
-                <div class="timeline-item"><div class="timeline-year">Jan - Feb 2026</div><div class="timeline-title">ICT Intern</div><div class="timeline-desc"><strong>Mulungushi University ICT Department, Kabwe</strong><ul><li>Worked on networking, hardware and software installation, and system management.</li><li>Supported staff and students with troubleshooting and general IT operations.</li><li>The ICT Manager confirmed in writing that the internship was successful.</li></ul></div></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="about-content" id="education" style="padding-top: 20px;">
-        <div class="container">
-            <div class="section-title"><h2>Education</h2></div>
-            <div class="about-text"><h3>Bachelor of Science in Computer Science (Credit)</h3><p>Mulungushi University, Kabwe | Graduated 30 October 2026</p><p><strong>Selected coursework:</strong> Software Engineering, Cloud Computing, Cybersecurity, Web Systems, Databases, Networking, Artificial Intelligence and Mobile Application Programming.</p><p><strong>Final-year project:</strong> Cloud-Based Market Information Platform for Farmers, delivering real-time commodity prices and demand forecasts to Zambian smallholder farmers.</p><h3>School Certificate</h3><p>Frederick Chiluba Combined School, Ndola | 2020. Distinctions in Mathematics, Biology and Science.</p>
-            <p>See <a href="expertise.html">Technical Skills</a> and <a href="certificates.html">Certificates</a> for more details.</p>
-            <h3 id="languages">Languages</h3><p>English, Nyanja and Bemba</p>
-            <h3 id="references">References</h3><p><strong>Dr. Kabuutu Chuunga</strong> ? ICT Manager, Mulungushi University | +260 979 554 000</p><p><strong>Mr. Aaron Mundambo</strong> ? IT Foreman, Zambezi Portland Cement | +260 777 911 516</p><p><strong>Emmanuel Nyirenda</strong> ? Lecturer, Mulungushi University | +260 978 543 126 | <a href="mailto:enyirenda37@gmail.com">enyirenda37@gmail.com</a></p><p><strong>Zilani Kaluba</strong> ? Lecturer, Mulungushi University | +260 971 114 715 | <a href="mailto:zilanikaluba@gmail.com">zilanikaluba@gmail.com</a></p></div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-card">
-                <h3>Have an Opportunity or Question?</h3>
-                <p>Send me a message about an ICT role, technical issue or project.</p>
-                <div class="cta-buttons">
-                    <a href="certificates.html" class="btn btn-outline">
-                        <i class="fas fa-certificate"></i> View Certifications
-                    </a>
-                    <a href="contact.html" class="btn btn-accent">
-                        <i class="fas fa-envelope"></i> Send a Message
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
-                    <p>Computer Science graduate with practical experience in IT support, networking and user support.</p>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="expertise.html"><i class="fas fa-chevron-right"></i> Technical Skills</a></li>
-                        <li><a href="certificates.html"><i class="fas fa-chevron-right"></i> Certificates</a></li>
-                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="https://github.com/Feligo1" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
-                        <li><a href="https://www.linkedin.com/in/felixdaka-zm" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                        <li><a href="https://www.facebook.com/share/1AJKpFspAB/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
-                        <li><a href="https://wa.me/260774496821" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
-            <div class="copyright">
-                <p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved. <span>Proudly Zambian</span></p>
-            </div>
-        </div>
     </footer>
-
-    <script>
-        // DOM Elements
-        const mainHeader = document.getElementById('mainHeader');
-        const menuBtn = document.getElementById('menuBtn');
-        const menuContent = document.getElementById('menuContent');
-        const menuLinks = document.querySelectorAll('.menu-content a');
-
-        // Menu Toggle Functionality
-        if (menuBtn) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                menuContent.classList.toggle('show');
-                
-                // Change icon when menu is open
-                const icon = menuBtn.querySelector('i');
-                if (menuContent.classList.contains('show')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-        }
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (event) => {
-            if (menuContent && menuContent.classList.contains('show')) {
-                const isClickInside = menuBtn.contains(event.target) || menuContent.contains(event.target);
-                if (!isClickInside) {
-                    menuContent.classList.remove('show');
-                    const icon = menuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            }
-        });
-
-        // Close menu when clicking a link
-        if (menuLinks) {
-            menuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    menuContent.classList.remove('show');
-                    const icon = menuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                });
-            });
-        }
-
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuContent.classList.contains('show')) {
-                menuContent.classList.remove('show');
-                const icon = menuBtn.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        // Set active menu item based on current page
-        function setActiveMenuItem() {
-            const currentPage = window.location.pathname.split('/').pop() || 'about.html';
-            
-            menuLinks.forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Header scroll effect
-        function handleHeaderScroll() {
-            if (window.scrollY > 50) {
-                mainHeader.classList.add('scrolled');
-            } else {
-                mainHeader.classList.remove('scrolled');
-            }
-        }
-
-        // Animate stats numbers
-        function animateStats() {
-            const stats = document.querySelectorAll('.stat-number');
-            
-            stats.forEach(stat => {
-                const targetText = stat.textContent;
-                const targetNumber = parseInt(targetText);
-                
-                if (!isNaN(targetNumber)) {
-                    let current = 0;
-                    const increment = targetNumber / 50;
-                    
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= targetNumber) {
-                            stat.textContent = targetText;
-                            clearInterval(timer);
-                        } else {
-                            stat.textContent = Math.floor(current) + '+';
-                        }
-                    }, 20);
-                }
-            });
-        }
-
-        // Intersection Observer for animations
-        function setupIntersectionObserver() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                        
-                        // If it's the stats section, animate numbers
-                        if (entry.target.classList.contains('stats-bar')) {
-                            animateStats();
-                        }
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            // Observe sections
-            document.querySelectorAll('.stats-bar, .timeline-item, .value-card').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(el);
-            });
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            setActiveMenuItem();
-            handleHeaderScroll();
-            setupIntersectionObserver();
-            
-            // Header scroll effect
-            window.addEventListener('scroll', handleHeaderScroll);
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768 && menuContent?.classList.contains('show')) {
-                    menuContent.classList.remove('show');
-                    const icon = menuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-        });
-    </script>
-    <script type="module">
-        import { supabase } from './supabase-client.js'
-
-        const image = document.getElementById('aboutPageImage')
-        supabase.from('site_settings')
-            .select('setting_value')
-            .eq('setting_key', 'about_image_url')
-            .maybeSingle()
-            .then(({ data, error }) => {
-                if (!error && data?.setting_value) image.src = data.setting_value
-            })
-            .catch(error => console.error('Could not load the saved about image:', error))
-        import('./supabase-client.js').then(({ trackDeviceVisit }) => trackDeviceVisit())
-    </script>
 </body>
 </html>

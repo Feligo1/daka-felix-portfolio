@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Technical Skills | Daka Felix</title>
+    <title>Technical Skills | Felix Daka</title>
+    <meta name="description" content="Explore Felix Daka&#39;s practical ICT support and networking skills and his Computer Science coursework.">
+    <link rel="canonical" href="https://feligo1.github.io/daka-felix-portfolio/expertise.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Technical Skills | Felix Daka">
+    <meta property="og:description" content="Explore Felix Daka&#39;s practical ICT support and networking skills and his Computer Science coursework.">
+    <meta property="og:url" content="https://feligo1.github.io/daka-felix-portfolio/expertise.html">
+    <meta property="og:image" content="https://feligo1.github.io/daka-felix-portfolio/felix.jpg">
+    <meta property="og:image:alt" content="Portrait of Felix Daka">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
         }
         
         :root {
@@ -386,63 +394,82 @@
         }
     </style>
     <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="portfolio-refresh.css?v=5">
+    <script src="portfolio-nav.js" defer></script>
+    <link rel="stylesheet" href="editorial.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
+                <span>Felix Daka <span class="brand-label">Tech Guy</span></span>
             </a>
             <nav class="primary-nav" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="expertise.html" class="active">Technical Skills</a>
-                <a href="certificates.html">Certificates</a>
                 <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html" class="active" aria-current="page">Skills</a>
+                <a href="certificates.html">Certificates</a>
                 <a href="contact.html">Contact</a>
             </nav>
             <div class="menu-container">
-                <button class="menu-btn" id="menuBtn">
+                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="menu-content" id="menuContent">
-                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                    <a href="expertise.html" class="active"><i class="fas fa-cogs"></i> Technical Skills</a>
-                    <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
-                    <a href="about.html"><i class="fas fa-user"></i> About</a>
-                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                </div>
+                <nav class="menu-content" id="menuContent" aria-label="Mobile navigation">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="expertise.html" class="active" aria-current="page">Skills</a>
+                    <a href="certificates.html">Certificates</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
 
+    <main id="main-content" tabindex="-1">
+
     <div class="container">
         <div class="page-header">
             <h1>Technical Skills</h1>
-            <p class="page-subtitle">Areas I have studied and worked in, including network support, web development and computer hardware.</p>
+            <p class="page-subtitle">Skills developed through ICT placements and Computer Science coursework.</p>
         </div>
     </div>
 
     <div class="container">
+        <section class="skills-overview" aria-labelledby="skills-heading">
+            <h2 id="skills-heading">Skills at a glance</h2>
+            <div class="skills-grid">
+                <article><h3>IT Support</h3><p><a href="about.html#experience">Placement experience</a> &middot; Hardware and software installation, equipment maintenance, user support and troubleshooting.</p></article>
+                <article><h3>Networking</h3><p><strong>Placement experience</strong> &middot; Network support, troubleshooting and diagnostics.</p></article>
+                <article><h3>Development</h3><p><strong>Academic and project skills</strong> &middot; Java, Python, Flask, HTML, CSS and JavaScript.</p></article>
+                <article><h3>Cybersecurity</h3><p><strong>Coursework and course completion</strong> &middot; Cybersecurity fundamentals.</p></article>
+                <article><h3>Cloud</h3><p><strong>Academic exposure</strong> &middot; Cloud computing and a <a href="project.html?project=farmers-market-information-platform">cloud-based final-year project</a>.</p></article>
+                <article><h3>Data</h3><p><strong>Academic exposure</strong> &middot; Databases and introductory data science.</p></article>
+            </div>
+        </section>
+        <h2 class="skills-detail-heading">Browse technical areas</h2>
         <div class="filters-container">
             <div class="filter-group" id="filterGroup">
-                <button class="filter-btn active" data-filter="all">All Services</button>
-                <button class="filter-btn" data-filter="networking">Networking</button>
-                <button class="filter-btn" data-filter="web">Web Development</button>
-                <button class="filter-btn" data-filter="security">Cyber Security</button>
-                <button class="filter-btn" data-filter="engineering">Engineering</button>
-                <button class="filter-btn" data-filter="database">Database</button>
-                <button class="filter-btn" data-filter="consulting">Consulting</button>
+                <button class="filter-btn active" aria-pressed="true" data-filter="all">All areas</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="networking">Networking</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="web">Web Development</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="security">Cybersecurity</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="engineering">Engineering</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="database">Databases</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="consulting">Consulting</button>
             </div>
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search skills...">
+                <input type="search" id="searchInput" aria-label="Search skills" placeholder="Search skills...">
             </div>
         </div>
 
-        <div id="expertiseGrid" class="expertise-list">
+        <div id="expertiseGrid" class="expertise-list" aria-live="polite">
             <div class="empty-state">Loading skills...</div>
         </div>
 
@@ -450,14 +477,15 @@
             <h2>Request help</h2>
             <p>Choose the area you need help with and tell me a little about it. I’ll reply by email.</p>
             <form id="serviceRequestForm">
+                <div class="contact-trap" aria-hidden="true"><label>Leave this field blank <input name="_honey" tabindex="-1" autocomplete="off"></label></div>
                 <div class="service-request-grid">
                     <div class="service-request-field">
                         <label for="requestName">Your name</label>
-                        <input id="requestName" name="name" autocomplete="name" required>
+                        <input id="requestName" maxlength="120" name="name" autocomplete="name" required>
                     </div>
                     <div class="service-request-field">
                         <label for="requestEmail">Email address</label>
-                        <input id="requestEmail" name="email" type="email" autocomplete="email" required>
+                        <input id="requestEmail" maxlength="254" name="email" type="email" autocomplete="email" required>
                     </div>
                     <div class="service-request-field full-width">
                         <label for="requestService">What do you need help with?</label>
@@ -474,7 +502,7 @@
                     </div>
                     <div class="service-request-field full-width">
                         <label for="requestMessage">Tell me what you need</label>
-                        <textarea id="requestMessage" name="message" placeholder="What are you trying to do, and what help do you need?" required></textarea>
+                        <textarea id="requestMessage" maxlength="4000" name="message" placeholder="What are you trying to do, and what help do you need?" required></textarea>
                     </div>
                 </div>
                 <button class="btn btn-accent" type="submit" id="serviceRequestSubmit">Send request</button>
@@ -487,20 +515,23 @@
         </div>
     </div>
 
+    </main>
+
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
+                    <div class="footer-logo">Felix Daka <span>(Tech Guy)</span></div>
                     <p>Computer Science graduate based in Zambia, with experience in IT support and networking.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="expertise.html">Technical Skills</a></li>
-                        <li><a href="certificates.html">Certificates</a></li>
                         <li><a href="about.html">About</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="expertise.html">Skills</a></li>
+                        <li><a href="certificates.html">Certificates</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -510,16 +541,18 @@
                 </div>
             </div>
             <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
-            <div class="copyright"><p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved.</p></div>
+            <div class="copyright"><p>&copy; 2026 Felix Daka (Tech Guy). All rights reserved.</p></div>
         </div>
+        <nav class="editorial-footer-links" aria-label="More from Felix Daka">
+            <a href="journal.html">Technical Journal</a>
+            <a href="recommendations.html">Recommendations</a>
+        </nav>
     </footer>
 
     <script type="module">
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+        import { httpsLink } from './editorial-data.js'
+        import { supabase } from './supabase-client.js'
         
-        const SUPABASE_URL = 'https://pthcviwhcsluovdekjub.supabase.co'
-        const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC'
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
         
         let allProjects = []
         
@@ -543,6 +576,7 @@
             
             if (error) {
                 console.error('Error loading projects:', error)
+                document.getElementById('expertiseGrid').textContent = 'Technical area details could not be loaded.'
                 return
             }
             
@@ -577,7 +611,7 @@
             const container = document.getElementById('expertiseGrid')
             
             if (filtered.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-search" style="font-size:48px;margin-bottom:16px;"></i><h3>No Services Found</h3><p>Try adjusting your search or filter</p></div>'
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-search" style="font-size:48px;margin-bottom:16px;"></i><h3>No matching technical areas</h3><p>Try adjusting your search or filter</p></div>'
                 return
             }
             
@@ -684,6 +718,7 @@
         const serviceRequestForm = document.getElementById('serviceRequestForm')
         serviceRequestForm.addEventListener('submit', async event => {
             event.preventDefault()
+            if (serviceRequestForm.elements._honey.value) return
             const submitButton = document.getElementById('serviceRequestSubmit')
             const status = document.getElementById('serviceRequestStatus')
             const serviceSelect = document.getElementById('requestService')
@@ -709,11 +744,12 @@
                         ...formData,
                         _subject: formData.subject,
                         _replyto: email,
-                        _url: window.location.href
+                        _honey: '',
+                        _url: window.location.origin + window.location.pathname
                     })
                 })
                 const result = await response.json().catch(() => ({}))
-                if (!response.ok || result.success === false) throw new Error('Request could not be sent')
+                if (!response.ok || ![true, 'true'].includes(result.success)) throw new Error('Request could not be sent')
                 serviceRequestForm.reset()
                 status.textContent = 'Your request has been sent. I will reply to the email address you provided.'
             } catch (error) {
@@ -728,57 +764,25 @@
         // Load social links
         async function loadSocialLinks() {
             const { data } = await supabase.from('site_settings').select('*')
-            const github = data?.find(s => s.setting_key === 'contact_github')?.setting_value || 'https://github.com/Feligo1'
-            const linkedin = data?.find(s => s.setting_key === 'contact_linkedin')?.setting_value || 'https://www.linkedin.com/in/felixdaka-zm'
-            const facebook = data?.find(s => s.setting_key === 'contact_facebook')?.setting_value || 'https://www.facebook.com/share/1AJKpFspAB/'
-            const whatsapp = data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value || 'https://wa.me/260774496821'
+            const github = httpsLink(data?.find(s => s.setting_key === 'contact_github')?.setting_value) || 'https://github.com/Feligo1'
+            const linkedin = 'https://www.linkedin.com/in/felix-daka-5b6058212'
+            const facebook = httpsLink(data?.find(s => s.setting_key === 'contact_facebook')?.setting_value) || 'https://www.facebook.com/share/1AJKpFspAB/'
+            const whatsapp = httpsLink(data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value) || 'https://wa.me/260774496821'
             
             document.getElementById('socialIcons').innerHTML = `
-                <a href="${escapeHtml(github)}" target="_blank">GitHub</a>
-                <a href="${escapeHtml(linkedin)}" target="_blank">LinkedIn</a>
-                <a href="${escapeHtml(facebook)}" target="_blank">Facebook</a>
-                <a href="${escapeHtml(whatsapp)}" target="_blank">WhatsApp</a>
+                <a href="${escapeHtml(github)}" target="_blank" rel="noopener">GitHub</a>
+                <a href="${escapeHtml(linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="${escapeHtml(facebook)}" target="_blank" rel="noopener">Facebook</a>
+                <a href="${escapeHtml(whatsapp)}" target="_blank" rel="noopener">WhatsApp</a>
             `
         }
         
-        // Menu functionality
-        const menuBtn = document.getElementById('menuBtn')
-        const menuContent = document.getElementById('menuContent')
-        
-        if (menuBtn) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation()
-                menuContent.classList.toggle('show')
-                const icon = menuBtn.querySelector('i')
-                if (menuContent.classList.contains('show')) {
-                    icon.classList.remove('fa-bars')
-                    icon.classList.add('fa-times')
-                } else {
-                    icon.classList.remove('fa-times')
-                    icon.classList.add('fa-bars')
-                }
-            })
-        }
-        
-        document.addEventListener('click', (event) => {
-            if (menuContent?.classList.contains('show')) {
-                const isClickInside = menuBtn?.contains(event.target) || menuContent.contains(event.target)
-                if (!isClickInside) {
-                    menuContent.classList.remove('show')
-                    const icon = menuBtn?.querySelector('i')
-                    if (icon) {
-                        icon.classList.remove('fa-times')
-                        icon.classList.add('fa-bars')
-                    }
-                }
-            }
-        })
-        
-        // Filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
-                btn.classList.add('active')
+                document.querySelectorAll('.filter-btn').forEach(button => {
+                    button.classList.toggle('active', button === btn)
+                    button.setAttribute('aria-pressed', String(button === btn))
+                })
                 renderProjects()
             })
         })
@@ -789,14 +793,8 @@
             searchInput.addEventListener('input', () => renderProjects())
         }
         
-        // Header scroll effect
-        const header = document.getElementById('mainHeader')
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) header.classList.add('scrolled')
-            else header.classList.remove('scrolled')
-        })
-        
-        // Initialize
+
+// Initialize
         loadProjects()
         loadSocialLinks()
     </script>

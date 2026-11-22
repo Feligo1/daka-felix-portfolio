@@ -263,6 +263,8 @@
         }
     </style>
     <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="showcase.css">
+    <link rel="stylesheet" href="editorial.css">
 </head>
 <body>
     <div class="login-screen" id="loginScreen">
@@ -312,6 +314,8 @@
             <div class="stats-grid">
                 <div class="stat-card"><h3 id="statCerts">0</h3><p>Certificates</p></div>
                 <div class="stat-card"><h3 id="statProjects">0</h3><p>Projects</p></div>
+                <div class="stat-card"><h3 id="statJournal">0</h3><p>Articles</p></div>
+                <div class="stat-card"><h3 id="statRecommendations">0</h3><p>Recommendations</p></div>
                 <div class="stat-card"><h3 id="statMessages">0</h3><p>Messages</p></div>
                 <div class="stat-card"><h3 id="statPageVisits">0</h3><p>Page visits</p></div>
             </div>
@@ -319,9 +323,13 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="certificates">Certificates</button>
                 <button class="tab-btn" data-tab="documents">Documents</button>
-                <button class="tab-btn" data-tab="projects">Projects</button>
+                <button class="tab-btn" data-tab="showcase">Projects</button>
+                <button class="tab-btn" data-tab="projects">Skills content</button>
                 <button class="tab-btn" data-tab="profile">Profile Image</button>
                 <button class="tab-btn" data-tab="about">About Image</button>
+                <button class="tab-btn" data-tab="gallery">About Gallery</button>
+                <button class="tab-btn" data-tab="journal">Journal</button>
+                <button class="tab-btn" data-tab="recommendations">Recommendations</button>
                 <button class="tab-btn" data-tab="messages">Messages</button>
                 <button class="tab-btn" data-tab="deviceVisits">Visitors</button>
                 <button class="tab-btn" data-tab="security">Security</button>
@@ -359,6 +367,7 @@
                             <div class="form-group full-width"><label for="documentDescription">Description</label><textarea id="documentDescription" rows="3" maxlength="2000"></textarea></div>
                         </div>
                         <button type="submit" id="documentSubmitBtn">Upload Document</button>
+                        <button id="cancelDocumentEdit" type="button" hidden>Cancel edit</button>
                     </form>
                 </div>
                 <div class="card">
@@ -406,9 +415,156 @@
             </div>
             
             <!-- Projects Tab -->
+            <div id="recommendationsTab" class="tab-content">
+                <div class="card">
+                    <h2>Recommendations</h2>
+                    <button type="button" data-new>New draft</button>
+                    <div class="items-list" data-records aria-live="polite">Loading records...</div>
+                </div>
+                <div class="card">
+                    <h3>Editor</h3>
+                    <form class="showcase-admin-form" data-editor>
+                        <div class="form-grid">
+                            <label>Full name <input name="person" maxlength="120" required></label>
+                            <label>Role <input name="role" maxlength="120" required></label>
+                            <label>Organization <input name="organization" maxlength="160"></label>
+                            <label>Display order <input name="display_order" type="number" step="1" value="0" required></label>
+                        </div>
+                        <label>Exact approved statement <textarea name="quote" maxlength="3000" rows="5" required></textarea></label>
+                        <label class="showcase-checkbox"><input name="permission_confirmed" type="checkbox"> The author has approved public use of this statement and attribution.</label>
+                        <div class="editorial-actions">
+                            <button type="submit">Save</button>
+                            <button type="button" data-preview-button>Preview</button>
+                        </div>
+                    </form>
+                    <div class="card editorial-preview" data-preview tabindex="-1" aria-label="Draft preview" hidden></div>
+
+                </div>
+            </div>
+            <div id="journalTab" class="tab-content">
+                <div class="card">
+                    <h2>Journal</h2>
+                    <button type="button" data-new>New draft</button>
+                    <div class="items-list" data-records aria-live="polite">Loading records...</div>
+                </div>
+                <div class="card">
+                    <h3>Editor</h3>
+                    <form class="showcase-admin-form" data-editor>
+                        <div class="form-grid">
+                            <label>Title <input name="title" maxlength="160" required></label>
+                            <label>URL slug <input name="slug" maxlength="100" pattern="[a-z0-9]+(-[a-z0-9]+)*" required></label>
+                            <label>Topic <select name="topic" required></select></label>
+                            <label>Tags, comma separated <input name="tags"></label>
+                        </div>
+                        <label>Summary <textarea name="summary" maxlength="500" rows="2" required></textarea></label>
+                        <label>Article body <textarea name="body" rows="12" maxlength="60000" required></textarea></label>
+                        <p>Use ## and ### headings, lists beginning with a hyphen, bold with two asterisks, and fenced code. For references, use Markdown links with HTTPS URLs.</p>
+                        <div class="editorial-actions">
+                            <button type="submit">Save</button>
+                            <button type="button" data-preview-button>Preview</button>
+                        </div>
+                    </form>
+                    <div class="card editorial-preview" data-preview tabindex="-1" aria-label="Draft preview" hidden></div>
+                    <div id="journalMediaPanel" hidden>
+                        <h3>Article images</h3>
+                        <div id="journalImageList"></div>
+                        <form id="journalImageForm" class="showcase-admin-form">
+                            <label>Image <input name="file" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+                            <label>Image alt text <input name="alt" maxlength="300" required></label>
+                            <label class="showcase-checkbox"><input name="cover" type="checkbox"> Use as cover image</label>
+                            <button type="submit">Attach image</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="galleryTab" class="tab-content">
+                <div class="card">
+                    <h2>About photo gallery</h2>
+                    <button type="button" id="newGalleryPhoto">Add another photo</button>
+                    <div id="galleryAdminList" class="items-list" aria-live="polite">Loading photos...</div>
+                </div>
+                <div class="card">
+                    <h2 id="galleryEditorTitle">Add photo</h2>
+                    <p>Uploads start as drafts. Publish from the photo list when the caption is ready. Lower display order appears first.</p>
+                    <form class="showcase-admin-form">
+                        <label>Photograph <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" required></label>
+                        <div class="form-grid">
+                            <label>Title <input name="title" maxlength="120" required></label>
+                            <label>Category <select name="category" required></select></label>
+                            <label>Photo date <input name="photo_date" type="date"></label>
+                            <label>Display order <input name="display_order" type="number" value="0" step="1" required></label>
+                        </div>
+                        <label>Alt text <input name="alt_text" maxlength="300" required aria-describedby="galleryAltHelp"><small id="galleryAltHelp">Describe what is visible in the photograph.</small></label>
+                        <label>Caption <textarea name="description" maxlength="1000" rows="3"></textarea></label>
+                        <div class="editorial-actions">
+                            <button type="submit">Save photo</button>
+                            <button type="button" id="previewGalleryPhoto">Preview photo</button>
+                        </div>
+                    </form>
+                    <div id="galleryAdminPreview" class="card editorial-preview" tabindex="-1" aria-label="Photo preview" hidden></div>
+                </div>
+            </div>
+
+            <div id="showcaseTab" class="tab-content">
+                <div id="showcaseAdmin">
+                    <div class="card">
+                        <h2>Project publishing</h2>
+                        <button type="button" id="newShowcaseProject">New project</button>
+                        <div id="showcaseAdminList" class="items-list" aria-live="polite">Loading projects...</div>
+                    </div>
+                    <div class="card">
+                        <h2 id="showcaseEditorTitle">New project</h2>
+                        <p>New projects are drafts. Publish from the list when the case study is ready.</p>
+                        <form id="showcaseProjectForm" class="showcase-admin-form">
+                            <div class="form-grid">
+                                <label>Title <input name="title" maxlength="160" required></label>
+                                <label>URL slug <input name="slug" maxlength="100" pattern="[a-z0-9]+(-[a-z0-9]+)*" aria-describedby="slugHint" required><small id="slugHint">Lowercase words separated by hyphens. Permanent after saving.</small></label>
+                                <label>Category <input name="category" maxlength="80" required></label>
+                                <label>Status <select name="status" required></select></label>
+                                <label>Display order <input name="display_order" type="number" step="1" value="0" required></label>
+                                <label>Live demo URL <input name="live_url" type="url"></label>
+                                <label>GitHub repository URL <input name="github_url" type="url" placeholder="https://github.com/owner/repository"></label>
+                            </div>
+                            <label>Card summary <textarea name="summary" maxlength="500" rows="2" required></textarea></label>
+                            <label>Overview <textarea name="overview" rows="3"></textarea></label>
+                            <label>Problem <textarea name="problem" rows="3"></textarea></label>
+                            <label>Objectives, one per line <textarea name="objectives" rows="3"></textarea></label>
+                            <label>Technologies, one per line <textarea name="technologies" rows="3"></textarea></label>
+                            <label>Implemented features, one per line <textarea name="features" rows="3"></textarea></label>
+                            <label>Proposed features, one per line <textarea name="proposed_features" rows="3"></textarea></label>
+                            <label>Architecture <textarea name="architecture" rows="3"></textarea></label>
+                            <label>Challenges <textarea name="challenges" rows="3"></textarea></label>
+                            <label>Outcomes <textarea name="outcomes" rows="3"></textarea></label>
+                            <label>Lessons learned <textarea name="lessons" rows="3"></textarea></label>
+                            <label class="showcase-checkbox"><input name="featured" type="checkbox"> Feature this project</label>
+                            <div class="editorial-actions">
+                                <button type="submit">Save project</button>
+                                <button type="button" id="showcasePreviewButton">Preview project</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="showcasePreview" class="card editorial-preview" aria-live="polite" hidden></div>
+                    <div id="showcaseMediaPanel" class="card" hidden>
+                        <h2>Project media</h2>
+                        <p>Upload up to 20 MiB per file. The first image in media order is the cover. For larger demos, use a YouTube link.</p>
+                        <div id="showcaseAdminMedia"></div>
+                        <form id="showcaseUpload" class="showcase-admin-form">
+                            <label>Project images and videos <input name="files" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" multiple required></label>
+                            <div id="showcaseFileFields"></div>
+                            <button type="submit">Upload selected files</button>
+                        </form>
+                        <form id="showcaseEmbed" class="showcase-admin-form">
+                            <label>YouTube video URL <input name="url" type="url" required></label>
+                            <label>Video description <input name="description" maxlength="300" required></label>
+                            <button type="submit">Add YouTube demo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div id="projectsTab" class="tab-content">
                 <div class="card">
-                    <h2>Add Project</h2>
+                    <h2>Add technical area</h2>
                     <form id="addProjectForm">
                         <div class="form-grid">
                             <div class="form-group"><label>Title</label><input type="text" id="projectTitle" required></div>
@@ -440,7 +596,7 @@
                 </div>
                 
                 <div class="card">
-                    <h2>Manage Projects</h2>
+                    <h2>Manage technical areas</h2>
                     <div id="projectsList" class="items-list">Loading...</div>
                 </div>
             </div>
@@ -496,11 +652,9 @@
         </div>
     </div>
     
-    <div id="toast" class="toast"></div>
+    <div id="toast" class="toast" role="status"></div>
 
     <script>
-        const SUPABASE_URL = 'https://pthcviwhcsluovdekjub.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC';
         let supabase;
         let allCertificates = [];
         let allProjects = [];
@@ -729,6 +883,11 @@
                     open.textContent = 'Open';
                     actions.appendChild(open);
                 }
+                const edit = document.createElement('button');
+                edit.type = 'button';
+                edit.textContent = 'Edit details';
+                edit.addEventListener('click', () => setDocumentEditor(storedDocument));
+                actions.appendChild(edit);
                 const remove = document.createElement('button');
                 remove.className = 'danger';
                 remove.textContent = 'Delete';
@@ -740,30 +899,52 @@
             container.replaceChildren(...rows);
         }
 
+        function setDocumentEditor(record = null) {
+            const form = document.getElementById('addDocumentForm');
+            const file = document.getElementById('documentFile');
+            form.reset();
+            form.dataset.editId = record?.id || '';
+            document.getElementById('documentTitle').value = record?.title || '';
+            document.getElementById('documentDescription').value = record?.description || '';
+            file.disabled = Boolean(record);
+            file.required = !record;
+            document.getElementById('documentSubmitBtn').textContent = record ? 'Save details' : 'Upload document';
+            document.getElementById('cancelDocumentEdit').hidden = !record;
+            if (record) document.getElementById('documentTitle').focus();
+        }
+
+        document.getElementById('cancelDocumentEdit').addEventListener('click', () => setDocumentEditor());
         document.getElementById('addDocumentForm').addEventListener('submit', async event => {
             event.preventDefault();
+            const id = event.currentTarget.dataset.editId;
             const file = document.getElementById('documentFile').files[0];
             const button = document.getElementById('documentSubmitBtn');
+            const values = {
+                title: document.getElementById('documentTitle').value.trim(),
+                description: document.getElementById('documentDescription').value.trim()
+            };
             button.disabled = true;
             try {
-                const filePath = await uploadDocumentToStorage(file);
-                const { error } = await supabase.from('documents').insert({
-                    title: document.getElementById('documentTitle').value.trim(),
-                    description: document.getElementById('documentDescription').value.trim(),
-                    file_name: file.name,
-                    file_path: filePath,
-                    mime_type: file.type,
-                    file_size: file.size
-                });
-                if (error) {
-                    await supabase.storage.from('portfolio-documents').remove([filePath]);
-                    throw error;
+                if (!values.title) throw new Error('Enter a document title.');
+                if (id) {
+                    const { error } = await supabase.from('documents').update(values).eq('id', id).select('id').single();
+                    if (error) throw error;
+                } else {
+                    const filePath = await uploadDocumentToStorage(file);
+                    const { error } = await supabase.from('documents').insert({
+                        ...values, file_name: file.name, file_path: filePath,
+                        mime_type: file.type, file_size: file.size, is_public: false
+                    });
+                    if (error) {
+                        await supabase.storage.from('portfolio-documents').remove([filePath]);
+                        throw error;
+                    }
                 }
-                event.target.reset();
-                showToast('Document uploaded');
+                setDocumentEditor();
+                showToast(id ? 'Document details saved' : 'Document uploaded');
                 await loadDocuments();
             } catch (error) {
-                showToast(error.message || 'Document upload failed', 'error');
+                showToast(error.message || 'Document could not be saved', 'error');
             } finally {
                 button.disabled = false;
             }
@@ -776,6 +957,7 @@
             if (storageError) { showToast(storageError.message, 'error'); return; }
             const { error } = await supabase.from('documents').delete().eq('id', id);
             if (error) { showToast(error.message, 'error'); return; }
+            if (window.document.getElementById('addDocumentForm').dataset.editId === id) setDocumentEditor();
             showToast('Document deleted');
             await loadDocuments();
         };
@@ -870,12 +1052,50 @@
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
         
-        // ============ PROJECT CRUD ============
+        const editorialSetups = {};
+        async function loadEditorial(mode) {
+            try {
+                editorialSetups[mode] ||= import('./editorial-admin.js')
+                    .then(({ setupEditorialAdmin }) => setupEditorialAdmin(supabase, mode, optimizeImage, showToast));
+                const refresh = await editorialSetups[mode];
+                await refresh();
+            } catch (error) {
+                delete editorialSetups[mode];
+                showToast(error.message, 'error');
+            }
+        }
+
+        let gallerySetup;
+        async function loadGallery() {
+            try {
+                gallerySetup ||= import('./about-gallery-admin.js')
+                    .then(({ setupGalleryAdmin }) => setupGalleryAdmin(supabase, optimizeImage, showToast));
+                const refresh = await gallerySetup;
+                await refresh();
+            } catch (error) {
+                gallerySetup = null;
+                showToast(error.message, 'error');
+            }
+        }
+
+        let showcaseSetup;
+        async function loadShowcase() {
+            try {
+                showcaseSetup ||= import('./showcase-admin.js')
+                    .then(({ setupShowcaseAdmin }) => setupShowcaseAdmin(supabase, showToast));
+                const refresh = await showcaseSetup;
+                await refresh();
+            } catch (error) {
+                showcaseSetup = null;
+                showToast(error.message, 'error');
+            }
+        }
+
+        // ============ TECHNICAL AREA CRUD ============
         async function loadProjects() {
             const { data, error } = await supabase.from('projects').select('*').order('display_order');
             if (error) return;
             allProjects = data;
-            document.getElementById('statProjects').textContent = data.length;
             
             const container = document.getElementById('projectsList');
             if (data.length === 0) {
@@ -1115,6 +1335,9 @@
             document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
             if (tabId === 'certificates') loadCertificates();
             if (tabId === 'projects') loadProjects();
+            if (tabId === 'showcase') loadShowcase();
+            if (tabId === 'gallery') loadGallery();
+            if (tabId === 'journal' || tabId === 'recommendations') loadEditorial(tabId);
             if (tabId === 'messages') loadMessages();
             if (tabId === 'deviceVisits') loadDeviceVisits();
             if (tabId === 'documents') loadDocuments();
@@ -1169,8 +1392,7 @@
         
         // Initialize
         async function initSupabase() {
-            const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
-            supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+            supabase = (await import('./supabase-client.js')).supabase;
         }
 
         async function showAdminPanel() {
@@ -1196,7 +1418,9 @@
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('adminPanel').style.display = 'block';
             loadCertificates();
-            loadProjects();
+            loadShowcase();
+            loadEditorial('journal');
+            loadEditorial('recommendations');
             loadImages();
             loadMessages();
             loadDocuments();

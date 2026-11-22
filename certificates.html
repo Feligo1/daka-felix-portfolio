@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>My Certificates | Daka Felix (Tech Guy)</title>
+    <title>Course-completion Certificates | Felix Daka</title>
+    <meta name="description" content="Course-completion certificates from Huawei, Cisco Networking Academy and Smart Zambia Institute.">
+    <link rel="canonical" href="https://feligo1.github.io/daka-felix-portfolio/certificates.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Course-completion Certificates | Felix Daka">
+    <meta property="og:description" content="Course-completion certificates from Huawei, Cisco Networking Academy and Smart Zambia Institute.">
+    <meta property="og:url" content="https://feligo1.github.io/daka-felix-portfolio/certificates.html">
+    <meta property="og:image" content="https://feligo1.github.io/daka-felix-portfolio/felix.jpg">
+    <meta property="og:image:alt" content="Portrait of Felix Daka">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
         }
         
         :root {
@@ -443,7 +451,7 @@
             transition: opacity 0.3s ease;
         }
         
-        .modal.active { display: flex; opacity: 1; animation: modalFadeIn 0.3s ease; }
+        .modal[open] { display: flex; opacity: 1; animation: modalFadeIn 0.3s ease; }
         
         @keyframes modalFadeIn {
             from { opacity: 0; }
@@ -463,7 +471,7 @@
             box-shadow: var(--box-shadow-glow);
         }
         
-        .modal.active .modal-content {
+        .modal[open] .modal-content {
             transform: scale(1);
         }
         
@@ -603,72 +611,107 @@
         }
     </style>
     <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="portfolio-refresh.css?v=5">
+    <script src="portfolio-nav.js" defer></script>
+    <link rel="stylesheet" href="editorial.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
+                <span>Felix Daka <span class="brand-label">Tech Guy</span></span>
             </a>
             <nav class="primary-nav" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="expertise.html">Technical Skills</a>
-                <a href="certificates.html" class="active">Certificates</a>
                 <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
+                <a href="certificates.html" class="active" aria-current="page">Certificates</a>
                 <a href="contact.html">Contact</a>
             </nav>
             <div class="menu-container">
-                <button class="menu-btn" id="menuBtn">
+                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="menu-content" id="menuContent">
-                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                    <a href="expertise.html"><i class="fas fa-cogs"></i> Technical Skills</a>
-                    <a href="certificates.html" class="active"><i class="fas fa-certificate"></i> Certificates</a>
-                    <a href="about.html"><i class="fas fa-user"></i> About</a>
-                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                </div>
+                <nav class="menu-content" id="menuContent" aria-label="Mobile navigation">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="expertise.html">Skills</a>
+                    <a href="certificates.html" class="active" aria-current="page">Certificates</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
 
+    <main id="main-content" tabindex="-1">
+
     <div class="container">
         <div class="page-header">
-            <h1>My Certificates</h1>
-            <p class="page-subtitle">Courses and certifications I have completed.</p>
+            <h1>Certificates</h1>
+            <p class="page-subtitle">Seven course-completion certificates from Huawei, Cisco Networking Academy and Smart Zambia Institute.</p>
         </div>
 
-        <div class="stats-grid" id="statsGrid">
+        <div class="stats-grid" id="statsGrid" hidden>
             <div class="stat-card"><div class="stat-number" id="totalCerts">0</div><div class="stat-label">Total Certificates</div></div>
             <div class="stat-card red"><div class="stat-number" id="thisYearCerts">0</div><div class="stat-label">Earned This Year</div></div>
             <div class="stat-card yellow"><div class="stat-number" id="totalIssuers">0</div><div class="stat-label">Issuers</div></div>
         </div>
 
-        <div class="filters-container">
+        <div class="filters-container" id="certificateFilters" hidden>
             <div class="filter-group" id="filterGroup">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="certificate">Certificates</button>
-                <button class="filter-btn" data-filter="badge">Badges</button>
+                <button class="filter-btn active" aria-pressed="true" data-filter="all">All</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="certificate">Certificates</button>
+                <button class="filter-btn" aria-pressed="false" data-filter="badge">Badges</button>
             </div>
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search certificates...">
+                <input type="search" id="searchInput" aria-label="Search certificates" placeholder="Search certificates...">
             </div>
         </div>
 
-        <div id="certificatesGrid" class="certificates-grid">
-            <p class="empty-state">Loading certificates...</p>
+        <div id="certificateLoadStatus" role="status"></div>
+        <div id="certificatesGrid" class="certificates-grid" aria-live="polite">
+            <article class="certificate-row">
+                <div><h3>Introduction to IoT and Digital Transformation</h3><p class="certificate-issuer">Cisco Networking Academy</p></div>
+                <time class="certificate-row-meta" datetime="2026-03-09">9 March 2026</time>
+            </article>
+            <article class="certificate-row">
+                <div><h3>Introduction to Modern AI</h3><p class="certificate-issuer">Cisco Networking Academy</p></div>
+                <time class="certificate-row-meta" datetime="2026-02-03">3 February 2026</time>
+            </article>
+            <article class="certificate-row">
+                <div><h3>Cybersecurity Fundamentals</h3><p class="certificate-issuer">Cisco Networking Academy</p></div>
+                <time class="certificate-row-meta" datetime="2026-02-01">1 February 2026</time>
+            </article>
+            <article class="certificate-row">
+                <div><h3>Introduction to Cybersecurity</h3><p class="certificate-issuer">Smart Zambia Institute through Cisco Networking Academy</p></div>
+                <time class="certificate-row-meta" datetime="2026-02-01">1 February 2026</time>
+            </article>
+            <article class="certificate-row">
+                <div><h3>Introduction to Data Science</h3><p class="certificate-issuer">Cisco Networking Academy</p></div>
+                <time class="certificate-row-meta" datetime="2025-07-08">8 July 2025</time>
+            </article>
+            <article class="certificate-row">
+                <div><h3>Artificial Intelligence Technology Applications</h3><p class="certificate-issuer">Huawei</p></div>
+                <time class="certificate-row-meta" datetime="2025-05-21">21 May 2025</time>
+            </article>
+            <article class="certificate-row">
+                <div><h3>Artificial Intelligence and Applications</h3><p class="certificate-issuer">Huawei</p></div>
+                <time class="certificate-row-meta" datetime="2025-05-21">21 May 2025</time>
+            </article>
         </div>
     </div>
 
-    <div id="certModal" class="modal">
+    <dialog id="certModal" class="modal" aria-labelledby="modalTitle">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">Certificate Details</h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" type="button" aria-label="Close certificate viewer" autofocus onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="certificate-reader" aria-label="Certificate viewer">
@@ -689,22 +732,25 @@
     <div id="toast" class="toast-notification">
         <i class="fas fa-check-circle"></i>
         <span>Certificates loaded successfully!</span>
-    </div>
+    </dialog>
+
+    </main>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
+                    <div class="footer-logo">Felix Daka <span>(Tech Guy)</span></div>
                     <p>Computer Science graduate based in Zambia, with experience in IT support and networking.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="expertise.html">Technical Skills</a></li>
-                        <li><a href="certificates.html">Certificates</a></li>
                         <li><a href="about.html">About</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="expertise.html">Skills</a></li>
+                        <li><a href="certificates.html">Certificates</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -714,16 +760,18 @@
                 </div>
             </div>
             <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
-            <div class="copyright"><p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved.</p></div>
+            <div class="copyright"><p>&copy; 2026 Felix Daka (Tech Guy). All rights reserved.</p></div>
         </div>
+        <nav class="editorial-footer-links" aria-label="More from Felix Daka">
+            <a href="journal.html">Technical Journal</a>
+            <a href="recommendations.html">Recommendations</a>
+        </nav>
     </footer>
 
     <script type="module">
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+        import { httpsLink } from './editorial-data.js'
+        import { supabase } from './supabase-client.js'
         
-        const SUPABASE_URL = 'https://pthcviwhcsluovdekjub.supabase.co'
-        const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC'
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
         
         let allCertificates = []
         let visibleCertificates = []
@@ -738,7 +786,7 @@
         
         function formatDate(dateString) {
             if (!dateString) return 'Unknown'
-            return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+            return new Date(dateString).toLocaleDateString('en-GB', { timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric' })
         }
         
         function showToast(message, type = 'success') {
@@ -752,7 +800,7 @@
         }
 
         function showCertificatesError() {
-            document.getElementById('certificatesGrid').innerHTML = `
+            document.getElementById('certificateLoadStatus').innerHTML = `
                 <div class="empty-state">
                     <i class="fas fa-exclamation-triangle"></i>
                     <h3>Certificates could not be loaded</h3>
@@ -793,6 +841,8 @@
         
         // Update statistics with animation
         function updateStats() {
+            document.getElementById('statsGrid').hidden = false
+            document.getElementById('certificateFilters').hidden = false
             const currentYear = new Date().getFullYear()
             const total = allCertificates.length
             const thisYear = allCertificates.filter(c => c.date_earned && new Date(c.date_earned).getFullYear() === currentYear).length
@@ -868,7 +918,7 @@
                         </div>
                         <div class="certificate-row-actions">
                             <span class="certificate-row-meta">${formatDate(cert.date_earned)}</span>
-                            <button onclick="viewCertificate('${cert.id}')" class="btn" type="button">View</button>
+                            <button onclick="viewCertificate(this.dataset.certificateId)" data-certificate-id="${escapeHtml(String(cert.id))}" class="btn" type="button" aria-label="View ${escapeHtml(cert.name)}">View certificate</button>
                         </div>
                     </article>
                 `
@@ -890,7 +940,7 @@
 
             const stage = document.getElementById('readerStage')
             stage.replaceChildren()
-            const documentUrl = cert.document_url || ''
+            const documentUrl = httpsLink(cert.document_url || '')
             const isPdf = /\.pdf(?:$|[?#])/i.test(documentUrl) || /\.pdf$/i.test(cert.document_name || '')
             const isWordDocument = /\.docx?(?:$|[?#])/i.test(documentUrl) || /\.docx?$/i.test(cert.document_name || '')
             if (documentUrl && isPdf) {
@@ -903,9 +953,9 @@
                 frame.src = `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(documentUrl)}`
                 frame.title = `${cert.name} document preview`
                 stage.appendChild(frame)
-            } else if (cert.image_url) {
+            } else if (httpsLink(cert.image_url)) {
                 const image = document.createElement('img')
-                image.src = cert.image_url
+                image.src = httpsLink(cert.image_url)
                 image.alt = cert.name
                 stage.appendChild(image)
             } else if (documentUrl) {
@@ -943,7 +993,7 @@
             if (currentCertificateIndex < 0) return
 
             renderCertificateViewer()
-            document.getElementById('certModal').classList.add('active')
+            document.getElementById('certModal').showModal()
             document.body.style.overflow = 'hidden'
         }
 
@@ -958,65 +1008,35 @@
             renderCertificateViewer()
         })
         
-        window.closeModal = () => {
-            document.getElementById('certModal').classList.remove('active')
+        const certificateDialog = document.getElementById('certModal')
+        window.closeModal = () => certificateDialog.close()
+        certificateDialog.addEventListener('close', () => {
             document.body.style.overflow = ''
-        }
+        })
         
         // Load social links
         async function loadSocialLinks() {
             const { data } = await supabase.from('site_settings').select('*')
-            const github = data?.find(s => s.setting_key === 'contact_github')?.setting_value || 'https://github.com/Feligo1'
-            const linkedin = data?.find(s => s.setting_key === 'contact_linkedin')?.setting_value || 'https://www.linkedin.com/in/felixdaka-zm'
-            const facebook = data?.find(s => s.setting_key === 'contact_facebook')?.setting_value || 'https://www.facebook.com/share/1AJKpFspAB/'
-            const whatsapp = data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value || 'https://wa.me/260774496821'
+            const github = httpsLink(data?.find(s => s.setting_key === 'contact_github')?.setting_value) || 'https://github.com/Feligo1'
+            const linkedin = 'https://www.linkedin.com/in/felix-daka-5b6058212'
+            const facebook = httpsLink(data?.find(s => s.setting_key === 'contact_facebook')?.setting_value) || 'https://www.facebook.com/share/1AJKpFspAB/'
+            const whatsapp = httpsLink(data?.find(s => s.setting_key === 'contact_whatsapp')?.setting_value) || 'https://wa.me/260774496821'
             
             document.getElementById('socialIcons').innerHTML = `
-                <a href="${escapeHtml(github)}" target="_blank">GitHub</a>
-                <a href="${escapeHtml(linkedin)}" target="_blank">LinkedIn</a>
-                <a href="${escapeHtml(facebook)}" target="_blank">Facebook</a>
-                <a href="${escapeHtml(whatsapp)}" target="_blank">WhatsApp</a>
+                <a href="${escapeHtml(github)}" target="_blank" rel="noopener">GitHub</a>
+                <a href="${escapeHtml(linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="${escapeHtml(facebook)}" target="_blank" rel="noopener">Facebook</a>
+                <a href="${escapeHtml(whatsapp)}" target="_blank" rel="noopener">WhatsApp</a>
             `
         }
-        
-        // Menu functionality
-        const menuBtn = document.getElementById('menuBtn')
-        const menuContent = document.getElementById('menuContent')
-        
-        if (menuBtn) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation()
-                menuContent.classList.toggle('show')
-                const icon = menuBtn.querySelector('i')
-                if (menuContent.classList.contains('show')) {
-                    icon.classList.remove('fa-bars')
-                    icon.classList.add('fa-times')
-                } else {
-                    icon.classList.remove('fa-times')
-                    icon.classList.add('fa-bars')
-                }
-            })
-        }
-        
-        document.addEventListener('click', (event) => {
-            if (menuContent?.classList.contains('show')) {
-                const isClickInside = menuBtn?.contains(event.target) || menuContent.contains(event.target)
-                if (!isClickInside) {
-                    menuContent.classList.remove('show')
-                    const icon = menuBtn?.querySelector('i')
-                    if (icon) {
-                        icon.classList.remove('fa-times')
-                        icon.classList.add('fa-bars')
-                    }
-                }
-            }
-        })
         
         // Filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
-                btn.classList.add('active')
+                document.querySelectorAll('.filter-btn').forEach(button => {
+                    button.classList.toggle('active', button === btn)
+                    button.setAttribute('aria-pressed', String(button === btn))
+                })
                 renderCertificates()
             })
         })
@@ -1031,14 +1051,8 @@
             })
         }
         
-        // Header scroll effect
-        const header = document.getElementById('mainHeader')
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) header.classList.add('scrolled')
-            else header.classList.remove('scrolled')
-        })
-        
-        // Close modal on escape key
+
+// Close modal on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal()
         })

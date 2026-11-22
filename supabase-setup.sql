@@ -46,8 +46,6 @@ create index if not exists device_visits_visited_at_idx
 alter table public.documents enable row level security;
 drop policy if exists "Public can read public documents" on public.documents;
 drop policy if exists "Authenticated admins manage documents" on public.documents;
-create policy "Public can read public documents"
-    on public.documents for select to anon, authenticated using (is_public = true);
 create policy "Authenticated admins manage documents"
     on public.documents for all to authenticated using (public.is_portfolio_admin()) with check (public.is_portfolio_admin());
 
@@ -98,20 +96,24 @@ on conflict (id) do update set
     file_size_limit = excluded.file_size_limit,
     allowed_mime_types = excluded.allowed_mime_types;
 
--- Replace existing Storage object policies so older anonymous upload rules cannot
--- bypass the authenticated-admin policies below. This affects every bucket in
--- this Supabase project; the policy section must be adapted if other apps use it.
-do $$
-declare
-    policy_row record;
-begin
-    for policy_row in
-        select p.policyname from pg_policies as p
-        where p.schemaname = 'storage' and p.tablename = 'objects'
-    loop
-        execute format('drop policy %I on storage.objects', policy_row.policyname);
-    end loop;
-end $$;
+-- Replace only this baseline's known policies, including legacy admin-role names.
+-- Review unfamiliar policies separately, especially rules without a bucket restriction.
+drop policy if exists "Public can view portfolio images" on storage.objects;
+drop policy if exists "Authenticated admins upload portfolio images" on storage.objects;
+drop policy if exists "Authenticated admins update portfolio images" on storage.objects;
+drop policy if exists "Authenticated admins delete portfolio images" on storage.objects;
+drop policy if exists "Authenticated admins manage portfolio documents" on storage.objects;
+drop policy if exists "Public can view certificate files" on storage.objects;
+drop policy if exists "Authenticated admins upload certificate files" on storage.objects;
+drop policy if exists "Authenticated admins update certificate files" on storage.objects;
+drop policy if exists "Authenticated admins delete certificate files" on storage.objects;
+drop policy if exists "Portfolio admins upload portfolio images" on storage.objects;
+drop policy if exists "Portfolio admins update portfolio images" on storage.objects;
+drop policy if exists "Portfolio admins delete portfolio images" on storage.objects;
+drop policy if exists "Portfolio admins manage portfolio documents" on storage.objects;
+drop policy if exists "Portfolio admins upload certificate files" on storage.objects;
+drop policy if exists "Portfolio admins update certificate files" on storage.objects;
+drop policy if exists "Portfolio admins delete certificate files" on storage.objects;
 
 create policy "Public can view portfolio images"
     on storage.objects for select to anon, authenticated
@@ -197,7 +199,7 @@ grant select on public.site_settings, public.certificates, public.projects to an
 grant select, insert, update on public.visitors to anon, authenticated;
 grant all on public.site_settings, public.certificates, public.projects,
     public.documents, public.contact_submissions to authenticated;
-grant select on public.documents to anon, authenticated;
+revoke select on public.documents from anon;
 grant insert on public.device_visits to anon, authenticated;
 grant select on public.device_visits to authenticated;
 grant usage, select on sequence public.device_visits_id_seq to anon, authenticated;

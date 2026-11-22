@@ -1,0 +1,132 @@
+[data-cv-download][hidden], [data-cv-request][hidden], #galleryTab label[hidden],
+#projectFilters[hidden], #showMoreProjects[hidden], #showcaseMediaPanel[hidden] { display: none !important; }
+
+.showcase-page {
+    margin: 0;
+    color: var(--text-light);
+    font-family: Inter, system-ui, sans-serif;
+}
+.showcase-page #mainHeader { position: fixed; z-index: 100; inset: 0 0 auto; }
+.showcase-page .header-container { min-height: 72px; }
+.showcase-page .logo { color: var(--text-light); text-decoration: none; font-weight: 700; }
+.showcase-page .menu-container { position: relative; }
+.showcase-page .menu-btn {
+    padding: 8px 14px;
+    background: var(--dark-blue-lighter);
+    color: var(--text-light);
+    border: 1px solid var(--text-muted);
+    border-radius: 8px;
+}
+.showcase-page .menu-content {
+    display: none;
+    position: absolute;
+    inset: calc(100% + 8px) 0 auto auto;
+    padding: 8px;
+    border: 1px solid #526779;
+    border-radius: 10px;
+    background: var(--dark-blue-light);
+}
+.showcase-page .menu-content.show { display: grid; }
+.showcase-page .menu-content a { padding: 10px 12px; color: var(--text-light); text-decoration: none; }
+.showcase-page .menu-content a[aria-current] { color: var(--accent); }
+.showcase-main { min-height: 76vh; padding-top: 108px; padding-bottom: 64px; }
+.showcase-main h1 { max-width: 24ch; margin: 12px 0; font-size: clamp(2rem, 6vw, 4rem); line-height: 1.09; letter-spacing: -.04em; }
+.showcase-intro { max-width: 65ch; color: var(--text-muted); font-size: 1.1rem; }
+.showcase-section-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.showcase-section-heading h2 { margin: 0; }
+.showcase-section-heading + p { margin-block: 8px 16px; }
+.showcase-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: 14px;
+    margin: 24px 0 14px;
+}
+.showcase-filters label, .showcase-admin-form label, .showcase-admin-attachment label { display: grid; gap: 6px; min-width: 0; }
+.showcase-filters :is(input, select) {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #8090a3;
+    border-radius: 8px;
+    background: #182940;
+    color: var(--text-light);
+}
+.showcase-grid, .showcase-media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 18px;
+}
+.showcase-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    color: #101d32;
+    background: #f8fafc;
+    border: 1px solid #cad5df;
+    border-radius: 14px;
+}
+.showcase-cover { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.showcase-card-body { padding: clamp(16px, 3vw, 26px); border-top: 3px solid #43c7ad; }
+.showcase-card-body h3 { margin: 6px 0; font-size: 1.2rem; }
+main .showcase-card-body h3 a:not(.btn) { color: #0c5547; }
+.showcase-card-body p:not(.showcase-status) { color: #475569; overflow-wrap: anywhere; }
+.showcase-status { color: var(--accent); font-size: .88rem; font-weight: 700; overflow-wrap: anywhere; }
+.showcase-card .showcase-status { color: #0c5547; }
+#projectResultsStatus { color: var(--text-muted); }
+#projectResultsStatus:empty { display: none; }
+.showcase-section-heading { margin-bottom: 14px; }
+.showcase-action, main a.showcase-action:not(.btn) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 14px;
+    padding: 8px 16px;
+    color: #101d32;
+    background: #43c7ad;
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+}
+.showcase-back { display: inline-block; margin-bottom: 10px; }
+.case-section {
+    max-width: 90ch;
+    padding: 20px 0;
+    border-bottom: 1px solid #42536a;
+    overflow-wrap: anywhere;
+}
+.case-section h2 { margin: 0 0 10px; }
+.case-section p { white-space: pre-wrap; }
+.case-section p, .case-section li { color: var(--text-muted); }
+.case-section ul { padding-inline-start: 24px; }
+.showcase-media-grid figure, #projectLightbox figure { min-width: 0; margin: 0; }
+.showcase-media-grid :is(video, iframe, img) { width: 100%; aspect-ratio: 16/9; background: #0b1422; border: 0; }
+.showcase-media-grid img { object-fit: contain; display: block; }
+.showcase-media-grid figcaption, #projectLightbox figcaption { margin-top: 8px; overflow-wrap: anywhere; }
+.showcase-image-button { display: block; width: 100%; padding: 0; border: 1px solid #718198; border-radius: 8px; overflow: hidden; }
+#projectLightbox {
+    width: min(94vw, 1000px);
+    max-height: 94dvh;
+    padding: clamp(12px, 3vw, 24px);
+    background: #101d32;
+    color: #f8fafc;
+    border: 1px solid #718198;
+    border-radius: 14px;
+}
+#projectLightbox::backdrop { background: #060d18df; }
+#projectLightbox button { margin: 0 0 12px; }
+#projectLightbox img { display: block; max-height: 70dvh; max-width: 100%; margin: auto; object-fit: contain; }
+.showcase-footer { padding: 24px 0; border-top: 1px solid #42536a; }
+.showcase-footer p { margin: 0; }
+.showcase-footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.showcase-footer a { color: var(--accent); }
+.showcase-admin-form { display: grid; gap: 12px; margin-block: 12px; }
+.showcase-admin-form :is(input:not([type=checkbox]), select, textarea), .showcase-admin-attachment input { width: 100%; }
+.showcase-admin-form .showcase-checkbox { display: flex; align-items: center; }
+.showcase-admin-attachment { display: grid; gap: 8px; grid-template-columns: 2fr 1fr auto auto; margin-block: 10px; }
+#showcaseFileFields { display: grid; gap: 8px; }
+@media (max-width: 768px) {
+    .showcase-admin-attachment { grid-template-columns: minmax(0, 1fr); }
+    .showcase-page .header-container { min-height: 64px; }
+    .showcase-main { padding-top: 92px; }
+}

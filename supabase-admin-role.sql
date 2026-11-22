@@ -14,9 +14,7 @@ create table if not exists public.documents (
 );
 alter table public.documents enable row level security;
 drop policy if exists "Public can read public documents" on public.documents;
-create policy "Public can read public documents" on public.documents
-    for select to anon, authenticated using (is_public = true);
-grant select on public.documents to anon, authenticated;
+revoke select on public.documents from anon;
 grant all on public.documents to authenticated;
 
 create table if not exists public.portfolio_admins (

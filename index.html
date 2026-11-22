@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Felix Daka | Computer Science Graduate</title>
+    <title>Felix Daka | ICT Support &amp; Computer Science Graduate</title>
+    <meta name="description" content="Felix Daka is a Zambian Computer Science graduate with ICT support and networking placements and a final-year cloud project.">
+    <link rel="canonical" href="https://feligo1.github.io/daka-felix-portfolio/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Felix Daka | ICT Support &amp; Computer Science Graduate">
+    <meta property="og:description" content="Felix Daka is a Zambian Computer Science graduate with ICT support and networking placements and a final-year cloud project.">
+    <meta property="og:url" content="https://feligo1.github.io/daka-felix-portfolio/">
+    <meta property="og:image" content="https://feligo1.github.io/daka-felix-portfolio/felix.jpg">
+    <meta property="og:image:alt" content="Portrait of Felix Daka">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
         }
         
         :root {
@@ -538,134 +546,149 @@
         }
     </style>
     <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="portfolio-refresh.css?v=5">
+    <script src="portfolio-nav.js" defer></script>
+    <script src="cv-download.js" defer></script>
+    <script type="module" src="showcase-public.js"></script>
+    <script type="module" src="editorial-public.js"></script>
+    <link rel="stylesheet" href="showcase.css">
+    <link rel="stylesheet" href="editorial.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <header id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
+                <span>Felix Daka <span class="brand-label">Tech Guy</span></span>
             </a>
             <nav class="primary-nav" aria-label="Main navigation">
-                <a href="index.html" class="active">Home</a>
-                <a href="expertise.html">Technical Skills</a>
-                <a href="certificates.html">Certificates</a>
+                <a href="index.html" class="active" aria-current="page">Home</a>
                 <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="expertise.html">Skills</a>
+                <a href="certificates.html">Certificates</a>
                 <a href="contact.html">Contact</a>
             </nav>
             <div class="menu-container">
-                <button class="menu-btn" id="menuBtn">
+                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="menu-content" id="menuContent">
-                    <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
-                    <a href="expertise.html"><i class="fas fa-cogs"></i> Technical Skills</a>
-                    <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
-                    <a href="about.html"><i class="fas fa-user"></i> About</a>
-                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                </div>
+                <nav class="menu-content" id="menuContent" aria-label="Mobile navigation">
+                    <a href="index.html" class="active" aria-current="page">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="expertise.html">Skills</a>
+                    <a href="certificates.html">Certificates</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
 
+    <main id="main-content" tabindex="-1">
+
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text">
-                <span class="nickname" id="heroNickname">Loading...</span>
-                <h1 id="heroTitle">Daka Felix</h1>
-                <p id="heroDescription">Computer Science graduate seeking an ICT internship, with practical IT support and networking experience.</p>
+                <span class="nickname" id="heroNickname">Computer Science graduate</span>
+                <h1 id="heroTitle">Felix Daka</h1>
+                <p id="heroDescription">I gained hands-on experience in IT support, networking and troubleshooting during ICT placements in Zambia.</p>
                 <div class="specialties" id="specialtiesContainer">
-                    <span class="specialty-tag skeleton" style="width: 80px; height: 30px; display: inline-block;"></span>
-                    <span class="specialty-tag skeleton" style="width: 100px; height: 30px; display: inline-block;"></span>
-                    <span class="specialty-tag skeleton" style="width: 90px; height: 30px; display: inline-block;"></span>
+                    <span class="specialty-tag">IT Support</span>
+                    <span class="specialty-tag">Networking</span>
+                    <span class="specialty-tag">Software Development</span>
                 </div>
+                <p class="degree-summary">BSc Computer Science (Credit) &middot; Mulungushi University</p>
+                <p class="role-summary">Open to ICT support, networking and graduate technology roles.</p>
                 <div class="hero-buttons">
-                    <a href="contact.html" class="btn btn-red">Contact Me</a>
-                    <a href="about.html" class="btn">About Me</a>
+                    <a href="projects.html" class="btn btn-red">View Projects</a>
+                    <a href="mailto:felixddaka@gmail.com?subject=CV%20request" class="btn" data-cv-request>Request CV</a>
+                    <a class="btn" data-cv-download download hidden>Download CV</a>
+                    <a href="contact.html" class="btn">Contact Me</a>
+                </div>
+                <div class="profile-links">
+                    <a href="https://github.com/Feligo1">GitHub</a>
+                    <a href="https://www.linkedin.com/in/felix-daka-5b6058212">LinkedIn</a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="profile/profile-1772620176208.jpg" alt="Daka Felix" class="profile-img" id="profileImage" fetchpriority="high" decoding="async">
+                <img src="profile/felix-portrait.webp" alt="Felix Daka" class="profile-img" id="profileImage" fetchpriority="high" decoding="async">
             </div>
         </div>
     </section>
 
-    <section class="home-directory" id="explore">
-        <div class="container">
-            <h2>Explore my portfolio</h2>
-            <ul class="home-links">
-                <li><a href="expertise.html"><strong>Technical Skills</strong><span class="home-link-description">Areas I have studied and worked in</span><span class="home-link-action">Open</span></a></li>
-                <li><a href="certificates.html"><strong>Certificates</strong><span class="home-link-description">Courses and credentials I have completed</span><span class="home-link-action">Open</span></a></li>
-                <li><a href="about.html"><strong>About Me</strong><span class="home-link-description">Education, experience and background</span><span class="home-link-action">Open</span></a></li>
-                <li><a href="contact.html"><strong>Contact</strong><span class="home-link-description">Get in touch about an opportunity or question</span><span class="home-link-action">Open</span></a></li>
-            </ul>
-        </div>
+    <section class="container recruitment-evidence" aria-label="Qualifications and experience">
+        <p><strong>Graduated 30 October 2026</strong><br><a href="about.html#education">University and education timeline</a></p>
+        <p><strong>Two ICT placements</strong><br><a href="about.html#experience">Industrial and university IT support</a></p>
+        <p><strong>Seven course completions</strong><br><a href="certificates.html">Huawei, Cisco and Smart Zambia Institute</a></p>
     </section>
 
-    <section class="about-preview">
+    <section class="recruiter-section" id="project" aria-labelledby="project-heading">
         <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p id="aboutText">Loading...</p>
-                    <div style="margin-top: 24px;">
-                        <a href="about.html" class="btn">Read Full Bio</a>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="zambian-connection">
-                        <i class="fas fa-globe-africa"></i> Proudly Zambian
-                    </div>
-                    <img src="" alt="Daka Felix" class="about-img" id="aboutImage" loading="lazy" decoding="async">
-                </div>
+            <div class="showcase-section-heading">
+                <h2 id="project-heading">Selected projects</h2>
+                <a href="projects.html">Browse all projects</a>
             </div>
+            <p id="projectResultsStatus" role="status">Loading selected projects...</p>
+            <div id="homeProjects" class="showcase-grid" data-showcase-list></div>
+            <noscript><p>Enable JavaScript to load projects.</p></noscript>
         </div>
     </section>
 
-    <section class="contact-preview">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Have an opportunity or a technical question? Send me a message.</p>
-            <div class="contact-info" id="contactInfo"></div>
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="contact.html" class="btn btn-red">Contact Me</a>
-            </div>
-        </div>
+    <section class="container recruitment-journal" aria-labelledby="latest-journal-title">
+        <div class="showcase-section-heading"><h2 id="latest-journal-title">Latest from the journal</h2><a href="journal.html">Browse the journal</a></div>
+        <p id="editorialStatus" role="status">Loading the latest article...</p>
+        <div data-editorial="home"></div>
     </section>
-
+    <section class="container recruitment-journal" aria-labelledby="recruitment-title">
+        <h2 id="recruitment-title">Hiring for an ICT role?</h2>
+        <p>Get in touch about ICT support, networking or graduate technology opportunities.</p>
+        <a class="btn" href="contact.html">Contact Felix</a>
+    </section>
     <div class="container">
-        <div class="visitor-counter" id="visitorCounter">Loading visitor count...</div>
+        <div class="visitor-counter" id="visitorCounter"></div>
     </div>
+
+    </main>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">Daka Felix <span>(Tech Guy)</span></div>
+                    <div class="footer-logo">Felix Daka <span>(Tech Guy)</span></div>
                     <p id="footerText">Computer Science graduate in Zambia, with experience in IT support and networking.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="expertise.html">Technical Skills</a></li>
-                        <li><a href="certificates.html">Certificates</a></li>
                         <li><a href="about.html">About</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="expertise.html">Skills</a></li>
+                        <li><a href="certificates.html">Certificates</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Connect</h4>
-                    <div class="social-icons" id="socialIcons"></div>
+                    <div class="social-icons" id="socialIcons">
+                        <a href="https://github.com/Feligo1">GitHub</a>
+                        <a href="https://www.linkedin.com/in/felix-daka-5b6058212">LinkedIn</a>
+                    </div>
+                    <a class="portfolio-link" href="https://feligo1.github.io/daka-felix-portfolio/">Portfolio website</a>
                 </div>
             </div>
             <p class="visitor-privacy-note">Anonymous visit analytics records a temporary session ID, device type, browser, operating system and page visited. It does not record names or IP addresses in this analytics list.</p>
             <div class="copyright">
-                <p>&copy; 2025 Daka Felix (Tech Guy). All rights reserved. Proudly Zambian</p>
+                <p>&copy; 2026 Felix Daka (Tech Guy). All rights reserved. Proudly Zambian</p>
             </div>
         </div>
+        <nav class="editorial-footer-links" aria-label="More from Felix Daka">
+            <a href="journal.html">Technical Journal</a>
+            <a href="recommendations.html">Recommendations</a>
+        </nav>
     </footer>
 
     <div id="toast" class="toast-notification">
@@ -674,11 +697,9 @@
     </div>
 
     <script type="module">
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+        import { httpsLink } from './editorial-data.js'
+        import { supabase } from './supabase-client.js'
         
-        const SUPABASE_URL = 'https://pthcviwhcsluovdekjub.supabase.co'
-        const SUPABASE_KEY = 'sb_publishable_OE7PTaMrXu7GU4aDbztA_g_WhiKbjRC'
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
         let siteSettingsPromise
 
         function getSiteSettings() {
@@ -714,14 +735,8 @@
         async function loadHero() {
             try {
                 const settings = await getSiteSettings()
-                const title = settings.hero_title || 'Felix Daka'
-                const nickname = settings.hero_nickname || 'Computer Science Graduate | IT Support & Networking'
-                const description = settings.hero_description || 'BSc Computer Science (Credit) graduate with hands-on IT support experience, seeking an ICT internship.'
                 const tags = settings.specialty_tags || '["IT Support","Networking","Cybersecurity","Java","Cloud Computing"]'
                 
-                document.getElementById('heroTitle').textContent = title
-                document.getElementById('heroNickname').textContent = nickname
-                document.getElementById('heroDescription').textContent = description
                 
                 let tagsArray = []
                 try { tagsArray = JSON.parse(tags) } catch { tagsArray = tags.split(',') }
@@ -737,39 +752,10 @@
         async function loadProfileImage() {
             try {
                 const settings = await getSiteSettings()
-                const defaultProfile = 'profile/profile-1772620176208.jpg'
+                const defaultProfile = 'profile/felix-portrait.webp'
                 document.getElementById('profileImage').src = settings.profile_image_url || defaultProfile
             } catch (error) {
-                document.getElementById('profileImage').src = 'profile/profile-1772620176208.jpg'
-            }
-        }
-        
-        // Load About Image
-        async function loadAboutImage() {
-            try {
-                const settings = await getSiteSettings()
-                const defaultAbout = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
-                document.getElementById('aboutImage').src = settings.about_image_url || defaultAbout
-            } catch (error) {
-                document.getElementById('aboutImage').src = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80'
-            }
-        }
-        
-        // Load Contact Info
-        async function loadContactInfo() {
-            try {
-                const settings = await getSiteSettings()
-                const phone = settings.contact_phone || '+260 774 496 821'
-                const email = settings.contact_email || 'felixddaka@gmail.com'
-                
-                document.getElementById('contactInfo').innerHTML = `
-                    <div class="contact-detail"><i class="fas fa-user"></i><div><strong>Name</strong><br>Daka Felix (Tech Guy)</div></div>
-                    <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><div><strong>Location</strong><br>Zambia, Africa</div></div>
-                    <div class="contact-detail"><i class="fas fa-phone"></i><div><strong>Phone & WhatsApp</strong><br>${escapeHtml(phone)}</div></div>
-                    <div class="contact-detail"><i class="fas fa-envelope"></i><div><strong>Email</strong><br>${escapeHtml(email)}</div></div>
-                `
-            } catch (error) {
-                console.error('Error loading contact:', error)
+                document.getElementById('profileImage').src = 'profile/felix-portrait.webp'
             }
         }
         
@@ -777,16 +763,16 @@
         async function loadSocialLinks() {
             try {
                 const settings = await getSiteSettings()
-                const github = settings.contact_github || 'https://github.com/Feligo1'
-                const linkedin = settings.contact_linkedin || 'https://www.linkedin.com/in/felixdaka-zm'
-                const facebook = settings.contact_facebook || 'https://www.facebook.com/share/1AJKpFspAB/'
-                const whatsapp = settings.contact_whatsapp || 'https://wa.me/260774496821'
+                const github = httpsLink(settings.contact_github) || 'https://github.com/Feligo1'
+                const linkedin = 'https://www.linkedin.com/in/felix-daka-5b6058212'
+                const facebook = httpsLink(settings.contact_facebook) || 'https://www.facebook.com/share/1AJKpFspAB/'
+                const whatsapp = httpsLink(settings.contact_whatsapp) || 'https://wa.me/260774496821'
                 
                 document.getElementById('socialIcons').innerHTML = `
-                    <a href="${escapeHtml(github)}" target="_blank">GitHub</a>
-                    <a href="${escapeHtml(linkedin)}" target="_blank">LinkedIn</a>
-                    <a href="${escapeHtml(facebook)}" target="_blank">Facebook</a>
-                    <a href="${escapeHtml(whatsapp)}" target="_blank">WhatsApp</a>
+                    <a href="${escapeHtml(github)}" target="_blank" rel="noopener">GitHub</a>
+                    <a href="${escapeHtml(linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="${escapeHtml(facebook)}" target="_blank" rel="noopener">Facebook</a>
+                    <a href="${escapeHtml(whatsapp)}" target="_blank" rel="noopener">WhatsApp</a>
                 `
             } catch (error) {
                 console.error('Error loading social links:', error)
@@ -821,63 +807,11 @@
             }
         }
         
-        // Menu functionality
-        const menuBtn = document.getElementById('menuBtn')
-        const menuContent = document.getElementById('menuContent')
-        
-        if (menuBtn) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation()
-                menuContent.classList.toggle('show')
-                const icon = menuBtn.querySelector('i')
-                if (menuContent.classList.contains('show')) {
-                    icon.classList.remove('fa-bars')
-                    icon.classList.add('fa-times')
-                } else {
-                    icon.classList.remove('fa-times')
-                    icon.classList.add('fa-bars')
-                }
-            })
-        }
-        
-        document.addEventListener('click', (event) => {
-            if (menuContent?.classList.contains('show')) {
-                const isClickInside = menuBtn?.contains(event.target) || menuContent.contains(event.target)
-                if (!isClickInside) {
-                    menuContent.classList.remove('show')
-                    const icon = menuBtn?.querySelector('i')
-                    if (icon) {
-                        icon.classList.remove('fa-times')
-                        icon.classList.add('fa-bars')
-                    }
-                }
-            }
-        })
-        
-        document.querySelectorAll('.menu-content a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuContent.classList.remove('show')
-                const icon = menuBtn?.querySelector('i')
-                if (icon) {
-                    icon.classList.remove('fa-times')
-                    icon.classList.add('fa-bars')
-                }
-            })
-        })
-        
-        // Header scroll effect
-        const header = document.getElementById('mainHeader')
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) header.classList.add('scrolled')
-            else header.classList.remove('scrolled')
-        })
-        
-        trackVisitor()
+
+trackVisitor()
         // Start each section independently so a slow request cannot hold up the rest.
         loadHero()
         loadProfileImage()
-        loadAboutImage()
-        loadContactInfo()
         loadSocialLinks()
     </script>
     <script type="module">

@@ -1,0 +1,42 @@
+.editorial-page .showcase-main { max-width: 1100px; }
+.editorial-meta, .editorial-tags { color: var(--accent); font-size: .88rem; font-weight: 700; }
+.editorial-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); }
+.editorial-card, .editorial-quote {
+    border: 1px solid #42536a;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #192b43;
+    margin: 0;
+}
+.editorial-card-content, .editorial-quote { padding: clamp(16px, 4vw, 26px); }
+.editorial-card-content h2, .editorial-card-content h3 { margin: 8px 0; }
+.editorial-card-content p, .editorial-quote p { margin-block: 0 8px; overflow-wrap: anywhere; }
+.editorial-photo { display: block; width: 100%; aspect-ratio: 16/9; object-fit: contain; background: #0b1422; }
+.editorial-card .editorial-photo { object-fit: cover; }
+.editorial-article { max-width: 75ch; }
+.editorial-article > .editorial-photo { margin-block: 16px; border-radius: 12px; }
+.editorial-prose { overflow-wrap: anywhere; }
+.editorial-prose h2, .editorial-prose h3 { margin-top: 24px; }
+.editorial-prose pre { overflow-x: auto; background: #0b1422; color: #f8fafc; border: 1px solid #42536a; border-radius: 8px; padding: 14px; }
+.editorial-screenshots img { object-fit: contain; }
+.editorial-quote blockquote { margin: 0 0 16px; }
+.editorial-quote figcaption { display: grid; }
+.editorial-quote figcaption span { color: var(--text-muted); }
+#editorialStatus:empty { display: none; }
+.editorial-footer-links, .editorial-actions { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.editorial-footer-links { justify-content: center; padding: 16px; }
+.editorial-footer-links a { color: var(--accent); }
+.editorial-preview { overflow-wrap: anywhere; }
+.editorial-preview[hidden], #journalFilters[hidden], #journalMediaPanel[hidden] { display: none !important; }
+.contact-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.recruitment-evidence { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 12px 22px; }
+.recruitment-evidence p { border-inline-start: 2px solid var(--accent); padding-inline-start: 12px; margin: 0; }
+.recruitment-journal { padding-block: clamp(24px, 5vw, 50px); }
+.editorial-preview p { white-space: pre-wrap; }
+#showcasePreview[hidden] { display: none !important; }
+.editorial-page #editorialStatus:not(.showcase-intro):not(:empty) {
+    padding: clamp(16px, 4vw, 28px);
+    border: 1px dashed #718198;
+    border-radius: 12px;
+    color: var(--text-muted);
+}
