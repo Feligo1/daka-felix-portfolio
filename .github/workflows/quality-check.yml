@@ -17,3 +17,5 @@ jobs:
         run: node scripts/verify-site.mjs
       - name: Check cross-page navigation and responsive layout
         run: node scripts/check-layout-consistency.mjs
+      - name: Check certificate previews and admin form controls
+        run: node scripts/check-certificate-admin.mjs

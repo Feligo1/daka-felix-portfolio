@@ -43,7 +43,11 @@ function payload(section,form){const cfg=tables[section];const data={};for(const
 }
 data.is_published=!!form.elements.namedItem('is_published')?.checked;if(section==='recommendations'){data.permission_confirmed=!!form.elements.namedItem('permission_confirmed')?.checked;if(data.is_published&&!data.permission_confirmed)throw Error('Confirm permission before publishing the recommendation.')}return data}
 function setForm(section,data){const form=document.querySelector('#v2-'+section+'-form');form.reset();for(const key of tables[section].fields){const f=form.elements.namedItem(key);if(f){if(f.type==='checkbox')f.checked=!!data[key];else if(section==='gallery'&&key==='category'){f.value=['Graduation','At Work','Personal','Events'].includes(data.category)?data.category:'Personal'}
-else f.value=Array.isArray(data[key])?data[key].join(', '):(data[key]??'')}}form.elements.namedItem('record_id').value=data.id||'';form.elements.namedItem('is_published').checked=!!data.is_published;if(section==='recommendations')form.elements.namedItem('permission_confirmed').checked=!!data.permission_confirmed;form.querySelector('button[type=submit]').textContent=data.id?'Save changes':'Save new '+tables[section].title.toLowerCase();form.scrollIntoView({behavior:'smooth',block:'start'})}
+else if(f.tagName==='SELECT' && section!=='gallery'){
+ const selected=String(data[key]??'');
+ if(selected && !Array.from(f.options).some(x=>x.value===selected))f.add(new Option(selected,selected));
+ f.value=selected||f.value;
+ }else f.value=Array.isArray(data[key])?data[key].join(', '):(data[key]??'')}}form.elements.namedItem('record_id').value=data.id||'';form.elements.namedItem('is_published').checked=!!data.is_published;if(section==='recommendations')form.elements.namedItem('permission_confirmed').checked=!!data.permission_confirmed;form.querySelector('button[type=submit]').textContent=data.id?'Save changes':'Save new '+tables[section].title.toLowerCase();form.scrollIntoView({behavior:'smooth',block:'start'})}
 async function refresh(section){if(!authorized)return;const cfg=tables[section],box=document.querySelector('#v2-'+section+'-list');box.replaceChildren(E('p','Loading…'));const{data,error}=await supabase.from(cfg.table).select('*').order('created_at',{ascending:false}).limit(100);if(error){box.replaceChildren(E('p','Could not load data: '+error.message));return}box.replaceChildren();if(!data.length){box.append(E('p','No entries yet. Create the first one.'));return}for(const item of data){const row=E('div','',{class:'v2-row'}),info=E('div'),actions=E('div','',{class:'v2-row-actions'});info.append(E('strong',item.title||item.person_name||'Untitled'),E('small',(item.is_published?'Published':'Draft')+' · '+new Date(item.created_at).toLocaleDateString()));const edit=E('button','Edit',{type:'button'});edit.addEventListener('click',()=>setForm(section,item));const remove=E('button','Delete',{type:'button'});remove.addEventListener('click',async()=>{if(!confirm('Delete this '+cfg.title.toLowerCase()+'? This cannot be undone.'))return;remove.disabled=true;let oldMedia=[];
 if(section==='showcase'){
  const{data:child,error:childError}=await supabase.from('portfolio_project_media').select('media_url,media_type').eq('project_id',item.id);
@@ -68,7 +72,16 @@ async function submit(section,event){
   msg(section,'Saving changes…');
   const data=payload(section,form),id=form.elements.namedItem('record_id').value;
   const file=form.elements.namedItem('media_file')?.files?.[0];
-  if(section==='gallery'&&!id&&!file)throw Error('Choose a photo before creating a gallery entry.');
+  if(section==='gallery'&&!id&&!file){
+   if(data.is_published)throw Error('Choose a photo before publishing a new gallery entry.');
+   data.media_url=''; // A draft can be saved safely without a public file.
+  }
+  if(section==='gallery'&&id&&!file&&data.is_published){
+   const{data:existing,error:existingError}=await supabase.from('portfolio_gallery')
+     .select('media_url').eq('id',id).single();
+   if(existingError)throw existingError;
+   if(!existing?.media_url)throw Error('Upload a photo before publishing this draft.');
+  }
   if(file){
    if(!data.is_published)throw Error('Public media uploads require a published entry. Save the draft without media, then publish with a photo.');
    if(!cfg.media)throw Error('Media uploads are not supported for this section.');
