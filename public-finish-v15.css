@@ -1,0 +1,138 @@
+/*
+  Felix Daka | Portfolio public-page cohesion v15
+  Shared presentation for the entire public portfolio. Loaded last.
+  No changes to Supabase logic, admin routes, gallery data or document viewer.
+*/
+:root{
+  --finish-bg:#0e1a2b;
+  --finish-surface:#17283a;
+  --finish-text:#f5f5f1;
+  --finish-muted:#c3cfd8;
+  --finish-gold:#ecc66c;
+  --finish-teal:#66d9be;
+  --finish-shell:1120px;
+  --finish-reading:740px;
+}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;line-height:1.68!important;background:var(--finish-bg)!important;color:var(--finish-text)!important}
+body :is(h1,h2,h3,h4){font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;letter-spacing:-.04em!important;line-height:1.2!important;font-weight:650!important;text-transform:none}
+body h1{font-size:clamp(2.65rem,5.2vw,4.5rem)!important;letter-spacing:-.055em!important}
+body h2{font-size:clamp(1.8rem,3vw,2.5rem)!important}
+body h3{font-size:clamp(1.15rem,1.7vw,1.45rem)!important}
+body :is(p,li){line-height:1.75!important}
+body :is(.container,.wrap){width:100%;max-width:var(--finish-shell)!important;margin-inline:auto!important;padding-inline:clamp(20px,3.5vw,38px)!important}
+body :is(.page-header,.wrap > .hero,.wrap > section.hero){min-height:0!important;max-width:none!important;text-align:left!important;border:0!important;background:none!important;box-shadow:none!important;padding-top:clamp(110px,11vw,150px)!important;padding-bottom:clamp(36px,5vw,65px)!important;margin:0!important}
+body .wrap > .hero{padding-top:clamp(108px,10vw,145px)!important}
+body .page-header > .container{padding-inline:clamp(20px,3.5vw,38px)!important}
+body .page-header h1,body .wrap > .hero h1{max-width:850px!important;margin:0 0 18px!important;text-align:left!important}
+body :is(.page-header p,.page-subtitle,.wrap > .hero .lead){max-width:680px!important;margin:0!important;font-size:clamp(1rem,1.4vw,1.12rem)!important;color:var(--finish-muted)!important}
+body :is(.eyebrow,.feature-kicker,.about-intro-label){color:var(--finish-gold)!important;font-size:.73rem!important;font-weight:700!important;letter-spacing:.12em!important;text-transform:uppercase}
+body :is(.page-header,.wrap > .hero,.section-title,.feature-heading,.newsroom-heading)::after,
+body :is(h1,h2,h3)::after{display:none!important}
+body :is(.page-header,.wrap > .hero,.section-title,.feature-heading,.newsroom-heading,
+ .certificate-metrics,.filters-container,.section-jump-nav,.timeline-item,.expertise-row,
+ .certificate-row,.project-story,.story-item,.project-media-item,.contact-item,
+ .featured-work,.journal-feature,.newsroom-section,.career-gallery,.cta-section,
+ .skills-footer-cta,.response-info,.professional-references,.site-footer,footer)
+ {border-top:0!important;border-bottom:0!important;box-shadow:none!important}
+body #mainHeader,body #mainHeader.scrolled{border:0!important;box-shadow:none!important}
+body #mainHeader .primary-nav a{font-size:.9rem!important;font-weight:550!important}
+body :is(.section-title,.feature-heading,.newsroom-heading){padding:0!important;margin-bottom:28px!important}
+body :is(.section-title h2,.feature-heading h2,.newsroom-heading h2){margin:0 0 10px!important;text-align:left!important}
+body .section-title p,body .feature-heading p{max-width:640px;color:var(--finish-muted)!important}
+body :is(.btn,.button,.filter-btn){border-radius:8px!important;box-shadow:none!important}
+body :is(input,select,textarea){border-radius:8px!important;font-family:inherit!important}
+body :is(.btn,.button){transform:none!important}
+body .section{padding-block:clamp(26px,4vw,56px)!important}
+body .wrap > section.section{padding-top:0!important;padding-bottom:clamp(60px,8vw,100px)!important}
+body :is(.controls,.filters-container){display:flex!important;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px!important;margin:0 0 30px!important;padding:0!important}
+body :is(.controls input,.controls select,.search-box input){min-height:44px}
+body .filter-group{display:flex;flex-wrap:wrap;gap:9px!important}
+body .filter-btn{min-height:40px!important;padding:9px 16px!important}
+body :is(.projects-news-list,.grid,.expertise-list,.certificates-grid){min-width:0}
+body :is(.projects-news-list .project-story,.newsroom-feed .story-item,.expertise-row,.certificate-row){
+ padding-block:20px!important;margin-bottom:14px!important
+}
+body :is(.projects-news-list .project-story,.newsroom-feed .story-item){background:transparent!important}
+body :is(.projects-news-list .project-story img,.newsroom-feed .story-item img){border-radius:9px!important}
+body .project-story a{color:inherit}
+body .page-header + .container,body .page-header + .contact-section{padding-top:0!important}
+body #main-content > .container{padding-top:0}
+body #main-content > .container > .page-header{padding-top:clamp(115px,11vw,150px)!important}
+body #main-content > .container > .page-header,
+body #main-content > section.page-header{margin-bottom:0!important}
+body .site-footer{margin-top:clamp(38px,6vw,75px)!important}
+body .site-footer-inner{max-width:var(--finish-shell)!important;margin-inline:auto!important}
+body .site-footer-bottom{max-width:var(--finish-shell)!important;margin-inline:auto!important}
+/* About: readable editorial introduction, calm career timeline */
+body .section-jump-nav{display:flex!important;flex-wrap:wrap;gap:12px 24px!important;margin-bottom:30px!important;padding:0!important}
+body .section-jump-nav a{text-decoration:none!important;color:var(--finish-teal)!important;font-size:.93rem}
+body .about-content:not(#education){padding-block:clamp(28px,5vw,58px)!important}
+body .about-grid{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr)!important;align-items:center!important;gap:clamp(32px,5vw,75px)!important}
+body .about-text{text-align:left!important;max-width:var(--finish-reading)}
+body .about-text > :is(p,h2,h3){text-align:left!important}
+body .about-text h2{margin-bottom:18px!important}
+body .about-image{margin-inline:auto!important;max-width:390px}
+body .journey-section,body #education{padding-block:clamp(50px,7vw,88px)!important}
+body .timeline{max-width:900px}
+body .timeline-item{display:grid!important;grid-template-columns:minmax(125px,190px) minmax(0,1fr)!important;gap:10px 22px!important;padding:18px 0 30px!important}
+body .timeline-year{font-size:.85rem!important;color:var(--finish-gold)!important}
+body .timeline-title{font-size:1.18rem!important;font-weight:650!important}
+body .timeline-desc{grid-column:2}
+body #education .about-text{max-width:850px!important}
+body #education .about-text h3{margin-top:28px!important}
+body #career-gallery{padding-block:clamp(45px,6vw,80px)!important}
+body #career-gallery .fb-feed-heading{margin-bottom:24px!important}
+body .cta-section{padding-block:clamp(45px,6vw,80px)!important}
+/* Skills and certificates: clear searchable catalog */
+body .expertise-list,body .certificates-grid{padding-bottom:25px!important}
+body .expertise-row,body .certificate-row{width:100%!important;min-width:0!important}
+body .expertise-service-heading{font-size:1.2rem!important}
+body .certificate-metrics{padding:0 0 22px!important;margin-bottom:22px!important}
+body .certificate-metrics p{color:var(--finish-muted)!important}
+body .certificate-metrics strong{color:var(--finish-text)}
+body .skills-footer-cta{padding:24px 0!important}
+/* Contact: readable, balanced two-column layout without decorative rules */
+body .contact-section{padding:clamp(15px,3vw,32px) 0 clamp(45px,7vw,90px)!important}
+body .contact-grid{display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;gap:clamp(30px,5vw,65px)!important;align-items:start}
+body .contact-info,body .contact-form-container{min-width:0!important}
+body .contact-info h2{font-size:clamp(1.45rem,2vw,1.9rem)!important;text-align:left!important}
+body .contact-item{display:flex;align-items:flex-start;gap:15px!important;padding:13px 0!important;margin:0!important;background:transparent!important}
+body .contact-text :is(h4,p){margin:0!important;overflow-wrap:anywhere}
+body .contact-form-container{border-radius:12px!important;box-shadow:none!important}
+body .form-header h3{font-size:clamp(1.4rem,2vw,1.9rem)!important}
+body .form-group{margin-bottom:18px!important}
+body .form-group :is(input,textarea,select){width:100%;min-height:46px}
+body .form-group textarea{min-height:140px}
+body .social-links{margin-top:42px!important}
+body .social-links h3{text-align:left!important}
+/* Project case study: clean reading column, image and media presentation */
+body .project-case-study .hero{padding-bottom:clamp(30px,4vw,52px)!important}
+body .project-case-study .section{padding-top:0!important}
+body .project-case-study .prose{max-width:var(--finish-reading)!important}
+body .project-case-study .prose h2{margin-top:35px!important}
+body .project-case-study .feature-image{border-radius:12px!important;margin-bottom:38px!important}
+body .project-case-study #media{margin-top:22px!important}
+body .project-case-study #tags{margin:16px 0!important}
+body .project-case-study .actions{margin-top:24px!important}
+@media(max-width:850px){
+ body .about-grid,body .contact-grid{grid-template-columns:1fr!important}
+ body .about-image{margin:12px 0 0!important}
+ body .contact-grid{gap:40px!important}
+}
+@media(max-width:680px){
+ body :is(.page-header,.wrap > .hero,.wrap > section.hero){padding-top:108px!important;padding-bottom:30px!important}
+ body #main-content > .container > .page-header{padding-top:108px!important}
+ body .wrap > section.section{padding-bottom:52px!important}
+ body .timeline-item{display:block!important}
+ body .timeline-title{margin:7px 0!important}
+ body .timeline-desc{margin-top:6px}
+ body .section-jump-nav{gap:12px 18px!important}
+ body .filter-group{flex-wrap:nowrap!important;overflow-x:auto!important;max-width:100%;padding-bottom:6px}
+ body .filter-btn{flex-shrink:0}
+ body :is(.controls,.filters-container){align-items:stretch!important;flex-direction:column!important}
+ body :is(.controls input,.controls select,.search-box){width:100%!important}
+ body .contact-form-container{padding:22px!important}
+ body .contact-section{padding-bottom:40px!important}
+ body .site-footer{margin-top:32px!important}
+}
+@media(prefers-reduced-motion:reduce){body *,body *::before,body *::after{scroll-behavior:auto!important;animation-duration:.01ms!important}}
