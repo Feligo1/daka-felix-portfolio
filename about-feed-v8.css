@@ -1,0 +1,63 @@
+/* Facebook-inspired post layout for the About page. Independent original styling, no Meta assets. */
+body #career-gallery.facebook-about-feed{background:#101b2c!important;border-top:1px solid #344759;padding:clamp(35px,5vw,66px) 0}
+body #career-gallery .fb-feed-shell{width:min(100%,760px);margin-inline:auto}
+body #career-gallery .fb-feed-heading{margin-bottom:23px}
+body #career-gallery .fb-feed-heading h2{font-size:clamp(1.65rem,3.5vw,2.65rem);line-height:1.17;margin:7px 0 12px;text-align:left}
+body #career-gallery .fb-feed-heading h2:after{display:none!important}
+body #career-gallery .fb-feed-heading p{max-width:650px;margin:0;color:#c6d0d9;line-height:1.65}
+body #career-gallery .gallery-categories{margin:18px 0 20px;display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:9px;overscroll-behavior-x:contain}
+body #career-gallery .gallery-filter{flex:0 0 auto;border-radius:100px;background:#223448!important;color:#f1f7fa!important;border:1px solid #466477;min-height:42px;padding:9px 16px;font-size:.9rem}
+body #career-gallery .gallery-filter.active{background:#214940!important;color:#f3c34f!important;border-color:#4f9f89!important}
+body #career-gallery .fb-post-list{display:flex!important;flex-direction:column;gap:16px!important;min-width:0;align-items:stretch}
+body #career-gallery .fb-feed-post{display:block;min-width:0;max-width:100%;background:#192b3e;border:1px solid #3b5063;border-radius:12px;overflow:hidden;box-shadow:0 3px 18px rgba(2,9,17,.08)}
+body #career-gallery .fb-post-header{display:flex;align-items:center;gap:11px;padding:17px 18px 8px}
+body #career-gallery .fb-post-avatar{width:44px!important;height:44px!important;min-width:44px;max-height:44px!important;aspect-ratio:1!important;object-fit:cover!important;object-position:center 25%;border-radius:50%;border:1px solid #486276}
+body #career-gallery .fb-post-identity{display:flex;flex-direction:column;min-width:0;gap:3px}
+body #career-gallery .fb-post-identity strong{font-size:.99rem;font-weight:750;line-height:1.3;color:#f5f6f0}
+body #career-gallery .fb-post-meta{display:flex;gap:6px;align-items:center;color:#b4c6d0;font-size:.77rem;line-height:1.45}
+body #career-gallery .fb-post-public{font-size:.76rem;color:#b9d9db}
+body #career-gallery .fb-post-text{padding:8px 18px 16px}
+body #career-gallery .fb-post-text h3{margin:2px 0 8px;font-size:clamp(1.13rem,2.5vw,1.37rem);line-height:1.32;font-weight:730;color:#f4f5ef;text-align:left}
+body #career-gallery .fb-post-text p{color:#e2e7e8;font-size:.96rem;line-height:1.7;margin:0;white-space:pre-line;overflow-wrap:anywhere}
+body #career-gallery .fb-post-media{background:#0b1726;width:100%;max-width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
+body #career-gallery .fb-photo-open{width:100%;max-width:100%;display:block;cursor:zoom-in;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;line-height:0}
+body #career-gallery .fb-post-image{
+ display:block!important;width:100%!important;height:auto!important;max-width:100%!important;
+ max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;
+ object-position:center!important;border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+body #career-gallery .fb-post-video{display:block;width:100%;max-width:100%;height:auto!important;max-height:85dvh;aspect-ratio:auto;object-fit:contain;background:#060c16}
+body #career-gallery .fb-post-embed{width:100%;display:block;aspect-ratio:16/9;height:auto;border:0}
+body #career-gallery .fb-video-error{color:#e5d1cf;padding:22px}
+body #career-gallery .fb-post-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px 14px;border-top:1px solid #3a4e60}
+body #career-gallery .fb-action{width:100%;min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;padding:9px 10px;border:0!important;background:transparent!important;color:#c9d8dd!important;border-radius:8px;font-weight:660;font-size:.9rem;text-decoration:none}
+body #career-gallery .fb-action:hover{background:#263d50!important;color:#f4e4a7!important}
+body #career-gallery .fb-feed-empty{padding:22px 0;color:#bfced9;line-height:1.6}
+body #career-gallery .fb-feed-tail{padding:22px 0 0;text-align:center}
+body #career-gallery .fb-feed-tail a{color:#85e9d1;text-decoration:underline;text-underline-offset:4px;font-weight:600}
+body #career-gallery .newsroom-lightbox{width:min(1120px,96vw);max-width:min(1120px,96vw);padding:12px;background:#101b2c;border-radius:12px}
+body #career-gallery .newsroom-modal-media{min-height:180px;background:#0b1726}
+body #career-gallery .newsroom-modal-media img{max-width:100%!important;width:auto!important;height:auto!important;max-height:75dvh!important;object-fit:contain!important;aspect-ratio:auto!important;border-radius:0!important}
+body #career-gallery .newsroom-modal-media video{width:auto!important;max-width:100%!important;max-height:75dvh!important}
+body #career-gallery .newsroom-modal-media iframe{width:100%;height:min(68dvh,650px);border:0}
+body #career-gallery .newsroom-lightbox h3{font-size:1.15rem;line-height:1.4;margin:12px 0 4px}
+body #career-gallery .newsroom-lightbox p{margin:0;color:#c2d1dc}
+@media(max-width:720px){
+ body #career-gallery.facebook-about-feed{padding:32px 0}
+ body #career-gallery .fb-feed-shell{width:100%}
+ body #career-gallery .fb-feed-post{border-radius:9px}
+ body #career-gallery .fb-post-header{padding:13px 13px 8px}
+ body #career-gallery .fb-post-text{padding:8px 13px 13px}
+ body #career-gallery .fb-post-actions{padding:8px}
+ body #career-gallery .fb-post-image{width:100%!important}
+ body #career-gallery .gallery-categories{margin:15px 0}
+}
+@media(max-width:410px){
+ body #career-gallery .fb-post-avatar{width:40px!important;height:40px!important;min-width:40px}
+ body #career-gallery .fb-post-identity strong{font-size:.93rem}
+ body #career-gallery .fb-post-meta{font-size:.72rem}
+ body #career-gallery .fb-action{font-size:.81rem}
+}
+@media(prefers-reduced-motion:reduce){
+ body #career-gallery *,body #career-gallery *:before,body #career-gallery *:after{transition:none!important;animation:none!important}
+}
