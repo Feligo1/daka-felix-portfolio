@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>My Certificates | Daka Felix (Tech Guy)</title>
+    <title>Certificates & Training | Felix Daka</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -604,13 +604,15 @@
     </style>
     <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+    <link rel="stylesheet" href="site-responsive-v3.css?v=1">
+    <script src="site-navigation.js" defer></script>
 </head>
 <body>
     <header id="mainHeader">
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-laptop-code logo-icon"></i>
-                <span>Daka Felix <span style="color: var(--accent);">(Tech Guy)</span></span>
+                <span>Felix Daka <span style="color: var(--accent);">(Tech Guy)</span></span>
             </a>
             <nav class="primary-nav" aria-label="Main navigation">
                 <a href="index.html">Home</a>
@@ -623,11 +625,11 @@
                 <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf">Download CV</a>
             </nav>
             <div class="menu-container">
-                <button class="menu-btn" id="menuBtn">
+                <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="menu-content" id="menuContent">
+                <div class="menu-content" id="menuContent" aria-label="Mobile navigation">
                     <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
                     <a href="journal.html"><i class="fas fa-book-open"></i> Journal</a>
                     <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf"><i class="fas fa-file-pdf"></i> Download CV</a>
