@@ -165,3 +165,15 @@ body .admin-panel button[type="submit"]:hover{background:#007966!important}
  body .newsroom-feed .story-item:not(.story-lead) .story-open{grid-template-columns:90px minmax(0,1fr)}
  body .projects-news-list .project-story a{grid-template-columns:92px minmax(0,1fr)}
 }
+
+/* Keep uploaded video stories clearly identifiable on the project index. */
+body .projects-news-list .project-image-wrap{position:relative;min-width:0}
+body .projects-news-list .project-video-tag{position:absolute;left:9px;bottom:9px;background:rgba(15,27,44,.92);color:#f3c34f;border:1px solid #a18c4c;border-radius:6px;padding:5px 9px;font-size:.73rem;font-weight:750}
+body .hero-buttons .btn:first-child{background:#ed334b!important;border-color:#ed334b!important;color:#fff!important}
+body .hero-buttons .btn:first-child:hover{background:#ce273e!important}
+body .admin-story-preview{width:min(170px,100%);flex:0 0 auto;display:flex;align-items:center;min-width:0}
+body .admin-story-preview img,body .admin-story-preview video{width:100%;height:auto;max-height:120px;aspect-ratio:4/3;object-fit:cover;border-radius:7px;border:1px solid #455b68}
+body .admin-story-preview a{color:#f3c34f}
+body #v2-gallery-list .v2-row{display:flex;gap:16px;align-items:center}
+body #v2-gallery-list .v2-row > div:nth-child(2){flex:1}
+@media(max-width:700px){body #v2-gallery-list .v2-row{align-items:flex-start}body .admin-story-preview{width:150px}}
