@@ -298,3 +298,34 @@ body .professional-references summary::-webkit-details-marker{display:none}
 body .professional-reference-list{padding:12px 0 3px 22px}
 body .professional-reference-list p{margin:8px 0 13px!important;color:var(--ui-secondary)}
 body .skills-footer-cta{margin-top:32px;text-align:left;padding:28px 0;border-top:1px solid var(--ui-line)}
+
+
+/* v13: visual separators — quieter credentials and section transitions */
+body .career-credentials{
+  border:0!important;
+  border-block:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  padding:22px 0 12px!important;
+}
+body .career-credentials .container{border:0!important}
+body .career-credentials p{margin:0!important;line-height:1.8!important;color:var(--ui-secondary)!important}
+body .career-credentials strong{font-weight:600!important}
+body .credential-separator{color:var(--ui-tertiary)!important;opacity:.6;padding-inline:11px!important}
+body :where(.section-title,.feature-heading){
+  border:0!important;
+  border-bottom:0!important;
+  padding-bottom:0!important;
+  box-shadow:none!important;
+}
+body :where(.featured-work,.journal-feature,.home-cta){
+  border:0!important;
+  border-block:0!important;
+  box-shadow:none!important;
+}
+body :where(.feature-grid,.projects-news-list){border-top:0!important}
+@media(max-width:680px){
+ body .career-credentials{padding:16px 0 8px!important}
+ body .career-credentials p{font-size:.82rem!important;line-height:1.9!important}
+ body .credential-separator{padding-inline:6px!important}
+}
