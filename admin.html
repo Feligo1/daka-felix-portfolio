@@ -907,60 +907,70 @@
             }
         }
         
-        document.getElementById('addProjectForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const { error } = await supabase.from('projects').insert({
-                title: document.getElementById('projectTitle').value,
-                description: document.getElementById('projectDesc').value,
+        // ============ LEGACY PROJECTS: SINGLE SUBMIT HANDLER, FULL CRUD ============
+        document.getElementById('addProjectForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const submit = form.querySelector('button[type="submit"]');
+            const editId = form.dataset.editId;
+            const payload = {
+                title: document.getElementById('projectTitle').value.trim(),
+                description: document.getElementById('projectDesc').value.trim(),
                 icon_class: document.getElementById('projectIcon').value,
                 color_style: document.getElementById('projectColor').value,
-                display_order: parseInt(document.getElementById('projectOrder').value),
-                is_active: true
-            });
-            if (error) { showToast('Error: ' + error.message, 'error'); return; }
-            showToast('Project added');
-            document.getElementById('addProjectForm').reset();
-            loadProjects();
-        });
-        
-        window.deleteProject = async (id) => {
-            if (!confirm('Delete this project?')) return;
-            const { error } = await supabase.from('projects').delete().eq('id', id);
-            if (error) { showToast('Error deleting', 'error'); return; }
-            showToast('Project deleted');
-            loadProjects();
-        };
-        
-        window.editProject = async (id) => {
-            const proj = allProjects.find(p => p.id == id);
-            if (!proj) return;
-            
-            document.getElementById('projectTitle').value = proj.title;
-            document.getElementById('projectDesc').value = proj.description;
-            document.getElementById('projectIcon').value = proj.icon_class;
-            document.getElementById('projectColor').value = proj.color_style || '';
-            document.getElementById('projectOrder').value = proj.display_order;
-            
-            const btn = document.querySelector('#addProjectForm button');
-            btn.textContent = 'Update';
-            btn.onclick = async (e) => {
-                e.preventDefault();
-                const { error } = await supabase.from('projects').update({
-                    title: document.getElementById('projectTitle').value,
-                    description: document.getElementById('projectDesc').value,
-                    icon_class: document.getElementById('projectIcon').value,
-                    color_style: document.getElementById('projectColor').value,
-                    display_order: parseInt(document.getElementById('projectOrder').value)
-                }).eq('id', id);
-                if (error) { showToast('Error updating', 'error'); return; }
-                showToast('Project updated');
-                document.getElementById('addProjectForm').reset();
-                btn.textContent = 'Add Project';
-                btn.onclick = null;
-                loadProjects();
+                display_order: Number(document.getElementById('projectOrder').value) || 0
             };
+            if (!payload.title || !payload.description) {
+                showToast('Enter the project title and description.', 'error');
+                return;
+            }
+            submit.disabled = true;
+            try {
+                const query = editId
+                    ? supabase.from('projects').update(payload).eq('id', editId)
+                    : supabase.from('projects').insert({ ...payload, is_active: true });
+                const { error } = await query;
+                if (error) throw error;
+                showToast(editId ? 'Project updated successfully' : 'Project created successfully');
+                form.reset();
+                delete form.dataset.editId;
+                submit.textContent = 'Add Project';
+                await loadProjects();
+            } catch (error) {
+                showToast('Could not save project: ' + error.message, 'error');
+            } finally {
+                submit.disabled = false;
+            }
+        });
+
+        window.deleteProject = async (id) => {
+            if (!confirm('Delete this project permanently?')) return;
+            const { error } = await supabase.from('projects').delete().eq('id', id);
+            if (error) { showToast('Could not delete project: ' + error.message, 'error'); return; }
+            const form = document.getElementById('addProjectForm');
+            if (form.dataset.editId === String(id)) {
+                form.reset();
+                delete form.dataset.editId;
+                form.querySelector('button[type="submit"]').textContent = 'Add Project';
+            }
+            showToast('Project deleted');
+            await loadProjects();
         };
-        
+
+        window.editProject = (id) => {
+            const project = allProjects.find(item => String(item.id) === String(id));
+            if (!project) return;
+            document.getElementById('projectTitle').value = project.title || '';
+            document.getElementById('projectDesc').value = project.description || '';
+            document.getElementById('projectIcon').value = project.icon_class || 'fas fa-code';
+            document.getElementById('projectColor').value = project.color_style || '';
+            document.getElementById('projectOrder').value = project.display_order ?? 0;
+            const form = document.getElementById('addProjectForm');
+            form.dataset.editId = String(id);
+            form.querySelector('button[type="submit"]').textContent = 'Save Project Changes';
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
         // ============ IMAGE UPLOADS ============
         async function loadImages() {
             const { data } = await supabase.from('site_settings').select('*');
