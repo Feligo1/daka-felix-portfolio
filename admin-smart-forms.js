@@ -80,6 +80,18 @@ if(journalForm){
  slug?.addEventListener('input',()=>{slug.dataset.manuallyEdited='1'});
  journalForm.addEventListener('reset',()=>{delete slug.dataset.manuallyEdited});
 }
+// Project titles generate stable links while allowing manual overrides.
+const projectForm=get('#v2-showcase-form');
+if(projectForm){
+ const projectTitle=projectForm.elements.namedItem('title');
+ const projectSlug=projectForm.elements.namedItem('slug');
+ projectTitle?.addEventListener('input',()=>{
+  const editing=Boolean(projectForm.elements.namedItem('record_id')?.value);
+  if(!editing&&!projectSlug.dataset.manuallyEdited)projectSlug.value=slugify(projectTitle.value);
+ });
+ projectSlug?.addEventListener('input',()=>{projectSlug.dataset.manuallyEdited='1'});
+ projectForm.addEventListener('reset',()=>{delete projectSlug.dataset.manuallyEdited});
+}
 get('#journalExcerptHelper')?.addEventListener('click',()=>{
  const form=get('#v2-journal-form'),body=form?.elements.namedItem('body')?.value?.trim(),
  excerpt=form?.elements.namedItem('summary');
