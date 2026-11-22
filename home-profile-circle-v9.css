@@ -1,0 +1,36 @@
+/* Facebook-style circular profile photograph on HOME only.
+   The original portrait is loaded from Supabase; other gallery photos remain uncropped. */
+#home .hero-image{
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:440px;
+  min-width:0;
+  margin-inline:auto;
+}
+#home .hero-image #profileImage{
+  display:block!important;
+  width:min(100%,410px)!important;
+  height:auto!important;
+  aspect-ratio:1 / 1!important;
+  border-radius:50%!important;
+  object-fit:cover!important;
+  object-position:center 24%!important;
+  border:5px solid #172a38!important;
+  outline:2px solid rgba(243,195,79,.36);
+  box-shadow:0 18px 55px rgba(0,0,0,.25)!important;
+  background:#172b3d;
+}
+@media(max-width:820px){
+  #home .hero-image{max-width:320px}
+  #home .hero-image #profileImage{width:min(100%,305px)!important}
+}
+@media(max-width:520px){
+  #home .hero-image{max-width:255px}
+  #home .hero-image #profileImage{width:min(100%,245px)!important;border-width:4px!important}
+}
+@media(max-width:360px){
+  #home .hero-image{max-width:210px}
+  #home .hero-image #profileImage{width:min(100%,205px)!important}
+}
