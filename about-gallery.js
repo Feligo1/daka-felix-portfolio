@@ -49,7 +49,7 @@ const safeUrl = (value) => {
   } catch { return '' }
 };
 function makePicture(post, expanded = false) {
-  const img = elem('img','','feed-post-image');
+  const img = elem('img','','fb-post-image');
   img.src = safeUrl(post.media_url);
   img.alt = post.alt_text || post.title || 'Career photograph';
   img.loading = expanded ? 'eager' : 'lazy';
