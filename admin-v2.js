@@ -28,6 +28,49 @@ async function refreshOverview(){
 }
 document.getElementById('v2-overview-refresh')?.addEventListener('click',refreshOverview);
 
+
+const editableSettings=['hero_title','hero_nickname','hero_description','specialty_tags','contact_email','contact_phone','contact_github','contact_linkedin','contact_facebook','contact_whatsapp'];
+async function loadSiteSettings(){
+ try{
+ await check();
+ const form=document.getElementById('v2-settings-form');if(!form)return;
+ const{data,error}=await supabase.from('site_settings').select('setting_key,setting_value').in('setting_key',editableSettings);
+ if(error)throw error;
+ const map=Object.fromEntries((data||[]).map(row=>[row.setting_key,row.setting_value]));
+ for(const key of editableSettings){
+   const field=form.elements.namedItem(key);if(!field)continue;
+   const value=map[key]??'';
+   if(key==='specialty_tags'){
+     try{const arr=JSON.parse(value);field.value=Array.isArray(arr)?arr.join(', '):String(value)}catch{field.value=String(value)}
+   }else field.value=String(value);
+ }
+ msg('settings','Current website settings loaded.');
+ }catch(error){msg('settings','Could not load settings: '+error.message,true)}
+}
+document.getElementById('v2-settings-form')?.addEventListener('submit',async event=>{
+ event.preventDefault();
+ const form=event.currentTarget,button=form.querySelector('button[type=submit]');
+ button.disabled=true;msg('settings','Saving…');
+ try{
+  await check();
+  for(const key of editableSettings){
+   const field=form.elements.namedItem(key);if(!field)continue;
+   let value=field.value.trim();
+   if(key==='hero_title'&&!value)throw Error('Professional name cannot be empty.');
+   if(key==='specialty_tags')value=JSON.stringify(value.split(',').map(x=>x.trim()).filter(Boolean));
+   if(key.startsWith('contact_')&&!['contact_email','contact_phone'].includes(key)&&value)value=validateUrl(value);
+   const{data,error}=await supabase.from('site_settings').update({setting_value:value}).eq('setting_key',key).select('setting_key');
+   if(error)throw error;
+   if(!data?.length){
+    const{error:insertError}=await supabase.from('site_settings').insert({setting_key:key,setting_value:value});
+    if(insertError)throw insertError;
+   }
+  }
+  msg('settings','Website settings saved. Refresh the public site to see changes.');
+ }catch(error){msg('settings','Settings update failed: '+error.message,true)}
+ finally{button.disabled=false}
+});
+
 async function diagnostics(){const box=document.querySelector('#v2-storage-status');box.replaceChildren(E('p','Checking schema and bucket access…'));try{await check()}catch(e){box.replaceChildren(E('p',e.message));return}const buckets=['portfolio-images','portfolio-certificate-files','portfolio-documents','portfolio-project-media','portfolio-gallery','portfolio-journal-media'];box.replaceChildren();for(const name of buckets){const row=E('div','',{class:'v2-row'}),label=E('strong',name),status=E('small','Checking…');row.append(label,status);box.append(row);const {error}=await supabase.storage.from(name).list('',{limit:1});status.textContent=error?'Cannot verify: '+error.message:'Accessible (list permission verified)'}for(const section of Object.keys(tables)){const {error}=await supabase.from(tables[section].table).select('*',{count:'exact',head:true});const row=E('div','',{class:'v2-row'});row.append(E('strong',tables[section].table),E('small',error?'Not ready: '+error.message:'Accessible'));box.append(row)}box.append(E('p','Checks confirm read/list access only. A successful upload and owner-only authorization test are still required before production.',{class:'v2-notice'}))}
 
 async function activate(section){if(!document.getElementById('v2-'+section+'-form')&&section!=='storage')return;try{await check();if(section==='storage')await diagnostics();else {await refresh(section);if(section==='showcase'){await refreshProjectOptions();await refreshProjectMedia()}}}catch(e){msg(section,e.message,true)}}
@@ -99,5 +142,5 @@ document.querySelector('#v2-project-media-form')?.addEventListener('submit',asyn
 
 for(const section of Object.keys(tables)){const form=document.querySelector('#v2-'+section+'-form');if(!form)continue;form.addEventListener('submit',e=>submit(section,e));document.querySelector('#v2-'+section+'-reset')?.addEventListener('click',()=>setForm(section,{}))}
 document.querySelector('#v2-storage-check')?.addEventListener('click',diagnostics);
-document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>b.addEventListener('click',()=>{const tab=b.dataset.tab;if(tab in tables||tab==='storage')activate(tab);if(tab==='overview')refreshOverview()}));
+document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>b.addEventListener('click',()=>{const tab=b.dataset.tab;if(tab in tables||tab==='storage')activate(tab);if(tab==='overview')refreshOverview();if(tab==='settings')loadSiteSettings()}));
 supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN')queueMicrotask(refreshOverview);authorized=false;if(event==='SIGNED_OUT')for(const section of Object.keys(tables))document.querySelector('#v2-'+section+'-list')?.replaceChildren(E('p','Sign in to view records.'))});
