@@ -558,8 +558,7 @@
                 <a href="certificates.html">Certificates</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
-                <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf">Download CV</a>
-            </nav>
+                </nav>
             <div class="menu-container">
                 <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
@@ -568,7 +567,6 @@
                 <div class="menu-content" id="menuContent" aria-label="Mobile navigation">
                     <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
                     <a href="journal.html"><i class="fas fa-book-open"></i> Journal</a>
-                    <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf"><i class="fas fa-file-pdf"></i> Download CV</a>
                     <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
                     <a href="expertise.html"><i class="fas fa-cogs"></i> Technical Skills</a>
                     <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
@@ -587,7 +585,6 @@
                 <span class="nickname" id="heroNickname">IT Support · Networking · Software Development</span>
                 <h1 id="heroTitle">Felix Daka</h1><p class="career-headline">Computer Science Graduate &amp; ICT Professional</p>
                 <p style="margin:12px 0;color:#b8eee0">BSc Computer Science (Credit) · Mulungushi University · 2026</p>
-                <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf" style="display:inline-block;margin:15px 0 20px;padding:12px 22px;border-radius:8px;background:#55d8b9;color:#102233;text-decoration:none;font-weight:700"><i class="fas fa-file-download"></i> Download My CV (PDF)</a>
                 <p id="heroDescription">I support people, solve technology problems and build practical software solutions. Experienced in ICT support and networking through placements in Zambia.</p>
                 <div class="specialties" id="specialtiesContainer">
                     <span class="specialty-tag">IT Support</span>
@@ -627,36 +624,7 @@
         </div>
     </section>
 
-    <section class="about-preview">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p id="aboutText">A Zambian Computer Science graduate with practical ICT support experience and an interest in building useful digital systems.</p>
-                    <div style="margin-top: 24px;">
-                        <a href="about.html" class="btn">Read Full Bio</a>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="zambian-connection">
-                        <i class="fas fa-globe-africa"></i> Proudly Zambian
-                    </div>
-                    <img src="felix.jpg" alt="Felix Daka" class="about-img" id="aboutImage" loading="lazy" decoding="async">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact-preview">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Have an opportunity or a technical question? Send me a message.</p>
-            <div class="contact-info" id="contactInfo"></div>
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="contact.html" class="btn btn-red">Contact Me</a>
-            </div>
-        </div>
-    </section>
+    <section class="home-cta" aria-label="Recruitment and background"><div class="container"><div class="home-cta-inner"><div><span class="feature-kicker">The person behind the work</span><h2>Interested in working together?</h2><p>Explore my career story or get in touch about an ICT opportunity.</p></div><div class="home-cta-actions"><a class="btn btn-secondary" href="about.html">Read my story</a><a class="btn" href="contact.html">Contact me</a></div></div></div></section>
 
     <div class="container">
         <div class="visitor-counter" id="visitorCounter">Loading visitor count...</div>
@@ -900,8 +868,6 @@
         // Start each section independently so a slow request cannot hold up the rest.
         loadHero()
         loadProfileImage()
-        loadAboutImage()
-        loadContactInfo()
         loadSocialLinks()
     </script>
     <script type="module">
