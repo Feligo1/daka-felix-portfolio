@@ -76,8 +76,7 @@ body .card .body img{
 /* The About and project viewers scale large originals to the available screen without cropping. */
 body .newsroom-modal-media img,
 body .newsroom-lightbox .newsroom-modal-media img,
-body #viewer img,
-body #certModal .reader-stage img{
+body #viewer img{
  width:auto!important;
  height:auto!important;
  max-width:100%!important;
@@ -115,3 +114,14 @@ body .projects-news-list .project-story:first-child .project-image{
  body .projects-news-list .project-story a{align-items:start}
 }
 /* Intentional exception: profile headshots are displayed as designed, not natural-aspect galleries. */
+
+/* Certificate viewer has its own constrained document stage: contain the full page inside it. */
+body #certModal .reader-stage img{
+ display:block;
+ width:auto!important;
+ height:auto!important;
+ max-width:100%!important;
+ max-height:100%!important;
+ aspect-ratio:auto!important;
+ object-fit:contain!important;
+}
