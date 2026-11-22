@@ -193,24 +193,43 @@ async function refreshProjectMedia(){
 }
 }
 document.querySelector('#v2-media-project')?.addEventListener('change',refreshProjectMedia);
-document.querySelector('#v2-project-media-form')?.addEventListener('submit',async e=>{
- e.preventDefault();if(!authorized)return;
- const form=e.currentTarget,button=form.querySelector('button[type=submit]');button.disabled=true;
+document.querySelector('#v2-project-media-form')?.addEventListener('submit',async event=>{
+ event.preventDefault();
+ const form=event.currentTarget,button=form.querySelector('button[type=submit]');
+ button.disabled=true;let uploadedUrl=null;
  try{
- const projectId=form.elements.namedItem('project_id').value,caption=form.elements.namedItem('caption').value.trim(),alt=form.elements.namedItem('alt_text').value.trim(),file=form.elements.namedItem('media_file').files[0],external=form.elements.namedItem('external_video').value.trim();
- if(!projectId)throw Error('Select a published project.');
- if(!!file===!!external)throw Error('Provide either a media upload or a YouTube embed URL, not both.');
- let media_url,media_type;
- if(file){media_url=await upload('showcase',file);media_type=file.type.startsWith('video/')?'video':'image'}
- else{
- const url=new URL(external);
- if(url.protocol!=='https:'||url.hostname!=='www.youtube.com'||!/^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname))throw Error('Use a YouTube embed URL, for example https://www.youtube.com/embed/VIDEO_ID');
- media_url=url.origin+url.pathname;media_type='external_video'
- }
- const{error}=await supabase.from('portfolio_project_media').insert({project_id:projectId,caption,alt_text:alt,media_url,media_type});
- if(error)throw error;
- msg('showcase','Project media saved.');form.elements.namedItem('media_file').value='';form.elements.namedItem('external_video').value='';await refreshProjectMedia()
- }catch(err){msg('showcase',err.message,true)}finally{button.disabled=false}
+  await check();
+  const projectId=form.elements.namedItem('project_id').value,
+    caption=form.elements.namedItem('caption').value.trim(),
+    alt=form.elements.namedItem('alt_text').value.trim(),
+    file=form.elements.namedItem('media_file').files[0],
+    external=form.elements.namedItem('external_video').value.trim();
+  if(!projectId)throw Error('Choose a published project.');
+  if(!!file===!!external)throw Error('Provide either one media file or one YouTube embed URL.');
+  let media_url,media_type;
+  if(file){
+   uploadedUrl=await upload('showcase',file);
+   media_url=uploadedUrl;
+   media_type=file.type.startsWith('video/')?'video':'image';
+  }else{
+   const url=new URL(external);
+   if(url.protocol!=='https:'||url.hostname!=='www.youtube.com'||!/^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname))
+    throw Error('Use an HTTPS YouTube embed URL (youtube.com/embed/VIDEO_ID).');
+   media_url=url.origin+url.pathname;
+   media_type='external_video';
+  }
+  const{error}=await supabase.from('portfolio_project_media').insert({
+    project_id:projectId,caption,alt_text:alt,media_url,media_type
+  });
+  if(error)throw error;
+  form.elements.namedItem('media_file').value='';
+  form.elements.namedItem('external_video').value='';
+  msg('showcase','Project media saved.');
+  await refreshProjectMedia();
+ }catch(err){
+  if(uploadedUrl)await removeManagedUpload('portfolio-project-media',uploadedUrl);
+  msg('showcase',err,true);
+ }finally{button.disabled=false}
 });
 
 for(const section of Object.keys(tables)){const form=document.querySelector('#v2-'+section+'-form');if(!form)continue;form.addEventListener('submit',e=>submit(section,e));document.querySelector('#v2-'+section+'-reset')?.addEventListener('click',()=>setForm(section,{}))}
