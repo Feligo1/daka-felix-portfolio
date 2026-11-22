@@ -146,7 +146,7 @@ begin
   insert into public.portfolio_projects
    (slug,title,summary,description,category,is_featured,is_published,display_order)
   select
-   trim(both '-' from left(regexp_replace(lower(coalesce(nullif(trim(p.title),''),'project')), '[^a-z0-9]+','-','g'),135))
+   coalesce(nullif(trim(both '-' from left(regexp_replace(lower(coalesce(nullif(trim(p.title),''),'project')), '[^a-z0-9]+','-','g'),135)),''),'project')
      || '-' || substr(md5(p.id::text),1,8),
    coalesce(nullif(trim(p.title),''),'Untitled project'),
    left(coalesce(p.description,''),240),
