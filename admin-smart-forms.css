@@ -1,0 +1,17 @@
+/* Guided content forms – mobile first and compatible with the existing Admin Control Center */
+.v2-form .preset-select,#addCertForm .preset-select{display:block;width:100%;min-height:44px;margin:5px 0 9px;border:1px solid #55768b!important;background:#18344a!important;color:#eff9fc!important;border-radius:9px!important;padding:10px!important;font-size:16px!important}
+.v2-form label,.form-grid .form-group{min-width:0}
+.v2-form label input,.v2-form label textarea,.form-grid .form-group input{max-width:100%}
+.v2-form label small,.form-grid .form-group small{font-size:.79rem;line-height:1.5;color:#aec6d4;display:block;margin:3px 0 0}
+.v2-form .preset-action{width:auto;min-height:42px;padding:9px 13px;border:1px solid #3d8d7e;background:#1c463f;color:#d2fff0;border-radius:8px;margin-top:7px;font-size:.82rem;font-weight:650}
+.v2-form .preset-action:hover{background:#255b4e;color:white}
+#adminOptionForm .full{display:flex;justify-content:flex-start}
+#adminOptionList .v2-row{display:flex;align-items:center;gap:12px;justify-content:space-between}
+#adminOptionList .v2-row strong{font-weight:600;overflow-wrap:anywhere}
+#adminOptionList .preset-delete{min-height:42px;background:#332934;border:1px solid #936b76;color:#ffe8ed;padding:9px 13px;border-radius:8px;white-space:nowrap}
+#adminOptionList .preset-delete:hover{background:#50303c}
+#adminOptionForm select{min-height:44px}
+#v2-gallery-form input[type="date"]{color-scheme:dark}
+#v2-journal-form textarea[name="body"]{min-height:230px;resize:vertical}
+#v2-journal-form textarea[name="summary"]{min-height:95px;resize:vertical}
+@media(max-width:700px){#adminOptionList .v2-row{align-items:stretch;flex-direction:column}#adminOptionList .preset-delete{width:100%}#v2-journal-form textarea[name="body"]{min-height:180px}}
