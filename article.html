@@ -27,4 +27,20 @@
         </div>
       </div>
     </div>
-  </header><main id="main" class="wrap"><section class="hero"><a href="journal.html">← Technical journal</a><p class="eyebrow">Technical article</p><h1 id="title">Loading article…</h1><p id="summary" class="lead"></p><p class="meta" id="date"></p></section><section class="section prose"><img hidden id="cover" class="feature-image" alt=""><div id="body"></div></section></main><footer class="footer"><div class="wrap">© 2026 Felix Daka · <a href="mailto:felixddaka@gmail.com">Email</a> · <a href="https://github.com/Feligo1">GitHub</a> · <a href="https://www.linkedin.com/in/felix-daka-5b6058212">LinkedIn</a></div></footer><script type="module">import{supabase}from './supabase-client.js';import{el}from './portfolio-v2.js';const slug=new URLSearchParams(location.search).get('slug');if(slug){const {data:p,error}=await supabase.from('portfolio_journal').select('*').eq('slug',slug).eq('is_published',true).maybeSingle();if(error||!p){document.querySelector('#title').textContent='Article unavailable'}else{document.title=p.title+' | Felix Daka';document.querySelector('#title').textContent=p.title;document.querySelector('#summary').textContent=p.summary||'';document.querySelector('#date').textContent=p.published_at?new Date(p.published_at).toLocaleDateString('en-ZM',{day:'numeric',month:'long',year:'numeric'}):'';if(p.cover_url){const img=document.querySelector('#cover');img.src=p.cover_url;img.alt=p.title;img.hidden=false}const body=document.querySelector('#body');(p.body||'').split(/\n\n+/).forEach(paragraph=>body.append(el('p',paragraph)))}}else document.querySelector('#title').textContent='Article not specified'</script></body></html>
+  </header><main id="main" class="wrap"><section class="hero"><a href="journal.html">← Technical journal</a><p class="eyebrow">Technical article</p><h1 id="title">Loading article…</h1><p id="summary" class="lead"></p><p class="meta" id="date"></p></section><section class="section prose"><img hidden id="cover" class="feature-image" alt=""><div id="body"></div></section></main><footer class="site-footer">
+   <div class="site-footer-inner">
+     <div class="site-footer-summary">
+       <strong>Felix Daka <span>(Tech Guy)</span></strong>
+       <p id="footerText">Computer Science graduate · Zambia</p>
+     </div>
+     <div class="site-footer-links" id="socialIcons">
+       <a href="https://github.com/Feligo1" target="_blank" rel="noopener noreferrer">GitHub</a>
+       <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+       <a href="contact.html">Contact</a>
+     </div>
+   </div>
+   <div class="site-footer-bottom">
+     <span>© 2026 Felix Daka. All rights reserved.</span>
+     <small>Anonymous analytics are used to understand site visits; no names are collected in visit records.</small>
+   </div>
+ </footer><script type="module">import{supabase}from './supabase-client.js';import{el}from './portfolio-v2.js';const slug=new URLSearchParams(location.search).get('slug');if(slug){const {data:p,error}=await supabase.from('portfolio_journal').select('*').eq('slug',slug).eq('is_published',true).maybeSingle();if(error||!p){document.querySelector('#title').textContent='Article unavailable'}else{document.title=p.title+' | Felix Daka';document.querySelector('#title').textContent=p.title;document.querySelector('#summary').textContent=p.summary||'';document.querySelector('#date').textContent=p.published_at?new Date(p.published_at).toLocaleDateString('en-ZM',{day:'numeric',month:'long',year:'numeric'}):'';if(p.cover_url){const img=document.querySelector('#cover');img.src=p.cover_url;img.alt=p.title;img.hidden=false}const body=document.querySelector('#body');(p.body||'').split(/\n\n+/).forEach(paragraph=>body.append(el('p',paragraph)))}}else document.querySelector('#title').textContent='Article not specified'</script></body></html>
