@@ -137,3 +137,26 @@ create policy "Portfolio v2 admin delete media" on storage.objects for delete to
 
 -- Existing buckets portfolio-images, portfolio-certificate-files and portfolio-documents are retained.
 -- Public media can be retrieved directly by URL after upload; do not upload confidential drafts here.
+
+-- One-time, idempotent compatibility import of any original public projects.
+-- Imported records become the single Project Showcase data source. Existing records remain untouched.
+do $legacy_import$
+begin
+ if to_regclass('public.projects') is not null then
+  insert into public.portfolio_projects
+   (slug,title,summary,description,category,is_featured,is_published,display_order)
+  select
+   trim(both '-' from left(regexp_replace(lower(coalesce(nullif(trim(p.title),''),'project')), '[^a-z0-9]+','-','g'),135))
+     || '-' || substr(md5(p.id::text),1,8),
+   coalesce(nullif(trim(p.title),''),'Untitled project'),
+   left(coalesce(p.description,''),240),
+   coalesce(p.description,''),
+   'Previous projects',
+   false,
+   coalesce(p.is_active,false),
+   coalesce(p.display_order,0)
+  from public.projects p
+  on conflict(slug) do nothing;
+ end if;
+end
+$legacy_import$;
