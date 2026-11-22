@@ -447,6 +447,7 @@
                                 </div>
                                 <div class="upload-progress" id="certProgress"><div class="progress-bar"></div></div>
                                 <div id="certFileName" style="font-size:12px;color:#9CA3AF; margin-top:8px;"></div>
+                                <div id="certLocalPreview" class="cert-local-preview" aria-live="polite"></div>
                             </div>
                         </div>
                         <button type="submit" id="certSubmitBtn">Add Certificate</button>
@@ -738,8 +739,10 @@
                         <h4>${escapeHtml(cert.name)}</h4>
                         <p>${escapeHtml(cert.issuer)} • ${cert.date_earned || ''}</p>
                         <p style="font-size:12px;">${escapeHtml(cert.description || '')}</p>
+                        <p class="cert-asset-status ${cert.image_url || cert.document_url ? 'uploaded' : 'missing'}">${cert.image_url || cert.document_url ? 'Certificate file attached' : 'No file attached — edit to upload a picture, PDF or Word document.'}</p>
                     </div>
                     <div class="item-actions">
+                        <a class="edit-btn cert-preview-link" target="_blank" rel="noopener noreferrer" href="certificates.html?certificate=${encodeURIComponent(cert.id)}">${cert.image_url || cert.document_url ? 'Preview' : 'View details'}</a>
                         <button class="edit-btn" onclick="editCertificate('${cert.id}')">Edit</button>
                         <button class="danger" onclick="deleteCertificate('${cert.id}')">Delete</button>
                     </div>
