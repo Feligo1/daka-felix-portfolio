@@ -963,6 +963,7 @@
     </style>
     <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="portfolio-refresh.css?v=3">
+<link rel="stylesheet" href="about-gallery.css">
 </head>
 <body>
     <!-- Header & Navigation -->
@@ -1065,7 +1066,8 @@
         </div>
     </section>
 
-    <section class="journey-section" id="experience">
+    <section class="career-gallery" id="career-gallery"><div class="container"><div class="gallery-intro"><span class="eyebrow">Beyond the résumé</span><h2>My journey in pictures</h2><p>Graduation, hands-on ICT experience and the personal milestones shaping my career in technology. These are real moments shared as they happen.</p></div><div id="careerGalleryFilters" class="gallery-categories" role="group" aria-label="Filter gallery photos"></div><div id="careerGalleryGrid" class="gallery-grid" aria-live="polite"><p>Loading photographs…</p></div><a class="gallery-recommendations" href="recommendations.html">Read professional recommendations</a></div><dialog id="careerGalleryDialog" aria-labelledby="careerGalleryModalTitle"><div class="gallery-modal-actions"><button id="careerGalleryPrev" type="button" aria-label="Previous photo">← Previous</button><button id="careerGalleryClose" type="button">Close ×</button><button id="careerGalleryNext" type="button" aria-label="Next photo">Next →</button></div><img id="careerGalleryModalImage" alt=""><h3 id="careerGalleryModalTitle"></h3><p id="careerGalleryModalCaption"></p></dialog></section>
+<section class="journey-section" id="experience">
         <div class="container">
             <div class="section-title"><h2>Experience</h2><p>Supervised industrial placements in ICT support</p></div>
             <div class="timeline">
@@ -1306,5 +1308,6 @@
             .catch(error => console.error('Could not load the saved about image:', error))
         import('./supabase-client.js').then(({ trackDeviceVisit }) => trackDeviceVisit())
     </script>
+<script type="module" src="about-gallery.js"></script>
 </body>
 </html>
