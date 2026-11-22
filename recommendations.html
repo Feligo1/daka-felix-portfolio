@@ -27,4 +27,20 @@
         </div>
       </div>
     </div>
-  </header><main class="wrap"><section class="hero"><span class="eyebrow">Professional credibility</span><h1>Recommendations</h1><p class="lead">Genuine feedback from people I have had the opportunity to work with. Statements are shown only with their permission.</p><a href="about.html" class="button secondary">← About my experience</a></section><section class="section"><div id="recommendations" class="grid" aria-live="polite"><p>Loading recommendations…</p></div></section></main><footer class="footer"><div class="wrap">© 2026 Felix Daka · <a href="mailto:felixddaka@gmail.com">Contact</a></div></footer><script type="module">import{supabase}from './supabase-client.js';import{el,showError}from './portfolio-v2.js';const root=document.querySelector('#recommendations');const{data,error}=await supabase.from('portfolio_recommendations').select('person_name,job_title,organization,quote').eq('is_published',true).eq('permission_confirmed',true).order('created_at',{ascending:false});root.replaceChildren();if(error){console.error(error);showError(root,'Recommendations are temporarily unavailable.')}else if(!data?.length){showError(root,'Professional recommendations will appear here once they have been verified and approved for publication.')}else for(const r of data){const card=el('article','',{class:'card'}),body=el('div','',{class:'body'});body.append(el('p','“'+r.quote+'”'),el('h3',r.person_name),el('p',[r.job_title,r.organization].filter(Boolean).join(' · ')));card.append(body);root.append(card)}</script></body></html>
+  </header><main class="wrap"><section class="hero"><span class="eyebrow">Professional credibility</span><h1>Recommendations</h1><p class="lead">Genuine feedback from people I have had the opportunity to work with. Statements are shown only with their permission.</p><a href="about.html" class="button secondary">← About my experience</a></section><section class="section"><div id="recommendations" class="grid" aria-live="polite"><p>Loading recommendations…</p></div></section></main><footer class="site-footer">
+   <div class="site-footer-inner">
+     <div class="site-footer-summary">
+       <strong>Felix Daka <span>(Tech Guy)</span></strong>
+       <p id="footerText">Computer Science graduate · Zambia</p>
+     </div>
+     <div class="site-footer-links" id="socialIcons">
+       <a href="https://github.com/Feligo1" target="_blank" rel="noopener noreferrer">GitHub</a>
+       <a href="https://www.linkedin.com/in/felix-daka-5b6058212" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+       <a href="contact.html">Contact</a>
+     </div>
+   </div>
+   <div class="site-footer-bottom">
+     <span>© 2026 Felix Daka. All rights reserved.</span>
+     <small>Anonymous analytics are used to understand site visits; no names are collected in visit records.</small>
+   </div>
+ </footer><script type="module">import{supabase}from './supabase-client.js';import{el,showError}from './portfolio-v2.js';const root=document.querySelector('#recommendations');const{data,error}=await supabase.from('portfolio_recommendations').select('person_name,job_title,organization,quote').eq('is_published',true).eq('permission_confirmed',true).order('created_at',{ascending:false});root.replaceChildren();if(error){console.error(error);showError(root,'Recommendations are temporarily unavailable.')}else if(!data?.length){showError(root,'Professional recommendations will appear here once they have been verified and approved for publication.')}else for(const r of data){const card=el('article','',{class:'card'}),body=el('div','',{class:'body'});body.append(el('p','“'+r.quote+'”'),el('h3',r.person_name),el('p',[r.job_title,r.organization].filter(Boolean).join(' · ')));card.append(body);root.append(card)}</script></body></html>
