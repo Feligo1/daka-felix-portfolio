@@ -118,7 +118,10 @@ insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) v
  ('portfolio-project-media','portfolio-project-media',true,20971520,array['image/jpeg','image/png','image/webp','image/gif','video/mp4','video/webm']),
  ('portfolio-gallery','portfolio-gallery',true,10485760,array['image/jpeg','image/png','image/webp','image/gif']),
  ('portfolio-journal-media','portfolio-journal-media',true,10485760,array['image/jpeg','image/png','image/webp','image/gif'])
-on conflict (id) do nothing;
+on conflict (id) do update set
+  public=excluded.public,
+  file_size_limit=excluded.file_size_limit,
+  allowed_mime_types=excluded.allowed_mime_types;
 
 drop policy if exists "Portfolio v2 admin list media" on storage.objects;
 create policy "Portfolio v2 admin list media" on storage.objects for select to authenticated
@@ -137,3 +140,26 @@ create policy "Portfolio v2 admin delete media" on storage.objects for delete to
 
 -- Existing buckets portfolio-images, portfolio-certificate-files and portfolio-documents are retained.
 -- Public media can be retrieved directly by URL after upload; do not upload confidential drafts here.
+
+-- One-time, idempotent compatibility import of any original public projects.
+-- Imported records become the single Project Showcase data source. Existing records remain untouched.
+do $legacy_import$
+begin
+ if to_regclass('public.projects') is not null then
+  insert into public.portfolio_projects
+   (slug,title,summary,description,category,is_featured,is_published,display_order)
+  select
+   coalesce(nullif(trim(both '-' from left(regexp_replace(lower(coalesce(nullif(trim(p.title),''),'project')), '[^a-z0-9]+','-','g'),135)),''),'project')
+     || '-' || substr(md5(p.id::text),1,8),
+   coalesce(nullif(trim(p.title),''),'Untitled project'),
+   left(coalesce(p.description,''),240),
+   coalesce(p.description,''),
+   'Previous projects',
+   false,
+   coalesce(p.is_active,false),
+   coalesce(p.display_order,0)
+  from public.projects p
+  on conflict(slug) do nothing;
+ end if;
+end
+$legacy_import$;

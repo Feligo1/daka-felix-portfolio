@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /daka-felix-portfolio/admin.html
+Disallow: /daka-felix-portfolio/admin/
+
+# Crawlers should index only the public portfolio pages.
+# This is an indexing preference, NOT an access-control mechanism.
