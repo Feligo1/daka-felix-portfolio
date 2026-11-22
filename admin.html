@@ -442,8 +442,8 @@
                                 <div class="image-upload-area" id="certUploadArea">
                                     <i class="fas fa-cloud-upload-alt" style="font-size: 32px;"></i>
                                     <p>Click or drag &amp; drop to upload a certificate file</p>
-                                    <p style="font-size: 12px; margin-top: 8px;">JPG, PNG, GIF, PDF, DOC or DOCX (Max 20MB)</p>
-                                    <input type="file" id="certImageFile" accept="image/*,.pdf,.doc,.docx" hidden>
+                                    <p style="font-size: 12px; margin-top: 8px;">JPG, PNG, WebP, GIF, PDF, DOC or DOCX (Max 20 MB)</p>
+                                    <input type="file" id="certImageFile" accept=".jpg,.jpeg,.png,.webp,.gif,.pdf,.doc,.docx" hidden>
                                 </div>
                                 <div class="upload-progress" id="certProgress"><div class="progress-bar"></div></div>
                                 <div id="certFileName" style="font-size:12px;color:#9CA3AF; margin-top:8px;"></div>
@@ -1426,6 +1426,6 @@
         }).catch(error => showToast(error.message || 'Could not connect to Supabase', 'error'));
     </script>
     <script type="module" src="admin-v2.js?v=4"></script>
-<script type="module" src="admin-smart-forms.js?v=1"></script>
+<script type="module" src="admin-smart-forms.js?v=2"></script>
 </body>
 </html>
