@@ -298,3 +298,64 @@ body .professional-references summary::-webkit-details-marker{display:none}
 body .professional-reference-list{padding:12px 0 3px 22px}
 body .professional-reference-list p{margin:8px 0 13px!important;color:var(--ui-secondary)}
 body .skills-footer-cta{margin-top:32px;text-align:left;padding:28px 0;border-top:1px solid var(--ui-line)}
+
+
+/* v13 — restrained portfolio refinement. Public pages only.
+   Maintain existing dark palette, dynamic content and private admin UI. */
+:root{
+ --ui-heading:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --ui-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --ui-page:1140px;--ui-reading:720px;
+ --ui-section:clamp(52px,6vw,84px);
+}
+body:not(.admin-page){font-family:var(--ui-body)!important;font-size:16px!important;line-height:1.65!important}
+body:not(.admin-page) :is(h1,h2,h3,h4,h5,h6){
+ font-family:var(--ui-heading)!important;font-weight:650!important;
+ letter-spacing:-.035em!important;line-height:1.16!important;
+}
+body:not(.admin-page) h1{font-size:clamp(2.65rem,5.2vw,4.5rem)!important;letter-spacing:-.055em!important}
+body:not(.admin-page) h2{font-size:clamp(1.85rem,3vw,2.55rem)!important}
+body:not(.admin-page) :is(p,.lead){line-height:1.7!important}
+body:not(.admin-page) :is(.container,.wrap){max-width:var(--ui-page);margin-inline:auto;padding-inline:clamp(20px,4vw,40px)}
+body:not(.admin-page) :is(.hero,.page-header){background-image:none!important}
+body:not(.admin-page) .hero{min-height:unset!important;padding-block:clamp(100px,12vw,155px) clamp(58px,7vw,92px)!important}
+body:not(.admin-page) .hero-content{gap:clamp(28px,5vw,80px)!important}
+body:not(.admin-page) .hero-text{text-align:left!important;max-width:660px}
+body:not(.admin-page) .hero-text h1{margin-bottom:14px!important}
+body:not(.admin-page) .hero-text :is(p,.career-headline){max-width:58ch}
+body:not(.admin-page) .hero-buttons{justify-content:flex-start!important;gap:12px!important;margin-top:28px}
+body:not(.admin-page) :is(.featured-work,.journal-feature,.home-cta,.section){padding-block:var(--ui-section)!important}
+body:not(.admin-page) .feature-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:26px!important}
+body:not(.admin-page) .feature-heading h2{text-align:left!important;margin:8px 0 10px!important}
+body:not(.admin-page) .feature-heading h2:after{display:none!important}
+body:not(.admin-page) :is(.feature-grid,.projects-news-list){gap:22px!important}
+body:not(.admin-page) :is(.feature-grid,.projects-news-list) > *{min-width:0}
+body:not(.admin-page) :is(.card,.project-story,.story-item,.feature-card){
+ border-radius:12px!important;box-shadow:none!important;
+ transition:border-color .2s ease,transform .2s ease!important;
+}
+body:not(.admin-page) :is(.card,.project-story,.story-item,.feature-card):hover{
+ transform:translateY(-2px);border-color:#667b89!important;
+}
+body:not(.admin-page) :is(.btn,.button){border-radius:8px!important;box-shadow:none!important;transform:none}
+body:not(.admin-page) :is(.btn,.button):hover{transform:translateY(-1px)}
+body:not(.admin-page) .profile-img{box-shadow:none!important;border:1px solid #41576a!important}
+body:not(.admin-page) #mainHeader{box-shadow:none!important}
+body:not(.admin-page) #mainHeader .logo{letter-spacing:-.02em}
+body:not(.admin-page) #mainHeader .primary-nav{gap:clamp(10px,1.6vw,23px)}
+body:not(.admin-page) #mainHeader .primary-nav a{font-weight:550!important;font-size:.9rem!important}
+body:not(.admin-page) :is(input,select,textarea){border-radius:8px!important}
+body:not(.admin-page) .site-footer{border-top:1px solid #354759}
+@media(max-width:760px){
+ body:not(.admin-page) .hero{padding-top:115px!important;padding-bottom:48px!important}
+ body:not(.admin-page) .hero-content{flex-direction:column-reverse!important;align-items:flex-start!important}
+ body:not(.admin-page) .hero-image{max-width:220px!important;margin:0!important}
+ body:not(.admin-page) .hero-text{width:100%}
+ body:not(.admin-page) .hero-buttons{flex-wrap:wrap!important}
+ body:not(.admin-page) .feature-heading{display:block!important}
+ body:not(.admin-page) .feature-view-all{display:inline-flex;margin-top:12px}
+ body:not(.admin-page) :is(.feature-grid,.projects-news-list){grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){
+ body:not(.admin-page) :is(.card,.project-story,.story-item,.feature-card){transition:none!important;transform:none!important}
+}
