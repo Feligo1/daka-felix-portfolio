@@ -120,6 +120,10 @@ insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) v
  ('portfolio-journal-media','portfolio-journal-media',true,10485760,array['image/jpeg','image/png','image/webp','image/gif'])
 on conflict (id) do nothing;
 
+drop policy if exists "Portfolio v2 admin list media" on storage.objects;
+create policy "Portfolio v2 admin list media" on storage.objects for select to authenticated
+ using (bucket_id in ('portfolio-project-media','portfolio-gallery','portfolio-journal-media') and public.is_portfolio_admin());
+
 drop policy if exists "Portfolio v2 admin insert media" on storage.objects;
 create policy "Portfolio v2 admin insert media" on storage.objects for insert to authenticated
  with check (bucket_id in ('portfolio-project-media','portfolio-gallery','portfolio-journal-media') and public.is_portfolio_admin());
