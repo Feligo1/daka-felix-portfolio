@@ -670,7 +670,7 @@
         </div>
     </div>
 
-    <div id="certModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+    <div id="certModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle" tabindex="-1">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">Certificate Details</h3>
@@ -864,7 +864,7 @@
                         </div>
                         <div class="certificate-row-actions">
                             <span class="certificate-row-meta">${formatDate(cert.date_earned)}</span>
-                            <button onclick="viewCertificate('${cert.id}')" class="btn" type="button">View</button>
+                            <button onclick="viewCertificate('${cert.id}')" class="btn" type="button">${cert.image_url || cert.document_url ? 'View certificate' : 'View details'}</button>
                         </div>
                     </article>
                 `
