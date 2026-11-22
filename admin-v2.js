@@ -65,7 +65,18 @@ if(error){msg(section,error.message,true);remove.disabled=false}else{
  for(const url of oldMedia){const issue=await removeManagedUpload('portfolio-project-media',url);if(issue)warnings.push(issue)}
  msg(section,warnings.length?'Record deleted; some media needs cleanup: '+warnings.join('; '):'Entry and managed media deleted.',!!warnings.length);
  await refresh(section);
-}});actions.append(edit,remove);row.append(info,actions);box.append(row)}}
+}});if(section==='gallery'&&item.media_url){
+ const preview=E('div','',{class:'admin-story-preview'});
+ if(item.media_type==='image'){
+  const img=E('img','',{src:item.media_url,alt:item.alt_text||item.title,loading:'lazy'});preview.append(img);
+ }else if(item.media_type==='video'){
+  const video=E('video','',{src:item.media_url,controls:'',preload:'metadata'});preview.append(video);
+ }else if(item.media_type==='external_video'){
+  const link=E('a','Open video',{href:item.media_url,target:'_blank',rel:'noopener noreferrer'});preview.append(link);
+ }
+ row.prepend(preview);
+}
+actions.append(edit,remove);row.append(info,actions);box.append(row)}}
 async function submit(section,event){
  event.preventDefault();
  const cfg=tables[section],form=event.currentTarget,button=form.querySelector('button[type=submit]');
