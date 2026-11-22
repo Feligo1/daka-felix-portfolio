@@ -1,0 +1,32 @@
+/* Portfolio 2.0 admin visual system; preserves legacy selectors and functionality */
+:root{--admin-bg:#0c1727;--admin-panel:#15263b;--admin-panel-alt:#1b3048;--admin-line:#35506a;--admin-ink:#f4f8fd;--admin-muted:#afc2d1;--admin-teal:#52d7bd;--admin-focus:#f5c767}
+body{background:radial-gradient(ellipse at 90% -10%,rgba(30,126,115,.16),transparent 45%),var(--admin-bg);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--admin-ink)}
+.admin-header{background:#132338!important;border:1px solid var(--admin-line);border-radius:20px!important;box-shadow:0 12px 40px #030d1b44}
+.admin-header h1{font-size:clamp(1.35rem,3vw,2rem);letter-spacing:-.035em}
+.login-box{border-color:var(--admin-line);box-shadow:0 24px 75px #030d1b88}
+.login-box h1{color:var(--admin-teal)}
+.stats-grid{gap:15px}.stat-card{background:linear-gradient(145deg,#1b3148,#13253b);border:1px solid var(--admin-line);border-radius:17px;box-shadow:0 12px 30px #07101b2a}.stat-card h3{color:var(--admin-teal)}
+.tabs{display:flex;gap:9px;overflow-x:auto;scrollbar-width:thin;padding:8px 2px 16px;flex-wrap:wrap}
+.tab-btn{border:1px solid var(--admin-line)!important;border-radius:10px!important;background:#16283d!important;color:var(--admin-muted)!important;transition:background .2s,transform .2s}
+.tab-btn.active,.tab-btn:hover{background:#225449!important;color:#dbfff5!important;border-color:#458c7c!important}
+.card{background:var(--admin-panel)!important;border:1px solid var(--admin-line);border-radius:18px!important;box-shadow:0 14px 35px #030b1726}
+.card h2{letter-spacing:-.02em}.card p{line-height:1.6}
+input,textarea,select{background:#0f2135!important;color:var(--admin-ink)!important;border:1px solid var(--admin-line)!important;border-radius:10px!important}
+input:focus-visible,textarea:focus-visible,select:focus-visible,.tab-btn:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--admin-focus)!important;outline-offset:3px!important}
+button{border-radius:10px}button:disabled{opacity:.55;cursor:not-allowed}
+.v2-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 24px;margin:22px 0 18px;border:1px solid var(--admin-line);border-radius:18px;background:linear-gradient(110deg,#173e46,#172a43)}
+.v2-toolbar h2{margin:0 0 3px;letter-spacing:-.035em}.v2-toolbar p{color:var(--admin-muted);margin:0;font-size:.88rem}
+.v2-toolbar a{color:#ddfff3;border:1px solid #4b8d80;border-radius:10px;padding:10px 14px;text-decoration:none}
+.v2-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.v2-status{padding:12px 16px;background:#0d2336;border:1px solid var(--admin-line);border-radius:10px;color:#cce9ea;margin:12px 0}
+.v2-dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:20px 0}
+.v2-metric{padding:20px;background:var(--admin-panel-alt);border:1px solid var(--admin-line);border-radius:14px}
+.v2-metric strong{display:block;font-size:1.65rem;color:var(--admin-teal)}.v2-metric span{color:var(--admin-muted);font-size:.85rem}
+.v2-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px}
+.v2-form label{display:flex;flex-direction:column;gap:7px;color:#e4f1f5;font-weight:600;font-size:.88rem}
+.v2-form .full{grid-column:1/-1}.v2-form textarea{min-height:110px}
+.v2-form .check{flex-direction:row;align-items:center}.v2-form .check input{width:auto}
+.v2-list{display:grid;gap:12px;margin-top:15px}.v2-row{display:flex;justify-content:space-between;align-items:center;gap:16px;border:1px solid var(--admin-line);border-radius:12px;padding:15px;background:var(--admin-panel-alt);flex-wrap:wrap}.v2-row small{display:block;color:var(--admin-muted)}.v2-row-actions{display:flex;gap:8px;flex-wrap:wrap}.v2-row button{padding:9px 13px;font-size:.85rem}
+.v2-notice{color:#ecd8a7;font-size:.88rem}.v2-upload-preview{max-width:180px;max-height:130px;object-fit:contain;border-radius:10px}
+@media(max-width:700px){.v2-toolbar{padding:16px}.v2-form{grid-template-columns:1fr}.tabs{flex-wrap:nowrap}.tab-btn{white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
