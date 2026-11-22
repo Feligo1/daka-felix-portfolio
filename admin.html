@@ -738,6 +738,12 @@
                     open.textContent = 'Open';
                     actions.appendChild(open);
                 }
+                const edit = document.createElement('button');
+                edit.type = 'button';
+                edit.className = 'edit-btn';
+                edit.textContent = 'Edit details';
+                edit.addEventListener('click', () => window.editDocument(storedDocument.id));
+                actions.appendChild(edit);
                 const remove = document.createElement('button');
                 remove.className = 'danger';
                 remove.textContent = 'Delete';
@@ -778,18 +784,36 @@
             }
         });
 
-        window.deleteDocument = async id => {
-            const document = allDocuments.find(item => item.id === id);
-            if (!document || !confirm(`Delete “${document.title}”?`)) return;
-            const { error: storageError } = await supabase.storage.from('portfolio-documents').remove([document.file_path]);
-            if (storageError) { showToast(storageError.message, 'error'); return; }
-            const { error } = await supabase.from('documents').delete().eq('id', id);
-            if (error) { showToast(error.message, 'error'); return; }
-            showToast('Document deleted');
+        window.editDocument = async id => {
+            const storedDocument = allDocuments.find(item => String(item.id) === String(id));
+            if (!storedDocument) return;
+            const title = prompt('Document title:', storedDocument.title);
+            if (title === null) return;
+            if (!title.trim()) { showToast('Document title is required.', 'error'); return; }
+            const description = prompt('Document description:', storedDocument.description || '');
+            if (description === null) return;
+            const { error } = await supabase.from('documents')
+                .update({ title: title.trim().slice(0, 160), description: description.trim().slice(0, 2000) })
+                .eq('id', id);
+            if (error) { showToast('Update failed: ' + error.message, 'error'); return; }
+            showToast('Document details updated');
             await loadDocuments();
         };
-        
-        document.getElementById('addCertForm').addEventListener('submit', async (e) => {
+
+        window.deleteDocument = async id => {
+            const storedDocument = allDocuments.find(item => String(item.id) === String(id));
+            if (!storedDocument || !confirm('Delete "' + storedDocument.title + '" and its private file?')) return;
+            const { error } = await supabase.from('documents').delete().eq('id', id);
+            if (error) { showToast('Document deletion failed: ' + error.message, 'error'); return; }
+            const { error: storageError } = await supabase.storage.from('portfolio-documents')
+                .remove([storedDocument.file_path]);
+            if (storageError) {
+                showToast('Record deleted but its storage file needs cleanup: ' + storageError.message, 'error');
+            } else showToast('Document and file deleted');
+            await loadDocuments();
+        };
+
+                document.getElementById('addCertForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const file = document.getElementById('certImageFile').files[0];
             const btn = document.getElementById('certSubmitBtn');
@@ -980,7 +1004,7 @@
             const profile = data?.find(s => s.setting_key === 'profile_image_url');
             const about = data?.find(s => s.setting_key === 'about_image_url');
             const defaultProfile = 'https://scontent.fhre1-1.fna.fbcdn.net/v/t39.30808-6/556475553_1462651461635360_91226401548888980_n.jpg';
-            const defaultAbout = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80';
+            const defaultAbout = 'felix.jpg';
             document.getElementById('profilePreview').src = profile?.setting_value || defaultProfile;
             document.getElementById('aboutPreview').src = about?.setting_value || defaultAbout;
         }
@@ -1040,7 +1064,7 @@
         });
         
         document.getElementById('resetAboutBtn').addEventListener('click', async () => {
-            const defaultAbout = 'https://images.unsplash.com/photo-1529338296731-c4280a44fc48?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80';
+            const defaultAbout = 'felix.jpg';
             await updateSiteSetting('about_image_url', defaultAbout);
             document.getElementById('aboutPreview').src = defaultAbout;
             showToast('About image reset');
