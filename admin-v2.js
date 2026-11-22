@@ -2,7 +2,18 @@ import {supabase} from './supabase-client.js';
 const tables={showcase:{table:'portfolio_projects',title:'Project',fields:['title','slug','summary','description','category','technologies','github_url','demo_url','display_order','is_featured'],bucket:'portfolio-project-media',media:'cover_url'},gallery:{table:'portfolio_gallery',title:'Gallery photo',fields:['title','category','caption','alt_text','event_date'],bucket:'portfolio-gallery',media:'media_url'},journal:{table:'portfolio_journal',title:'Journal article',fields:['title','slug','summary','body','category'],bucket:'portfolio-journal-media',media:'cover_url'},recommendations:{table:'portfolio_recommendations',title:'Recommendation',fields:['person_name','job_title','organization','quote'],bucket:null,media:null}};
 const E=(tag,text='',attrs={})=>{const n=document.createElement(tag);n.textContent=String(text??'');Object.entries(attrs).forEach(([k,v])=>{if(v!=null)n.setAttribute(k,String(v))});return n};
 let authorized=false;
-const msg=(section,text,err=false)=>{const n=document.querySelector('#v2-'+section+'-status');if(n){n.textContent=text;n.style.borderColor=err?'#d76b74':'#35506a'}};
+function explainFeedback(error){
+ const text=String(error?.message||error||'An unexpected error occurred.');
+ if(/bucket not found|bucket does not exist/i.test(text))return 'Storage bucket unavailable. Open Storage Health to identify it. Details: '+text;
+ if(/row.level security|permission denied|not authorized|unauthorized|403|401/i.test(text))return 'Permission denied. Use an approved admin account and sign in again. Details: '+text;
+ if(/relation .*does not exist|42P01|could not find the table/i.test(text))return 'The database table is unavailable. Check Storage Health and database setup. Details: '+text;
+ if(/413|payload too large/i.test(text))return 'Your file exceeds the upload limit for this section.';
+ return text;
+}
+const msg=(section,text,err=false)=>{
+ const n=document.querySelector('#v2-'+section+'-status');
+ if(n){n.textContent=err?explainFeedback(text):text;n.style.borderColor=err?'#c87983':'#477a76';n.setAttribute('role',err?'alert':'status')}
+};
 async function check(){const{data:{user},error}=await supabase.auth.getUser();if(error||!user)throw Error('Sign in to manage portfolio content.');const{data:role,error:roleError}=await supabase.from('portfolio_admins').select('user_id').eq('user_id',user.id).maybeSingle();if(roleError||!role)throw Error('Your account is not authorized to manage portfolio content.');authorized=true}
 async function upload(section,file){if(!file)return null;const cfg=tables[section];if(!cfg.bucket)throw Error('This section does not support uploads.');const image=/^image\/(jpeg|png|webp|gif)$/.test(file.type);const video=section==='showcase'&&/^video\/(mp4|webm)$/.test(file.type);if(!image&&!video)throw Error('Unsupported media type. Use JPG, PNG, WebP or GIF'+(section==='showcase'?', MP4 or WebM.':'.'));const max=video?20:10;if(file.size>max*1024*1024)throw Error('File too large (limit '+max+' MB).');const extension=(file.type.split('/')[1]||'bin').replace('jpeg','jpg');const path='published/'+crypto.randomUUID()+'.'+extension;const {error}=await supabase.storage.from(cfg.bucket).upload(path,file,{contentType:file.type,cacheControl:'3600',upsert:false});if(error)throw error;return supabase.storage.from(cfg.bucket).getPublicUrl(path).data.publicUrl}
 
@@ -37,7 +48,37 @@ if(error){msg(section,error.message,true);remove.disabled=false}else{
  msg(section,warnings.length?'Record deleted; some media needs cleanup: '+warnings.join('; '):'Entry and managed media deleted.',!!warnings.length);
  await refresh(section);
 }});actions.append(edit,remove);row.append(info,actions);box.append(row)}}
-async function submit(section,event){event.preventDefault();if(!authorized){msg(section,'Unauthorized session.',true);return}const cfg=tables[section],form=event.currentTarget,button=form.querySelector('button[type=submit]');button.disabled=true;msg(section,'Saving…');try{const data=payload(section,form),id=form.elements.namedItem('record_id').value;const file=form.elements.namedItem('media_file')?.files?.[0];if(file){if(!data.is_published)throw Error('Media uploads go to public buckets. Publish the entry first or save the draft without media.');if(!cfg.media)throw Error('No media field');data[cfg.media]=await upload(section,file);if(section==='showcase')data.cover_alt=data.title;}let query=id?supabase.from(cfg.table).update(data).eq('id',id):supabase.from(cfg.table).insert(data);const{error}=await query;if(error)throw error;form.reset();form.elements.namedItem('record_id').value='';button.textContent='Save new '+cfg.title.toLowerCase();msg(section,'Saved successfully.');await refresh(section);if(section==='showcase')await refreshProjectOptions()}catch(err){msg(section,err.message||'Save failed.',true)}finally{button.disabled=false}}
+async function submit(section,event){
+ event.preventDefault();
+ const cfg=tables[section],form=event.currentTarget,button=form.querySelector('button[type=submit]');
+ button.disabled=true;
+ let newUpload=null;
+ try{
+  await check();
+  msg(section,'Saving changes…');
+  const data=payload(section,form),id=form.elements.namedItem('record_id').value;
+  const file=form.elements.namedItem('media_file')?.files?.[0];
+  if(section==='gallery'&&!id&&!file)throw Error('Choose a photo before creating a gallery entry.');
+  if(file){
+   if(!data.is_published)throw Error('Public media uploads require a published entry. Save the draft without media, then publish with a photo.');
+   if(!cfg.media)throw Error('Media uploads are not supported for this section.');
+   newUpload=await upload(section,file);
+   data[cfg.media]=newUpload;
+   if(section==='showcase')data.cover_alt=data.title;
+  }
+  const query=id?supabase.from(cfg.table).update(data).eq('id',id):supabase.from(cfg.table).insert(data);
+  const{error}=await query;
+  if(error)throw error;
+  form.reset();form.elements.namedItem('record_id').value='';
+  button.textContent='Save new '+cfg.title.toLowerCase();
+  msg(section,id?'Changes saved.':'New entry saved.');
+  await refresh(section);
+  if(section==='showcase')await refreshProjectOptions();
+ }catch(err){
+  if(newUpload)await removeManagedUpload(cfg.bucket,newUpload);
+  msg(section,err,true);
+ }finally{button.disabled=false}
+}
 
 async function refreshOverview(){
  try{
@@ -51,7 +92,7 @@ async function refreshOverview(){
  let failures=0;
  for(const c of counts){const node=document.getElementById('v2-count-'+c.key);if(node)node.textContent=c.error?'—':String(c.count??0);if(c.error)failures++}
  const status=document.getElementById('v2-overview-status');
- if(status)status.textContent=failures?failures+' content area(s) unavailable. Run the Supabase migration and check permissions.':'Published content counts loaded.';
+ if(status)status.textContent=failures?failures+' content area(s) unavailable. Check the admin account and database permissions.':'Published content counts loaded.';
  }catch(err){const status=document.getElementById('v2-overview-status');if(status)status.textContent=err.message}
 }
 document.getElementById('v2-overview-refresh')?.addEventListener('click',refreshOverview);
@@ -152,24 +193,43 @@ async function refreshProjectMedia(){
 }
 }
 document.querySelector('#v2-media-project')?.addEventListener('change',refreshProjectMedia);
-document.querySelector('#v2-project-media-form')?.addEventListener('submit',async e=>{
- e.preventDefault();if(!authorized)return;
- const form=e.currentTarget,button=form.querySelector('button[type=submit]');button.disabled=true;
+document.querySelector('#v2-project-media-form')?.addEventListener('submit',async event=>{
+ event.preventDefault();
+ const form=event.currentTarget,button=form.querySelector('button[type=submit]');
+ button.disabled=true;let uploadedUrl=null;
  try{
- const projectId=form.elements.namedItem('project_id').value,caption=form.elements.namedItem('caption').value.trim(),alt=form.elements.namedItem('alt_text').value.trim(),file=form.elements.namedItem('media_file').files[0],external=form.elements.namedItem('external_video').value.trim();
- if(!projectId)throw Error('Select a published project.');
- if(!!file===!!external)throw Error('Provide either a media upload or a YouTube embed URL, not both.');
- let media_url,media_type;
- if(file){media_url=await upload('showcase',file);media_type=file.type.startsWith('video/')?'video':'image'}
- else{
- const url=new URL(external);
- if(url.protocol!=='https:'||url.hostname!=='www.youtube.com'||!/^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname))throw Error('Use a YouTube embed URL, for example https://www.youtube.com/embed/VIDEO_ID');
- media_url=url.origin+url.pathname;media_type='external_video'
- }
- const{error}=await supabase.from('portfolio_project_media').insert({project_id:projectId,caption,alt_text:alt,media_url,media_type});
- if(error)throw error;
- msg('showcase','Project media saved.');form.elements.namedItem('media_file').value='';form.elements.namedItem('external_video').value='';await refreshProjectMedia()
- }catch(err){msg('showcase',err.message,true)}finally{button.disabled=false}
+  await check();
+  const projectId=form.elements.namedItem('project_id').value,
+    caption=form.elements.namedItem('caption').value.trim(),
+    alt=form.elements.namedItem('alt_text').value.trim(),
+    file=form.elements.namedItem('media_file').files[0],
+    external=form.elements.namedItem('external_video').value.trim();
+  if(!projectId)throw Error('Choose a published project.');
+  if(!!file===!!external)throw Error('Provide either one media file or one YouTube embed URL.');
+  let media_url,media_type;
+  if(file){
+   uploadedUrl=await upload('showcase',file);
+   media_url=uploadedUrl;
+   media_type=file.type.startsWith('video/')?'video':'image';
+  }else{
+   const url=new URL(external);
+   if(url.protocol!=='https:'||url.hostname!=='www.youtube.com'||!/^\/embed\/[A-Za-z0-9_-]{11}$/.test(url.pathname))
+    throw Error('Use an HTTPS YouTube embed URL (youtube.com/embed/VIDEO_ID).');
+   media_url=url.origin+url.pathname;
+   media_type='external_video';
+  }
+  const{error}=await supabase.from('portfolio_project_media').insert({
+    project_id:projectId,caption,alt_text:alt,media_url,media_type
+  });
+  if(error)throw error;
+  form.elements.namedItem('media_file').value='';
+  form.elements.namedItem('external_video').value='';
+  msg('showcase','Project media saved.');
+  await refreshProjectMedia();
+ }catch(err){
+  if(uploadedUrl)await removeManagedUpload('portfolio-project-media',uploadedUrl);
+  msg('showcase',err,true);
+ }finally{button.disabled=false}
 });
 
 for(const section of Object.keys(tables)){const form=document.querySelector('#v2-'+section+'-form');if(!form)continue;form.addEventListener('submit',e=>submit(section,e));document.querySelector('#v2-'+section+'-reset')?.addEventListener('click',()=>setForm(section,{}))}

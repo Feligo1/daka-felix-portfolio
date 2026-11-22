@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -541,6 +540,8 @@
     <link rel="stylesheet" href="portfolio-refresh.css?v=3">
     <link rel="stylesheet" href="site-responsive-v3.css?v=1">
     <script src="site-navigation.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="brand-unified.css?v=1">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -550,31 +551,13 @@
                 <i class="fas fa-laptop-code logo-icon"></i>
                 <span>Felix Daka <span style="color: var(--accent);">(Tech Guy)</span></span>
             </a>
-            <nav class="primary-nav" aria-label="Main navigation">
-                <a href="index.html" class="active">Home</a>
-                <a href="projects.html">Projects</a>
-                <a href="journal.html">Journal</a>
-                <a href="expertise.html">Technical Skills</a>
-                <a href="certificates.html">Certificates</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf">Download CV</a>
-            </nav>
+            <nav class="primary-nav" aria-label="Main navigation"><a href="index.html" class="active" aria-current="page">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="expertise.html">Skills</a><a href="certificates.html">Certificates</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a></nav>
             <div class="menu-container">
                 <button class="menu-btn" id="menuBtn" type="button" aria-controls="menuContent" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                     <span>Menu</span>
                 </button>
-                <div class="menu-content" id="menuContent" aria-label="Mobile navigation">
-                    <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-                    <a href="journal.html"><i class="fas fa-book-open"></i> Journal</a>
-                    <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf"><i class="fas fa-file-pdf"></i> Download CV</a>
-                    <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
-                    <a href="expertise.html"><i class="fas fa-cogs"></i> Technical Skills</a>
-                    <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
-                    <a href="about.html"><i class="fas fa-user"></i> About</a>
-                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                </div>
+                <div class="menu-content" id="menuContent" aria-label="Mobile navigation"><a href="index.html" class="active" aria-current="page">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="expertise.html">Skills</a><a href="certificates.html">Certificates</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a></div>
             </div>
         </div>
     </header>
@@ -584,23 +567,19 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text">
-                <span class="nickname" id="heroNickname">IT Support · Networking · Software Development</span>
-                <h1 id="heroTitle">Felix Daka</h1><p class="career-headline">Computer Science Graduate &amp; ICT Professional</p>
-                <p style="margin:12px 0;color:#b8eee0">BSc Computer Science (Credit) · Mulungushi University · 2026</p>
-                <a href="assets/documents/Felix_Daka_CV.pdf" download="Felix_Daka_CV.pdf" style="display:inline-block;margin:15px 0 20px;padding:12px 22px;border-radius:8px;background:#55d8b9;color:#102233;text-decoration:none;font-weight:700"><i class="fas fa-file-download"></i> Download My CV (PDF)</a>
+                <span class="nickname" id="heroNickname">Computer Science graduate</span>
+                <h1 id="heroTitle">Felix Daka</h1><p class="career-headline">IT Support · Networking · Software Development</p>
+                
                 <p id="heroDescription">I support people, solve technology problems and build practical software solutions. Experienced in ICT support and networking through placements in Zambia.</p>
-                <div class="specialties" id="specialtiesContainer">
-                    <span class="specialty-tag">IT Support</span>
-                    <span class="specialty-tag">Networking</span>
-                    <span class="specialty-tag">Software Development</span>
-                </div>
+                <div class="specialties" id="specialtiesContainer" hidden></div>
                 <div class="hero-buttons">
-                    <a href="contact.html" class="btn btn-red">Contact Me</a>
-                    <a href="about.html" class="btn">About Me</a>
+                    <a href="projects.html" class="btn">View Projects</a>
+                    <a href="assets/documents/Felix_Daka_CV.pdf" class="btn btn-secondary" download="Felix_Daka_CV.pdf">Download CV</a>
+                    <a href="contact.html" class="btn btn-outline">Contact Me</a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="profile/profile-1772620176208.jpg" alt="Daka Felix" class="profile-img" id="profileImage" fetchpriority="high" decoding="async">
+                <img src="profile/profile-1772620176208.jpg" alt="Felix Daka" class="profile-img" id="profileImage" fetchpriority="high" decoding="async">
             </div>
         </div>
     </section>
@@ -627,39 +606,10 @@
         </div>
     </section>
 
-    <section class="about-preview">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p id="aboutText">A Zambian Computer Science graduate with practical ICT support experience and an interest in building useful digital systems.</p>
-                    <div style="margin-top: 24px;">
-                        <a href="about.html" class="btn">Read Full Bio</a>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="zambian-connection">
-                        <i class="fas fa-globe-africa"></i> Proudly Zambian
-                    </div>
-                    <img src="felix.jpg" alt="Felix Daka" class="about-img" id="aboutImage" loading="lazy" decoding="async">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact-preview">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Have an opportunity or a technical question? Send me a message.</p>
-            <div class="contact-info" id="contactInfo"></div>
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="contact.html" class="btn btn-red">Contact Me</a>
-            </div>
-        </div>
-    </section>
+    <section class="home-cta" aria-label="Recruitment and background"><div class="container"><div class="home-cta-inner"><div><span class="feature-kicker">The person behind the work</span><h2>Interested in working together?</h2><p>Explore my career story or get in touch about an ICT opportunity.</p></div><div class="home-cta-actions"><a class="btn btn-secondary" href="about.html">Read my story</a><a class="btn" href="contact.html">Contact me</a></div></div></div></section>
 
     <div class="container">
-        <div class="visitor-counter" id="visitorCounter">Loading visitor count...</div>
+        <div class="visitor-counter" id="visitorCounter" hidden>Loading visitor count...</div>
     </div>
 
         </main>
@@ -669,16 +619,6 @@
                 <div class="footer-about">
                     <div class="footer-logo">Felix Daka <span>(Tech Guy)</span></div>
                     <p id="footerText">Computer Science graduate in Zambia, with experience in IT support and networking.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="expertise.html">Technical Skills</a></li>
-                        <li><a href="certificates.html">Certificates</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Connect</h4>
@@ -739,8 +679,8 @@
             try {
                 const settings = await getSiteSettings()
                 const title = settings.hero_title || 'Felix Daka'
-                const nickname = settings.hero_nickname || 'Computer Science Graduate | IT Support & Networking'
-                const description = settings.hero_description || 'BSc Computer Science (Credit) graduate with hands-on IT support experience, seeking an ICT internship.'
+                const nickname = settings.hero_nickname || 'Computer Science graduate'
+                const description = settings.hero_description || 'I support people, solve technology problems and build useful software. My experience includes ICT support and networking placements in Zambia.'
                 const tags = settings.specialty_tags || '["IT Support","Networking","Cybersecurity","Java","Cloud Computing"]'
                 
                 document.getElementById('heroTitle').textContent = title
@@ -751,7 +691,7 @@
                 try { tagsArray = JSON.parse(tags) } catch { tagsArray = tags.split(',') }
                 
                 const specialtiesContainer = document.getElementById('specialtiesContainer')
-                specialtiesContainer.innerHTML = tagsArray.map(tag => `<span class="specialty-tag">${escapeHtml(tag.trim())}</span>`).join('')
+                if (specialtiesContainer && !specialtiesContainer.hidden) specialtiesContainer.innerHTML = tagsArray.map(tag => `<span class="specialty-tag">${escapeHtml(tag.trim())}</span>`).join('')
             } catch (error) {
                 console.error('Error loading hero:', error)
             }
@@ -900,8 +840,6 @@
         // Start each section independently so a slow request cannot hold up the rest.
         loadHero()
         loadProfileImage()
-        loadAboutImage()
-        loadContactInfo()
         loadSocialLinks()
     </script>
     <script type="module">
